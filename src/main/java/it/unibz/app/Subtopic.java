@@ -3,10 +3,6 @@ package it.unibz.app;
 import java.util.ArrayList;
 
 public interface Subtopic {
-    // attributes
-    String name = null;
-    ArrayList<Question> questions = null;
-
     // methods
     ArrayList<Question> getQuestions();
     ArrayList<Question> getAvailableQuestions();
