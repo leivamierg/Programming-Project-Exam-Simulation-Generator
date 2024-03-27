@@ -1,11 +1,8 @@
-package it.unibz.app;
+package it.unibz.model;
 
 import java.util.ArrayList;
 
 public interface Subtopic {
-    // attributes
-    String name = null;
-    ArrayList<Question> questions = null;
 
     // methods
     ArrayList<Question> getQuestions();
