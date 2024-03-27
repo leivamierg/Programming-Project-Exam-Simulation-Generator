@@ -1,12 +1,20 @@
 package it.unibz.app;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface FileLoading {
     // methods
-    boolean loadFile(String fileName);
-    // loads a file and returns false if it fails
-    void load(ArrayList<String> files);
-    // loads all files in the bank package
+
+    /**
+     * loads an input bank file
+     * @param path path to the input bank file
+     * @return true if it succeeds, false if it fails
+     */
+    boolean loadFile(String path);
+    /**
+     * loads all input bank files
+     * @param files list of all input banks files
+     */
+    void load(List<String> files);
 }
