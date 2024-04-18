@@ -12,45 +12,40 @@ public class Controller {
         this.model = model;
     }
 
-    public void readInput() {
-        Scanner scan = new Scanner(System.in);
-        boolean run = true;
-
-        while (run) {
-            System.out.println("Choose what to do: ");
-            System.out.println("Options: List, Subtopics, Test, Exit");
-            String input = scan.nextLine().trim();
-
-            String[] readInput = input.split(" ");
-
-            switch (readInput[0]) {
-                case "List":
-                    model.list();
-                    break;
-                case "Subtopics":
-                    if(readInput.length < 2)
-                    {
-                        System.out.println("Need to write: Subtopics <topic>");
-                    } else {
-                        model.listSubtopics(readInput[1]);
-                    }
-                    break;
-                case "Test":
-                    if(readInput.length < 3)
-                    {
-                        System.out.println("Need to write: Test <topic> <subtopic>");
-                    } else {
-                        model.test(readInput[1], readInput[2]);
-                    }
-                    break;
-                case "Exit":
-                    run = false;
-                    break;
-                default:
-                    System.out.println("Invalid");
-                    break;
-            }
+    public void elaborateArgs(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Usage: java Controller <command>");
+            return;
         }
-        scan.close();
+
+        String command = args[0];
+
+        switch (command) {
+            case "List":
+                model.list();
+                break;
+            case "Subtopics":
+                if (args.length < 2) {
+                    System.out.println("Need to write: Subtopics <topic>");
+                } else {
+                    model.listSubtopics(args[1]);
+                }
+                break;
+            case "Test":
+                if (args.length < 3) {
+                    System.out.println("Need to write: Test <topic> <subtopic>");
+                } else {
+                    model.test(args[1], args[2]);
+                }
+                break;
+            default:
+                System.out.println("Invalid command");
+                break;
+        }
+    }
+
+    public static void main(String[] args) {
+        Controller controller = new Controller(model);
+        controller.elaborateArgs(args);
     }
 }
