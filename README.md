@@ -1,4 +1,4 @@
-# Programming-Project-Exam-Simulationm-Simulator
+# Programming-Project-Exam-Simulation-Simulator
 Free Choice-Group project for the "Programming Project" course of the Free University of Bozen-Bolzano, 2nd semester 2023-2024. 
 
 ## come funzionano pull requests in github?
