@@ -1,0 +1,316 @@
+{
+  "topic": "Computer System Architecture",
+  "subtopics": [
+    {
+      "subtopic": "Binary arithmetics",
+      "questions": [
+        {
+          "question": "What happens to the binary representation of a number when it gets multiplied by 2?",
+          "rightAnswer": "The bits get shifted to the left",
+          "wrongAnswers": [
+            "The bits get flipped",
+            "The bits get shifted to the right",
+            "The bits are shuffled"
+          ],
+          "subtopic": "Binary arithmetics"
+        }, {
+          "question": "Which is the result of the binary operation 001101 + 110010?",
+          "rightAnswer": "111111",
+          "wrongAnswers": [
+            "10101",
+            "111000",
+            "000000"
+          ]
+        }, {
+          "question": "Which is the two’s complement representation of the number -1, using 8 bits?",
+          "rightAnswer": "11111111",
+          "wrongAnswers": [
+            "11110000",
+            "11101111",
+            "11100001"
+          ],
+          "subtopic": "Binary arithmetics"
+        }, {
+          "question": "An advantage of the floating-point system for representing fractional numbers is that:",
+          "rightAnswer": "with the same encoding we can represent very large or very small numbers, depending on the applications",
+          "wrongAnswers": [
+            "any number fits into 32 bits",
+            "the precision is very high",
+            "the representable magnitude is very large"
+          ],
+          "subtopic": "Binary arithmetics"
+        }, {
+          "question": "What happens to a binary number when it is shifted to the left by one position? (for example, from 111001 to 1110010)",
+          "rightAnswer": "the value is multiplied by 2",
+          "wrongAnswers": [
+            "the value is divided by 2",
+            "the value is raised to the power of 2",
+            "the new value is unrelated"
+          ],
+          "subtopic": "Binary arithmetics"
+        }, {
+          "question": "Which is the result of the binary operation 111001 + 111001?",
+          "rightAnswer": "1110010",
+          "wrongAnswers": [
+            "0101010",
+            "0000001",
+            "1110000"
+          ],
+          "subtopic": "Binary arithmetics"
+        }, {
+          "question": "An advantage of the two’s complement scheme for negative numbers is:",
+          "rightAnswer": "there is only one representation of zero",
+          "wrongAnswers": [
+            "any number of bits can be used",
+            "the precision is very high",
+            "the set of representable numbers is very large"
+          ],
+          "subtopic": "Binary arithmetics"
+        }, {
+          "question": "Which is the two’s complement representation of the number -10, using 8 bits?",
+          "rightAnswer": "11110110",
+          "wrongAnswers": [
+            "00001010",
+            "11100111",
+            "10101010"
+          ],
+          "subtopic": "Binary arithmetics"
+        }, {
+          "question": "In the floating-point IEEE 754 format:",
+          "rightAnswer": "the sign bit is 0 for positive numbers",
+          "wrongAnswers": [
+            "there is more than one sign bit",
+            "the sign bit is 1 for positive numbers",
+            "the sign bit is either 1 or 0 depending on whether the mantissa is even or odd"
+          ],
+          "subtopic": "Binary arithmetics"
+        }, {
+          "question": "Which is the result of the binary operation 111000 + 000111?",
+          "rightAnswer": "111111",
+          "wrongAnswers": [
+            "010101",
+            "000000",
+            "111000"
+          ],
+          "subtopic": "Binary arithmetics"
+        }, {
+          "question": "Which is the two’s complement representation of the number -42, using 8 bits?",
+          "rightAnswer": "11010110",
+          "wrongAnswers": [
+            "00101010",
+            "11100111",
+            "10101010"
+          ],
+          "subtopic": "Binary arithmetics"
+        }, {
+          "question": "In the two’s complement encoding for negative numbers:",,,
+          "rightAnswer": "there is only one representation of zero",
+          "wrongAnswers": [
+            "even numbers are represented better",
+            "very high precision is achieved",
+            "one needs two times the number of bits"
+          ],
+          "subtopic": "Binary arithmetics"
+        }, {
+          "question": "In the floating-point IEEE 754 format:",
+          "rightAnswer": "the distance between two consecutive numbers is variable",
+          "wrongAnswers": [
+            "the distance between two consecutive numbers is constants",
+            "there is only one representation of the number zero",
+            "there is no way to represent the concept of infinity"
+          ],
+          "subtopic": "Binary arithmetics"
+        }
+        ],
+      "topic": "Computer System Architecture"
+    }, {
+          "subtopic": "Logic gates and boolean algebra",
+          "questions": [
+            {
+              "question": "If A=0 e B=0, which is the result of the Boolean operations A AND B, A OR B, and A XOR B?",
+              "rightAnswer": "0, 0, 0",
+              "wrongAnswers": [
+                "1, 0, 1",
+                "0, 1, 0",
+                "1, 1, 1"
+              ],
+              "subtopic": "Logic gates and boolean algebra"
+            }, {
+              "question": "Which of these combinations of gates can be used to build a Set-Reset flip-flop?",
+              "rightAnswer": "two NAND gates",
+              "wrongAnswers": [
+                "two AND gates",
+                "two XOR gates",
+                "an OR gate and an AND gate"
+              ],
+              "subtopic": "Logic gates and boolean algebra"
+            }, {
+              "question": "If A=0 e B=1, which is the result of the Boolean operations A NAND B, A NOR B, and A XOR B?",
+              "rightAnswer": "1, 0, 1",
+              "wrongAnswers": [
+                "1, 1, 0",
+                "0, 1, 0",
+                "1, 1, 1"
+              ],
+              "subtopic": "Logic gates and boolean algebra"
+            }, {
+              "question": "In a Set-Reset flip-flop built with NOR gates, when S=0 and R=0, the circuit:",
+              "rightAnswer": "stays in the memory configuration",
+              "wrongAnswers": [
+                "gives output 0",
+                "has unpredictable behavior",
+                "gives output 1"
+              ],
+              "subtopic": "Logic gates and boolean algebra"
+            }
+          ],
+      "topic": "Computer System Architecture"
+        }, {
+      "subtopic": "Sequential and Combinatorial circuits",
+      "questions": [
+        {
+          "question": "A Set-Reset flip-flop has the purpose of:",
+          "rightAnswer": "memorizing one bit of information",
+          "wrongAnswers": [
+            "setting or resetting an external circuit",
+            "memorizing a word of N bits",
+            "generating a clock signal"
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
+        }, {
+          "question": "A counter is:",
+          "rightAnswer": "a sequential circuit whose output increments at each clock cycle",
+          "wrongAnswers": [
+            "a combinatorial circuit that counts the number of 1s in the inputs",
+            "a combinatorial circuit that counts the number of 0s in the inputs",
+            "a sequential circuit that counts the number of 1s in the inputs"
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
+        }, {
+          "question": "A shift register is:",
+          "rightAnswer": "a sequential circuit whose output shifts to the right or to the left at each clock cycle",
+          "wrongAnswers": [
+            "a combinatorial circuit that registers user inputs",
+            "a combinatorial circuit that outputs a shifted version of the input",
+            "a sequential circuit whose output is registered in different ways at each clock cycle"
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
+        }, {
+          "question": "In a pipelined CPU architecture, performance can degrade if:",
+          "rightAnswer": "the jumps are not correctly predicted",
+          "wrongAnswers": [
+            "there are too many instructions to execute at once",
+            "the ALU is given too large numbers as inputs",
+            "the registers are full"
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
+        }, {
+          "question": "In a superscalar CPU architecture, performance can degrade if:",
+          "rightAnswer": "there are too many dependencies between the instructions",
+          "wrongAnswers": [
+            "there are not enough registers to keep all the needed temporary values",
+            "there are only a few dependencies between the instructions",
+            "the instructions do not access memory often enough"
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
+        }, {
+          "question": "The  cache memory is very effective also because of:",
+          "rightAnswer": "the transitions of the clock signal synchronize all the operations",
+          "wrongAnswers": [
+            "there are multiple clock signals that have to be synchronized together",
+            "devices do not have to synchronize their access to the bus",
+            "synchronization of devices happens automatically"
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
+        }, {
+          "question": "The direct memory access (DMA) mechanism:",
+          "rightAnswer": "allows peripherals to directly access main memory without the CPU",
+          "wrongAnswers": [
+            "allows the CPU to directly access main memory without the bus",
+            "allows main memory to directly access peripherals",
+            "allows main memory to directly access the CPU registers"
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
+        }, {
+          "question": "In a pipelined CPU architecture, performance increases when:",
+          "rightAnswer": "the jumps are correctly predicted",
+          "wrongAnswers": [
+            "there are only a few instructions to execute at once",
+            "the ALU is given small numbers as inputs",
+            "only a few registers are used"
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
+        }, {
+          "question": "In a superscalar CPU architecture, performance increases when:",
+          "rightAnswer": "there are only few dependencies between the instructions",
+          "wrongAnswers": [
+            "there are enough registers to keep all the needed temporary values",
+            "there are too many dependencies between the instructions",
+            "the instructions access memory very often"
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
+        }, {
+          "question": "A dynamic memory is:",
+          "rightAnswer": "a memory made of capacitors, and it needs to be refreshed periodically",
+          "wrongAnswers": [
+            "a memory that can be written many times",
+            "a memory made of flip flops, and it does not need to be refreshed",
+            "a memory used to store information that changes frequently"
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
+        }, {
+          "question": "The cache memory is very especially effective when:",
+          "rightAnswer": "nearby data are accessed together",
+          "wrongAnswers": [
+            "the CPU frequency is relatively low",
+            "the bandwidth of the bus is large enough",
+            "main memory is built with similar technologies"
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
+        }
+      ],
+      "topic": "Computer System Architecture"
+    }, {
+      "subtopic": "The BUS",
+      "questions": [
+        {
+          "question": "In  the old PCI bus:",
+          "rightAnswer": "all the devices were limited by the set 66MHz clock frequency",
+          "wrongAnswers": [
+            "there are multiple clock signals that have to be synchronized together",
+            "devices do not have to synchronize their access to the bus",
+            "synchronization of devices happens automatically"
+          ]
+        }, {
+          "question": "In an asynchronous bus:",
+          "rightAnswer": "synchronization of devices happens without a central clock signal",
+          "wrongAnswers": [
+            "the transitions of the clock signal synchronize all the operations",
+            "there are multiple clock signals that have to be synchronized together",
+            "devices do not have to synchronize their access to the bus"
+          ],
+          "subtopic": "The BUS"
+        }, {
+          "question": "In the PCI-Express bus:",
+          "rightAnswer": "there is no central clock signal",
+          "wrongAnswers": [
+            "all the devices are limited to the same clock frequency",
+            "the clock frequency is chosen by the operating system",
+            "the data lines connecting the devices to the host are parallel"
+          ],
+          "subtopic": "The BUS"
+        }, {
+          "question": "With the interrupt I/O mechanism:",
+          "rightAnswer": "the CPU interrupts the control flow when I/O is ready",
+          "wrongAnswers": [
+            "the CPU waits for I/O operations",
+            "the CPU interrupts the control flow more frequently",
+            "the CPU interrupts the control flow at each instruction"
+          ],
+          "subtopic": "The BUS"
+        }
+      ],
+      "topic": "Computer System Architecture"
+    }
+      ]
+    }
