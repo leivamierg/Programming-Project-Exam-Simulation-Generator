@@ -1,5 +1,7 @@
 package it.unibz.app;
 
+import it.unibz.controller.Controller;
+
 /**
  * Hello world!
  *
@@ -8,6 +10,8 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        ModelInt model = new ModelImpl();
+        Controller controller = new Controller(model);
+        controller.elaborateArgs(args);
     }
 }

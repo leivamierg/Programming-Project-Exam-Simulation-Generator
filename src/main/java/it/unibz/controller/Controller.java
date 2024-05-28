@@ -43,9 +43,4 @@ public class Controller {
                 break;
         }
     }
-
-    public static void main(String[] args) {
-        Controller controller = new Controller(model);
-        controller.elaborateArgs(args);
-    }
 }
