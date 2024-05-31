@@ -29,9 +29,9 @@ public interface Subtopic {
 
     List<Question> getQuestions();
 
-    List<Question> getAvailableQuestions();
+    List<Question> getAvailableQuestions();// Questions whose priority variable is not 0
 
-    List<Question> getWrongAnsweredQuestions();
+    // List<Question> getWrongAnsweredQuestions();//might delete it
 
     // other methods
     /**
@@ -44,15 +44,16 @@ public interface Subtopic {
 
     /**
      * Updates the availableQuestions attribute, containing Question objects with a
-     * low priority
+     * priority attribute which is not 0
      */
-    public void updateAvbQuestions();
+    // public void updateAvbQuestions(); TODO
 
     /**
      * Updates the availableQuestions attribute, containing Question objects with a
      * high priority
      */
-    public void updateWrongAnsweredQuestions();
+
+    // public void updateWrongAnsweredQuestions();//
 
     public String toString();
 }

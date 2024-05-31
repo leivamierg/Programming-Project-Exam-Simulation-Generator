@@ -1,5 +1,7 @@
 package it.unibz.app;
 
+import java.util.List;
+
 public interface Question {
     // setters
     /**
@@ -25,15 +27,23 @@ public interface Question {
      * @param wrongAnswers a 3 components array containing wrong answers to the
      *                     questionSatement
      */
-    void setWrongAnswers(String[] wrongAnswers);
+    void setWrongAnswers(List<String> wrongAnswers);
 
     /**
      * 
      * @param WasAnsweredRight a boolean value specifying if the question was
      *                         answered right or not
      *                         the last time it was shown on a simulation
+     * 
+     *                         void setWasAnsweredRight(boolean WasAnsweredRight);
      */
-    void setWasAnsweredRight(boolean WasAnsweredRight);
+
+    /**
+     * 
+     * @param priorityLevel integer which denotes how likely is the question to be
+     *                      picked on the next simulation
+     */
+    void setPriorityLevel(int priorityLevel);
 
     // getters
 
@@ -43,15 +53,18 @@ public interface Question {
 
     String getRightAnswer();
 
-    String[] getWrongAnswers();
+    List<String> getWrongAnswers();
 
-    boolean getWasAnsweredRight();
+    /* boolean getWasAnsweredRight();********* */
+
+    int getPriorityLevel();
 
     // other methods
+    List<String> shuffle();
+
     /**
-     * Updates the priority value of the current Question object
+     * @return a list of the 4 possible answers shuffled in a random order
      */
-    void updatePriority();
 
     String toString();
 

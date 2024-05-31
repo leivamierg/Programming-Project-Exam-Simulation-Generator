@@ -24,6 +24,8 @@ public interface Topic {
 
     List<Subtopic> getSubtopics();
 
-    // toString
+    // toString and others
     public String toString();
+
+    public void addSubTopic(Subtopic subtopic);// * */
 }
