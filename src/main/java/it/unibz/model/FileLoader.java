@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,21 +20,13 @@ public class FileLoader implements FileLoaderInt {
     public Topic loadFile(String fileName) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        Topic topic;
-        try {
-            topic = mapper.readValue(new File(fileName), Topic.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return mapper.readValue(new File(fileName), Topic.class);
     }
     // loadBank
     @Override
-    public List<Topic> loadBank(String bankPath) {
-        try {
+    public List<Topic> loadBank(String bankPath) throws NullPointerException {
             List<String> fileNames = new ArrayList<>();
-
             File folder = new File(bankPath);
-
             for (File file : folder.listFiles()) {
                 if (file.getName().endsWith(".json"))
                     fileNames.add(file.getName());
@@ -46,9 +37,6 @@ public class FileLoader implements FileLoaderInt {
             }
             topics.addAll(bank);
             return bank;
-        } catch (NullPointerException e) {
-            return null;
-        }
     }
 
     // getTopics
