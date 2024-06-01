@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import static it.unibz.model.TopicUtils.topic1_CSA_FL;
-import static it.unibz.model.TopicUtils.topic2_LA_FL;
+import static it.unibz.utils.TopicUtils.topic1_CSA_FL;
+import static it.unibz.utils.TopicUtils.topic2_LA_FL;
 
 
 /**
