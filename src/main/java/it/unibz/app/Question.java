@@ -1,42 +1,41 @@
 package it.unibz.app;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Question {
     // setters
     /**
      * 
-     * @param subtopic the Subtopic object containing the current Question
+     * @param subtopic the name of the Subtopic object containing the current
+     *                 Question
      */
-    void setSubtopic(Subtopic subtopic);
+    // void setSubtopic(String subtopic);
+
+    /**
+     * 
+     * @param subtopicReference reference to the apparteining subtopic
+     */
+    // void setSubtopicReference(Subtopic subtopicReference);// TODO
 
     /**
      * 
      * @param statement the String which can be understood as the question itself
      */
-    void setQuestionStatement(String statement);
+    // void setQuestionStatement(String statement);
 
     /**
      * 
      * @param rightAnswer the correct answer to the questionStatement
      */
-    void setRightAnswer(String rightAnswer);
+    // void setRightAnswer(String rightAnswer);
 
     /**
      * 
      * @param wrongAnswers a 3 components array containing wrong answers to the
      *                     questionSatement
      */
-    void setWrongAnswers(List<String> wrongAnswers);
-
-    /**
-     * 
-     * @param WasAnsweredRight a boolean value specifying if the question was
-     *                         answered right or not
-     *                         the last time it was shown on a simulation
-     * 
-     *                         void setWasAnsweredRight(boolean WasAnsweredRight);
-     */
+    // void setWrongAnswers(List<String> wrongAnswers);
 
     /**
      * 
@@ -47,7 +46,9 @@ public interface Question {
 
     // getters
 
-    Subtopic getSubtopic();
+    String getSubtopic();
+
+    Subtopic getSubtopicReference();
 
     String getQuestionStatement();
 
@@ -55,12 +56,10 @@ public interface Question {
 
     List<String> getWrongAnswers();
 
-    /* boolean getWasAnsweredRight();********* */
-
     int getPriorityLevel();
 
     // other methods
-    List<String> shuffle();
+    Map<String, Character> getShuffleMap();
 
     /**
      * @return a list of the 4 possible answers shuffled in a random order

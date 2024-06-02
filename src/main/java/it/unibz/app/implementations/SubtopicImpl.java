@@ -12,12 +12,16 @@ import it.unibz.app.Subtopic;
 
 public class SubtopicImpl implements Subtopic {
     private String name;
-    private Topic topic;
+    private Topic topicReference;
+    private String topic;
     private List<Question> questions;
 
-    public SubtopicImpl(String name, Topic topic, List<Question> questions) {
+    // add topicReference as a name and as a reference
+
+    public SubtopicImpl(String name, Topic topicReference, List<Question> questions) {
         setName(name);
-        setTopic(topic);
+        setTopicReference(topicReference);
+        setTopic(topicReference.getName());
         setQuestions(questions);
     }
 
@@ -26,11 +30,15 @@ public class SubtopicImpl implements Subtopic {
         this.name = name;
     }
 
-    public void setTopic(Topic topic) {
+    private void setTopicReference(Topic topicReference) {
+        this.topicReference = topicReference;
+    }
+
+    private void setTopic(String topic) {
         this.topic = topic;
     }
 
-    public void setQuestions(List<Question> questions) {
+    private void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 
@@ -39,7 +47,11 @@ public class SubtopicImpl implements Subtopic {
         return this.name;
     }
 
-    public Topic getTopic() {
+    public Topic getTopicReference() {
+        return this.topicReference;
+    }
+
+    public String getTopic() {
         return this.topic;
     }
 
@@ -49,18 +61,19 @@ public class SubtopicImpl implements Subtopic {
 
     // toString and others
     public String toString() {
-        return "Subtopic: " + getName() + System.lineSeparator() + "Topic: " + getTopic().getName()
-                + System.lineSeparator() + "Questions: " + getQuestions();
-        // TODO
+        return "Subtopic: " + getName() + System.lineSeparator() + "Topic: " + getTopic()
+                + System.lineSeparator() + "Nr. questions: " + getQuestions().size();
     }
 
     public List<Question> getAvailableQuestions() {
         return getQuestions().stream().filter((q) -> (q.getPriorityLevel() > 0)).toList();
     }
 
-    public List<Question> pickQuestions(int n) {
-        if (n >= getQuestions().size()) {
-            return getQuestions();
+    public List<Question> pickQuestions(int n) throws IllegalArgumentException {
+        if (n > getAvailableQuestions().size()) {
+            throw new IllegalArgumentException();
+        } else if (n == getAvailableQuestions().size()) {
+            return getAvailableQuestions();
         } else {
             List<Question> copy = getAvailableQuestions();
             Collections.sort(copy, new QuestionPriorityComparator());// gets the most prioritized at the start
@@ -72,5 +85,9 @@ public class SubtopicImpl implements Subtopic {
 
             return returnList;
         }
+    }
+
+    public void addQuestion(Question question) {
+        getQuestions().add(question);
     }
 }

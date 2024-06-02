@@ -2,7 +2,10 @@ package it.unibz.app.implementations;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import it.unibz.app.Question;
 import it.unibz.app.Subtopic;
@@ -11,34 +14,40 @@ public class QuestionImpl implements Question {
     private String questionStatement;
     private String rightAnswer;
     private List<String> wrongAnswers;
-    private Subtopic subtopic;
+    private String subtopic;
+    private Subtopic subtopicReference;
     private int priorityLevel;
 
-    public QuestionImpl(String questionStatement, String rightAnswer, List<String> wrongAnswers, Subtopic subtopic,
-            int priorityLevel) {
+    public QuestionImpl(String questionStatement, String rightAnswer, List<String> wrongAnswers,
+            Subtopic subtopicReference) {
         setQuestionStatement(questionStatement);
         setRightAnswer(rightAnswer);
         setWrongAnswers(wrongAnswers);
-        setSubtopic(subtopic);
-        setPriorityLevel(priorityLevel);// might need a starting value of 1 or so
+        setSubtopic(subtopicReference.getName());
+        setSubtopicReference(subtopicReference);
+        setPriorityLevel(1);// starts at 1 by default
     }
 
     // setters
     // override????
-    public void setQuestionStatement(String questionStatement) {
+    private void setQuestionStatement(String questionStatement) {
         this.questionStatement = questionStatement;
     }
 
-    public void setRightAnswer(String rightAnswer) {
+    private void setRightAnswer(String rightAnswer) {
         this.rightAnswer = rightAnswer;
     }
 
-    public void setWrongAnswers(List<String> wrongAnswers) {
+    private void setWrongAnswers(List<String> wrongAnswers) {
         this.wrongAnswers = wrongAnswers;
     }
 
-    public void setSubtopic(Subtopic subtopic) {
+    private void setSubtopic(String subtopic) {
         this.subtopic = subtopic;
+    }
+
+    private void setSubtopicReference(Subtopic subtopicReference) {
+        this.subtopicReference = subtopicReference;
     }
 
     public void setPriorityLevel(int priorityLevel) {
@@ -58,8 +67,12 @@ public class QuestionImpl implements Question {
         return this.wrongAnswers;
     }
 
-    public Subtopic getSubtopic() {
+    public String getSubtopic() {
         return this.subtopic;
+    }
+
+    public Subtopic getSubtopicReference() {
+        return this.subtopicReference;
     }
 
     public int getPriorityLevel() {
@@ -69,14 +82,30 @@ public class QuestionImpl implements Question {
     // toString and others
     public String toString() {
         return "Question: " + getQuestionStatement() + System.lineSeparator() + "Right answer: " + getRightAnswer()
-                + System.lineSeparator() + "Wrong answers: " + getWrongAnswers() + System.lineSeparator() + "Subtopic: "
-                + getSubtopic().getName() + System.lineSeparator() + "Priority: " + getPriorityLevel();
+                + System.lineSeparator() + "Wrong answers: " + returnWrongAnswers() + System.lineSeparator()
+                + "Subtopic: "
+                + getSubtopic() + System.lineSeparator() + "Priority: " + getPriorityLevel();
     }
 
-    public List<String> shuffle() {
-        List<String> copy = new ArrayList<>(getWrongAnswers());
-        copy.add(getRightAnswer());
-        Collections.shuffle(copy);
-        return copy;
+    private String returnWrongAnswers() {
+        return getWrongAnswers().stream().collect(Collectors.joining("; "));
+    }
+
+    public Map<String, Character> getShuffleMap() {
+        List<String> everyQuestionList = new ArrayList<>(getWrongAnswers());
+        everyQuestionList.add(getRightAnswer());
+        Collections.shuffle(everyQuestionList);
+        Map<String, Character> shufflemap = new HashMap<>();
+
+        shufflemap.put(everyQuestionList.get(0), 'A');
+        shufflemap.put(everyQuestionList.get(1), 'B');
+        shufflemap.put(everyQuestionList.get(2), 'C');
+        shufflemap.put(everyQuestionList.get(3), 'D');
+
+        return shufflemap;
+    }
+
+    public char getCorrectAnswerLabel(Map<String, Character> shuffleMap) {
+        return shuffleMap.get(getRightAnswer());
     }
 }

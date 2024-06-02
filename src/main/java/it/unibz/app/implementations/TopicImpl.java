@@ -22,8 +22,7 @@ public class TopicImpl implements Topic {
         this.name = name;
     }
 
-    @Override
-    public void setSubtopics(List<Subtopic> subtopics) {
+    private void setSubtopics(List<Subtopic> subtopics) {
         this.subtopics = subtopics;
     }
 
@@ -41,9 +40,8 @@ public class TopicImpl implements Topic {
     // other
     @Override
     public String toString() {
-        return "Name: " + getName() + System.lineSeparator() + "Subtopics: " + getSubtopics();// might need to correct
-                                                                                              // it
-    }// TODO
+        return "Name: " + getName() + System.lineSeparator() + "Nr. subtopics: " + getSubtopics().size();//
+    }
 
     public void addSubTopic(Subtopic subtopic) {
         getSubtopics().add(subtopic);
