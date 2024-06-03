@@ -2,6 +2,8 @@ package it.unibz.model;
 
 import java.util.List;
 
+import it.unibz.app.Topic;
+
 public interface FileLoadingInt {
     // methods
     /**
