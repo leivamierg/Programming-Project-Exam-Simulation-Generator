@@ -2,7 +2,9 @@ package it.unibz.app;
 
 import java.util.List;
 
-public interface Topic {
+import it.unibz.app.implementations.Subtopic;
+
+public interface TopicInt {
     // :p
     // setters
     /**
@@ -10,7 +12,7 @@ public interface Topic {
      * 
      * @param name the given name of the Topic
      */
-    /* public */ void setName(String name);
+    /* public */ void setTopicName(String topicName);
 
     /**
      * Sets the contained subtopics of the topic to a list of subtopis
@@ -20,7 +22,7 @@ public interface Topic {
     /* public void setSubtopics(List<Subtopic> subtopics);// TODO: private */
 
     // getters
-    String getName();
+    String getTopicName();
 
     List<Subtopic> getSubtopics();
 

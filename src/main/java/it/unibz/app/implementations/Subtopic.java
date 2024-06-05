@@ -1,41 +1,47 @@
 package it.unibz.app.implementations;
 
-import it.unibz.app.Topic;
 import it.unibz.app.comparators.QuestionPriorityComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import it.unibz.app.Question;
-import it.unibz.app.Subtopic;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SubtopicImpl implements Subtopic {
-    private String name;
+import it.unibz.app.SubtopicInt;
+
+public class Subtopic implements SubtopicInt {
+    private String subtopicName;
     private Topic topicReference;
-    private String topic;
+    private String topicName;
     private List<Question> questions;
 
-    // add topicReference as a name and as a reference
-
-    public SubtopicImpl(String name, Topic topicReference, List<Question> questions) {
-        setName(name);
-        setTopicReference(topicReference);
-        setTopic(topicReference.getName());
+    @JsonCreator
+    public Subtopic(@JsonProperty("subtopicName") String subtopicName,
+            @JsonProperty("questions") List<Question> questions) {
+        setSubtopicName(subtopicName);
+        // setTopicReference(topicReference);TODO: add a loop in the Topic class
+        setTopicName(topicReference.getTopicName());// TODO: might not work :p
         setQuestions(questions);
+
+        for (Question question : questions) {
+            question.setSubtopicReference(this);
+        }
+
     }
 
     // setters
-    public void setName(String name) {
-        this.name = name;
+    public void setSubtopicName(String subtopicName) {
+        this.subtopicName = subtopicName;
     }
 
-    private void setTopicReference(Topic topicReference) {
+    void setTopicReference(Topic topicReference) {
         this.topicReference = topicReference;
     }
 
-    private void setTopic(String topic) {
-        this.topic = topic;
+    private void setTopicName(String topicName) {
+        this.topicName = topicName;
     }
 
     private void setQuestions(List<Question> questions) {
@@ -43,17 +49,19 @@ public class SubtopicImpl implements Subtopic {
     }
 
     // getters
-    public String getName() {
-        return this.name;
+    public String getSubtopicName() {
+        return this.subtopicName;
     }
 
     public Topic getTopicReference() {
         return this.topicReference;
     }
 
-    public String getTopic() {
-        return this.topic;
-    }
+    /*
+     * public String getTopicName() {
+     * return this.topicName;
+     * }
+     */
 
     public List<Question> getQuestions() {
         return this.questions;
@@ -61,7 +69,8 @@ public class SubtopicImpl implements Subtopic {
 
     // toString and others
     public String toString() {
-        return "Subtopic: " + getName() + System.lineSeparator() + "Topic: " + getTopic()
+        return "Subtopic: " + getSubtopicName() + System.lineSeparator() + "Topic: "
+                + getTopicReference().getTopicName()
                 + System.lineSeparator() + "Nr. questions: " + getQuestions().size();
     }
 
@@ -71,7 +80,11 @@ public class SubtopicImpl implements Subtopic {
 
     public List<Question> pickQuestions(int n) throws IllegalArgumentException {
         if (n > getAvailableQuestions().size()) {
-            throw new IllegalArgumentException();
+            System.err.println(
+                    "Attention: the number of questions requested is greater than the number of available question");
+            System.err.println(
+                    "Only " + getAvailableQuestions().size() + " questions were added to the current simulation");
+            return getAvailableQuestions();
         } else if (n == getAvailableQuestions().size()) {
             return getAvailableQuestions();
         } else {

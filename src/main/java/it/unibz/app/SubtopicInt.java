@@ -2,13 +2,16 @@ package it.unibz.app;
 
 import java.util.List;
 
-public interface Subtopic {
+import it.unibz.app.implementations.Question;
+import it.unibz.app.implementations.Topic;
+
+public interface SubtopicInt {
     // setters
     /**
      * 
      * @param name the name attribute of current the Subtopic
      */
-    void setName(String name);
+    void setSubtopicName(String name);
 
     /**
      * 
@@ -29,11 +32,11 @@ public interface Subtopic {
     // void setQuestions(List<Question> questions);// TODO: private
 
     // getters
-    String getName();
+    String getSubtopicName();
 
     Topic getTopicReference();
 
-    String getTopic();
+    // String getTopicName();
 
     List<Question> getQuestions();
 

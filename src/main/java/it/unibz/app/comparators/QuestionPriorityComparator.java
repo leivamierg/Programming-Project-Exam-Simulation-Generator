@@ -2,11 +2,11 @@ package it.unibz.app.comparators;
 
 import java.util.Comparator;
 
-import it.unibz.app.Question;
+import it.unibz.app.QuestionInt;
 
-public class QuestionPriorityComparator implements Comparator<Question> {
+public class QuestionPriorityComparator implements Comparator<QuestionInt> {
     @Override
-    public int compare(Question q1, Question q2) {
+    public int compare(QuestionInt q1, QuestionInt q2) {
         return Integer.compare(q1.getPriorityLevel(), q2.getPriorityLevel());// might be wrong
     }
 }

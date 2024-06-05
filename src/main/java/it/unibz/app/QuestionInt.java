@@ -3,7 +3,9 @@ package it.unibz.app;
 import java.util.List;
 import java.util.Map;
 
-public interface Question {
+import it.unibz.app.implementations.Subtopic;
+
+public interface QuestionInt {
     // setters
     /**
      * 

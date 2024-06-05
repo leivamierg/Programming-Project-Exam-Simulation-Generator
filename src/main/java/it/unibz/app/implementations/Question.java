@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import it.unibz.app.Question;
-import it.unibz.app.Subtopic;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class QuestionImpl implements Question {
+import it.unibz.app.QuestionInt;
+
+public class Question implements QuestionInt {
     private String questionStatement;
     private String rightAnswer;
     private List<String> wrongAnswers;
@@ -18,13 +20,16 @@ public class QuestionImpl implements Question {
     private Subtopic subtopicReference;
     private int priorityLevel;
 
-    public QuestionImpl(String questionStatement, String rightAnswer, List<String> wrongAnswers,
-            Subtopic subtopicReference) {
+    @JsonCreator
+    public Question(@JsonProperty("questionStatement") String questionStatement,
+            @JsonProperty("rightAnswer") String rightAnswer,
+            @JsonProperty("wrongAnswers") List<String> wrongAnswers
+    /* , Subtopic subtopicReference */) {
         setQuestionStatement(questionStatement);
         setRightAnswer(rightAnswer);
         setWrongAnswers(wrongAnswers);
-        setSubtopic(subtopicReference.getName());
-        setSubtopicReference(subtopicReference);
+        setSubtopic(subtopicReference.getSubtopicName());
+        // setSubtopicReference(subtopicReference);
         setPriorityLevel(1);// starts at 1 by default
     }
 
@@ -46,7 +51,7 @@ public class QuestionImpl implements Question {
         this.subtopic = subtopic;
     }
 
-    private void setSubtopicReference(Subtopic subtopicReference) {
+    void setSubtopicReference(Subtopic subtopicReference) {
         this.subtopicReference = subtopicReference;
     }
 
