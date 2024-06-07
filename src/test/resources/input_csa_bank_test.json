@@ -1,33 +1,31 @@
 {
-  "topic": "Computer System Architecture",
+  "topicName": "Computer System Architecture",
   "subtopics": [
     {
-      "subtopic": "Binary arithmetics",
+      "subtopicName": "Binary arithmetics",
       "questions": [
         {
-          "question": "What happens to the binary representation of a number when it gets multiplied by 2?",
+          "questionStatement": "What happens to the binary representation of a number when it gets multiplied by 2?",
           "rightAnswer": "The bits get shifted to the left",
           "wrongAnswers": [
             "The bits get flipped",
             "The bits get shifted to the right",
             "The bits are shuffled"
-          ],
-          "subtopic": "Binary arithmetics"
+          ]
         }
       ]
     },
     {
-      "subtopic": "Sequential and Combinatorial circuits",
+      "subtopicName": "Sequential and Combinatorial circuits",
       "questions": [
         {
-          "question": "A Set-Reset flip-flop has the purpose of:",
+          "questionStatement": "A Set-Reset flip-flop has the purpose of:",
           "rightAnswer": "memorizing one bit of information",
           "wrongAnswers": [
             "setting or resetting an external circuit",
             "memorizing a word of N bits",
             "generating a clock signal"
-          ],
-          "subtopic": "Sequential and Combinatorial circuits"
+          ]
         }
       ]
     }

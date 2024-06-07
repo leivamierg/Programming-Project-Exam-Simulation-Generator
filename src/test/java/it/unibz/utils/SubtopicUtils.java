@@ -1,11 +1,8 @@
 package it.unibz.utils;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 
-=======
 import static it.unibz.utils.QuestionUtils.*;
->>>>>>> simulation
 public class SubtopicUtils {
     // Subtopic 1.1 CSA FL -> first topic (CSA) - first subtopic (Binary Arithmetic) -> for FileLoader
     // Subtopic 1.2 CSA FL -> first topic (CSA) - second subtopic (Sequential and Combinatorial circuits) -> for FileLoader

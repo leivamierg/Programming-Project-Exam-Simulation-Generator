@@ -2,11 +2,8 @@ package it.unibz.utils;
 
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-=======
 import static it.unibz.utils.SubtopicUtils.*;
 
->>>>>>> simulation
 public class TopicUtils {
     // Topic 1 CSA FL -> first topic (CSA) -> for FileLoader
     // Topic 2 LA FL -> second topic (LA) -> for FileLoader

@@ -1,5 +1,6 @@
 package it.unibz.model;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -21,13 +22,15 @@ public class FileLoader implements FileLoaderInt {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         return mapper.readValue(new File(fileName), Topic.class);
+
     }
     // loadBank
     @Override
     public List<Topic> loadBank(String bankPath) throws NullPointerException {
             List<String> fileNames = new ArrayList<>();
             File folder = new File(bankPath);
-            for (File file : folder.listFiles()) {
+            List<File> files = List.of(folder.listFiles());
+            for (File file : files) {
                 if (file.getName().endsWith(".json"))
                     fileNames.add(file.getName());
             }
