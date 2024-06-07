@@ -1,7 +1,11 @@
 package it.unibz.utils;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 
+=======
+import static it.unibz.utils.QuestionUtils.*;
+>>>>>>> simulation
 public class SubtopicUtils {
     // Subtopic 1.1 CSA FL -> first topic (CSA) - first subtopic (Binary Arithmetic) -> for FileLoader
     // Subtopic 1.2 CSA FL -> first topic (CSA) - second subtopic (Sequential and Combinatorial circuits) -> for FileLoader
@@ -47,7 +51,7 @@ public class SubtopicUtils {
     // Subtopic 2.2 -> second topic - second subtopic
     // Subtopic 2.3 -> second topic - third subtopic
     // Subtopic 2.4 -> second topic - fourth subtopic
-
+    // Subtopic null -> null
     private static List<Question> questions2_1 = new ArrayList<>();
     questions2_1.add(question2_1_1);
     questions2_1.add(question2_1_2);
@@ -69,5 +73,5 @@ public class SubtopicUtils {
     questions2_4.add(question2_4_1);
     questions2_4.add(question2_4_2);
     public static Subtopic subtopic2_4 = new Subtopic("Subtopic 2.4", questions2_4);
-
+    public static Subtopic nullSubtopic = null;
 }

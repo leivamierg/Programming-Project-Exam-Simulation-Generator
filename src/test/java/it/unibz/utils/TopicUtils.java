@@ -2,6 +2,11 @@ package it.unibz.utils;
 
 import java.util.ArrayList;
 
+<<<<<<< HEAD
+=======
+import static it.unibz.utils.SubtopicUtils.*;
+
+>>>>>>> simulation
 public class TopicUtils {
     // Topic 1 CSA FL -> first topic (CSA) -> for FileLoader
     // Topic 2 LA FL -> second topic (LA) -> for FileLoader
@@ -17,6 +22,7 @@ public class TopicUtils {
 
     // Topic 1 -> first topic
     // Topic 2 -> second topic
+    // Topic null -> null;
     private static List<Subtopic> subtopics1 = new ArrayList<>();
     subtopics1.add(subtopic1_1);
     subtopics1.add(subtopic1_2);
@@ -29,4 +35,5 @@ public class TopicUtils {
     subtopics2.add(subtopic2_3);
     subtopics2.add(subtopic2_4);
     public static Topic topic2 = new Topic("Topic 2", subtopics2);
+    public static Topic nullTopic = null;
 }

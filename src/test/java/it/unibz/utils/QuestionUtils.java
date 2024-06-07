@@ -110,6 +110,7 @@ public class QuestionUtils {
 
     // Question 2.4.1 -> second topic - fourth subtopic - first question
     // Question 2.4.2 -> second topic - fourth subtopic - second question
+    // Question null -> null
     public static Question question2_4_1 = new Question("Question 2.4.1",
             "Right answer 2.4.1",
             new String[]{"Wrong answer 2.4.1.1", "Wrong answer 2.4.1.2", "Wrong answer 2.4.1.3"},
@@ -118,4 +119,5 @@ public class QuestionUtils {
             "Right answer 2.4.2",
             new String[]{"Wrong answer 2.4.2.1", "Wrong answer 2.4.2.2", "Wrong answer 2.4.2.3"},
             "Subtopic 2.4");
+    public static Question nullQuestion = null;
 }
