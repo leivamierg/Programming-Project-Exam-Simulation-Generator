@@ -65,6 +65,42 @@ public interface SimulationInt {
 
     /**
      *
+     * @param subtopic the input subtopic
+     * @return a list of correct questions for the input subtopic
+     */
+
+    List<Question> getSubtopicCorrectQuestions(Subtopic subtopic);
+
+    /**
+     *
+     * @param subtopic the input subtopic
+     * @return a list of wrong questions for the input subtopic
+     */
+
+    List<Question> getSubtopicWrongQuestions(Subtopic subtopic);
+    /**
+     *
+     * @return a list of wrong questions for the whole sim
+     */
+
+    List<Question> getAllWrongQuestions();
+
+    /**
+     *
+     * @return a list of correct questions for the whole sim
+     */
+
+    List<Question> getAllCorrectQuestions();
+
+    /**
+     *
+     * @return a list of non-selected question for the sim
+     */
+
+    List<Question> getNonSelectedQuestions();
+
+    /**
+     *
      * @param subtopic the subtopic you want to compute the stats on
      * @return a CorrectAnswersAndPercentage record which stores the number of correct answers and the percentage of the given subtopic
      * @throws IllegalArgumentException if the given subtopic doesn't exist
@@ -78,6 +114,12 @@ public interface SimulationInt {
      */
 
     CorrectAnswersAndPercentage computeSimStats();
+
+    /**
+     *
+     * @return a list of all questions (without the subtopic they belong to)
+     */
+    List<Question> getAllQuestions();
 
     /**
      *
@@ -97,4 +139,10 @@ public interface SimulationInt {
      * @return a map that stores the answer of every question
      */
     Map<Question, Character> getQuestionToAnswer();
+
+    /**
+     *
+     * @return a map mapping every question to its shuffled answers label (A, B, C, D)
+     */
+    Map<Question, Map<String, Character>> getQuestionToShuffledAnswers();
 }

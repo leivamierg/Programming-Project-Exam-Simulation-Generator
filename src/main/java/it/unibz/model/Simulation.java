@@ -1,28 +1,38 @@
 package it.unibz.model;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Simulation implements SimulationInt {
     // attributes
     private Map<Subtopic, List<Question>> subtopicToQuestions;
     private Map<Question, Character> questionToAnswer;
+    private Map<Question, Map<String, Character>> questionToShuffledAnswers;
     private Question currentQuestion;
     @Override
     public void select(Topic topic, int nrQuestionsPerSubtopic) throws NullPointerException {
             for (Subtopic subtopic : topic.getSubtopics()) {
-                List<Question> pickedQuestions = new ArrayList<>(new Set<>(subtopic.pickQuestions(nrQuestionsPerSubtopic)));
-                subtopicToQuestions.put(subtopic, pickedQuestions);
+                updateSubtopicToQuestions(subtopic);
             }
     }
     @Override
     public void select(List<Subtopic> subtopics, int nrQuestionsPerSubtopic) throws IllegalStateException, NullPointerException {
         if (!subtopics.isEmpty()) {
             for (Subtopic subtopic : subtopics) {
-                List<Question> pickedQuestions = new ArrayList<>(new Set<>(subtopic.pickQuestions(nrQuestionsPerSubtopic)));
-                subtopicToQuestions.put(subtopic, pickedQuestions);
+                updateSubtopicToQuestions(subtopic);
             }
         } else throw new IllegalStateException();
+    }
+
+    private void updateSubtopicToQuestions(Subtopic subtopic) {
+        List<Question> pickedQuestions = subtopic.pickQuestions(nrQuestionsPerSubtopic);
+        subtopicToQuestions.put(subtopic, pickedQuestions);
+        updateQuestionToShuffledAnswers(pickedQuestions);
+    }
+
+    private void updateQuestionToShuffledAnswers(List<Question> questions) {
+        for (Question question: questions) {
+            questionToShuffledAnswers.put(question, question.getShuffleMap());
+        }
     }
 
     @Override
@@ -31,12 +41,12 @@ public class Simulation implements SimulationInt {
     }
     @Override
     public void answer(char answer) throws IllegalArgumentException {
-        switch (answer) {
+        switch (Character.toUpperCase(answer)) {
             case 'A':
             case 'B':
             case 'C':
             case 'D':
-            case '-': questionToAnswer.put(currentQuestion, answer);
+            case '-': questionToAnswer.put(currentQuestion, Character.toUpperCase(answer));
                 break;
             default: throw new IllegalArgumentException();
         }
@@ -71,37 +81,54 @@ public class Simulation implements SimulationInt {
     @Override
     public String terminate() {
         // update all parameters
-        updatePriority();
+        updateNonSelectedQuestions();
         updateCorrectAndWrongQuestions();
         return computeResult();
 
     }
 
-    private void updatePriority() {
-        List<Question> allQuestions = getAllQuestions();
-        for (Question question : allQuestions) {
-            question.updatePriority();
-        }
+    private void updateNonSelectedQuestions() {
+        getNonSelectedQuestions().stream().
+                forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 1));
     }
 
     private void updateCorrectAndWrongQuestions() {
-        for (Subtopic subtopic : subtopicToQuestions.keySet()) {
-            subtopic.setCorrectQuestions(getSubtopicCorrectQuestions(subtopic));
-            subtopic.setWrongQuestions(getSubtopicWrongQuestions(subtopic));
-        }
+        // correct
+        getAllCorrectQuestions().stream().
+                forEach(q -> q.setPriorityLevel(0));
+        // wrong
+        getAllWrongQuestions().stream().
+                forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 2));
     }
 
+    @Override
+    public List<Question> getSubtopicCorrectQuestions(Subtopic subtopic) {
+        return getCorrect_WrongQuestions(subtopicToQuestions.get(subtopic), true);
+    }
 
+    @Override
+    public List<Question> getSubtopicWrongQuestions(Subtopic subtopic) {
+        return getCorrect_WrongQuestions(subtopicToQuestions.get(subtopic), false);
+    }
 
-    private List<Question> getSubtopicCorrectQuestions(Subtopic subtopic) {
-        return subtopicToQuestions.get(subtopic).stream().
-                filter(this::isCorrect).
+    @Override
+    public List<Question> getAllWrongQuestions() {
+        return getCorrect_WrongQuestions(getAllQuestions(), false);
+    }
+
+    @Override
+    public List<Question> getAllCorrectQuestions() {
+        return getCorrect_WrongQuestions(getAllQuestions(), true);
+    }
+    private List<Question> getCorrect_WrongQuestions(List<Question> questions, boolean corWrong) {
+        return questions.stream().
+                filter(q -> isCorrect(q) && corWrong).
                 toList();
     }
-
-    private List<Question> getSubtopicWrongQuestions(Subtopic subtopic) {
-        return subtopicToQuestions.get(subtopic).stream().
-                filter(q -> !isCorrect(q)).
+    @Override
+    public List<Question> getNonSelectedQuestions() {
+        return getAllQuestions().stream().
+                filter(q -> !getAllQuestions().contains(q)).
                 toList();
     }
 
@@ -145,9 +172,10 @@ public class Simulation implements SimulationInt {
     public boolean isCorrect(Question question) throws NullPointerException {
         if (questionToAnswer.get(question) == null)
             throw new NullPointerException();
-        return questionToAnswer.get(question) == question.getCorrectAnswerLabel();
+        return questionToAnswer.get(question) == question.getCorrectAnswerLabel(questionToShuffledAnswers);
     }
-    private List<Question> getAllQuestions() {
+    @Override
+    public List<Question> getAllQuestions() {
         return subtopicToQuestions.entrySet().stream().
                 flatMap(e -> e.getValue().stream()).
                 toList();
@@ -168,7 +196,16 @@ public class Simulation implements SimulationInt {
         return questionToAnswer;
     }
 
-    private void setCurrentQuestion(Question currentQuestion) {
+    @Override
+    public Map<Question, Map<String, Character>> getQuestionToShuffledAnswers() {
+        return questionToShuffledAnswers;
+    }
+
+    /**
+     * do not use this method, only for debug purposes
+     * @param currentQuestion the question you want to set as the current one
+     */
+    public void setCurrentQuestion(Question currentQuestion) {
         this.currentQuestion = currentQuestion;
     }
 
