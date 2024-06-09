@@ -1,6 +1,5 @@
 package it.unibz.model.implementations;
 
-import it.unibz.model.CorrectAnswersAndPercentage;
 import it.unibz.model.interfaces.SimulationInt;
 
 import java.util.*;

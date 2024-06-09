@@ -1,6 +1,6 @@
 package it.unibz.model.interfaces;
 
-import it.unibz.model.CorrectAnswersAndPercentage;
+import it.unibz.model.implementations.CorrectAnswersAndPercentage;
 
 import java.util.List;
 import java.util.Map;
