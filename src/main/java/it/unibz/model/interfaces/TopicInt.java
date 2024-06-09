@@ -1,8 +1,8 @@
-package it.unibz.app;
+package it.unibz.model.interfaces;
 
 import java.util.Set;
 
-import it.unibz.app.implementations.Subtopic;
+import it.unibz.model.implementations.Subtopic;
 
 public interface TopicInt {
     // :p

@@ -1,8 +1,6 @@
 package it.unibz.controller;
 
-import it.unibz.model.ModelInt;
-
-import java.util.Scanner;
+import it.unibz.model.interfaces.ModelInt;
 
 public class Controller {
 

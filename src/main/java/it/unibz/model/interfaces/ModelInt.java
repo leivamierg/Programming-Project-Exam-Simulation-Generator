@@ -1,4 +1,4 @@
-package it.unibz.model;
+package it.unibz.model.interfaces;
 
 public interface ModelInt {
 
