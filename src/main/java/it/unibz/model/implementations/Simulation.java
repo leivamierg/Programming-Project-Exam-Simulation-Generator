@@ -1,4 +1,6 @@
-package it.unibz.model;
+package it.unibz.model.implementations;
+
+import it.unibz.model.interfaces.SimulationInt;
 
 import java.util.*;
 

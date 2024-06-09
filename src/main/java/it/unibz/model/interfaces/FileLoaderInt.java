@@ -1,4 +1,4 @@
-package it.unibz.model;
+package it.unibz.model.interfaces;
 
 
 
@@ -9,7 +9,7 @@ public interface FileLoaderInt {
      * @param bankName path to the bank you want to load files from
      * @throws NullPointerException if the given bank doesn't exist
      */
-    List<Topic> loadBank(String bankName) throws NullPointerException;
+    Set<Topic> loadBank(String bankName) throws NullPointerException;
     /**
      * loads an input bank file -> transforms the input file into a Topic object
      * @param fileName path to the bank file you want to load
@@ -19,8 +19,8 @@ public interface FileLoaderInt {
 
     /**
      *
-     * @return a list of all available topics for the user
+     * @return a set of all available topics for the user
      */
-    List<Topic> getTopics();
+    Set<Topic> getTopics();
 
 }

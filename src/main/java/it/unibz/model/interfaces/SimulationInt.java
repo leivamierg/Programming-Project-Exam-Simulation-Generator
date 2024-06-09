@@ -1,6 +1,8 @@
-package it.unibz.model;
+package it.unibz.model.interfaces;
 
-import java.util.List;
+import it.unibz.model.implementations.CorrectAnswersAndPercentage;
+
+import java.util.Set;
 import java.util.Map;
 
 public interface SimulationInt {
@@ -29,7 +31,7 @@ public interface SimulationInt {
      * @throws NullPointerException if subtopics is null
      * @throws IllegalStateException if subtopics is empty
      */
-    void select(List<Subtopic> subtopics, int nrQuestionsPerSubtopic);
+    void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic);
 
     /**
      * starts the sim, thus initialize the current question to the first one
@@ -66,38 +68,38 @@ public interface SimulationInt {
     /**
      *
      * @param subtopic the input subtopic
-     * @return a list of correct questions for the input subtopic
+     * @return a set of correct questions for the input subtopic
      */
 
-    List<Question> getSubtopicCorrectQuestions(Subtopic subtopic);
+    Set<Question> getSubtopicCorrectQuestions(Subtopic subtopic);
 
     /**
      *
      * @param subtopic the input subtopic
-     * @return a list of wrong questions for the input subtopic
+     * @return a set of wrong questions for the input subtopic
      */
 
-    List<Question> getSubtopicWrongQuestions(Subtopic subtopic);
+    Set<Question> getSubtopicWrongQuestions(Subtopic subtopic);
     /**
      *
-     * @return a list of wrong questions for the whole sim
+     * @return a set of wrong questions for the whole sim
      */
 
-    List<Question> getAllWrongQuestions();
-
-    /**
-     *
-     * @return a list of correct questions for the whole sim
-     */
-
-    List<Question> getAllCorrectQuestions();
+    Set<Question> getAllWrongQuestions();
 
     /**
      *
-     * @return a list of non-selected question for the sim
+     * @return a set of correct questions for the whole sim
      */
 
-    List<Question> getNonSelectedQuestions();
+    Set<Question> getAllCorrectQuestions();
+
+    /**
+     *
+     * @return a set of non-selected question for the sim
+     */
+
+    Set<Question> getNonSelectedQuestions();
 
     /**
      *
@@ -117,15 +119,15 @@ public interface SimulationInt {
 
     /**
      *
-     * @return a list of all questions (without the subtopic they belong to)
+     * @return a set of all questions (without the subtopic they belong to)
      */
-    List<Question> getAllQuestions();
+    Set<Question> getAllQuestions();
 
     /**
      *
      * @return a map with all questions for each subtopic
      */
-    Map<Subtopic, List<Question>> getQuestionsPerSubtopic();
+    Map<Subtopic, Set<Question>> getQuestionsPerSubtopic();
 
     /**
      *

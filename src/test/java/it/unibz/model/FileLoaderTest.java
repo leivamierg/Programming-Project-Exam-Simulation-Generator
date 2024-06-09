@@ -1,10 +1,11 @@
 package it.unibz.model;
 
 
+import it.unibz.model.implementations.FileLoader;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import static it.unibz.utils.TopicUtils.topic1_CSA_FL;
 import static it.unibz.utils.TopicUtils.topic2_LA_FL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,8 +33,8 @@ public class FileLoaderTest {
     @Test
     public void loadBank() {
         FileLoader fileLoader = new FileLoader();
-        List<Topic> producedBank = fileLoader.loadBank(inputBank);
-        List<Topic> expectedBank = new ArrayList<>();
+        Set<Topic> producedBank = fileLoader.loadBank(inputBank);
+        Set<Topic> expectedBank = new HashSet<>();
         expectedBank.add(topic1_CSA_FL);
         expectedBank.add(topic2_LA_FL);
         assertEquals(expectedBank, producedBank);

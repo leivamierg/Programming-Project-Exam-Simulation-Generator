@@ -1,13 +1,15 @@
 package it.unibz.model;
 
+import it.unibz.model.implementations.CorrectAnswersAndPercentage;
+import it.unibz.model.implementations.Simulation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Set;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,13 +34,13 @@ public class SimulationTest {
 
     @Nested
     class SelectTest {
-        private Map<Subtopic, List<Question>> createExpectedSubtopicTo1QuestionFirstSim() {
-            Map<Subtopic, List<Question>> expected = new Map<Subtopic, List<Question>>();
-            List<Question> expectedQuestions1_1 = new ArrayList<>();
+        private Map<Subtopic, Set<Question>> createExpectedSubtopicTo1QuestionFirstSim() {
+            Map<Subtopic, Set<Question>> expected = new Map<Subtopic, Set<Question>>();
+            Set<Question> expectedQuestions1_1 = new HashSet<>();
             expectedQuestions1_1.add(question1_1_1);
-            List<Question> expectedQuestions1_2 = new ArrayList<>();
+            Set<Question> expectedQuestions1_2 = new HashSet<>();
             expectedQuestions1_2.add(question1_2_1);
-            List<Question> expectedQuestions1_3 = new ArrayList<>();
+            Set<Question> expectedQuestions1_3 = new HashSet<>();
             expectedQuestions1_3.add(question1_3_1);
             expected.put(subtopic1_1, expectedQuestions1_1);
             expected.put(subtopic1_2, expectedQuestions1_2);
@@ -46,13 +48,13 @@ public class SimulationTest {
             return expected;
         }
 
-        private Map<Subtopic, List<Question>> createExpectedSubtopicTo1QuestionSecondSim() {
-            Map<Subtopic, List<Question>> expected = new Map<Subtopic, List<Question>>();
-            List<Question> expectedQuestions1_1 = new ArrayList<>();
+        private Map<Subtopic, Set<Question>> createExpectedSubtopicTo1QuestionSecondSim() {
+            Map<Subtopic, Set<Question>> expected = new Map<Subtopic, Set<Question>>();
+            Set<Question> expectedQuestions1_1 = new HashSet<>();
             expectedQuestions1_1.add(question1_1_2);
-            List<Question> expectedQuestions1_2 = new ArrayList<>();
+            Set<Question> expectedQuestions1_2 = new HashSet<>();
             expectedQuestions1_2.add(question1_2_2);
-            List<Question> expectedQuestions1_3 = new ArrayList<>();
+            Set<Question> expectedQuestions1_3 = new HashSet<>();
             expectedQuestions1_3.add(question1_3_1);
             expected.put(subtopic1_1, expectedQuestions1_1);
             expected.put(subtopic1_2, expectedQuestions1_2);
@@ -69,7 +71,7 @@ public class SimulationTest {
         @DisplayName("Topic 1 at first sim: select(Topic) should return a map with first question for each subtopic")
         @Test
         void selectTopic1FirstSim() {
-            Map<Subtopic, List<Question>> expected = createExpectedSubtopicTo1QuestionFirstSim();
+            Map<Subtopic, Set<Question>> expected = createExpectedSubtopicTo1QuestionFirstSim();
             simulation.select(topic1, 1);
             assertEquals(expected, simulation.getQuestionsPerSubtopic());
         }
@@ -78,23 +80,23 @@ public class SimulationTest {
                 "first question for subtopic 3")
         @Test
         void selectTopic1SecondSim() {
-            Map<Subtopic, List<Question>> expected = createExpectedSubtopicTo1QuestionSecondSim();
+            Map<Subtopic, Set<Question>> expected = createExpectedSubtopicTo1QuestionSecondSim();
             updateParametersAfterFirstSim();
             simulation.select(topic1, 1);
             assertEquals(expected, simulation.getQuestionsPerSubtopic());
         }
 
-        @DisplayName("List of subtopics null: select(List<Subtopic>) should throw a NullPointerException")
+        @DisplayName("Set of subtopics null: select(Set<Subtopic>) should throw a NullPointerException")
         @Test
         void selectListSubtopicsNull() {
-            List<Subtopic> nullList = null;
+            Set<Subtopic> nullList = null;
             assertThrows(NullPointerException.class, simulation.select(nullList, 2));
         }
 
-        @DisplayName("Empty list of subtopics: select(List<Subtopic>) should throw an IllegalStateException")
+        @DisplayName("Empty Set of subtopics: select(Set<Subtopic>) should throw an IllegalStateException")
         @Test
         void selectListSubtopicNull() {
-            List<Subtopic> emptyList = new ArrayList<>();
+            Set<Subtopic> emptyList = new HashSet<>();
             assertThrows(IllegalStateException.class, simulation.select(emptyList, 2));
         }
     }
@@ -109,7 +111,7 @@ public class SimulationTest {
         @Test
         void getAllQuestionsFirstSim() {
             simulation.select(topic1, 1);
-            List<Question> expected = new ArrayList<>();
+            Set<Question> expected = new HashSet<>();
             expected.add(question1_1_1);
             expected.add(question1_2_1);
             expected.add(question1_3_1);
@@ -125,7 +127,7 @@ public class SimulationTest {
             simulation.select(topic1, 1);
             updateParametersAfterFirstSim();
             simulation.select(topic1, 1);
-            List<Question> expected = new ArrayList<>();
+            Set<Question> expected = new HashSet<>();
             expected.add(question1_1_2);
             expected.add(question1_2_2);
             expected.add(question1_3_1);
@@ -335,85 +337,85 @@ public class SimulationTest {
                 "getNonSelectedQuestions should return: [question1_3_3]")
         @Test
         void nonSelectedQuestions() {
-            List<Question> expected = new ArrayList<>();
+            Set<Question> expected = new HashSet<>();
             expected.add(question1_3_3);
-            List<Question> produced = simulation.getNonSelectedQuestions();
+            Set<Question> produced = simulation.getNonSelectedQuestions();
             assertEquals(expected, produced);
         }
 
         @DisplayName("getAllCorrectQuestions() should return: [question1_1_1, question1_1_2, question1_2_1]")
         @Test
         void correctQuestions() {
-            List<Question> expected = new ArrayList<>();
+            Set<Question> expected = new HashSet<>();
             expected.add(question1_1_1);
             expected.add(question1_1_2);
             expected.add(question1_2_1);
-            List<Question> produced = simulation.getAllCorrectQuestions();
+            Set<Question> produced = simulation.getAllCorrectQuestions();
             assertEquals(expected, produced);
         }
 
         @DisplayName("getAllWrongQuestions() should return: [question1_2_2, question1_3_1, question1_3_2]")
         @Test
         void correctQuestions() {
-            List<Question> expected = new ArrayList<>();
+            Set<Question> expected = new HashSet<>();
             expected.add(question1_2_2);
             expected.add(question1_3_1);
             expected.add(question1_3_2);
-            List<Question> produced = simulation.getAllWrongQuestions();
+            Set<Question> produced = simulation.getAllWrongQuestions();
             assertEquals(expected, produced);
         }
 
         @DisplayName("getSubtopicCorrectQuestions(subtopic 1.1) should return: [question1_1_1, question1_1_2]")
         @Test
         void correctQuestionsSubtopic1_1() {
-            List<Question> expected = new ArrayList<>();
+            Set<Question> expected = new HashSet<>();
             expected.add(question1_1_1);
             expected.add(question1_1_2);
-            List<Question> produced = simulation.getSubtopicCorrectQuestions(subtopic1_1);
+            Set<Question> produced = simulation.getSubtopicCorrectQuestions(subtopic1_1);
             assertEquals(expected, produced);
         }
 
         @DisplayName("getSubtopicCorrectQuestions(subtopic 1.2) should return: [question1_2_1]")
         @Test
         void correctQuestionsSubtopic1_2() {
-            List<Question> expected = new ArrayList<>();
+            Set<Question> expected = new HashSet<>();
             expected.add(question1_2_1);
-            List<Question> produced = simulation.getSubtopicCorrectQuestions(subtopic1_2);
+            Set<Question> produced = simulation.getSubtopicCorrectQuestions(subtopic1_2);
             assertEquals(expected, produced);
         }
 
-        @DisplayName("getSubtopicCorrectQuestions(subtopic 1.3) should return an empty list")
+        @DisplayName("getSubtopicCorrectQuestions(subtopic 1.3) should return an empty Set")
         @Test
         void correctQuestionsSubtopic1_3() {
-            List<Question> expected = new ArrayList<>();
-            List<Question> produced = simulation.getSubtopicCorrectQuestions(subtopic1_3);
+            Set<Question> expected = new HashSet<>();
+            Set<Question> produced = simulation.getSubtopicCorrectQuestions(subtopic1_3);
             assertEquals(expected, produced);
         }
 
-        @DisplayName("getSubtopicWrongQuestions(subtopic 1.1) should return an empty list")
+        @DisplayName("getSubtopicWrongQuestions(subtopic 1.1) should return an empty Set")
         @Test
         void wrongQuestionsSubtopic1_1() {
-            List<Question> expected = new ArrayList<>();
-            List<Question> produced = simulation.getSubtopicWrongQuestions(subtopic1_1);
+            Set<Question> expected = new HashSet<>();
+            Set<Question> produced = simulation.getSubtopicWrongQuestions(subtopic1_1);
             assertEquals(expected, produced);
         }
 
         @DisplayName("getSubtopicWrongQuestions(subtopic 1.2) should return: [question1_2_2]")
         @Test
         void correctQuestionsSubtopic1_2() {
-            List<Question> expected = new ArrayList<>();
+            Set<Question> expected = new HashSet<>();
             expected.add(question1_2_2);
-            List<Question> produced = simulation.getSubtopicWrongQuestions(subtopic1_2);
+            Set<Question> produced = simulation.getSubtopicWrongQuestions(subtopic1_2);
             assertEquals(expected, produced);
         }
 
         @DisplayName("getSubtopicWrongQuestions(subtopic 1.3) should return: [question1_3_1, question1_3_2]")
         @Test
         void correctQuestionsSubtopic1_1() {
-            List<Question> expected = new ArrayList<>();
+            Set<Question> expected = new HashSet<>();
             expected.add(question1_3_1);
             expected.add(question1_3_2);
-            List<Question> produced = simulation.getSubtopicWrongQuestions(subtopic1_3);
+            Set<Question> produced = simulation.getSubtopicWrongQuestions(subtopic1_3);
             assertEquals(expected, produced);
         }
     }

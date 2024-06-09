@@ -1,20 +1,16 @@
-package it.unibz.model;
+package it.unibz.model.implementations;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import it.unibz.model.interfaces.FileLoaderInt;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HahSet;
+import java.util.Set;
 
 public class FileLoader implements FileLoaderInt {
     // attributes
-    private List<Topic> topics;
-    // constructor
-    public FileLoader() {
-        topics = new ArrayList<Topic>();
-    }
+    private Set<Topic> topics;
     // methods
     // loadFile
     @Override
@@ -26,15 +22,15 @@ public class FileLoader implements FileLoaderInt {
     }
     // loadBank
     @Override
-    public List<Topic> loadBank(String bankPath) throws NullPointerException {
-            List<String> fileNames = new ArrayList<>();
+    public Set<Topic> loadBank(String bankPath) throws NullPointerException {
+            Set<String> fileNames = new HahSet<>();
             File folder = new File(bankPath);
-            List<File> files = List.of(folder.listFiles());
+            Set<File> files = Set.of(folder.listFiles());
             for (File file : files) {
                 if (file.getName().endsWith(".json"))
                     fileNames.add(file.getName());
             }
-            List<Topic> bank = new ArrayList<Topic>();
+            Set<Topic> bank = new HahSet<Topic>();
             for (String fileName : fileNames) {
                 bank.add(loadFile(bankPath + fileName));
             }
@@ -44,7 +40,7 @@ public class FileLoader implements FileLoaderInt {
 
     // getTopics
     @Override
-    public List<Topic> getTopics() {
+    public Set<Topic> getTopics() {
         return topics;
     }
 }
