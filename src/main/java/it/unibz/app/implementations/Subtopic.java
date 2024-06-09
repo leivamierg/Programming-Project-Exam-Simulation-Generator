@@ -4,7 +4,12 @@ import it.unibz.app.comparators.QuestionPriorityComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,11 +20,11 @@ public class Subtopic implements SubtopicInt {
     private String subtopicName;
     private Topic topicReference;
     private String topicName;
-    private List<Question> questions;
+    private Set<Question> questions;
 
     @JsonCreator
     public Subtopic(@JsonProperty("subtopicName") String subtopicName,
-            @JsonProperty("questions") List<Question> questions) {
+            @JsonProperty("questions") Set<Question> questions) {
         setSubtopicName(subtopicName);
         // setTopicReference(topicReference);TODO: add a loop in the Topic class
         setTopicName(topicReference.getTopicName());// TODO: might not work :p
@@ -44,7 +49,7 @@ public class Subtopic implements SubtopicInt {
         this.topicName = topicName;
     }
 
-    private void setQuestions(List<Question> questions) {
+    private void setQuestions(Set<Question> questions) {
         this.questions = questions;
     }
 
@@ -63,7 +68,7 @@ public class Subtopic implements SubtopicInt {
      * }
      */
 
-    public List<Question> getQuestions() {
+    public Set<Question> getQuestions() {
         return this.questions;
     }
 
@@ -74,11 +79,11 @@ public class Subtopic implements SubtopicInt {
                 + System.lineSeparator() + "Nr. questions: " + getQuestions().size();
     }
 
-    public List<Question> getAvailableQuestions() {
-        return getQuestions().stream().filter((q) -> (q.getPriorityLevel() > 0)).toList();
+    public Set<Question> getAvailableQuestions() {
+        return getQuestions().stream().filter((q) -> (q.getPriorityLevel() > 0)).collect(Collectors.toSet());
     }
 
-    public List<Question> pickQuestions(int n) throws IllegalArgumentException {
+    public Set<Question> pickQuestions(int n) throws IllegalArgumentException {
         if (n > getAvailableQuestions().size()) {
             System.err.println(
                     "Attention: the number of questions requested is greater than the number of available question");
@@ -88,19 +93,42 @@ public class Subtopic implements SubtopicInt {
         } else if (n == getAvailableQuestions().size()) {
             return getAvailableQuestions();
         } else {
-            List<Question> copy = getAvailableQuestions();
+            List<Question> copy = getAvailableQuestions().stream().toList();
             Collections.sort(copy, new QuestionPriorityComparator());// gets the most prioritized at the start
-            List<Question> returnList = new ArrayList<>();
+            Set<Question> returnSet = new HashSet<>();
 
-            for (int i = 0; i < n; i++) {// adds to another list the first n elements
-                returnList.add(copy.get(i));
+            for (int i = 0; i < n; i++) {
+                returnSet.add(copy.get(i));
             }
 
-            return returnList;
+            return returnSet;
         }
     }
 
     public void addQuestion(Question question) {
         getQuestions().add(question);
+    }
+
+    public boolean equals(Subtopic subtopic) {
+        if (subtopic == null || subtopic.getClass() != getClass()) {
+            return false;
+        } else if (this == subtopic) {
+            return true;
+        }
+
+        return (getTopicReference().equals(subtopic.getTopicReference())
+                && getSubtopicName().equals(subtopic.getSubtopicName()) && equalsQuestions(subtopic.getQuestions()));
+    }
+
+    private boolean equalsQuestions(Set<Question> questions) {
+        if (getQuestions().size() != questions.size() || questions == null) {
+            return false;
+        } else {
+            return questions.containsAll(getQuestions());
+        }
+    }
+
+    public int hashCode() {
+        return Objects.hash(subtopicName, topicReference, questions);
     }
 }

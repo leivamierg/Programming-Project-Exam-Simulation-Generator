@@ -1,6 +1,8 @@
 package it.unibz.app.implementations;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,10 +12,10 @@ import it.unibz.app.TopicInt;
 public class Topic implements TopicInt {
 
     private String topicName;
-    private List<Subtopic> subtopics;
+    private Set<Subtopic> subtopics;
 
     @JsonCreator
-    public Topic(@JsonProperty("topicName") String topicName, @JsonProperty("subtopics") List<Subtopic> subtopics) {
+    public Topic(@JsonProperty("topicName") String topicName, @JsonProperty("subtopics") Set<Subtopic> subtopics) {
         setTopicName(topicName);
         setSubtopics(subtopics);
 
@@ -30,7 +32,7 @@ public class Topic implements TopicInt {
         this.topicName = topicName;
     }
 
-    private void setSubtopics(List<Subtopic> subtopics) {
+    private void setSubtopics(Set<Subtopic> subtopics) {
         this.subtopics = subtopics;
     }
 
@@ -41,7 +43,7 @@ public class Topic implements TopicInt {
     }
 
     @Override
-    public List<Subtopic> getSubtopics() {
+    public Set<Subtopic> getSubtopics() {
         return this.subtopics;
     }
 
@@ -53,5 +55,27 @@ public class Topic implements TopicInt {
 
     public void addSubTopic(Subtopic subtopic) {
         getSubtopics().add(subtopic);
+    }
+
+    public boolean equals(Topic topic) {
+        if (topic == null || topic.getClass() != getClass()) {
+            return false;
+        } else if (this == topic) {
+            return true;
+        }
+
+        return (getTopicName().equals(topic.getTopicName()) && equalsSubtopics(topic.getSubtopics()));
+    }
+
+    private boolean equalsSubtopics(Set<Subtopic> subtopics) {
+        if (getSubtopics().size() != subtopics.size() || subtopics == null) {
+            return false;
+        } else {
+            return subtopics.containsAll(getSubtopics());
+        }
+    }
+
+    public int hashCode() {
+        return Objects.hash(topicName, subtopics);
     }
 }

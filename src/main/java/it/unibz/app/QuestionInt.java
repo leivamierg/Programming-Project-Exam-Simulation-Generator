@@ -2,6 +2,7 @@ package it.unibz.app;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import it.unibz.app.implementations.Subtopic;
 
@@ -56,7 +57,7 @@ public interface QuestionInt {
 
     String getRightAnswer();
 
-    List<String> getWrongAnswers();
+    Set<String> getWrongAnswers();
 
     int getPriorityLevel();
 

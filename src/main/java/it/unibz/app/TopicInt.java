@@ -1,6 +1,6 @@
 package it.unibz.app;
 
-import java.util.List;
+import java.util.Set;
 
 import it.unibz.app.implementations.Subtopic;
 
@@ -24,7 +24,7 @@ public interface TopicInt {
     // getters
     String getTopicName();
 
-    List<Subtopic> getSubtopics();
+    Set<Subtopic> getSubtopics();
 
     // toString and others
     public String toString();

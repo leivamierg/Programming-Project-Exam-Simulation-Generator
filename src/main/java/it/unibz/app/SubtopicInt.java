@@ -1,6 +1,6 @@
 package it.unibz.app;
 
-import java.util.List;
+import java.util.Set;
 
 import it.unibz.app.implementations.Question;
 import it.unibz.app.implementations.Topic;
@@ -38,9 +38,9 @@ public interface SubtopicInt {
 
     // String getTopicName();
 
-    List<Question> getQuestions();
+    Set<Question> getQuestions();
 
-    List<Question> getAvailableQuestions();// Questions whose priority variable is not 0
+    Set<Question> getAvailableQuestions();// Questions whose priority variable is not 0
 
     // List<Question> getWrongAnsweredQuestions();//might delete it
 
@@ -54,7 +54,7 @@ public interface SubtopicInt {
      * @throws IllegalArgumentException if number of questions is greater than the
      *                                  number of available ones
      */
-    public List<Question> pickQuestions(int numOfQuestions);
+    public Set<Question> pickQuestions(int numOfQuestions);
 
     /**
      * Updates the availableQuestions attribute, containing Question objects with a

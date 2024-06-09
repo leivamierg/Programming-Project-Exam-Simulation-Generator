@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -15,7 +17,7 @@ import it.unibz.app.QuestionInt;
 public class Question implements QuestionInt {
     private String questionStatement;
     private String rightAnswer;
-    private List<String> wrongAnswers;
+    private Set<String> wrongAnswers;
     private String subtopic;
     private Subtopic subtopicReference;
     private int priorityLevel;
@@ -23,7 +25,7 @@ public class Question implements QuestionInt {
     @JsonCreator
     public Question(@JsonProperty("questionStatement") String questionStatement,
             @JsonProperty("rightAnswer") String rightAnswer,
-            @JsonProperty("wrongAnswers") List<String> wrongAnswers
+            @JsonProperty("wrongAnswers") Set<String> wrongAnswers
     /* , Subtopic subtopicReference */) {
         setQuestionStatement(questionStatement);
         setRightAnswer(rightAnswer);
@@ -43,7 +45,7 @@ public class Question implements QuestionInt {
         this.rightAnswer = rightAnswer;
     }
 
-    private void setWrongAnswers(List<String> wrongAnswers) {
+    private void setWrongAnswers(Set<String> wrongAnswers) {
         this.wrongAnswers = wrongAnswers;
     }
 
@@ -68,7 +70,7 @@ public class Question implements QuestionInt {
         return this.rightAnswer;
     }
 
-    public List<String> getWrongAnswers() {
+    public Set<String> getWrongAnswers() {
         return this.wrongAnswers;
     }
 
@@ -112,5 +114,31 @@ public class Question implements QuestionInt {
 
     public char getCorrectAnswerLabel(Map<String, Character> shuffleMap) {
         return shuffleMap.get(getRightAnswer());
+    }
+
+    public boolean equals(Question question) {
+        if (question == null || question.getClass() != getClass()) {
+            return false;
+        } else if (question == this) {
+            return true;
+        }
+
+        return getQuestionStatement().equals(question.getQuestionStatement())
+                && getRightAnswer().equals(question.getRightAnswer())
+                && equalsWrongAnswers(question.getWrongAnswers())
+                && getSubtopicReference().equals(question.getSubtopicReference())
+                && getPriorityLevel() == question.getPriorityLevel();
+    }
+
+    private boolean equalsWrongAnswers(Set<String> wrongAnswers) {
+        if (getWrongAnswers().size() != wrongAnswers.size() || wrongAnswers == null) {
+            return false;
+        } else {
+            return wrongAnswers.containsAll(getWrongAnswers());
+        }
+    }
+
+    public int hashCode() {
+        return Objects.hash(questionStatement, rightAnswer, wrongAnswers, subtopicReference, priorityLevel);
     }
 }
