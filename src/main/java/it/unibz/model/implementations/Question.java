@@ -1,4 +1,4 @@
-package it.unibz.app.implementations;
+package it.unibz.model.implementations;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import it.unibz.app.QuestionInt;
+import it.unibz.model.interfaces.QuestionInt;
 
 public class Question implements QuestionInt {
     private String questionStatement;

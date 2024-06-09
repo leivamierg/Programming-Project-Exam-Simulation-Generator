@@ -1,13 +1,12 @@
-package it.unibz.app.implementations;
+package it.unibz.model.implementations;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import it.unibz.app.TopicInt;
+import it.unibz.model.interfaces.TopicInt;
 
 public class Topic implements TopicInt {
 

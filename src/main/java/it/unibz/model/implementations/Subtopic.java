@@ -1,20 +1,18 @@
-package it.unibz.app.implementations;
+package it.unibz.model.implementations;
 
-import it.unibz.app.comparators.QuestionPriorityComparator;
+import it.unibz.model.comparators.QuestionPriorityComparator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import it.unibz.app.SubtopicInt;
+import it.unibz.model.interfaces.SubtopicInt;
 
 public class Subtopic implements SubtopicInt {
     private String subtopicName;

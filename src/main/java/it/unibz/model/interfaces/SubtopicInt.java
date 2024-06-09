@@ -1,9 +1,9 @@
-package it.unibz.app;
+package it.unibz.model.interfaces;
 
 import java.util.Set;
 
-import it.unibz.app.implementations.Question;
-import it.unibz.app.implementations.Topic;
+import it.unibz.model.implementations.Question;
+import it.unibz.model.implementations.Topic;
 
 public interface SubtopicInt {
     // setters

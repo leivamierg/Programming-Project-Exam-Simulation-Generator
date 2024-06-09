@@ -1,8 +1,8 @@
-package it.unibz.app.comparators;
+package it.unibz.model.comparators;
 
 import java.util.Comparator;
 
-import it.unibz.app.QuestionInt;
+import it.unibz.model.interfaces.QuestionInt;
 
 public class QuestionPriorityComparator implements Comparator<QuestionInt> {
     @Override

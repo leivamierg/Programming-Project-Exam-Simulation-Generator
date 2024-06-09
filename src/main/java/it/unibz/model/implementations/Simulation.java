@@ -1,7 +1,9 @@
-package it.unibz.model;
+package it.unibz.model.implementations;
+
+import it.unibz.model.CorrectAnswersAndPercentage;
+import it.unibz.model.interfaces.SimulationInt;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Simulation implements SimulationInt {
     // attributes

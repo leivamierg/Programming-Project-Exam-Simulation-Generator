@@ -1,7 +1,7 @@
 package it.unibz.app;
 
 import it.unibz.controller.Controller;
-import it.unibz.model.ModelInt;
+import it.unibz.model.interfaces.ModelInt;
 
 /**
  * Hello world!
