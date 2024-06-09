@@ -1,6 +1,9 @@
 package it.unibz.model.interfaces;
 
 
+import it.unibz.model.implementations.Topic;
+
+import java.util.Set;
 
 public interface FileLoaderInt {
     // methods

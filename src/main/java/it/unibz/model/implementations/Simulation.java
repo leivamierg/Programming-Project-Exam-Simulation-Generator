@@ -17,7 +17,7 @@ public class Simulation implements SimulationInt {
             }
     }
     @Override
-    public void select(List<Subtopic> subtopics, int nrQuestionsPerSubtopic) throws IllegalStateException, NullPointerException {
+    public void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic) throws IllegalStateException, NullPointerException {
         if (!subtopics.isEmpty()) {
             for (Subtopic subtopic : subtopics) {
                 updateSubtopicToQuestions(subtopic);

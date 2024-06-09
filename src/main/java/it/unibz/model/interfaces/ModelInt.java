@@ -18,6 +18,7 @@ public interface ModelInt {
 
     /**
      * Starts an interactive thest abbout the subtopic
+     * if subtopic is null it will start a test of the topic with all subtobics.
      * 
      * @param topic the general topic
      * @param subtopic the subtopic the thest is about

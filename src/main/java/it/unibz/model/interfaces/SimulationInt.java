@@ -1,5 +1,7 @@
 package it.unibz.model.interfaces;
 
+import it.unibz.model.implementations.*;
+
 import it.unibz.model.implementations.CorrectAnswersAndPercentage;
 
 import java.util.Set;
