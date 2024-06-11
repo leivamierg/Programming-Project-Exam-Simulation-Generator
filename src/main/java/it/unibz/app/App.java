@@ -10,8 +10,8 @@ import it.unibz.model.interfaces.ModelInt;
 public class App {
     public static void main( String[] args )
     {
-        ModelInt model = new ModelImpl;
-        Controller controller = new Controller(model);
-        controller.elaborateArgs(args);
+        // ModelInt model = new ModelImpl();
+        // Controller controller = new Controller(model);
+        // controller.elaborateArgs(args);
     }
 }

@@ -1,5 +1,6 @@
 package it.unibz.model.interfaces;
 
+import java.util.List;
 import java.util.Set;
 
 import it.unibz.model.implementations.Question;
@@ -7,16 +8,6 @@ import it.unibz.model.implementations.Topic;
 
 public interface SubtopicInt {
     // setters
-    /**
-     * 
-     * @param name the name attribute of current the Subtopic
-     */
-    void setSubtopicName(String name);
-
-    /**
-     * 
-     * @param topic the Topic object containing the current Subtopic(reference)
-     */
     // void setTopicReference(Topic topic);
 
     /**
@@ -32,15 +23,13 @@ public interface SubtopicInt {
     // void setQuestions(List<Question> questions);// TODO: private
 
     // getters
-    String getSubtopicName();
-
-    Topic getTopicReference();
+    Topic getTopic();
 
     // String getTopicName();
 
-    Set<Question> getQuestions();
+    List<Question> getQuestions();
 
-    Set<Question> getAvailableQuestions();// Questions whose priority variable is not 0
+    List<Question> getAvailableQuestions();// Questions whose priority variable is not 0
 
     // List<Question> getWrongAnsweredQuestions();//might delete it
 
@@ -54,7 +43,7 @@ public interface SubtopicInt {
      * @throws IllegalArgumentException if number of questions is greater than the
      *                                  number of available ones
      */
-    public Set<Question> pickQuestions(int numOfQuestions);
+    public List<Question> pickQuestions(int numOfQuestions);
 
     /**
      * Updates the availableQuestions attribute, containing Question objects with a

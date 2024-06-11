@@ -4,6 +4,7 @@ import it.unibz.model.implementations.*;
 
 import it.unibz.model.implementations.CorrectAnswersAndPercentage;
 
+import java.util.List;
 import java.util.Set;
 import java.util.Map;
 
@@ -121,15 +122,15 @@ public interface SimulationInt {
 
     /**
      *
-     * @return a set of all questions (without the subtopic they belong to)
+     * @return a list of all questions (without the subtopic they belong to)
      */
-    Set<Question> getAllQuestions();
+    List<Question> getAllQuestions();
 
     /**
      *
      * @return a map with all questions for each subtopic
      */
-    Map<Subtopic, Set<Question>> getQuestionsPerSubtopic();
+    Map<Subtopic, List<Question>> getQuestionsPerSubtopic();
 
     /**
      *

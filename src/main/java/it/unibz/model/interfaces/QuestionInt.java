@@ -16,7 +16,7 @@ public interface QuestionInt {
 
     /**
      * 
-     * @param subtopicReference reference to the apparteining subtopic
+     * @param subtopic reference to the apparteining subtopic
      */
     // void setSubtopicReference(Subtopic subtopicReference);// TODO
 
@@ -48,9 +48,7 @@ public interface QuestionInt {
 
     // getters
 
-    String getSubtopic();
-
-    Subtopic getSubtopicReference();
+    Subtopic getSubtopic();
 
     String getQuestionStatement();
 

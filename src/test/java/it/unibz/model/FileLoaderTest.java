@@ -2,10 +2,14 @@ package it.unibz.model;
 
 
 import it.unibz.model.implementations.FileLoader;
+import it.unibz.model.implementations.Topic;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Set;
+
 import static it.unibz.utils.TopicUtils.topic1_CSA_FL;
 import static it.unibz.utils.TopicUtils.topic2_LA_FL;
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -3,10 +3,10 @@ package it.unibz.model.implementations;
 import it.unibz.model.comparators.QuestionPriorityComparator;
 
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -16,48 +16,46 @@ import it.unibz.model.interfaces.SubtopicInt;
 
 public class Subtopic implements SubtopicInt {
     private String subtopicName;
-    private Topic topicReference;
-    private String topicName;
-    private Set<Question> questions;
+    private Topic topic;
+    private List<Question> questions;
 
     @JsonCreator
     public Subtopic(@JsonProperty("subtopicName") String subtopicName,
-            @JsonProperty("questions") Set<Question> questions) {
+            @JsonProperty("questions") List<Question> questions) {
         setSubtopicName(subtopicName);
-        // setTopicReference(topicReference);TODO: add a loop in the Topic class
-        setTopicName(topicReference.getTopicName());// TODO: might not work :p
+        // setTopic(topic);TODO: add a loop in the Topic class
         setQuestions(questions);
 
         for (Question question : questions) {
-            question.setSubtopicReference(this);
+            question.setSubtopic(this);
         }
 
     }
 
     // setters
+
+
     public void setSubtopicName(String subtopicName) {
         this.subtopicName = subtopicName;
     }
 
-    void setTopicReference(Topic topicReference) {
-        this.topicReference = topicReference;
+    void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
-    private void setTopicName(String topicName) {
-        this.topicName = topicName;
-    }
-
-    private void setQuestions(Set<Question> questions) {
+    private void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 
     // getters
+
+
     public String getSubtopicName() {
-        return this.subtopicName;
+        return subtopicName;
     }
 
-    public Topic getTopicReference() {
-        return this.topicReference;
+    public Topic getTopic() {
+        return this.topic;
     }
 
     /*
@@ -66,22 +64,22 @@ public class Subtopic implements SubtopicInt {
      * }
      */
 
-    public Set<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return this.questions;
     }
 
     // toString and others
     public String toString() {
         return "Subtopic: " + getSubtopicName() + System.lineSeparator() + "Topic: "
-                + getTopicReference().getTopicName()
+                + getTopic().getTopicName()
                 + System.lineSeparator() + "Nr. questions: " + getQuestions().size();
     }
 
-    public Set<Question> getAvailableQuestions() {
-        return getQuestions().stream().filter((q) -> (q.getPriorityLevel() > 0)).collect(Collectors.toSet());
+    public List<Question> getAvailableQuestions() {
+        return getQuestions().stream().filter((q) -> (q.getPriorityLevel() > 0)).toList();
     }
 
-    public Set<Question> pickQuestions(int n) throws IllegalArgumentException {
+    public List<Question> pickQuestions(int n) throws IllegalArgumentException {
         if (n > getAvailableQuestions().size()) {
             System.err.println(
                     "Attention: the number of questions requested is greater than the number of available question");
@@ -91,15 +89,15 @@ public class Subtopic implements SubtopicInt {
         } else if (n == getAvailableQuestions().size()) {
             return getAvailableQuestions();
         } else {
-            List<Question> copy = getAvailableQuestions().stream().toList();
+            List<Question> copy = getAvailableQuestions();
             Collections.sort(copy, new QuestionPriorityComparator());// gets the most prioritized at the start
-            Set<Question> returnSet = new HashSet<>();
+            List<Question> returnList = new ArrayList<>();
 
             for (int i = 0; i < n; i++) {
-                returnSet.add(copy.get(i));
+                returnList.add(copy.get(i));
             }
 
-            return returnSet;
+            return returnList;
         }
     }
 
@@ -114,19 +112,11 @@ public class Subtopic implements SubtopicInt {
             return true;
         }
 
-        return (getTopicReference().equals(subtopic.getTopicReference())
-                && getSubtopicName().equals(subtopic.getSubtopicName()) && equalsQuestions(subtopic.getQuestions()));
-    }
-
-    private boolean equalsQuestions(Set<Question> questions) {
-        if (getQuestions().size() != questions.size() || questions == null) {
-            return false;
-        } else {
-            return questions.containsAll(getQuestions());
-        }
+        return (getTopic().equals(subtopic.getTopic())
+                && getSubtopicName().equals(subtopic.getSubtopicName()) && getQuestions().equals(subtopic.getQuestions()));
     }
 
     public int hashCode() {
-        return Objects.hash(subtopicName, topicReference, questions);
+        return Objects.hash(subtopicName, topic, questions);
     }
 }

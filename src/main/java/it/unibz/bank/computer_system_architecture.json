@@ -1,6 +1,6 @@
 {
   "topicName": "Computer System Architecture",
-  "subtopicNames": [
+  "subtopics": [
     {
       "subtopicName": "Binary arithmetics",
       "questions": [

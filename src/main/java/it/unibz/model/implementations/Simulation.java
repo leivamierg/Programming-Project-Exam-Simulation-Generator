@@ -3,6 +3,7 @@ package it.unibz.model.implementations;
 import it.unibz.model.interfaces.SimulationInt;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Simulation implements SimulationInt {
     // attributes
@@ -10,22 +11,29 @@ public class Simulation implements SimulationInt {
     private Map<Question, Character> questionToAnswer;
     private Map<Question, Map<String, Character>> questionToShuffledAnswers;
     private Question currentQuestion;
+
+    public Simulation() {
+        subtopicToQuestions = new HashMap<>();
+        questionToAnswer = new HashMap<>();
+        questionToShuffledAnswers = new HashMap<>();
+    }
+
     @Override
     public void select(Topic topic, int nrQuestionsPerSubtopic) throws NullPointerException {
             for (Subtopic subtopic : topic.getSubtopics()) {
-                updateSubtopicToQuestions(subtopic);
+                updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
             }
     }
     @Override
     public void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic) throws IllegalStateException, NullPointerException {
         if (!subtopics.isEmpty()) {
             for (Subtopic subtopic : subtopics) {
-                updateSubtopicToQuestions(subtopic);
+                updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
             }
         } else throw new IllegalStateException();
     }
 
-    private void updateSubtopicToQuestions(Subtopic subtopic) {
+    private void updateSubtopicToQuestions(Subtopic subtopic, int nrQuestionsPerSubtopic) {
         List<Question> pickedQuestions = subtopic.pickQuestions(nrQuestionsPerSubtopic);
         subtopicToQuestions.put(subtopic, pickedQuestions);
         updateQuestionToShuffledAnswers(pickedQuestions);
@@ -104,34 +112,34 @@ public class Simulation implements SimulationInt {
     }
 
     @Override
-    public List<Question> getSubtopicCorrectQuestions(Subtopic subtopic) {
+    public Set<Question> getSubtopicCorrectQuestions(Subtopic subtopic) {
         return getCorrect_WrongQuestions(subtopicToQuestions.get(subtopic), true);
     }
 
     @Override
-    public List<Question> getSubtopicWrongQuestions(Subtopic subtopic) {
+    public Set<Question> getSubtopicWrongQuestions(Subtopic subtopic) {
         return getCorrect_WrongQuestions(subtopicToQuestions.get(subtopic), false);
     }
 
     @Override
-    public List<Question> getAllWrongQuestions() {
+    public Set<Question> getAllWrongQuestions() {
         return getCorrect_WrongQuestions(getAllQuestions(), false);
     }
 
     @Override
-    public List<Question> getAllCorrectQuestions() {
+    public Set<Question> getAllCorrectQuestions() {
         return getCorrect_WrongQuestions(getAllQuestions(), true);
     }
-    private List<Question> getCorrect_WrongQuestions(List<Question> questions, boolean corWrong) {
+    private Set<Question> getCorrect_WrongQuestions(List<Question> questions, boolean corWrong) {
         return questions.stream().
                 filter(q -> isCorrect(q) && corWrong).
-                toList();
+                collect(Collectors.toSet());
     }
     @Override
-    public List<Question> getNonSelectedQuestions() {
+    public Set<Question> getNonSelectedQuestions() {
         return getAllQuestions().stream().
                 filter(q -> !getAllQuestions().contains(q)).
-                toList();
+                collect(Collectors.toSet());
     }
 
     private String computeResult () {
@@ -144,8 +152,8 @@ public class Simulation implements SimulationInt {
             CorrectAnswersAndPercentage subtopicStats = computeSubtopicStats(subtopic);
             String subtopicCorAns = "Number of correct answers: " + simStats.correctAnswers() + "/" + getAllQuestions().size();
             String subtopicPerc = "Percentage of correct answers: " + simStats.percentage() + "%";
-            result += subtopic.getName() + ": " + System.lineSeparator() + simCorAns + System.lineSeparator()
-                    + simPerc + System.lineSeparator();
+            result += subtopic.getSubtopicName() + ": " + System.lineSeparator() + subtopicCorAns + System.lineSeparator()
+                    + subtopicPerc + System.lineSeparator();
         }
         return result;
     }
@@ -156,8 +164,6 @@ public class Simulation implements SimulationInt {
             List<Question> questions = subtopicToQuestions.get(subtopic);
             return computeStats(questions);
         }
-
-    }
     @Override
     public CorrectAnswersAndPercentage computeSimStats() {
         return computeStats(getAllQuestions());
@@ -174,7 +180,7 @@ public class Simulation implements SimulationInt {
     public boolean isCorrect(Question question) throws NullPointerException {
         if (questionToAnswer.get(question) == null)
             throw new NullPointerException();
-        return questionToAnswer.get(question) == question.getCorrectAnswerLabel(questionToShuffledAnswers);
+        return questionToAnswer.get(question) == question.getCorrectAnswerLabel(questionToShuffledAnswers.get(question));
     }
     @Override
     public List<Question> getAllQuestions() {

@@ -18,20 +18,18 @@ public class Question implements QuestionInt {
     private String questionStatement;
     private String rightAnswer;
     private Set<String> wrongAnswers;
-    private String subtopic;
-    private Subtopic subtopicReference;
+    private Subtopic subtopic;
     private int priorityLevel;
 
     @JsonCreator
     public Question(@JsonProperty("questionStatement") String questionStatement,
             @JsonProperty("rightAnswer") String rightAnswer,
             @JsonProperty("wrongAnswers") Set<String> wrongAnswers
-    /* , Subtopic subtopicReference */) {
+    /* , Subtopic subtopic */) {
         setQuestionStatement(questionStatement);
         setRightAnswer(rightAnswer);
         setWrongAnswers(wrongAnswers);
-        setSubtopic(subtopicReference.getSubtopicName());
-        // setSubtopicReference(subtopicReference);
+        // setSubtopicReference(subtopic);
         setPriorityLevel(1);// starts at 1 by default
     }
 
@@ -49,12 +47,8 @@ public class Question implements QuestionInt {
         this.wrongAnswers = wrongAnswers;
     }
 
-    private void setSubtopic(String subtopic) {
+    void setSubtopic(Subtopic subtopic) {
         this.subtopic = subtopic;
-    }
-
-    void setSubtopicReference(Subtopic subtopicReference) {
-        this.subtopicReference = subtopicReference;
     }
 
     public void setPriorityLevel(int priorityLevel) {
@@ -74,12 +68,8 @@ public class Question implements QuestionInt {
         return this.wrongAnswers;
     }
 
-    public String getSubtopic() {
+    public Subtopic getSubtopic() {
         return this.subtopic;
-    }
-
-    public Subtopic getSubtopicReference() {
-        return this.subtopicReference;
     }
 
     public int getPriorityLevel() {
@@ -91,7 +81,7 @@ public class Question implements QuestionInt {
         return "Question: " + getQuestionStatement() + System.lineSeparator() + "Right answer: " + getRightAnswer()
                 + System.lineSeparator() + "Wrong answers: " + returnWrongAnswers() + System.lineSeparator()
                 + "Subtopic: "
-                + getSubtopic() + System.lineSeparator() + "Priority: " + getPriorityLevel();
+                + getSubtopic().getSubtopicName() + System.lineSeparator() + "Priority: " + getPriorityLevel();
     }
 
     private String returnWrongAnswers() {
@@ -125,20 +115,12 @@ public class Question implements QuestionInt {
 
         return getQuestionStatement().equals(question.getQuestionStatement())
                 && getRightAnswer().equals(question.getRightAnswer())
-                && equalsWrongAnswers(question.getWrongAnswers())
-                && getSubtopicReference().equals(question.getSubtopicReference())
+                && getWrongAnswers().equals(question.getWrongAnswers())
+                && getSubtopic().equals(question.getSubtopic())
                 && getPriorityLevel() == question.getPriorityLevel();
     }
 
-    private boolean equalsWrongAnswers(Set<String> wrongAnswers) {
-        if (getWrongAnswers().size() != wrongAnswers.size() || wrongAnswers == null) {
-            return false;
-        } else {
-            return wrongAnswers.containsAll(getWrongAnswers());
-        }
-    }
-
     public int hashCode() {
-        return Objects.hash(questionStatement, rightAnswer, wrongAnswers, subtopicReference, priorityLevel);
+        return Objects.hash(questionStatement, rightAnswer, wrongAnswers, subtopic, priorityLevel);
     }
 }

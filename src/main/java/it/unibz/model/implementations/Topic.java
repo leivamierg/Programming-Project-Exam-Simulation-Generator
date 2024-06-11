@@ -19,7 +19,7 @@ public class Topic implements TopicInt {
         setSubtopics(subtopics);
 
         for (Subtopic subtopic : subtopics) {
-            subtopic.setTopicReference(this);
+            subtopic.setTopic(this);
         }
 
     }
@@ -63,15 +63,7 @@ public class Topic implements TopicInt {
             return true;
         }
 
-        return (getTopicName().equals(topic.getTopicName()) && equalsSubtopics(topic.getSubtopics()));
-    }
-
-    private boolean equalsSubtopics(Set<Subtopic> subtopics) {
-        if (getSubtopics().size() != subtopics.size() || subtopics == null) {
-            return false;
-        } else {
-            return subtopics.containsAll(getSubtopics());
-        }
+        return (getTopicName().equals(topic.getTopicName()) && getSubtopics().equals(topic.getSubtopics()));
     }
 
     public int hashCode() {
