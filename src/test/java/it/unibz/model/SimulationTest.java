@@ -4,6 +4,8 @@ import it.unibz.model.implementations.CorrectAnswersAndPercentage;
 import it.unibz.model.implementations.Question;
 import it.unibz.model.implementations.Simulation;
 import it.unibz.model.implementations.Subtopic;
+import it.unibz.utils.SubtopicUtils;
+import it.unibz.utils.TopicUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,12 @@ import static it.unibz.utils.QuestionUtils.*;
 import static it.unibz.utils.SubtopicUtils.*;
 public class SimulationTest {
     private final Simulation simulation = new Simulation();
+
+    @BeforeEach
+    void init() {
+        TopicUtils.init();
+        SubtopicUtils.init();
+    }
 
     private void updateParametersAfterFirstSim() {
         // correct
