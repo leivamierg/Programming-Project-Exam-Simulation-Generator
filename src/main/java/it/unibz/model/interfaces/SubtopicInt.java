@@ -23,7 +23,7 @@ public interface SubtopicInt {
     // void setQuestions(List<Question> questions);// TODO: private
 
     // getters
-    Topic getTopic();
+    String getTopic();
 
     // String getTopicName();
 
@@ -66,4 +66,9 @@ public interface SubtopicInt {
      * @param question the question to be added
      */
     void addQuestion(Question question);
+
+    /**
+     * set the topic reference of the subtopic
+     */
+    void linkSubtopicToTopic();
 }

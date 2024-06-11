@@ -3,8 +3,6 @@ package it.unibz.model.interfaces;
 import java.util.Map;
 import java.util.Set;
 
-import it.unibz.model.implementations.Subtopic;
-
 public interface QuestionInt {
     // setters
     /**
@@ -48,7 +46,7 @@ public interface QuestionInt {
 
     // getters
 
-    Subtopic getSubtopic();
+    String getSubtopic();
 
     String getQuestionStatement();
 
@@ -60,6 +58,11 @@ public interface QuestionInt {
 
     // other methods
     Map<String, Character> getShuffleMap();
+
+    /**
+     * set the subtopic reference of the question
+     */
+    void linkQuestionToSubtopic();
 
     /**
      * @return a list of the 4 possible answers shuffled in a random order

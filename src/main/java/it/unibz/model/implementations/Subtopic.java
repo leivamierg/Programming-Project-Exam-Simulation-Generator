@@ -2,10 +2,7 @@ package it.unibz.model.implementations;
 
 import it.unibz.model.comparators.QuestionPriorityComparator;
 
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,15 +13,17 @@ import it.unibz.model.interfaces.SubtopicInt;
 
 public class Subtopic implements SubtopicInt {
     private String subtopicName;
-    private Topic topic;
+    private String topic;
+    private Topic topicReference;
     private List<Question> questions;
 
     @JsonCreator
     public Subtopic(@JsonProperty("subtopicName") String subtopicName,
-            @JsonProperty("questions") List<Question> questions) {
+            @JsonProperty("questions") List<Question> questions, @JsonProperty("topic") String topic) {
         setSubtopicName(subtopicName);
         // setTopic(topic);TODO: add a loop in the Topic class
         setQuestions(questions);
+        setTopic(topic);
 
         /*for (Question question : questions) {
             question.setSubtopic(this);
@@ -39,7 +38,7 @@ public class Subtopic implements SubtopicInt {
         this.subtopicName = subtopicName;
     }
 
-    void setTopic(Topic topic) {
+    void setTopic(String topic) {
         this.topic = topic;
     }
 
@@ -47,6 +46,9 @@ public class Subtopic implements SubtopicInt {
         this.questions = questions;
     }
 
+    private void setTopicReference(Topic topicReference) {
+        this.topicReference = topicReference;
+    }
     // getters
 
 
@@ -54,7 +56,7 @@ public class Subtopic implements SubtopicInt {
         return subtopicName;
     }
 
-    public Topic getTopic() {
+    public String getTopic() {
         return this.topic;
     }
 
@@ -68,10 +70,23 @@ public class Subtopic implements SubtopicInt {
         return this.questions;
     }
 
+    public Topic getTopicReference() {
+        return topicReference;
+    }
+
     // toString and others
+    public void linkSubtopicToTopic() {
+        FileLoader fileLoader = new FileLoader();
+        Set<Topic> allTopics = fileLoader.getTopics();
+        Optional<Topic> correctSubtopic = allTopics.stream().
+                filter(s -> s.getTopicName().equals(topic)).
+                findFirst();
+        if (correctSubtopic.isPresent())
+            setTopicReference(correctSubtopic.get());
+    }
     public String toString() {
         return "Subtopic: " + getSubtopicName() + System.lineSeparator() + "Topic: "
-                + getTopic().getTopicName()
+                + getTopicReference().getTopicName()
                 + System.lineSeparator() + "Nr. questions: " + getQuestions().size();
     }
 
@@ -112,11 +127,11 @@ public class Subtopic implements SubtopicInt {
             return true;
         }
 
-        return (getTopic().equals(subtopic.getTopic())
+        return (getTopicReference().equals(subtopic.getTopicReference())
                 && getSubtopicName().equals(subtopic.getSubtopicName()) && getQuestions().equals(subtopic.getQuestions()));
     }
 
     public int hashCode() {
-        return Objects.hash(subtopicName, topic, questions);
+        return Objects.hash(subtopicName, topicReference, questions);
     }
 }

@@ -1,3 +1,4 @@
+
 {
   "topicName": "Computer System Architecture",
   "subtopics": [
@@ -11,9 +12,10 @@
             "The bits get flipped",
             "The bits get shifted to the right",
             "The bits are shuffled"
-          ]
+          ],
+          "subtopic": "Binary arithmetics"
         }
-      ]
+      ], "topic": "Computer System Architecture"
     },
     {
       "subtopicName": "Sequential and Combinatorial circuits",
@@ -25,9 +27,10 @@
             "setting or resetting an external circuit",
             "memorizing a word of N bits",
             "generating a clock signal"
-          ]
+          ],
+          "subtopic": "Sequential and Combinatorial circuits"
         }
-      ]
+      ], "topic": "Computer System Architecture"
     }
   ]
 }
