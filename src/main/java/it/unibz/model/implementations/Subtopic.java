@@ -26,9 +26,9 @@ public class Subtopic implements SubtopicInt {
         // setTopic(topic);TODO: add a loop in the Topic class
         setQuestions(questions);
 
-        for (Question question : questions) {
+        /*for (Question question : questions) {
             question.setSubtopic(this);
-        }
+        }*/
 
     }
 

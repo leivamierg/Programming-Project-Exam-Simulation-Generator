@@ -18,9 +18,9 @@ public class Topic implements TopicInt {
         setTopicName(topicName);
         setSubtopics(subtopics);
 
-        for (Subtopic subtopic : subtopics) {
+        /*for (Subtopic subtopic : subtopics) {
             subtopic.setTopic(this);
-        }
+        }*/
 
     }
 

@@ -97,14 +97,14 @@ public class SimulationTest {
         @Test
         void selectListSubtopicsNull() {
             Set<Subtopic> nullSet = null;
-            assertThrows(NullPointerException.class, simulation.select(nullSet, 2));
+            assertThrows(NullPointerException.class, () -> simulation.select(nullSet, 2));
         }
 
         @DisplayName("Empty Set of subtopics: select(Set<Subtopic>) should throw an IllegalStateException")
         @Test
         void selectListSubtopicNull() {
             Set<Subtopic> emptySet = new HashSet<>();
-            assertThrows(IllegalStateException.class, simulation.select(emptySet, 2));
+            assertThrows(IllegalStateException.class, () -> simulation.select(emptySet, 2));
         }
     }
 
@@ -191,7 +191,7 @@ public class SimulationTest {
         @DisplayName("The input is neither '+' nor '-'; therefore changeQuestion(char) should throw an IllegalArgumentException")
         @Test
         void changeQuestionWithWrongChar() {
-            assertThrows(IllegalArgumentException.class, simulation.changeQuestion('?'));
+            assertThrows(IllegalArgumentException.class, () -> simulation.changeQuestion('?'));
         }
 
         @DisplayName("The current question is the last one and I change to the first one: changeQuestion(1) should work")
@@ -207,13 +207,13 @@ public class SimulationTest {
         @DisplayName("The input index is too small: changeQuestion(too small index) should throw an IndexOutOfBoundException")
         @Test
         void changeQuestionWithTooSmallIdx() {
-            assertThrows(IndexOutOfBoundsException.class, simulation.changeQuestion(-1));
+            assertThrows(IndexOutOfBoundsException.class, () -> simulation.changeQuestion(-1));
         }
 
         @DisplayName("The input index is too big: changeQuestion(too big index) should throw an IndexOutOfBoundException")
         @Test
         void changeQuestionWithTooBigIdx() {
-            assertThrows(IndexOutOfBoundsException.class, simulation.changeQuestion(simulation.getAllQuestions().size()));
+            assertThrows(IndexOutOfBoundsException.class, () -> simulation.changeQuestion(simulation.getAllQuestions().size()));
         }
     }
 
@@ -252,7 +252,7 @@ public class SimulationTest {
         @DisplayName("The answer is invalid but: answer(invalid answer) should throw an IllegalArgumentException")
         @Test
         void invalidAnswerToFirstQuestion() {
-            assertThrows(IllegalArgumentException.class, simulation.answer('?'));
+            assertThrows(IllegalArgumentException.class, () -> simulation.answer('?'));
         }
     }
 
@@ -306,7 +306,7 @@ public class SimulationTest {
         @DisplayName("The input question is null: isCorrect(null question) should throw a NullPointerException")
         @Test
         void selectListSubtopicsNull() {
-            assertThrows(NullPointerException.class, simulation.isCorrect(nullQuestion));
+            assertThrows(NullPointerException.class, () -> simulation.isCorrect(nullQuestion));
         }
     }
 
