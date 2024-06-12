@@ -4,7 +4,6 @@ import it.unibz.model.comparators.QuestionPriorityComparator;
 
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -46,7 +45,7 @@ public class Subtopic implements SubtopicInt {
         this.questions = questions;
     }
 
-    private void setTopicReference(Topic topicReference) {
+    public void setTopicReference(Topic topicReference) {
         this.topicReference = topicReference;
     }
     // getters
@@ -75,10 +74,8 @@ public class Subtopic implements SubtopicInt {
     }
 
     // toString and others
-    public void linkSubtopicToTopic() {
-        FileLoader fileLoader = new FileLoader();
-        Set<Topic> allTopics = fileLoader.getTopics();
-        Optional<Topic> correctSubtopic = allTopics.stream().
+    public void linkSubtopicToTopic(Set<Topic> topics) {
+        Optional<Topic> correctSubtopic = topics.stream().
                 filter(s -> s.getTopicName().equals(topic)).
                 findFirst();
         if (correctSubtopic.isPresent())
@@ -86,7 +83,7 @@ public class Subtopic implements SubtopicInt {
     }
     public String toString() {
         return "Subtopic: " + getSubtopicName() + System.lineSeparator() + "Topic: "
-                + getTopicReference().getTopicName()
+                + getTopic()
                 + System.lineSeparator() + "Nr. questions: " + getQuestions().size();
     }
 
@@ -120,6 +117,7 @@ public class Subtopic implements SubtopicInt {
         getQuestions().add(question);
     }
 
+    @Override
     public boolean equals(Subtopic subtopic) {
         if (subtopic == null || subtopic.getClass() != getClass()) {
             return false;
@@ -127,11 +125,20 @@ public class Subtopic implements SubtopicInt {
             return true;
         }
 
-        return (getTopicReference().equals(subtopic.getTopicReference())
-                && getSubtopicName().equals(subtopic.getSubtopicName()) && getQuestions().equals(subtopic.getQuestions()));
+        return (getTopic().equals(subtopic.getTopic())
+                && getSubtopicName().equals(subtopic.getSubtopicName())  && equalsQuestions(subtopic.getQuestions()));
     }
 
+    private boolean equalsQuestions(List<Question> questions) {
+        if (getQuestions().size() != questions.size() || questions == null) {
+            return false;
+        } else {
+            return questions.containsAll(getQuestions());
+        }
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hash(subtopicName, topicReference, questions);
+        return Objects.hash(topic, subtopicName,  questions);
     }
 }

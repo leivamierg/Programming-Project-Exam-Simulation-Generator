@@ -6,6 +6,7 @@ import it.unibz.model.implementations.Topic;
 import java.util.HashSet;
 import java.util.Set;
 
+import static it.unibz.utils.QuestionUtils.*;
 import static it.unibz.utils.SubtopicUtils.*;
 public class TopicUtils {
     // Topic 1 CSA FL -> first topic (CSA) -> for FileLoader
@@ -21,6 +22,7 @@ public class TopicUtils {
     public static Topic nullTopic;
 
     public static void init() {
+        SubtopicUtils.init();
         // Topic 1 CSA FL
         Set<Subtopic> subtopics1_CSA_FL = new HashSet<>();
         subtopics1_CSA_FL.add(subtopic1_1_CSA_FL);
@@ -47,8 +49,25 @@ public class TopicUtils {
         subtopics2.add(subtopic2_3);
         subtopics2.add(subtopic2_4);
         topic2 = new Topic("Topic 2", subtopics2);
-
         // Topic null
         nullTopic = null;
+        setSubtopicToTopicReference();
+    }
+
+    private static void setSubtopicToTopicReference() {
+        subtopic1_1_CSA_FL.setTopicReference(topic1_CSA_FL);
+        subtopic1_2_CSA_FL.setTopicReference(topic1_CSA_FL);
+
+        subtopic1_1.setTopicReference(topic1);
+        subtopic1_2.setTopicReference(topic1);
+        subtopic1_3.setTopicReference(topic1);
+
+        subtopic2_1_LA_FL.setTopicReference(topic2_LA_FL);
+        subtopic2_2_LA_FL.setTopicReference(topic2_LA_FL);
+
+        subtopic2_1.setTopicReference(topic2);
+        subtopic2_2.setTopicReference(topic2);
+        subtopic2_3.setTopicReference(topic2);
+        subtopic2_4.setTopicReference(topic2);
     }
 }

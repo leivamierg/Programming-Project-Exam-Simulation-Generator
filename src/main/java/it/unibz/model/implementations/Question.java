@@ -51,7 +51,7 @@ public class Question implements QuestionInt {
         this.priorityLevel = priorityLevel;
     }
 
-    private void setSubtopicReference(Subtopic subtopicReference) {
+    public void setSubtopicReference(Subtopic subtopicReference) {
         this.subtopicReference = subtopicReference;
     }
 
@@ -83,10 +83,8 @@ public class Question implements QuestionInt {
     // toString and others
 
     @Override
-    public void linkQuestionToSubtopic() {
-        FileLoader fileLoader = new FileLoader();
-        Set<Topic> allTopics = fileLoader.getTopics();
-        Optional<Subtopic> correctSubtopic = allTopics.stream().
+    public void linkQuestionToSubtopic(Set<Topic> topics) {
+        Optional<Subtopic> correctSubtopic = topics.stream().
                 flatMap(t -> t.getSubtopics().stream()).
                 filter(s -> s.getSubtopicName().equals(subtopic)).
                 findFirst();
@@ -98,7 +96,7 @@ public class Question implements QuestionInt {
         return "Question: " + getQuestionStatement() + System.lineSeparator() + "Right answer: " + getRightAnswer()
                 + System.lineSeparator() + "Wrong answers: " + returnWrongAnswers() + System.lineSeparator()
                 + "Subtopic: "
-                + getSubtopicReference().getSubtopicName() + System.lineSeparator() + "Priority: " + getPriorityLevel();
+                + getSubtopic() + System.lineSeparator() + "Priority: " + getPriorityLevel();
     }
 
     private String returnWrongAnswers() {
@@ -123,6 +121,7 @@ public class Question implements QuestionInt {
         return shuffleMap.get(getRightAnswer());
     }
 
+    @Override
     public boolean equals(Question question) {
         if (question == null || question.getClass() != getClass()) {
             return false;
@@ -133,11 +132,12 @@ public class Question implements QuestionInt {
         return getQuestionStatement().equals(question.getQuestionStatement())
                 && getRightAnswer().equals(question.getRightAnswer())
                 && getWrongAnswers().equals(question.getWrongAnswers())
-                && getSubtopicReference().equals(question.getSubtopicReference())
+                && getSubtopic().equals(question.getSubtopic())
                 && getPriorityLevel() == question.getPriorityLevel();
     }
 
+    @Override
     public int hashCode() {
-        return Objects.hash(questionStatement, rightAnswer, wrongAnswers, subtopicReference, priorityLevel);
+        return Objects.hash(questionStatement, rightAnswer, wrongAnswers, subtopic, priorityLevel);
     }
 }

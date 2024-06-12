@@ -56,6 +56,7 @@ public class Topic implements TopicInt {
         getSubtopics().add(subtopic);
     }
 
+    @Override
     public boolean equals(Topic topic) {
         if (topic == null || topic.getClass() != getClass()) {
             return false;
@@ -63,9 +64,18 @@ public class Topic implements TopicInt {
             return true;
         }
 
-        return (getTopicName().equals(topic.getTopicName()) && getSubtopics().equals(topic.getSubtopics()));
+        return (getTopicName().equals(topic.getTopicName()) && equalsSubtopics(topic.getSubtopics()));
     }
 
+    private boolean equalsSubtopics(Set<Subtopic> subtopics) {
+        if (getSubtopics().size() != subtopics.size() || subtopics == null) {
+            return false;
+        } else {
+            return subtopics.containsAll(getSubtopics());
+        }
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(topicName, subtopics);
     }

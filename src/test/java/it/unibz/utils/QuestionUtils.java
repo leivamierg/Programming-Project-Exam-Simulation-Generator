@@ -3,6 +3,7 @@ package it.unibz.utils;
 import it.unibz.model.implementations.Question;
 
 import java.util.Set;
+import static it.unibz.utils.SubtopicUtils.*;
 
 public class QuestionUtils {
 
@@ -11,7 +12,7 @@ public class QuestionUtils {
     public static Question question1_1_1_CSA_FL = new Question("What happens to the binary representation of a number when it gets multiplied by 2?",
             "The bits get shifted to the left",
             Set.of(new String[]{"The bits get flipped", "The bits get shifted to the right", "The bits are shuffled"}),
-            "Binary Arithmetic");
+            "Binary arithmetics");
     public static Question question1_2_1_CSA_FL = new Question("A Set-Reset flip-flop has the purpose of:",
             "memorizing one bit of information",
             Set.of(new String[]{"setting or resetting an external circuit", "memorizing a word of N bits", "generating a clock signal"}),
@@ -123,4 +124,37 @@ public class QuestionUtils {
             Set.of(new String[]{"Wrong answer 2.4.2.1", "Wrong answer 2.4.2.2", "Wrong answer 2.4.2.3"}),
             "Subtopic 2.4");
     public static Question nullQuestion = null;
+
+    /*public static void init() {
+        question1_1_1_CSA_FL.setSubtopicReference(subtopic1_1_CSA_FL);
+        question1_2_1_CSA_FL.setSubtopicReference(subtopic1_2_CSA_FL);
+
+        question1_1_1.setSubtopicReference(subtopic1_1);
+        question1_1_2.setSubtopicReference(subtopic1_1);
+
+        question1_2_1.setSubtopicReference(subtopic1_2);
+        question1_2_2.setSubtopicReference(subtopic1_2);
+
+        question1_3_1.setSubtopicReference(subtopic1_3);
+        question1_3_2.setSubtopicReference(subtopic1_3);
+        question1_3_3.setSubtopicReference(subtopic1_3);
+
+
+        question2_1_1_LA_FL.setSubtopicReference(subtopic2_1_LA_FL);
+        question2_2_1_LA_FL.setSubtopicReference(subtopic2_2_LA_FL);
+
+        question2_1_1.setSubtopicReference(subtopic2_1);
+        question2_1_2.setSubtopicReference(subtopic2_1);
+        question2_1_3.setSubtopicReference(subtopic2_1);
+
+        question2_2_1.setSubtopicReference(subtopic2_2);
+        question2_2_2.setSubtopicReference(subtopic2_2);
+
+        question2_3_1.setSubtopicReference(subtopic2_3);
+        question2_3_2.setSubtopicReference(subtopic2_3);
+        question2_3_3.setSubtopicReference(subtopic2_3);
+
+        question2_4_1.setSubtopicReference(subtopic2_4);
+        question2_4_2.setSubtopicReference(subtopic2_4);
+    }*/
 }
