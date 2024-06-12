@@ -26,14 +26,15 @@ public class Subtopic implements SubtopicInt {
         // setTopic(topic);TODO: add a loop in the Topic class
         setQuestions(questions);
 
-        /*for (Question question : questions) {
-            question.setSubtopic(this);
-        }*/
+        /*
+         * for (Question question : questions) {
+         * question.setSubtopic(this);
+         * }
+         */
 
     }
 
     // setters
-
 
     public void setSubtopicName(String subtopicName) {
         this.subtopicName = subtopicName;
@@ -48,7 +49,6 @@ public class Subtopic implements SubtopicInt {
     }
 
     // getters
-
 
     public String getSubtopicName() {
         return subtopicName;
@@ -76,7 +76,7 @@ public class Subtopic implements SubtopicInt {
     }
 
     public List<Question> getAvailableQuestions() {
-        return getQuestions().stream().filter((q) -> (q.getPriorityLevel() > 0)).toList();
+        return new ArrayList<Question>(getQuestions().stream().filter((q) -> (q.getPriorityLevel() > 0)).toList());
     }
 
     public List<Question> pickQuestions(int n) throws IllegalArgumentException {
@@ -94,7 +94,7 @@ public class Subtopic implements SubtopicInt {
             List<Question> returnList = new ArrayList<>();
 
             for (int i = 0; i < n; i++) {
-                returnList.add(copy.get(i));
+                returnList.add(copy.get(copy.size() - i - 1));
             }
 
             return returnList;
@@ -113,7 +113,8 @@ public class Subtopic implements SubtopicInt {
         }
 
         return (getTopic().equals(subtopic.getTopic())
-                && getSubtopicName().equals(subtopic.getSubtopicName()) && getQuestions().equals(subtopic.getQuestions()));
+                && getSubtopicName().equals(subtopic.getSubtopicName())
+                && getQuestions().equals(subtopic.getQuestions()));
     }
 
     public int hashCode() {
