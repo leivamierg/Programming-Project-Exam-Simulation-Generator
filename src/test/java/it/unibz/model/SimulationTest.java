@@ -4,6 +4,7 @@ import it.unibz.model.implementations.CorrectAnswersAndPercentage;
 import it.unibz.model.implementations.Question;
 import it.unibz.model.implementations.Simulation;
 import it.unibz.model.implementations.Subtopic;
+import it.unibz.utils.QuestionUtils;
 import it.unibz.utils.SubtopicUtils;
 import it.unibz.utils.TopicUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +24,8 @@ public class SimulationTest {
     @BeforeEach
     void init() {
         TopicUtils.init();
-        SubtopicUtils.init();
+        // SubtopicUtils.init();
+        // QuestionUtils.init();
     }
 
     private void updateParametersAfterFirstSim() {

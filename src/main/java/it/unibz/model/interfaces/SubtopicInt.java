@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import it.unibz.model.implementations.Question;
+import it.unibz.model.implementations.Subtopic;
 import it.unibz.model.implementations.Topic;
 
 public interface SubtopicInt {
@@ -23,7 +24,7 @@ public interface SubtopicInt {
     // void setQuestions(List<Question> questions);// TODO: private
 
     // getters
-    Topic getTopic();
+    String getTopic();
 
     // String getTopicName();
 
@@ -66,4 +67,12 @@ public interface SubtopicInt {
      * @param question the question to be added
      */
     void addQuestion(Question question);
+
+    /**
+     * set the topic reference of the subtopic
+     * @param topics all the current loaded topics
+     */
+    void linkSubtopicToTopic(Set<Topic> topics);
+
+    boolean equals(Subtopic subtopic);
 }

@@ -1,12 +1,6 @@
 package it.unibz.model.implementations;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -18,23 +12,28 @@ public class Question implements QuestionInt {
     private String questionStatement;
     private String rightAnswer;
     private Set<String> wrongAnswers;
-    private Subtopic subtopic;
     private int priorityLevel;
+    private Subtopic subtopicReference;
+    private String subtopic;
 
     @JsonCreator
     public Question(@JsonProperty("questionStatement") String questionStatement,
             @JsonProperty("rightAnswer") String rightAnswer,
-            @JsonProperty("wrongAnswers") Set<String> wrongAnswers
+            @JsonProperty("wrongAnswers") Set<String> wrongAnswers, @JsonProperty("subtopic") String subtopic
     /* , Subtopic subtopic */) {
         setQuestionStatement(questionStatement);
         setRightAnswer(rightAnswer);
         setWrongAnswers(wrongAnswers);
+        setSubtopic(subtopic);
         // setSubtopicReference(subtopic);
         setPriorityLevel(1);// starts at 1 by default
     }
 
     // setters
     // override????
+    public void setSubtopic(String name) {
+        subtopic = name;
+    }
     private void setQuestionStatement(String questionStatement) {
         this.questionStatement = questionStatement;
     }
@@ -47,12 +46,13 @@ public class Question implements QuestionInt {
         this.wrongAnswers = wrongAnswers;
     }
 
-    void setSubtopic(Subtopic subtopic) {
-        this.subtopic = subtopic;
-    }
 
     public void setPriorityLevel(int priorityLevel) {
         this.priorityLevel = priorityLevel;
+    }
+
+    public void setSubtopicReference(Subtopic subtopicReference) {
+        this.subtopicReference = subtopicReference;
     }
 
     // getters
@@ -68,20 +68,35 @@ public class Question implements QuestionInt {
         return this.wrongAnswers;
     }
 
-    public Subtopic getSubtopic() {
-        return this.subtopic;
+    public Subtopic getSubtopicReference() {
+        return this.subtopicReference;
     }
 
     public int getPriorityLevel() {
         return this.priorityLevel;
     }
 
+    public String getSubtopic() {
+        return subtopic;
+    }
+
     // toString and others
+
+    @Override
+    public void linkQuestionToSubtopic(Set<Topic> topics) {
+        Optional<Subtopic> correctSubtopic = topics.stream().
+                flatMap(t -> t.getSubtopics().stream()).
+                filter(s -> s.getSubtopicName().equals(subtopic)).
+                findFirst();
+        if (correctSubtopic.isPresent())
+            setSubtopicReference(correctSubtopic.get());
+    }
+
     public String toString() {
         return "Question: " + getQuestionStatement() + System.lineSeparator() + "Right answer: " + getRightAnswer()
                 + System.lineSeparator() + "Wrong answers: " + returnWrongAnswers() + System.lineSeparator()
                 + "Subtopic: "
-                + getSubtopic().getSubtopicName() + System.lineSeparator() + "Priority: " + getPriorityLevel();
+                + getSubtopic() + System.lineSeparator() + "Priority: " + getPriorityLevel();
     }
 
     private String returnWrongAnswers() {
@@ -106,6 +121,7 @@ public class Question implements QuestionInt {
         return shuffleMap.get(getRightAnswer());
     }
 
+    @Override
     public boolean equals(Question question) {
         if (question == null || question.getClass() != getClass()) {
             return false;
@@ -120,6 +136,7 @@ public class Question implements QuestionInt {
                 && getPriorityLevel() == question.getPriorityLevel();
     }
 
+    @Override
     public int hashCode() {
         return Objects.hash(questionStatement, rightAnswer, wrongAnswers, subtopic, priorityLevel);
     }

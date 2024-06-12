@@ -11,9 +11,10 @@
             "v = (3, -3) and w = (2, -2)",
             "v = (5, 2) and w = (4, -3)",
             "v = (-3, 3) and w = (-2, -2)"
-          ]
+          ],
+          "subtopic": "Vectors"
         }
-      ]
+      ], "topic": "Linear Algebra"
     },
     {
       "subtopicName": "Matrices",
@@ -24,9 +25,10 @@
           "wrongAnswers": [
             "Skew symmetric",
             "Symmetric"
-          ]
+          ],
+          "subtopic": "Matrices"
         }
-      ]
+      ], "topic": "Linear Algebra"
     }
   ]
 }

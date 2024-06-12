@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class FileLoader implements FileLoaderInt {
     // attributes
-    private Set<Topic> topics;
+    private static Set<Topic> topics;
     public FileLoader() {
         topics = new HashSet<>();
     }
@@ -21,7 +21,15 @@ public class FileLoader implements FileLoaderInt {
     public Topic loadFile(String fileName) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        return mapper.readValue(new File(fileName), Topic.class);
+        Topic topic = mapper.readValue(new File(fileName), Topic.class);
+        topics.add(topic);
+        for (Subtopic subtopic : topic.getSubtopics()) {
+            subtopic.linkSubtopicToTopic(topics);
+            for (Question question : subtopic.getQuestions()) {
+                question.linkQuestionToSubtopic(topics);
+            }
+        }
+        return topic;
 
     }
     // loadBank

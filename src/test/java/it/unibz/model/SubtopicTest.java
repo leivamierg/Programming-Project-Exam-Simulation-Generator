@@ -5,6 +5,7 @@ import static it.unibz.utils.SubtopicUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -124,4 +125,26 @@ public class SubtopicTest {
         }
     }
 
+    @Nested
+    class equalsAndHashCodeTest {
+        @DisplayName("Should return true for the same object and different objects but with identical parameters")
+        @Test
+        void test7() {
+            Subtopic sTA = subtopic2_4;
+            Subtopic sTB = sTA;
+
+            List<Question> questionsList = new ArrayList<>();
+            for (Question q : sTA.getQuestions()) {
+                questionsList.add(q);
+            }
+
+            Subtopic sTC = new Subtopic(sTA.getSubtopicName(), questionsList, sTA.getTopic());
+
+            assertTrue(sTA.equals(sTB));
+            assertTrue(sTA.equals(sTC));
+
+            assertTrue(sTA.hashCode() == sTB.hashCode());
+            assertTrue(sTA.hashCode() == sTC.hashCode());
+        }
+    }
 }

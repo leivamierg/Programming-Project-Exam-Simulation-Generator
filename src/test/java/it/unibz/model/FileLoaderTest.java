@@ -3,8 +3,8 @@ package it.unibz.model;
 
 import it.unibz.model.implementations.FileLoader;
 import it.unibz.model.implementations.Topic;
-import it.unibz.utils.QuestionUtils;
-import it.unibz.utils.SubtopicUtils;
+import static it.unibz.utils.QuestionUtils.*;
+import static it.unibz.utils.SubtopicUtils.*;
 import it.unibz.utils.TopicUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +16,7 @@ import java.util.Set;
 
 import static it.unibz.utils.TopicUtils.topic1_CSA_FL;
 import static it.unibz.utils.TopicUtils.topic2_LA_FL;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class FileLoaderTest {
@@ -25,14 +24,16 @@ public class FileLoaderTest {
     FileLoader fileLoader = new FileLoader();
     @BeforeEach
     void init() {
+        // QuestionUtils.init();
+        // SubtopicUtils.init();
         TopicUtils.init();
-        SubtopicUtils.init();
     }
     @DisplayName("loadFile(CSA bank) should transform the input json file into the Topic object CSA")
     @Test
     public void loadCSABank() {
         try {
             Topic producedTopic = fileLoader.loadFile(inputBank + "input_csa_bank_test.json");
+            producedTopic.equals(topic1_CSA_FL);
             assertEquals(topic1_CSA_FL, producedTopic);
         } catch (IOException e) {
             throw new RuntimeException(e);
