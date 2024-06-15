@@ -130,7 +130,7 @@ public interface SimulationInt {
      *
      * @return a map with all questions for each subtopic
      */
-    Map<Subtopic, List<Question>> getQuestionsPerSubtopic();
+    Map<Subtopic, Set<Question>> getQuestionsPerSubtopic();
 
     /**
      *
