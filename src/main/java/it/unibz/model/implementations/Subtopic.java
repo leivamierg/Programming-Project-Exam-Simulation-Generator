@@ -107,7 +107,6 @@ public class Subtopic implements SubtopicInt {
 
             for (int i = 0; i < n; i++) {
                 returnSet.add(copy.get(i));
-                returnSet.add(copy.get(copy.size() - i - 1));
             }
 
             return returnSet;

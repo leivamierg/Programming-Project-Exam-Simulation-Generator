@@ -132,12 +132,11 @@ public class Question implements QuestionInt {
         return getQuestionStatement().equals(question.getQuestionStatement())
                 && getRightAnswer().equals(question.getRightAnswer())
                 && getWrongAnswers().equals(question.getWrongAnswers())
-                && getSubtopic().equals(question.getSubtopic())
-                && getPriorityLevel() == question.getPriorityLevel();
+                && getSubtopic().equals(question.getSubtopic());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(questionStatement, rightAnswer, wrongAnswers, subtopic, priorityLevel);
+        return Objects.hash(questionStatement, rightAnswer, wrongAnswers, subtopic);
     }
 }
