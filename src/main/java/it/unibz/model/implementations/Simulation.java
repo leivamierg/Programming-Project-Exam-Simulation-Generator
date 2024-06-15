@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Simulation implements SimulationInt {
     // attributes
-    private Map<Subtopic, List<Question>> subtopicToQuestions;
+    private Map<Subtopic, Set<Question>> subtopicToQuestions;
     private Map<Question, Character> questionToAnswer;
     private Map<Question, Map<String, Character>> questionToShuffledAnswers;
     private Question currentQuestion;
@@ -34,12 +34,12 @@ public class Simulation implements SimulationInt {
     }
 
     private void updateSubtopicToQuestions(Subtopic subtopic, int nrQuestionsPerSubtopic) {
-        List<Question> pickedQuestions = subtopic.pickQuestions(nrQuestionsPerSubtopic);
+        Set<Question> pickedQuestions = subtopic.pickQuestions(nrQuestionsPerSubtopic);
         subtopicToQuestions.put(subtopic, pickedQuestions);
         updateQuestionToShuffledAnswers(pickedQuestions);
     }
 
-    private void updateQuestionToShuffledAnswers(List<Question> questions) {
+    private void updateQuestionToShuffledAnswers(Set<Question> questions) {
         for (Question question: questions) {
             questionToShuffledAnswers.put(question, question.getShuffleMap());
         }
@@ -123,14 +123,14 @@ public class Simulation implements SimulationInt {
 
     @Override
     public Set<Question> getAllWrongQuestions() {
-        return getCorrect_WrongQuestions(getAllQuestions(), false);
+        return getCorrect_WrongQuestions(new HashSet<>(getAllQuestions()), false);
     }
 
     @Override
     public Set<Question> getAllCorrectQuestions() {
-        return getCorrect_WrongQuestions(getAllQuestions(), true);
+        return getCorrect_WrongQuestions(new HashSet<>(getAllQuestions()), true);
     }
-    private Set<Question> getCorrect_WrongQuestions(List<Question> questions, boolean corWrong) {
+    private Set<Question> getCorrect_WrongQuestions(Set<Question> questions, boolean corWrong) {
         return questions.stream().
                 filter(q -> isCorrect(q) && corWrong).
                 collect(Collectors.toSet());
@@ -161,15 +161,15 @@ public class Simulation implements SimulationInt {
 
     @Override
     public CorrectAnswersAndPercentage computeSubtopicStats(Subtopic subtopic) throws NullPointerException {
-            List<Question> questions = subtopicToQuestions.get(subtopic);
+            Set<Question> questions = subtopicToQuestions.get(subtopic);
             return computeStats(questions);
         }
     @Override
     public CorrectAnswersAndPercentage computeSimStats() {
-        return computeStats(getAllQuestions());
+        return computeStats(new HashSet<>(getAllQuestions()));
     }
 
-    private CorrectAnswersAndPercentage computeStats(List<Question> questions) {
+    private CorrectAnswersAndPercentage computeStats(Set<Question> questions) {
         long numberOfCorrectAnswers = questions.stream().
                 filter(this::isCorrect).
                 count();
@@ -186,11 +186,11 @@ public class Simulation implements SimulationInt {
     public List<Question> getAllQuestions() {
         return subtopicToQuestions.entrySet().stream().
                 flatMap(e -> e.getValue().stream()).
-                toList();
+                collect(Collectors.toList());
     }
 
     @Override
-    public Map<Subtopic, List<Question>> getQuestionsPerSubtopic() {
+    public Map<Subtopic, Set<Question>> getQuestionsPerSubtopic() {
         return subtopicToQuestions;
     }
 

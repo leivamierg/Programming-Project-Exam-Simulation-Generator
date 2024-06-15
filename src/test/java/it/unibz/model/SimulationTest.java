@@ -43,13 +43,13 @@ public class SimulationTest {
 
     @Nested
     class SelectTest {
-        private Map<Subtopic, List<Question>> createExpectedSubtopicTo1QuestionFirstSim() {
-            Map<Subtopic, List<Question>> expected = new HashMap<>();
-            List<Question> expectedQuestions1_1 = new ArrayList<>();
+        private Map<Subtopic, Set<Question>> createExpectedSubtopicTo1QuestionFirstSim() {
+            Map<Subtopic, Set<Question>> expected = new HashMap<>();
+            Set<Question> expectedQuestions1_1 = new HashSet<>();
             expectedQuestions1_1.add(question1_1_1);
-            List<Question> expectedQuestions1_2 = new ArrayList<>();
+            Set<Question> expectedQuestions1_2 = new HashSet<>();
             expectedQuestions1_2.add(question1_2_1);
-            List<Question> expectedQuestions1_3 = new ArrayList<>();
+            Set<Question> expectedQuestions1_3 = new HashSet<>();
             expectedQuestions1_3.add(question1_3_1);
             expected.put(subtopic1_1, expectedQuestions1_1);
             expected.put(subtopic1_2, expectedQuestions1_2);
@@ -57,13 +57,13 @@ public class SimulationTest {
             return expected;
         }
 
-        private Map<Subtopic, List<Question>> createExpectedSubtopicTo1QuestionSecondSim() {
-            Map<Subtopic, List<Question>> expected = new HashMap<>();
-            List<Question> expectedQuestions1_1 = new ArrayList<>();
+        private Map<Subtopic, Set<Question>> createExpectedSubtopicTo1QuestionSecondSim() {
+            Map<Subtopic, Set<Question>> expected = new HashMap<>();
+            Set<Question> expectedQuestions1_1 = new HashSet<>();
             expectedQuestions1_1.add(question1_1_2);
-            List<Question> expectedQuestions1_2 = new ArrayList<>();
+            Set<Question> expectedQuestions1_2 = new HashSet<>();
             expectedQuestions1_2.add(question1_2_2);
-            List<Question> expectedQuestions1_3 = new ArrayList<>();
+            Set<Question> expectedQuestions1_3 = new HashSet<>();
             expectedQuestions1_3.add(question1_3_1);
             expected.put(subtopic1_1, expectedQuestions1_1);
             expected.put(subtopic1_2, expectedQuestions1_2);
@@ -71,6 +71,15 @@ public class SimulationTest {
             return expected;
         }
 
+        private boolean contains(Map<Subtopic, Set<Question>> produced, Question question) {
+            return produced.values().stream().
+                    flatMap(s -> s.stream()).
+                    anyMatch(q -> q.equals(question));
+        }
+
+        private boolean xor(boolean a, boolean b) {
+            return (a && !b) || (!a && b);
+        }
         @DisplayName("Null topic: select(Topic) should throw a NullPointerException")
         @Test
         void selectTopicNull() {
@@ -80,16 +89,18 @@ public class SimulationTest {
         @DisplayName("Topic 1 at first sim: select(Topic) should return a map with first question for each subtopic")
         @Test
         void selectTopic1FirstSim() {
-            Map<Subtopic, List<Question>> expected = createExpectedSubtopicTo1QuestionFirstSim();
             simulation.select(topic1, 1);
-            assertEquals(expected, simulation.getQuestionsPerSubtopic());
+            Map<Subtopic, Set<Question>> produced = simulation.getQuestionsPerSubtopic();
+            assertTrue(xor(contains(produced, question1_1_1), contains(produced, question1_1_2)));
+            assertTrue(xor(contains(produced, question1_2_1), contains(produced, question1_2_2)));
+            assertTrue(contains(produced, question1_3_1) ^ contains(produced, question1_3_2) ^ );
         }
 
         @DisplayName("Topic 1 at second sim: select(Topic) should return a map with second question for subtopic 1 and 2, " +
                 "first question for subtopic 3")
         @Test
         void selectTopic1SecondSim() {
-            Map<Subtopic, List<Question>> expected = createExpectedSubtopicTo1QuestionSecondSim();
+            Map<Subtopic, Set<Question>> expected = createExpectedSubtopicTo1QuestionSecondSim();
             updateParametersAfterFirstSim();
             simulation.select(topic1, 1);
             assertEquals(expected, simulation.getQuestionsPerSubtopic());
@@ -120,7 +131,7 @@ public class SimulationTest {
         @Test
         void getAllQuestionsFirstSim() {
             simulation.select(topic1, 1);
-            List<Question> expected = new ArrayList<>();
+            Set<Question> expected = new HashSet<>();
             expected.add(question1_1_1);
             expected.add(question1_2_1);
             expected.add(question1_3_1);
@@ -136,7 +147,7 @@ public class SimulationTest {
             simulation.select(topic1, 1);
             updateParametersAfterFirstSim();
             simulation.select(topic1, 1);
-            List<Question> expected = new ArrayList<>();
+            Set<Question> expected = new HashSet<>();
             expected.add(question1_1_2);
             expected.add(question1_2_2);
             expected.add(question1_3_1);

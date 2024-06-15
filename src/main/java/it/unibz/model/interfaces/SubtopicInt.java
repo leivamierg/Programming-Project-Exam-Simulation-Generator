@@ -1,6 +1,5 @@
 package it.unibz.model.interfaces;
 
-import java.util.List;
 import java.util.Set;
 
 import it.unibz.model.implementations.Question;
@@ -28,23 +27,21 @@ public interface SubtopicInt {
 
     // String getTopicName();
 
-    List<Question> getQuestions();
+    Set<Question> getQuestions();
 
-    List<Question> getAvailableQuestions();// Questions whose priority variable is not 0
+    Set<Question> getAvailableQuestions();// Questions whose priority variable is not 0
 
     // List<Question> getWrongAnsweredQuestions();//might delete it
 
     // other methods
     /**
-     * 
      * @param numOfQuestions number of questions to be picked for the current
      *                       simulation
      * @return the list of the randomly chosen questions according to their priority
-     * 
      * @throws IllegalArgumentException if number of questions is greater than the
      *                                  number of available ones
      */
-    public List<Question> pickQuestions(int numOfQuestions);
+    public Set<Question> pickQuestions(int numOfQuestions);
 
     /**
      * Updates the availableQuestions attribute, containing Question objects with a

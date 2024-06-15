@@ -4,6 +4,7 @@ import it.unibz.model.comparators.QuestionPriorityComparator;
 
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,11 +15,11 @@ public class Subtopic implements SubtopicInt {
     private String subtopicName;
     private String topic;
     private Topic topicReference;
-    private List<Question> questions;
+    private Set<Question> questions;
 
     @JsonCreator
     public Subtopic(@JsonProperty("subtopicName") String subtopicName,
-            @JsonProperty("questions") List<Question> questions, @JsonProperty("topic") String topic) {
+            @JsonProperty("questions") Set<Question> questions, @JsonProperty("topic") String topic) {
         setSubtopicName(subtopicName);
         // setTopic(topic);TODO: add a loop in the Topic class
         setQuestions(questions);
@@ -41,7 +42,7 @@ public class Subtopic implements SubtopicInt {
         this.topic = topic;
     }
 
-    private void setQuestions(List<Question> questions) {
+    private void setQuestions(Set<Question> questions) {
         this.questions = questions;
     }
 
@@ -65,7 +66,7 @@ public class Subtopic implements SubtopicInt {
      * }
      */
 
-    public List<Question> getQuestions() {
+    public Set<Question> getQuestions() {
         return this.questions;
     }
 
@@ -87,11 +88,11 @@ public class Subtopic implements SubtopicInt {
                 + System.lineSeparator() + "Nr. questions: " + getQuestions().size();
     }
 
-    public List<Question> getAvailableQuestions() {
-        return getQuestions().stream().filter((q) -> (q.getPriorityLevel() > 0)).toList();
+    public Set<Question> getAvailableQuestions() {
+        return getQuestions().stream().filter((q) -> (q.getPriorityLevel() > 0)).collect(Collectors.toSet());
     }
 
-    public List<Question> pickQuestions(int n) throws IllegalArgumentException {
+    public Set<Question> pickQuestions(int n) throws IllegalArgumentException {
         if (n > getAvailableQuestions().size()) {
             System.err.println(
                     "Attention: the number of questions requested is greater than the number of available question");
@@ -101,15 +102,15 @@ public class Subtopic implements SubtopicInt {
         } else if (n == getAvailableQuestions().size()) {
             return getAvailableQuestions();
         } else {
-            List<Question> copy = getAvailableQuestions();
+            List<Question> copy = new ArrayList<>(getAvailableQuestions());
             Collections.sort(copy, new QuestionPriorityComparator());// gets the most prioritized at the start
-            List<Question> returnList = new ArrayList<>();
+            Set<Question> returnSet = new HashSet<>();
 
             for (int i = 0; i < n; i++) {
-                returnList.add(copy.get(i));
+                returnSet.add(copy.get(i));
             }
 
-            return returnList;
+            return returnSet;
         }
     }
 
@@ -129,7 +130,7 @@ public class Subtopic implements SubtopicInt {
                 && getSubtopicName().equals(subtopic.getSubtopicName())  && equalsQuestions(subtopic.getQuestions()));
     }
 
-    private boolean equalsQuestions(List<Question> questions) {
+    private boolean equalsQuestions(Set<Question> questions) {
         if (getQuestions().size() != questions.size() || questions == null) {
             return false;
         } else {
