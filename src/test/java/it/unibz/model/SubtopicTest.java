@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -134,14 +135,14 @@ public class SubtopicTest {
             Subtopic sTA = subtopic2_4;
             Subtopic sTB = sTA;
 
-            List<Question> questionsList = new ArrayList<>();
+            Set<Question> questionsSet = new HashSet<>();
             for (Question q : sTA.getQuestions()) {
-                questionsList.add(new Question(new String(q.getQuestionStatement()), new String(q.getRightAnswer()),
+                questionsSet.add(new Question(new String(q.getQuestionStatement()), new String(q.getRightAnswer()),
                         new HashSet<String>(q.getWrongAnswers()),
                         new String(q.getSubtopic())));
             }
 
-            Subtopic sTC = new Subtopic(new String(sTA.getSubtopicName()), questionsList, new String(sTA.getTopic()));
+            Subtopic sTC = new Subtopic(new String(sTA.getSubtopicName()), questionsSet, new String(sTA.getTopic()));
 
             assertTrue(sTA.equals(sTB));
             assertTrue(sTA.equals(sTC));

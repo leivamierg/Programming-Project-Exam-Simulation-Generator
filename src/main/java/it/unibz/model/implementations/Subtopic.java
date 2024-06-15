@@ -21,15 +21,8 @@ public class Subtopic implements SubtopicInt {
     public Subtopic(@JsonProperty("subtopicName") String subtopicName,
             @JsonProperty("questions") Set<Question> questions, @JsonProperty("topic") String topic) {
         setSubtopicName(subtopicName);
-        // setTopic(topic);TODO: add a loop in the Topic class
         setQuestions(questions);
         setTopic(topic);
-
-        /*
-         * for (Question question : questions) {
-         * question.setSubtopic(this);
-         * }
-         */
 
     }
 
@@ -128,16 +121,28 @@ public class Subtopic implements SubtopicInt {
 
         return (getTopic().equals(subtopic.getTopic())
                 && getSubtopicName().equals(subtopic.getSubtopicName())
-                && getQuestions().equals(subtopic.getQuestions()));
+                && equalsQuestions(subtopic.getQuestions()));
     }
 
     private boolean equalsQuestions(Set<Question> questions) {
         if (getQuestions().size() != questions.size() || questions == null) {
             return false;
         } else {
-            for(int i=0; i<questions.size(); i++){
-                if(q)
+            boolean condition = true;
+            for (Question q1 : getQuestions()) {
+                condition = false;
+                for (Question q2 : questions) {
+                    if (q1.equals(q2)) {
+                        condition = true;
+                        break;
+                    }
+                }
+                if (!condition) {
+                    return false;
+                }
             }
+
+            return true;
         }
     }
 

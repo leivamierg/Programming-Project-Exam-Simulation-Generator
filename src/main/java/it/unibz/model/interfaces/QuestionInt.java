@@ -19,7 +19,7 @@ public interface QuestionInt {
      * 
      * @param subtopic reference to the apparteining subtopic
      */
-    // void setSubtopicReference(Subtopic subtopicReference);// TODO
+    // void setSubtopicReference(Subtopic subtopicReference);//
 
     /**
      * 
@@ -64,6 +64,7 @@ public interface QuestionInt {
 
     /**
      * set the subtopic reference of the question
+     * 
      * @param topics all the current loaded topics
      */
     void linkQuestionToSubtopic(Set<Topic> topics);
