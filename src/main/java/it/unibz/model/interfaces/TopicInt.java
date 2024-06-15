@@ -20,7 +20,7 @@ public interface TopicInt {
      * 
      * @param subtopics list of the subtopics contained by the current Topic
      */
-    /* public void setSubtopics(List<Subtopic> subtopics);// TODO: private */
+    /* public void setSubtopics(List<Subtopic> subtopics) */
 
     // getters
     String getTopicName();
