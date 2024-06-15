@@ -5,7 +5,10 @@ import static it.unibz.utils.QuestionUtils.question1_2_1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,8 +33,9 @@ public class QuestionTest {
         void test1() {
             Question q1 = question1_1_1;
             Question q2 = q1;
-            Question q3 = new Question(q1.getQuestionStatement(), q1.getRightAnswer(), q1.getWrongAnswers(),
-                    q1.getSubtopic());
+            Question q3 = new Question(new String(q1.getQuestionStatement()), new String(q1.getRightAnswer()),
+                    new HashSet<String>(q1.getWrongAnswers()),
+                    new String(q1.getSubtopic()));
 
             assertTrue(q1.equals(q2));
             assertTrue(q1.equals(q3));

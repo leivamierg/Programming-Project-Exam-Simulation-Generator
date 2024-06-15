@@ -137,10 +137,12 @@ public class SubtopicTest {
 
             Set<Question> questionsSet = new HashSet<>();
             for (Question q : sTA.getQuestions()) {
-                questionsSet.add(q);
+                questionsSet.add(new Question(new String(q.getQuestionStatement()), new String(q.getRightAnswer()),
+                        new HashSet<String>(q.getWrongAnswers()),
+                        new String(q.getSubtopic())));
             }
 
-            Subtopic sTC = new Subtopic(sTA.getSubtopicName(), questionsSet, sTA.getTopic());
+            Subtopic sTC = new Subtopic(new String(sTA.getSubtopicName()), questionsSet, new String(sTA.getTopic()));
 
             assertTrue(sTA.equals(sTB));
             assertTrue(sTA.equals(sTC));
