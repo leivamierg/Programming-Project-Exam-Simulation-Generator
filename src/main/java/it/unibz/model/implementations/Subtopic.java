@@ -128,6 +128,7 @@ public class Subtopic implements SubtopicInt {
             return false;
         } else {
             boolean condition = true;
+
             for (Question q1 : getQuestions()) {
                 condition = false;
                 for (Question q2 : questions) {
@@ -139,10 +140,12 @@ public class Subtopic implements SubtopicInt {
                 if (!condition) {
                     return false;
                 }
+
             }
 
             return true;
         }
+
     }
 
     @Override
