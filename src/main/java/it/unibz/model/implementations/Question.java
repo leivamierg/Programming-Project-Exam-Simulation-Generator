@@ -34,6 +34,7 @@ public class Question implements QuestionInt {
     public void setSubtopic(String name) {
         subtopic = name;
     }
+
     private void setQuestionStatement(String questionStatement) {
         this.questionStatement = questionStatement;
     }
@@ -45,7 +46,6 @@ public class Question implements QuestionInt {
     private void setWrongAnswers(Set<String> wrongAnswers) {
         this.wrongAnswers = wrongAnswers;
     }
-
 
     public void setPriorityLevel(int priorityLevel) {
         this.priorityLevel = priorityLevel;
@@ -84,10 +84,8 @@ public class Question implements QuestionInt {
 
     @Override
     public void linkQuestionToSubtopic(Set<Topic> topics) {
-        Optional<Subtopic> correctSubtopic = topics.stream().
-                flatMap(t -> t.getSubtopics().stream()).
-                filter(s -> s.getSubtopicName().equals(subtopic)).
-                findFirst();
+        Optional<Subtopic> correctSubtopic = topics.stream().flatMap(t -> t.getSubtopics().stream())
+                .filter(s -> s.getSubtopicName().equals(subtopic)).findFirst();
         if (correctSubtopic.isPresent())
             setSubtopicReference(correctSubtopic.get());
     }
@@ -132,12 +130,11 @@ public class Question implements QuestionInt {
         return getQuestionStatement().equals(question.getQuestionStatement())
                 && getRightAnswer().equals(question.getRightAnswer())
                 && getWrongAnswers().equals(question.getWrongAnswers())
-                && getSubtopic().equals(question.getSubtopic())
-                && getPriorityLevel() == question.getPriorityLevel();
+                && getSubtopic().equals(question.getSubtopic());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(questionStatement, rightAnswer, wrongAnswers, subtopic, priorityLevel);
+        return Objects.hash(questionStatement, rightAnswer, wrongAnswers, subtopic);
     }
 }

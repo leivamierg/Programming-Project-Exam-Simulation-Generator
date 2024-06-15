@@ -125,14 +125,17 @@ public class Subtopic implements SubtopicInt {
         }
 
         return (getTopic().equals(subtopic.getTopic())
-                && getSubtopicName().equals(subtopic.getSubtopicName()) && equalsQuestions(subtopic.getQuestions()));
+                && getSubtopicName().equals(subtopic.getSubtopicName())
+                && getQuestions().equals(subtopic.getQuestions()));
     }
 
     private boolean equalsQuestions(List<Question> questions) {
         if (getQuestions().size() != questions.size() || questions == null) {
             return false;
         } else {
-            return questions.containsAll(getQuestions());
+            for(int i=0; i<questions.size(); i++){
+                if(q)
+            }
         }
     }
 
