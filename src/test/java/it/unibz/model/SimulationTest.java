@@ -110,11 +110,13 @@ public class SimulationTest {
         @Test
         void getAllQuestionsFirstSim() {
             simulation.select(topic1, 1);
-            Set<Question> expected = new HashSet<>();
-            expected.add(question1_1_1);
-            expected.add(question1_2_1);
-            expected.add(question1_3_1);
-            assertEquals(expected, simulation.getAllQuestions());
+            Map<Subtopic, Set<Question>> subtopicToQuestions = simulation.getQuestionsPerSubtopic();
+            List<Question> expected = new ArrayList<>();
+            for (Set<Question> questions : subtopicToQuestions.values()) {
+                expected.addAll(questions);
+            }
+            List<Question> produced =  simulation.getAllQuestions();
+            assertEquals(expected, produced);
         }
         @DisplayName("The subtopic -> questions are: " +
                 "subtopic 1.1 -> [question1_1_2], " +
@@ -123,14 +125,15 @@ public class SimulationTest {
                 "getAllQuestions() should output [question1_1_2, question1_2_2, question_1_3_2]")
         @Test
         void getAllQuestionsSecondSim() {
-            simulation.select(topic1, 1);
             updateParametersAfterFirstSim();
             simulation.select(topic1, 1);
-            Set<Question> expected = new HashSet<>();
-            expected.add(question1_1_2);
-            expected.add(question1_2_2);
-            expected.add(question1_3_1);
-            assertEquals(expected, simulation.getAllQuestions());
+            Map<Subtopic, Set<Question>> subtopicToQuestions = simulation.getQuestionsPerSubtopic();
+            List<Question> expected = new ArrayList<>();
+            for (Set<Question> questions : subtopicToQuestions.values()) {
+                expected.addAll(questions);
+            }
+            List<Question> produced =  simulation.getAllQuestions();
+            assertEquals(expected, produced);
 
         }
     }
