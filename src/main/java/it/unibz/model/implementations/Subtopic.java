@@ -25,14 +25,15 @@ public class Subtopic implements SubtopicInt {
         setQuestions(questions);
         setTopic(topic);
 
-        /*for (Question question : questions) {
-            question.setSubtopic(this);
-        }*/
+        /*
+         * for (Question question : questions) {
+         * question.setSubtopic(this);
+         * }
+         */
 
     }
 
     // setters
-
 
     public void setSubtopicName(String subtopicName) {
         this.subtopicName = subtopicName;
@@ -50,7 +51,6 @@ public class Subtopic implements SubtopicInt {
         this.topicReference = topicReference;
     }
     // getters
-
 
     public String getSubtopicName() {
         return subtopicName;
@@ -76,12 +76,11 @@ public class Subtopic implements SubtopicInt {
 
     // toString and others
     public void linkSubtopicToTopic(Set<Topic> topics) {
-        Optional<Topic> correctSubtopic = topics.stream().
-                filter(s -> s.getTopicName().equals(topic)).
-                findFirst();
+        Optional<Topic> correctSubtopic = topics.stream().filter(s -> s.getTopicName().equals(topic)).findFirst();
         if (correctSubtopic.isPresent())
             setTopicReference(correctSubtopic.get());
     }
+
     public String toString() {
         return "Subtopic: " + getSubtopicName() + System.lineSeparator() + "Topic: "
                 + getTopic()
@@ -108,6 +107,7 @@ public class Subtopic implements SubtopicInt {
 
             for (int i = 0; i < n; i++) {
                 returnSet.add(copy.get(i));
+                returnSet.add(copy.get(copy.size() - i - 1));
             }
 
             return returnSet;
@@ -127,7 +127,7 @@ public class Subtopic implements SubtopicInt {
         }
 
         return (getTopic().equals(subtopic.getTopic())
-                && getSubtopicName().equals(subtopic.getSubtopicName())  && equalsQuestions(subtopic.getQuestions()));
+                && getSubtopicName().equals(subtopic.getSubtopicName()) && equalsQuestions(subtopic.getQuestions()));
     }
 
     private boolean equalsQuestions(Set<Question> questions) {
@@ -140,6 +140,6 @@ public class Subtopic implements SubtopicInt {
 
     @Override
     public int hashCode() {
-        return Objects.hash(topic, subtopicName,  questions);
+        return Objects.hash(topic, subtopicName, questions);
     }
 }
