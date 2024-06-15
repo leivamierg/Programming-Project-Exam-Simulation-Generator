@@ -87,14 +87,14 @@ public class SimulationTest {
 
         @DisplayName("Set of subtopics null: select(null set) should throw a NullPointerException")
         @Test
-        void selectListSubtopicsNull() {
+        void selectSetSubtopicsNull() {
             Set<Subtopic> nullSet = null;
             assertThrows(NullPointerException.class, () -> simulation.select(nullSet, 2));
         }
 
         @DisplayName("Empty Set of subtopics: select(Set<Subtopic>) should throw an IllegalStateException")
         @Test
-        void selectListSubtopicNull() {
+        void selectSetSubtopicNull() {
             Set<Subtopic> emptySet = new HashSet<>();
             assertThrows(IllegalStateException.class, () -> simulation.select(emptySet, 2));
         }
