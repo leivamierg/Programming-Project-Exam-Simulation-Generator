@@ -64,9 +64,10 @@ public interface SimulationInt {
 
     /**
      * terminates the simulation, compute the stats, updates all parameters for the next simulation
+     * @param stats the stats object used to update stats once the simulation terminates
      * @return a string containing the result of the sim
      */
-    String terminate();
+    String terminate(Stats stats);
 
     /**
      *
@@ -138,6 +139,12 @@ public interface SimulationInt {
      */
 
     Question getCurrentQuestion();
+    /**
+     *
+     * @return the reference to the topic the sim is about
+     */
+
+    Topic getTopicReference();
 
     /**
      *
@@ -150,4 +157,11 @@ public interface SimulationInt {
      * @return a map mapping every question to its shuffled answers label (A, B, C, D)
      */
     Map<Question, Map<String, Character>> getQuestionToShuffledAnswers();
+
+    /**
+     *
+     * @return the name of the topic the sim is about
+     */
+
+    String getTopic();
 }

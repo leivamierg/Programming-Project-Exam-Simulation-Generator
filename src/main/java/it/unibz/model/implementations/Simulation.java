@@ -86,10 +86,11 @@ public class Simulation implements SimulationInt {
 
 
     @Override
-    public String terminate() {
+    public String terminate(Stats stats) {
         // update all parameters
         updateNonSelectedQuestions();
         updateCorrectAndWrongQuestions();
+        stats.updateStats(this);
         return computeResult();
 
     }
@@ -140,10 +141,9 @@ public class Simulation implements SimulationInt {
     }
     @Override
     public Set<Question> getNonSelectedQuestions() {
-        Set<Question> nonSel = getAllSelected_NonSelectedQuestions().stream().
+        return getAllSelected_NonSelectedQuestions().stream().
                 filter(q -> !getAllQuestions().contains(q)).
                 collect(Collectors.toSet());
-        return nonSel;
     }
 
     private Set<Question> getAllSelected_NonSelectedQuestions() {
@@ -160,8 +160,8 @@ public class Simulation implements SimulationInt {
                 + simPerc + System.lineSeparator();
         for (Subtopic subtopic : subtopicToQuestions.keySet()) {
             CorrectAnswersAndPercentage subtopicStats = computeSubtopicStats(subtopic);
-            String subtopicCorAns = "Number of correct answers: " + simStats.correctAnswers() + "/" + getAllQuestions().size();
-            String subtopicPerc = "Percentage of correct answers: " + simStats.percentage() + "%";
+            String subtopicCorAns = "Number of correct answers: " + subtopicStats.correctAnswers() + "/" + getAllQuestions().size();
+            String subtopicPerc = "Percentage of correct answers: " + subtopicStats.percentage() + "%";
             result += subtopic.getSubtopicName() + ": " + System.lineSeparator() + subtopicCorAns + System.lineSeparator()
                     + subtopicPerc + System.lineSeparator();
         }
@@ -207,6 +207,18 @@ public class Simulation implements SimulationInt {
     @Override
     public Question getCurrentQuestion() {
         return currentQuestion;
+    }
+
+    @Override
+    public String getTopic() {
+        List<Subtopic> subtopics = new ArrayList<>(subtopicToQuestions.keySet());
+        return subtopics.get(0).getTopic();
+    }
+
+    @Override
+    public Topic getTopicReference() {
+        List<Subtopic> subtopics = new ArrayList<>(subtopicToQuestions.keySet());
+        return subtopics.get(0).getTopicReference();
     }
 
     @Override
