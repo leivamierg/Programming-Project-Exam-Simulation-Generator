@@ -70,15 +70,12 @@ public class Simulation implements SimulationInt {
     public void changeQuestion(char prevOrNext) throws IllegalArgumentException {
         List<Question> allQuestions = getAllQuestions();
         int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
-        if (idxCurrentQuestion > 0 || idxCurrentQuestion < allQuestions.size() - 1) {
-            switch (prevOrNext) {
-                case '+':  setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
-                    break;
-                case '-': setCurrentQuestion(allQuestions.get(idxCurrentQuestion - 1));
-                    break;
-                default: throw new IllegalArgumentException();
-            }
-        }
+        if (prevOrNext != '+' && prevOrNext != '-')
+            throw new IllegalArgumentException();
+        if (idxCurrentQuestion >= 0 && idxCurrentQuestion < allQuestions.size() - 1 && prevOrNext == '+') {
+            setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
+        } else if (idxCurrentQuestion > 0 && idxCurrentQuestion <= allQuestions.size() - 1 && prevOrNext == '-')
+            setCurrentQuestion(allQuestions.get(idxCurrentQuestion - 1));
     }
 
     @Override
@@ -113,32 +110,45 @@ public class Simulation implements SimulationInt {
 
     @Override
     public Set<Question> getSubtopicCorrectQuestions(Subtopic subtopic) {
-        return getCorrect_WrongQuestions(subtopicToQuestions.get(subtopic), true);
+        return getCorrectQuestions(subtopicToQuestions.get(subtopic));
     }
 
     @Override
     public Set<Question> getSubtopicWrongQuestions(Subtopic subtopic) {
-        return getCorrect_WrongQuestions(subtopicToQuestions.get(subtopic), false);
+        return getWrongQuestions(subtopicToQuestions.get(subtopic));
     }
 
     @Override
     public Set<Question> getAllWrongQuestions() {
-        return getCorrect_WrongQuestions(new HashSet<>(getAllQuestions()), false);
+        return getWrongQuestions(new HashSet<>(getAllQuestions()));
     }
 
     @Override
     public Set<Question> getAllCorrectQuestions() {
-        return getCorrect_WrongQuestions(new HashSet<>(getAllQuestions()), true);
+        return getCorrectQuestions(new HashSet<>(getAllQuestions()));
     }
-    private Set<Question> getCorrect_WrongQuestions(Set<Question> questions, boolean corWrong) {
+    private Set<Question> getCorrectQuestions(Set<Question> questions) {
         return questions.stream().
-                filter(q -> isCorrect(q) && corWrong).
+                filter(this::isCorrect).
+                collect(Collectors.toSet());
+    }
+
+    private Set<Question> getWrongQuestions(Set<Question> questions) {
+        return questions.stream().
+                filter(q -> !isCorrect(q)).
                 collect(Collectors.toSet());
     }
     @Override
     public Set<Question> getNonSelectedQuestions() {
-        return getAllQuestions().stream().
+        Set<Question> nonSel = getAllSelected_NonSelectedQuestions().stream().
                 filter(q -> !getAllQuestions().contains(q)).
+                collect(Collectors.toSet());
+        return nonSel;
+    }
+
+    private Set<Question> getAllSelected_NonSelectedQuestions() {
+        return subtopicToQuestions.keySet().stream().
+                flatMap(s -> s.getQuestions().stream()).
                 collect(Collectors.toSet());
     }
 
@@ -173,7 +183,7 @@ public class Simulation implements SimulationInt {
         long numberOfCorrectAnswers = questions.stream().
                 filter(this::isCorrect).
                 count();
-        double percentage = (double) numberOfCorrectAnswers / questions.size();
+        double percentage = ((double) numberOfCorrectAnswers / questions.size()) * 100;
         return new CorrectAnswersAndPercentage(numberOfCorrectAnswers, percentage);
     }
     @Override

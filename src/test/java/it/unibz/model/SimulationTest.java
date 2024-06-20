@@ -148,7 +148,7 @@ public class SimulationTest {
         @DisplayName("The current question is the first one; therefore, changeQuestion('+') should change the current question to the second one")
         @Test
         void nextWithFirstQuestion() {
-            Question expected = question1_1_2;
+            Question expected = simulation.getAllQuestions().get(1);
             simulation.changeQuestion('+');
             Question produced = simulation.getCurrentQuestion();
             assertEquals(expected, produced);
@@ -158,7 +158,7 @@ public class SimulationTest {
         @Test
         void prevWithLastQuestion() {
             simulation.setCurrentQuestion(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1));
-            Question expected = question1_3_1;
+            Question expected = simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 2);
             simulation.changeQuestion('-');
             Question produced = simulation.getCurrentQuestion();
             assertEquals(expected, produced);
@@ -167,7 +167,7 @@ public class SimulationTest {
         @DisplayName("The current question is the first one; therefore, changeQuestion('-') should not change the current question")
         @Test
         void prevWithFirstQuestion() {
-            Question expected = question1_1_1;
+            Question expected = simulation.getAllQuestions().get(0);
             simulation.changeQuestion('-');
             Question produced = simulation.getCurrentQuestion();
             assertEquals(expected, produced);
@@ -177,7 +177,7 @@ public class SimulationTest {
         @Test
         void nextWithLastQuestion() {
             simulation.setCurrentQuestion(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1));
-            Question expected = question1_3_2;
+            Question expected = simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1);
             simulation.changeQuestion('+');
             Question produced = simulation.getCurrentQuestion();
             assertEquals(expected, produced);
@@ -193,7 +193,7 @@ public class SimulationTest {
         @Test
         void changeQuestionWithIdx1() {
             simulation.setCurrentQuestion(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1));
-            Question expected = question1_1_1;
+            Question expected = simulation.getAllQuestions().get(0);
             simulation.changeQuestion(1);
             Question produced = simulation.getCurrentQuestion();
             assertEquals(expected, produced);
@@ -208,7 +208,7 @@ public class SimulationTest {
         @DisplayName("The input index is too big: changeQuestion(too big index) should throw an IndexOutOfBoundException")
         @Test
         void changeQuestionWithTooBigIdx() {
-            assertThrows(IndexOutOfBoundsException.class, () -> simulation.changeQuestion(simulation.getAllQuestions().size()));
+            assertThrows(IndexOutOfBoundsException.class, () -> simulation.changeQuestion(simulation.getAllQuestions().size() + 1));
         }
     }
 
@@ -225,8 +225,8 @@ public class SimulationTest {
         @Test
         void validAnswerToFirstQuestion() {
             Map<Question, Character> expectedMap = new HashMap<>();
-            expectedMap.put(question1_1_1, 'A');
-            Question expectedCurrentQuestion = question1_2_1;
+            expectedMap.put(simulation.getAllQuestions().get(0), 'A');
+            Question expectedCurrentQuestion = simulation.getAllQuestions().get(1);
             simulation.answer('a');
             assertEquals(expectedMap, simulation.getQuestionToAnswer());
             assertEquals(expectedCurrentQuestion, simulation.getCurrentQuestion());
@@ -236,9 +236,10 @@ public class SimulationTest {
                 "the answer and the current question should remain the last one")
         @Test
         void validAnswerToLastQuestion() {
+            simulation.setCurrentQuestion(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1));
             Map<Question, Character> expectedMap = new HashMap<>();
-            expectedMap.put(question1_3_1, '-');
-            Question expectedCurrentQuestion = question1_3_1;
+            expectedMap.put(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1), '-');
+            Question expectedCurrentQuestion = simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1);
             simulation.answer('-');
             assertEquals(expectedMap, simulation.getQuestionToAnswer());
             assertEquals(expectedCurrentQuestion, simulation.getCurrentQuestion());
@@ -270,11 +271,11 @@ public class SimulationTest {
         private char getWrongAnswer(Question question) {
             char wrongAnswer = 'E';
             switch (getCorrectAnswer(question)) {
-                case 'A': wrongAnswer = 'A';
+                case 'A': wrongAnswer = 'B';
                     break;
                 case 'B':
                 case 'C':
-                case 'D': wrongAnswer = 'B';
+                case 'D': wrongAnswer = 'A';
                     break;
             }
             return wrongAnswer;
@@ -300,7 +301,7 @@ public class SimulationTest {
 
         @DisplayName("The input question is null: isCorrect(null question) should throw a NullPointerException")
         @Test
-        void selectListSubtopicsNull() {
+        void checkNullQuestion() {
             assertThrows(NullPointerException.class, () -> simulation.isCorrect(nullQuestion));
         }
     }
@@ -319,31 +320,32 @@ public class SimulationTest {
             simulation.answer(getWrongAnswer(question1_2_2));
             // third subtopic -> both questions wrong
             simulation.answer(getWrongAnswer(question1_3_1));
-            simulation.answer(getWrongAnswer(question1_3_2));
+            simulation.answer(getWrongAnswer(question1_3_3));
         }
+
         private char getCorrectAnswer(Question question) {
             return question.getCorrectAnswerLabel(simulation.getQuestionToShuffledAnswers().get(question));
         }
         private char getWrongAnswer(Question question) {
             char wrongAnswer = 'E';
             switch (getCorrectAnswer(question)) {
-                case 'A': wrongAnswer = 'A';
+                case 'A': wrongAnswer = 'B';
                     break;
                 case 'B':
                 case 'C':
-                case 'D': wrongAnswer = 'B';
+                case 'D': wrongAnswer = 'A';
                     break;
             }
             return wrongAnswer;
         }
 
         @DisplayName("Selected questions: [question1_1_1, question1_1_2, question1_2_1, " +
-                "question1_2_2, question1_3_1, question1_3_2] " +
-                "getNonSelectedQuestions should return: [question1_3_3]")
+                "question1_2_2, question1_3_1, question1_3_3] " +
+                "getNonSelectedQuestions should return: [question1_3_2]")
         @Test
         void nonSelectedQuestions() {
             Set<Question> expected = new HashSet<>();
-            expected.add(question1_3_3);
+            expected.add(question1_3_2);
             Set<Question> produced = simulation.getNonSelectedQuestions();
             assertEquals(expected, produced);
         }
@@ -359,13 +361,13 @@ public class SimulationTest {
             assertEquals(expected, produced);
         }
 
-        @DisplayName("getAllWrongQuestions() should return: [question1_2_2, question1_3_1, question1_3_2]")
+        @DisplayName("getAllWrongQuestions() should return: [question1_2_2, question1_3_1, question1_3_3]")
         @Test
         void wrongQuestions() {
             Set<Question> expected = new HashSet<>();
             expected.add(question1_2_2);
             expected.add(question1_3_1);
-            expected.add(question1_3_2);
+            expected.add(question1_3_3);
             Set<Question> produced = simulation.getAllWrongQuestions();
             assertEquals(expected, produced);
         }
@@ -414,12 +416,12 @@ public class SimulationTest {
             assertEquals(expected, produced);
         }
 
-        @DisplayName("getSubtopicWrongQuestions(subtopic 1.3) should return: [question1_3_1, question1_3_2]")
+        @DisplayName("getSubtopicWrongQuestions(subtopic 1.3) should return: [question1_3_1, question1_3_3]")
         @Test
         void wrongQuestionsSubtopic1_3() {
             Set<Question> expected = new HashSet<>();
             expected.add(question1_3_1);
-            expected.add(question1_3_2);
+            expected.add(question1_3_3);
             Set<Question> produced = simulation.getSubtopicWrongQuestions(subtopic1_3);
             assertEquals(expected, produced);
         }
@@ -439,7 +441,7 @@ public class SimulationTest {
             simulation.answer(getWrongAnswer(question1_2_2));
             // third subtopic -> both questions wrong
             simulation.answer(getWrongAnswer(question1_3_1));
-            simulation.answer(getWrongAnswer(question1_3_2));
+            simulation.answer(getWrongAnswer(question1_3_3));
         }
         private char getCorrectAnswer(Question question) {
             return question.getCorrectAnswerLabel(simulation.getQuestionToShuffledAnswers().get(question));
@@ -447,11 +449,11 @@ public class SimulationTest {
         private char getWrongAnswer(Question question) {
             char wrongAnswer = 'E';
             switch (getCorrectAnswer(question)) {
-                case 'A': wrongAnswer = 'A';
+                case 'A': wrongAnswer = 'B';
                     break;
                 case 'B':
                 case 'C':
-                case 'D': wrongAnswer = 'B';
+                case 'D': wrongAnswer = 'A';
                     break;
             }
             return wrongAnswer;
