@@ -41,7 +41,7 @@ public class SubtopicTest {
 
             assertEquals(q1.getPriorityLevel(), 2);
             assertEquals(q2.getPriorityLevel(), 4);
-            assertEquals(sT1.getAvailableQuestions(), List.of(q1, q2));
+            assertEquals(sT1.getAvailableQuestions(), Set.of(q1, q2));
         }
 
         @DisplayName("Shouldn't return anything as both questions have 0 as their priority level")
@@ -55,7 +55,7 @@ public class SubtopicTest {
             q3.setPriorityLevel(0);
             q4.setPriorityLevel(0);
 
-            assertEquals(sT2.getAvailableQuestions(), List.of());
+            assertEquals(sT2.getAvailableQuestions(), Set.of());
         }
 
         @DisplayName("Should return 2 out of the 3 questions within the subtopic")
@@ -71,7 +71,8 @@ public class SubtopicTest {
             q6.setPriorityLevel(3);
             q7.setPriorityLevel(0);
 
-            assertEquals(sT3.getAvailableQuestions(), List.of(q5, q6));
+            assertTrue(sT3.getAvailableQuestions().equals(Set.of(q6, q5)));
+            assertTrue(sT3.getAvailableQuestions().size() == 2);
         }
     }
 

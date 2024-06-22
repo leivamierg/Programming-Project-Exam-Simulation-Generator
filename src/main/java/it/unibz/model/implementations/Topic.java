@@ -18,9 +18,11 @@ public class Topic implements TopicInt {
         setTopicName(topicName);
         setSubtopics(subtopics);
 
-        /*for (Subtopic subtopic : subtopics) {
-            subtopic.setTopic(this);
-        }*/
+        /*
+         * for (Subtopic subtopic : subtopics) {
+         * subtopic.setTopic(this);
+         * }
+         */
 
     }
 
@@ -67,12 +69,39 @@ public class Topic implements TopicInt {
         return (getTopicName().equals(topic.getTopicName()) && equalsSubtopics(topic.getSubtopics()));
     }
 
+    /*
+     * private boolean equalsSubtopics(Set<Subtopic> subtopics) {
+     * if (getSubtopics().size() != subtopics.size() || subtopics == null) {
+     * return false;
+     * } else {
+     * return subtopics.containsAll(getSubtopics());
+     * }
+     * }
+     */
+
     private boolean equalsSubtopics(Set<Subtopic> subtopics) {
         if (getSubtopics().size() != subtopics.size() || subtopics == null) {
             return false;
         } else {
-            return subtopics.containsAll(getSubtopics());
+            boolean condition = true;
+
+            for (Subtopic s1 : getSubtopics()) {
+                condition = false;
+                for (Subtopic s2 : getSubtopics()) {
+                    if (s1.equals(s2)) {
+                        condition = true;
+                        break;
+                    }
+                }
+                if (!condition) {
+                    return false;
+                }
+
+            }
+
+            return true;
         }
+
     }
 
     @Override

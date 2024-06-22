@@ -1,6 +1,5 @@
 package it.unibz.model;
 
-import static it.unibz.utils.SubtopicUtils.subtopic2_4;
 import static it.unibz.utils.TopicUtils.topic1;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,9 +33,18 @@ public class TopicTest {
             Topic topicB = topicA;
 
             Set<Subtopic> subtopicsSet = new HashSet<>();
-            subtopicsSet.addAll(topicB.getSubtopics());
-
             Topic topicC = new Topic(topicA.getTopicName(), subtopicsSet);
+
+            for (Subtopic s : topicA.getSubtopics()) {
+                Set<Question> newSet = new HashSet<>();
+                Subtopic sX = new Subtopic(s.getSubtopicName(), newSet, topicA.getTopicName());
+                for (Question q : s.getQuestions()) {
+                    Question newQuestion = new Question(q.getQuestionStatement(), q.getRightAnswer(),
+                            q.getWrongAnswers(), q.getSubtopic());
+                    sX.getQuestions().add(newQuestion);
+                }
+                topicC.getSubtopics().add(sX);
+            }
 
             assertTrue(topicA.equals(topicB));
             assertTrue(topicA.equals(topicC));
