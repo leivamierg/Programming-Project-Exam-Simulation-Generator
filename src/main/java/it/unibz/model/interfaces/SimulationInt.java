@@ -64,7 +64,7 @@ public interface SimulationInt {
 
     /**
      * terminates the simulation, compute the stats, updates all parameters for the next simulation
-     * @param stats the stats object used to update stats once the simulation terminates
+     * @param stats the stats object needed to update the stats once the sim has terminated
      * @return a string containing the result of the sim
      */
     String terminate(Stats stats);
