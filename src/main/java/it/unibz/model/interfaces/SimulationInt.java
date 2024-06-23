@@ -31,6 +31,7 @@ public interface SimulationInt {
      * @param nrQuestionsPerSubtopic number of questions per subtopic
      * @throws NullPointerException if subtopics is null
      * @throws IllegalStateException if subtopics is empty
+     * @throws IllegalArgumentException if at least one of the subtopic has a different topic
      */
     void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic);
 

@@ -25,9 +25,14 @@ public class Simulation implements SimulationInt {
             }
     }
     @Override
-    public void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic) throws IllegalStateException, NullPointerException {
+    public void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic) throws
+            IllegalStateException, IllegalArgumentException, NullPointerException {
         if (!subtopics.isEmpty()) {
+            List<Subtopic> temp = new ArrayList<>(subtopics);
+            String topic = temp.get(0).getTopic();
             for (Subtopic subtopic : subtopics) {
+                if (!subtopic.getTopic().equals(topic))
+                    throw new IllegalArgumentException();
                 updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
             }
         } else throw new IllegalStateException();
@@ -183,7 +188,7 @@ public class Simulation implements SimulationInt {
             Score subtopicStats = computeSubtopicStats(subtopic);
             subtopicsResult += getResult(subtopicStats, subtopic.getSubtopicName());
         }
-        return simResult + System.lineSeparator() + subtopicsResult;
+        return simResult + subtopicsResult;
     }
 
     private static String getResult(Score score, String subtopicSim) {
@@ -193,7 +198,7 @@ public class Simulation implements SimulationInt {
         String perc = "Percentage of correct answers: " + score.percentage() + "%";
         String result = subtopicSim + " result:" + System.lineSeparator() + corAns + System.lineSeparator()
                 + wrongAns + System.lineSeparator() + blankAns + System.lineSeparator() +
-                perc + System.lineSeparator();
+                perc + System.lineSeparator() + System.lineSeparator();
         return result;
     }
 

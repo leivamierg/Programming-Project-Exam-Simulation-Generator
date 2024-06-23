@@ -1,9 +1,6 @@
 package it.unibz.model;
 
-import it.unibz.model.implementations.Question;
-import it.unibz.model.implementations.Score;
-import it.unibz.model.implementations.Simulation;
-import it.unibz.model.implementations.Subtopic;
+import it.unibz.model.implementations.*;
 import it.unibz.utils.TopicUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -95,6 +92,16 @@ public class SimulationTest {
         void selectSetSubtopicNull() {
             Set<Subtopic> emptySet = new HashSet<>();
             assertThrows(IllegalStateException.class, () -> simulation.select(emptySet, 2));
+        }
+
+        @DisplayName("Set of subtopics with two different topics: select(invalid Set<Subtopic>) " +
+                "should throw an IllegalArgumentException")
+        @Test
+        void selectInvalidSet() {
+            Set<Subtopic> invalidSet = new HashSet<>();
+            invalidSet.add(subtopic1_1);
+            invalidSet.add(subtopic2_1);
+            assertThrows(IllegalArgumentException.class, () -> simulation.select(invalidSet, 2));
         }
     }
 
@@ -456,6 +463,69 @@ public class SimulationTest {
             assertEquals(expected, produced);
         }
     }
+    @Nested
+    class Selected_NonSelectedQuestionsTest {
+        private boolean equalsSet(Set<Question> producedSet, Set<Question> expectedSet) {
+            if (producedSet.size() != expectedSet.size()) {
+                return false;
+            } else {
+                boolean condition = true;
+                for (Question q1 : expectedSet) {
+                    condition = false;
+                    for (Question q2 : producedSet) {
+                        if (q1.equals(q2)) {
+                            condition = true;
+                            break;
+                        }
+                    }
+                    if (!condition) {
+                        return false;
+                    }
+
+                }
+
+                return true;
+            }
+        }
+        @BeforeEach
+        void setUpSim() {
+            simulation.select(Set.of(new Subtopic[]{subtopic1_1, subtopic1_3}), 2);
+        }
+
+        @DisplayName("getSubtopicSelected_NonSelectedQuestions(subtopic 1.1) should return: " +
+                "[question 1.1.1, question 1.1.2]")
+        @Test
+        void selected_NonSelectedS1_1Test() {
+            Set<Question> expected = new HashSet<>();
+            expected.add(question1_1_1);
+            expected.add(question1_1_2);
+            assertTrue(equalsSet(simulation.getSubtopicSelected_NonSelectedQuestions(subtopic1_1), expected));
+        }
+
+        @DisplayName("getSubtopicSelected_NonSelectedQuestions(subtopic 1.3) should return: " +
+                "[question 1.3.1, question 1.3.2, question 1.3.3]")
+        @Test
+        void selected_NonSelectedS1_3Test() {
+            Set<Question> expected = new HashSet<>();
+            expected.add(question1_3_1);
+            expected.add(question1_3_2);
+            expected.add(question1_3_3);
+            assertTrue(equalsSet(simulation.getSubtopicSelected_NonSelectedQuestions(subtopic1_3), expected));
+        }
+
+        @DisplayName("getAllSelected_NonSelectedQuestions() should return: " +
+                "[question 1.1.1, question 1.1.2, question 1.3.1, question 1.3.2, question 1.3.3]")
+        @Test
+        void selected_NonSelectedSimTest() {
+            Set<Question> expected = new HashSet<>();
+            expected.add(question1_1_1);
+            expected.add(question1_1_2);
+            expected.add(question1_3_1);
+            expected.add(question1_3_2);
+            expected.add(question1_3_3);
+            assertTrue(equalsSet(simulation.getAllSelected_NonSelectedQuestions(), expected));
+        }
+    }
 
     @Nested
     class StatsTest {
@@ -522,6 +592,46 @@ public class SimulationTest {
             Score produced = simulation.computeSimStats();
             Score expected = new Score(3, 1, 2, 6, 7, 50.0);
             assertEquals(expected, produced);
+        }
+    }
+
+    @Nested
+    class TerminateTest {
+        @BeforeEach
+        void setUpSim() {
+            simulation.select(topic1, 2);
+            simulation.start();
+            // first subtopic -> both questions correct
+            simulation.answer(getCorrectAnswer(question1_1_1));
+            simulation.answer(getCorrectAnswer(question1_1_2));
+            // second subtopic -> one question correct, one question wrong
+            simulation.answer(getCorrectAnswer(question1_2_1));
+            simulation.answer('-');
+            // third subtopic -> both questions wrong
+            simulation.answer(getWrongAnswer(question1_3_1));
+            simulation.answer('-');
+        }
+
+        private char getCorrectAnswer(Question question) {
+            return question.getCorrectAnswerLabel(simulation.getQuestionToShuffledAnswers().get(question));
+        }
+        private char getWrongAnswer(Question question) {
+            char wrongAnswer = 'E';
+            switch (getCorrectAnswer(question)) {
+                case 'A': wrongAnswer = 'B';
+                    break;
+                case 'B':
+                case 'C':
+                case 'D': wrongAnswer = 'A';
+                    break;
+            }
+            return wrongAnswer;
+        }
+
+        @DisplayName("Once the simulation is terminated, the program should print the result of the simulation")
+        @Test
+        void terminateTest() {
+            System.out.println(simulation.terminate(new Stats()));
         }
     }
 }
