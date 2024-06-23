@@ -12,15 +12,10 @@ public class FileLoader {
 
     private static final Set<Topic> topics = new HashSet<>();
 
-
-    private FileLoader() {
-
-    }
-
     /**
      * loads an input bank file -> transforms the input file into a Topic object
      * @param filePath path to the bank file you want to load
-     * @return a Topic object that corresponds to the input file
+     * @return the Topic object that corresponds to the input file
      * @throws IOException if the input file doesn't exist
      */
     public static Topic loadFile(String filePath) throws IOException {
@@ -45,7 +40,7 @@ public class FileLoader {
      * @throws IOException
      * @return the set of loaded topics
      */
-    public static Set<Topic> loadBank(String bankPath) throws NullPointerException, IOException {
+    public static Set<Topic> loadBank(String bankPath) throws IOException {
             Set<String> fileNames = new HashSet<>();
             File folder = new File(bankPath);
             if (!folder.exists()) {
@@ -66,7 +61,7 @@ public class FileLoader {
 
     // getTopics
     /**
-     *
+     * TODO implement this method
      * @return a set of all available topics for the user
      */
     public static Set<Topic> getTopics() {

@@ -16,7 +16,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"redhat.java"
+				"redhat.java",
+				"redhat.fabric8-analytics"
 			]
 		}
 	}
