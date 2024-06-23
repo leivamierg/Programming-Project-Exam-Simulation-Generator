@@ -12,7 +12,10 @@ public class FileLoader {
 
     private static final Set<Topic> topics = new HashSet<>();
 
-    private FileLoader() {}
+
+    private FileLoader() {
+
+    }
 
     /**
      * loads an input bank file -> transforms the input file into a Topic object

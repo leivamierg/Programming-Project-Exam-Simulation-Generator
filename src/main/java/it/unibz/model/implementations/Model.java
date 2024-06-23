@@ -6,12 +6,17 @@ import it.unibz.model.interfaces.ModelInt;
 
 public class Model extends Simulation implements ModelInt {
 
-    private final static String BANK_PATH = "";
+    private String RESOURCES_PATH = System.getProperty("user.dir") + "/src/main/resources/";
+
+    public Model() {
+        super();
+    }
+
 
     @Override
     public void list() {
         try {
-            FileLoader.loadBank(BANK_PATH);
+            FileLoader.loadBank(RESOURCES_PATH);
             for (Topic topic : FileLoader.getTopics()) {
                 System.out.println(topic.getTopicName());
             }
