@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FileLoaderTest {
     private final String inputBank = "src/test/resources/";
-    FileLoader fileLoader = new FileLoader();
     @BeforeEach
     void init() {
         // QuestionUtils.init();
@@ -33,7 +32,7 @@ public class FileLoaderTest {
     @Test
     public void loadCSABank() {
         try {
-            Topic producedTopic = fileLoader.loadFile(inputBank + "input_csa_bank_test.json");
+            Topic producedTopic = FileLoader.loadFile(inputBank + "input_csa_bank_test.json");
             // producedTopic.equals(topic1_CSA_FL);
             assertTrue(topic1_CSA_FL.equals(producedTopic));
         } catch (IOException e) {
@@ -45,7 +44,7 @@ public class FileLoaderTest {
     @Test
     public void loadLABank() {
         try {
-            Topic producedTopic = fileLoader.loadFile(inputBank + "input_la_bank_test.json");
+            Topic producedTopic = FileLoader.loadFile(inputBank + "input_la_bank_test.json");
             assertTrue(topic2_LA_FL.equals(producedTopic));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -56,14 +55,14 @@ public class FileLoaderTest {
     @DisplayName("loadFile(invalid file) should throw a IOException")
     @Test
     public void loadInvalidFile() {
-        assertThrows(IOException.class, () -> fileLoader.loadFile("abc"));
+        assertThrows(IOException.class, () -> FileLoader.loadFile("abc"));
     }
 
     @DisplayName("loadBank() should transform the whole input bank into Topic objects")
     @Test
     public void loadBank() {
         try {
-            Set<Topic> producedBank = fileLoader.loadBank(inputBank);
+            Set<Topic> producedBank = FileLoader.loadBank(inputBank);
             Set<Topic> expectedBank = new HashSet<>();
             expectedBank.add(topic1_CSA_FL);
             expectedBank.add(topic2_LA_FL);
@@ -75,7 +74,7 @@ public class FileLoaderTest {
     @DisplayName("loadBank(invalid bank) should throw a NullPointerException")
     @Test
     public void loadInvalidBank() {
-        assertThrows(NullPointerException.class, () -> fileLoader.loadBank("abc"));
+        assertThrows(NullPointerException.class, () -> FileLoader.loadBank("abc"));
     }
 
     private boolean equalsBank(Set<Topic> producedBank, Set<Topic> expectedBank) {
