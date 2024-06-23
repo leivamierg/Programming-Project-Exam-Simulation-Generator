@@ -78,14 +78,29 @@ public class Model extends Simulation implements ModelInt {
         simulation.select(selectedTopic, 1);
         simulation.start();
 
-        String input = Controller.takeInput("Press Enter to start the test.");
-        System.out.println("Test started. Good luck!\n" + input);
+        String input = Controller.takeInput("Use '+' to go to the next question and '-' for the previous. Press Enter to start the test.");
+        
+        do {
+            simulation.answer(sanitizeAnswer(input));
+            input = Controller.takeInput("Use '+' to go to the next question and '-' for the previous. Press Enter to start the test.");
+        } while (!input.equals(""));
+
+
         
 
     }
 
     private void testSubtopic(Subtopic selectedSubtopic) {
         
+    }
+
+    private char sanitizeAnswer(String answer) {
+        char res = Character.toUpperCase(answer.toUpperCase().charAt(0)) ;
+        if (!Character.toString(res).matches("[A-D\\+\\-]")) {
+            return 'n';
+        }
+
+        return res;
     }
 
     @Override
