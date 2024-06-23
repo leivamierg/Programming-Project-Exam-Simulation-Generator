@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class Stats implements StatsInt {
     private List<Simulation> simulations;
-    private Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> topicToStats;
-    private Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> subtopicToStats;
+    private Map<String, List<Score>> topicToStats;
+    private Map<String, List<Score>> subtopicToStats;
 
     public Stats() {
         simulations = new ArrayList<>();
@@ -19,8 +19,8 @@ public class Stats implements StatsInt {
     }
     @JsonCreator
     public Stats(@JsonProperty("simulations") List<Simulation> simulations, 
-                 @JsonProperty("topicToStats") Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> topicToStats,
-                 @JsonProperty("subtopicToStats") Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> subtopicToStats) {
+                 @JsonProperty("topicToStats") Map<String, List<Score>> topicToStats,
+                 @JsonProperty("subtopicToStats") Map<String, List<Score>> subtopicToStats) {
         setSimulations(simulations);
         setTopicToStats(topicToStats);
         setSubtopicToStats(subtopicToStats);
@@ -32,11 +32,11 @@ public class Stats implements StatsInt {
         this.simulations = simulations;
     }
 
-    private void setTopicToStats(Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> topicToStats) {
+    private void setTopicToStats(Map<String, List<Score>> topicToStats) {
         this.topicToStats = topicToStats;
     }
 
-    private void setSubtopicToStats(Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> subtopicToStats) {
+    private void setSubtopicToStats(Map<String, List<Score>> subtopicToStats) {
         this.subtopicToStats = subtopicToStats;
     }
     // methods
@@ -50,21 +50,23 @@ public class Stats implements StatsInt {
 
     private void updateTopicToStats(Simulation simulation) {
         Set<Question> correctQuestions = new HashSet<>();
+        Set<Question> wrongQuestions = new HashSet<>();
+        Set<Question> blankQuestions = new HashSet<>();
         Set<Question> selectedQuestions = new HashSet<>();
-        Set<Question> allQuestions = simulation.getTopicReference().getSubtopics().stream().
-                flatMap(s -> s.getQuestions().stream()).
-                collect(Collectors.toSet());
+        Set<Question> allQuestions = simulation.getAllSelected_NonSelectedQuestions();
         for (Simulation currentSim : simulations) {
             // if (currentSim.getTopic().equals(simulation.getTopic()))
-                updateCorSel(correctQuestions, selectedQuestions,
-                        currentSim.getAllCorrectQuestions(), new HashSet<>(currentSim.getAllQuestions()),
+                updateCorWrongBlankSel(correctQuestions, wrongQuestions, blankQuestions, selectedQuestions,
+                        currentSim.getAllCorrectQuestions(), currentSim.getAllWrongQuestions(),
+                        currentSim.getAllBlankQuestions(), new HashSet<>(currentSim.getAllQuestions()),
                         simulation.getTopic(), currentSim.getTopic());
         }
         double percentage = ((double) correctQuestions.size() / selectedQuestions.size()) * 100;
 
-        List<Correct_Selected_TotalQuestionsAndPercentage> temp = topicToStats.get(simulation.getTopic());
+        List<Score> temp = topicToStats.get(simulation.getTopic());
         updateMap(subtopicToStats, simulation.getTopic(), temp,
-                correctQuestions.size(), selectedQuestions.size(), allQuestions.size(), percentage);
+                correctQuestions.size(), wrongQuestions.size(), blankQuestions.size(),
+                selectedQuestions.size(), allQuestions.size(), percentage);
         /*if (temp == null) {
             List<Correct_Selected_TotalQuestionsAndPercentage> stats = new ArrayList<>();
             stats.add(new Correct_Selected_TotalQuestionsAndPercentage(correctQuestions.size(),
@@ -80,28 +82,32 @@ public class Stats implements StatsInt {
 
     private void updateSubtopicToStats() {
         simulations.stream().
-                flatMap(s -> s.getQuestionsPerSubtopic().keySet().stream()).
+                flatMap(s -> s.getSubtopicToQuestions().keySet().stream()).
                 forEach(this::updateSubtopicStats);
     }
 
     private void updateSubtopicStats(Subtopic subtopic) {
         Set<Question> correctQuestions = new HashSet<>();
+        Set<Question> wrongQuestions = new HashSet<>();
+        Set<Question> blankQuestions = new HashSet<>();
         Set<Question> selectedQuestions = new HashSet<>();
         Set<Question> allQuestions = subtopic.getQuestions();
         for (Simulation simulation : simulations) {
-            for (Subtopic currentSubtopic : simulation.getQuestionsPerSubtopic().keySet()) {
+            for (Subtopic currentSubtopic : simulation.getSubtopicToQuestions().keySet()) {
                 // if (subtopic.getSubtopicName().equals(currentSubtopic.getSubtopicName()))
-                    updateCorSel(correctQuestions, selectedQuestions,
-                            simulation.getSubtopicCorrectQuestions(subtopic), simulation.getQuestionsPerSubtopic().get(subtopic),
+                    updateCorWrongBlankSel(correctQuestions, wrongQuestions, blankQuestions, selectedQuestions,
+                            simulation.getSubtopicCorrectQuestions(subtopic), simulation.getSubtopicWrongQuestions(subtopic),
+                            simulation.getSubtopicBlankQuestions(subtopic), simulation.getSubtopicToQuestions().get(subtopic),
                             subtopic.getSubtopicName(), currentSubtopic.getSubtopicName());
             }
 
         }
         double percentage = ((double) correctQuestions.size() / selectedQuestions.size()) * 100;
 
-        List<Correct_Selected_TotalQuestionsAndPercentage> temp = subtopicToStats.get(subtopic.getSubtopicName());
+        List<Score> temp = subtopicToStats.get(subtopic.getSubtopicName());
         updateMap(subtopicToStats, subtopic.getSubtopicName(), temp,
-                correctQuestions.size(), selectedQuestions.size(), allQuestions.size(), percentage);
+                correctQuestions.size(), wrongQuestions.size(), blankQuestions.size(),
+                selectedQuestions.size(), allQuestions.size(), percentage);
         /*if (temp == null) {
             List<Correct_Selected_TotalQuestionsAndPercentage> stats = new ArrayList<>();
             stats.add(new Correct_Selected_TotalQuestionsAndPercentage(correctQuestions.size(),
@@ -114,24 +120,29 @@ public class Stats implements StatsInt {
         }*/
     }
 
-    private void updateCorSel(Set<Question> correct, Set<Question> selected,
-                              Set<Question> corToAdd, Set<Question> selToAdd,
+    private void updateCorWrongBlankSel(Set<Question> correct, Set<Question> wrong,
+                                        Set<Question> blank, Set<Question> selected,
+                                        Set<Question> corToAdd, Set<Question> wrongToAdd,
+                                        Set<Question> blankToAdd, Set<Question> selToAdd,
                               String topicSubtopic, String currentTopicSubtopic) {
         if (topicSubtopic.equals(currentTopicSubtopic)) {
             correct.addAll(corToAdd);
+            wrong.addAll(wrongToAdd);
+            blank.addAll(blankToAdd);
             selected.addAll(selToAdd);
         }
     }
 
-    private void updateMap(Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> map,
-                           String topicSubtopic, List<Correct_Selected_TotalQuestionsAndPercentage> temp,
-                           int nrCorrect, int nrSelected, int nrTotQ, double percentage) {
+    private void updateMap(Map<String, List<Score>> map,
+                           String topicSubtopic, List<Score> temp,
+                           int nrCorrect, int nrWrong, int nrBlank, int nrSelected, int nrTotal, double percentage) {
+        Score score = new Score(nrCorrect, nrWrong, nrBlank, nrSelected, nrTotal, percentage);
         if (temp == null) {
-            List<Correct_Selected_TotalQuestionsAndPercentage> stats = new ArrayList<>();
-            stats.add(new Correct_Selected_TotalQuestionsAndPercentage(nrCorrect, nrSelected, nrTotQ, percentage));
+            List<Score> stats = new ArrayList<>();
+            stats.add(score);
             map.put(topicSubtopic, stats);
         } else {
-            temp.add(new Correct_Selected_TotalQuestionsAndPercentage(nrCorrect, nrSelected, nrTotQ, percentage));
+            temp.add(score);
             map.put(topicSubtopic, temp);
         }
     }
@@ -156,10 +167,10 @@ public class Stats implements StatsInt {
         return printStatsComparison(subtopicToStats, start, subtopicToStats.get(subtopic.getSubtopicName()).size(), subtopic.getSubtopicName());
     }
 
-    private String printStatsComparison(Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> map,
+    private String printStatsComparison(Map<String, List<Score>> map,
                                         int start, int end, String topicSubtopic) {
-        Correct_Selected_TotalQuestionsAndPercentage startingStats = map.get(topicSubtopic).get(start - 1);
-        Correct_Selected_TotalQuestionsAndPercentage endingStats = map.get(topicSubtopic).get(end - 1);
+        Score startingStats = map.get(topicSubtopic).get(start - 1);
+        Score endingStats = map.get(topicSubtopic).get(end - 1);
         String result = topicSubtopic + ":" + System.lineSeparator();
         result += String.format("%-10s %-10s" + System.lineSeparator(),
                 "From simulation number " + start + ":", "To simulation number " + end + ":");
@@ -186,25 +197,27 @@ public class Stats implements StatsInt {
         // stats for every subtopic
     }
     @Override
-    public Correct_Selected_TotalQuestionsAndPercentage updateGeneralStats() {
-        int correct = 0, selected = 0, total = 0;
+    public Score updateGeneralStats() {
+        int correct = 0, wrong = 0, blank = 0, selected = 0, total = 0;
         for (String topic : topicToStats.keySet()) {
             int idxLastStats = topicToStats.get(topic).size() - 1;
-            Correct_Selected_TotalQuestionsAndPercentage topicStats = topicToStats.get(topic).get(idxLastStats);
+            Score topicStats = topicToStats.get(topic).get(idxLastStats);
             correct += topicStats.correct();
-            selected = topicStats.selected();
-            total = topicStats.total();
+            wrong += topicStats.correct();
+            blank += topicStats.correct();
+            selected += topicStats.selected();
+            total += topicStats.total();
         }
-        return new Correct_Selected_TotalQuestionsAndPercentage(correct, selected, total, (double) correct/selected);
+        return new Score(correct, wrong, blank, selected, total, (double) correct/selected);
     }
 
     @Override
-    public Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> getTopicToStats() {
+    public Map<String, List<Score>> getTopicToStats() {
         return topicToStats;
     }
 
     @Override
-    public Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> getSubtopicToStats() {
+    public Map<String, List<Score>> getSubtopicToStats() {
         return subtopicToStats;
     }
 }

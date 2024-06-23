@@ -2,8 +2,6 @@ package it.unibz.model.interfaces;
 
 import it.unibz.model.implementations.*;
 
-import it.unibz.model.implementations.CorrectAnswersAndPercentage;
-
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -84,6 +82,14 @@ public interface SimulationInt {
      */
 
     Set<Question> getSubtopicWrongQuestions(Subtopic subtopic);
+     /**
+     *
+     * @param subtopic the input subtopic
+     * @return a set of blank questions for the input subtopic
+     */
+
+    Set<Question> getSubtopicBlankQuestions(Subtopic subtopic);
+
     /**
      *
      * @return a set of wrong questions for the whole sim
@@ -97,6 +103,12 @@ public interface SimulationInt {
      */
 
     Set<Question> getAllCorrectQuestions();
+    /**
+     *
+     * @return a set of blank questions for the whole sim
+     */
+
+    Set<Question> getAllBlankQuestions();
 
     /**
      *
@@ -107,19 +119,36 @@ public interface SimulationInt {
 
     /**
      *
-     * @param subtopic the subtopic you want to compute the stats on
-     * @return a CorrectAnswersAndPercentage record which stores the number of correct answers and the percentage of the given subtopic
-     * @throws IllegalArgumentException if the given subtopic doesn't exist
+     * @return a set containing both selected and non-selected questions for this sim
      */
 
-    CorrectAnswersAndPercentage computeSubtopicStats(Subtopic subtopic) throws IllegalArgumentException;
+    Set<Question> getAllSelected_NonSelectedQuestions();
 
     /**
      *
-     * @return a CorrectAnswersAndPercentage record which stores the number of correct answers and the percentage of the whole sim
+     * @param subtopic the input subtopic
+     * @return a set containing both selected and non-selected questions for the given subtopic
      */
 
-    CorrectAnswersAndPercentage computeSimStats();
+    Set<Question> getSubtopicSelected_NonSelectedQuestions(Subtopic subtopic);
+
+    /**
+     *
+     * @param subtopic the subtopic you want to compute the stats on
+     * @return a Score record which stores the number of correct, wrong, blank, selected, total questions
+     * and the percentage of the given subtopic on the selected questions
+     * @throws IllegalArgumentException if the given subtopic doesn't exist
+     */
+
+    Score computeSubtopicStats(Subtopic subtopic) throws IllegalArgumentException;
+
+    /**
+     *
+     @return a Score record which stores the number of correct, wrong, blank, selected, total questions
+      * and the percentage of the given subtopic on the selected questions
+      */
+
+    Score computeSimStats();
 
     /**
      *
@@ -131,7 +160,7 @@ public interface SimulationInt {
      *
      * @return a map with all questions for each subtopic
      */
-    Map<Subtopic, Set<Question>> getQuestionsPerSubtopic();
+    Map<Subtopic, Set<Question>> getSubtopicToQuestions();
 
     /**
      *

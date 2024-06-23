@@ -1,11 +1,9 @@
 package it.unibz.model;
 
-import it.unibz.model.implementations.CorrectAnswersAndPercentage;
 import it.unibz.model.implementations.Question;
+import it.unibz.model.implementations.Score;
 import it.unibz.model.implementations.Simulation;
 import it.unibz.model.implementations.Subtopic;
-import it.unibz.utils.QuestionUtils;
-import it.unibz.utils.SubtopicUtils;
 import it.unibz.utils.TopicUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -65,7 +63,7 @@ public class SimulationTest {
         @Test
         void selectTopic1FirstSim() {
             simulation.select(topic1, 1);
-            Map<Subtopic, Set<Question>> produced = simulation.getQuestionsPerSubtopic();
+            Map<Subtopic, Set<Question>> produced = simulation.getSubtopicToQuestions();
             assertTrue(xor(contains(produced, question1_1_1), contains(produced, question1_1_2)));
             assertTrue(xor(contains(produced, question1_2_1), contains(produced, question1_2_2)));
             assertTrue(xor(contains(produced, question1_3_1), contains(produced, question1_3_2), contains(produced, question1_3_3)));
@@ -77,7 +75,7 @@ public class SimulationTest {
         void selectTopic1SecondSim() {
             updateParametersAfterFirstSim();
             simulation.select(topic1, 1);
-            Map<Subtopic, Set<Question>> produced = simulation.getQuestionsPerSubtopic();
+            Map<Subtopic, Set<Question>> produced = simulation.getSubtopicToQuestions();
             assertTrue(!contains(produced, question1_1_1) && contains(produced, question1_1_2));
             assertTrue(!contains(produced, question1_2_1) && contains(produced, question1_2_2));
             assertTrue(!contains(produced, question1_3_2) && !contains(produced, question1_3_3) &&
@@ -110,7 +108,7 @@ public class SimulationTest {
         @Test
         void getAllQuestionsFirstSim() {
             simulation.select(topic1, 1);
-            Map<Subtopic, Set<Question>> subtopicToQuestions = simulation.getQuestionsPerSubtopic();
+            Map<Subtopic, Set<Question>> subtopicToQuestions = simulation.getSubtopicToQuestions();
             List<Question> expected = new ArrayList<>();
             for (Set<Question> questions : subtopicToQuestions.values()) {
                 expected.addAll(questions);
@@ -127,7 +125,7 @@ public class SimulationTest {
         void getAllQuestionsSecondSim() {
             updateParametersAfterFirstSim();
             simulation.select(topic1, 1);
-            Map<Subtopic, Set<Question>> subtopicToQuestions = simulation.getQuestionsPerSubtopic();
+            Map<Subtopic, Set<Question>> subtopicToQuestions = simulation.getSubtopicToQuestions();
             List<Question> expected = new ArrayList<>();
             for (Set<Question> questions : subtopicToQuestions.values()) {
                 expected.addAll(questions);
@@ -307,7 +305,7 @@ public class SimulationTest {
     }
 
     @Nested
-    class NonSelected_Correct_Wrong_QuestionsTest {
+    class NonSelected_Correct_Wrong_BlankQuestionsTest {
         @BeforeEach
         void setUpSim() {
             simulation.select(topic1, 2);
@@ -318,9 +316,9 @@ public class SimulationTest {
             // second subtopic -> one question correct, one question wrong
             simulation.answer(getCorrectAnswer(question1_2_1));
             simulation.answer(getWrongAnswer(question1_2_2));
-            // third subtopic -> both questions wrong
+            // third subtopic -> one question wrong, one question blank
             simulation.answer(getWrongAnswer(question1_3_1));
-            simulation.answer(getWrongAnswer(question1_3_3));
+            simulation.answer('-');
         }
 
         private char getCorrectAnswer(Question question) {
@@ -361,14 +359,22 @@ public class SimulationTest {
             assertEquals(expected, produced);
         }
 
-        @DisplayName("getAllWrongQuestions() should return: [question1_2_2, question1_3_1, question1_3_3]")
+        @DisplayName("getAllWrongQuestions() should return: [question1_2_2, question1_3_3]")
         @Test
         void wrongQuestions() {
             Set<Question> expected = new HashSet<>();
             expected.add(question1_2_2);
             expected.add(question1_3_1);
-            expected.add(question1_3_3);
             Set<Question> produced = simulation.getAllWrongQuestions();
+            assertEquals(expected, produced);
+        }
+
+        @DisplayName("getAllBlankQuestions() should return: [question1_3_3]")
+        @Test
+        void blankQuestions() {
+            Set<Question> expected = new HashSet<>();
+            expected.add(question1_3_3);
+            Set<Question> produced = simulation.getAllBlankQuestions();
             assertEquals(expected, produced);
         }
 
@@ -416,13 +422,37 @@ public class SimulationTest {
             assertEquals(expected, produced);
         }
 
-        @DisplayName("getSubtopicWrongQuestions(subtopic 1.3) should return: [question1_3_1, question1_3_3]")
+        @DisplayName("getSubtopicWrongQuestions(subtopic 1.3) should return: [question1_3_1]")
         @Test
         void wrongQuestionsSubtopic1_3() {
             Set<Question> expected = new HashSet<>();
             expected.add(question1_3_1);
-            expected.add(question1_3_3);
             Set<Question> produced = simulation.getSubtopicWrongQuestions(subtopic1_3);
+            assertEquals(expected, produced);
+        }
+
+        @DisplayName("getSubtopicBlankQuestions(subtopic 1.1) should return an empty Set")
+        @Test
+        void blankQuestionsSubtopic1_1() {
+            Set<Question> expected = new HashSet<>();
+            Set<Question> produced = simulation.getSubtopicBlankQuestions(subtopic1_1);
+            assertEquals(expected, produced);
+        }
+
+        @DisplayName("getSubtopicBlankQuestions(subtopic 1.2) should return an empty Set")
+        @Test
+        void blankQuestionsSubtopic1_2() {
+            Set<Question> expected = new HashSet<>();
+            Set<Question> produced = simulation.getSubtopicBlankQuestions(subtopic1_2);
+            assertEquals(expected, produced);
+        }
+
+        @DisplayName("getSubtopicBlankQuestions(subtopic 1.3) should return: [question1_3_3]")
+        @Test
+        void blankQuestionsSubtopic1_3() {
+            Set<Question> expected = new HashSet<>();
+            expected.add(question1_3_3);
+            Set<Question> produced = simulation.getSubtopicBlankQuestions(subtopic1_3);
             assertEquals(expected, produced);
         }
     }
@@ -438,10 +468,10 @@ public class SimulationTest {
             simulation.answer(getCorrectAnswer(question1_1_2));
             // second subtopic -> one question correct, one question wrong
             simulation.answer(getCorrectAnswer(question1_2_1));
-            simulation.answer(getWrongAnswer(question1_2_2));
+            simulation.answer('-');
             // third subtopic -> both questions wrong
             simulation.answer(getWrongAnswer(question1_3_1));
-            simulation.answer(getWrongAnswer(question1_3_3));
+            simulation.answer('-');
         }
         private char getCorrectAnswer(Question question) {
             return question.getCorrectAnswerLabel(simulation.getQuestionToShuffledAnswers().get(question));
@@ -458,35 +488,39 @@ public class SimulationTest {
             }
             return wrongAnswer;
         }
-        @DisplayName("Both questions are correct in subtopic 1.1: correct answers -> 2, percentage -> 100.0")
+        @DisplayName("Both questions are correct in subtopic 1.1: " +
+                "correct -> 2, wrong -> 0, blank -> 0, percentage -> 100.0")
         @Test
         void computeSubtopic1_1Stats() {
-            CorrectAnswersAndPercentage produced = simulation.computeSubtopicStats(subtopic1_1);
-            CorrectAnswersAndPercentage expected = new CorrectAnswersAndPercentage(2, 100.0);
+            Score produced = simulation.computeSubtopicStats(subtopic1_1);
+            Score expected = new Score(2, 0, 0, 2, 2, 100.0);
             assertEquals(expected, produced);
         }
 
-        @DisplayName("One question is correct, one question is wrong correct in subtopic 1.2: correct answers -> 1, percentage -> 50.0")
+        @DisplayName("One question is correct, one question is blank in subtopic 1.2: " +
+                "correct -> 1, wrong -> 0, blank -> 1, percentage -> 50.0")
         @Test
         void computeSubtopic1_2Stats() {
-            CorrectAnswersAndPercentage produced = simulation.computeSubtopicStats(subtopic1_2);
-            CorrectAnswersAndPercentage expected = new CorrectAnswersAndPercentage(1, 50.0);
+            Score produced = simulation.computeSubtopicStats(subtopic1_2);
+            Score expected = new Score(1, 0, 1, 2, 2, 50.0);
             assertEquals(expected, produced);
         }
 
-        @DisplayName("Both questions are wrong in subtopic 1.3: correct answers -> 0, percentage -> 0.0")
+        @DisplayName("One question is wrong, one question is blank in subtopic 1.3: " +
+                "correct -> 0, wrong -> 1, blank -> 1 percentage -> 0.0")
         @Test
         void computeSubtopic1_3Stats() {
-            CorrectAnswersAndPercentage produced = simulation.computeSubtopicStats(subtopic1_3);
-            CorrectAnswersAndPercentage expected = new CorrectAnswersAndPercentage(0, 0.0);
+            Score produced = simulation.computeSubtopicStats(subtopic1_3);
+            Score expected = new Score(0, 1, 1, 2, 3, 0.0);
             assertEquals(expected, produced);
         }
 
-        @DisplayName("Three questions are correct, three questions are wrong in this sim: correct answers -> 3, percentage -> 50.0")
+        @DisplayName("Three questions are correct, 1 question is wrong and 2 questions are blank in this sim: " +
+                "correct -> 3, wrong -> 1, blank -> 2, percentage -> 50.0")
         @Test
         void computeSimStats() {
-            CorrectAnswersAndPercentage produced = simulation.computeSimStats();
-            CorrectAnswersAndPercentage expected = new CorrectAnswersAndPercentage(3, 50.0);
+            Score produced = simulation.computeSimStats();
+            Score expected = new Score(3, 1, 2, 6, 7, 50.0);
             assertEquals(expected, produced);
         }
     }
