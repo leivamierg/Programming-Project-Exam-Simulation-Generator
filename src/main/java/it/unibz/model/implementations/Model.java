@@ -1,8 +1,8 @@
 package it.unibz.model.implementations;
 
-import java.io.IOException;
 import java.util.Set;
 
+import it.unibz.controller.Controller;
 import it.unibz.model.interfaces.ModelInt;
 
 public class Model extends Simulation implements ModelInt {
@@ -29,9 +29,9 @@ public class Model extends Simulation implements ModelInt {
     public void listSubtopics(String topicString) {
         String stdTopic = topicString.toLowerCase().strip();
         Topic selectedTopic = topics.stream()
-            .filter(t -> t.getTopicName().equalsIgnoreCase(stdTopic))
-            .findFirst()
-            .orElse(null);
+                .filter(t -> t.getTopicName().equalsIgnoreCase(stdTopic))
+                .findFirst()
+                .orElse(null);
 
         if (selectedTopic == null) {
             System.out.println("The topic you are looking for doesn't exist.");
@@ -45,8 +45,47 @@ public class Model extends Simulation implements ModelInt {
 
     @Override
     public void test(String topic, String subtopic) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'test'");
+        Topic selectedTopic = topics.stream()
+                .filter(t -> t.getTopicName().equalsIgnoreCase(topic.strip()))
+                .findFirst()
+                .orElse(null);
+
+        if (selectedTopic == null) {
+            System.out.println("The topic you are looking for doesn't exist.");
+            return;
+        }
+
+        if (subtopic == null) {
+            testAllSubtopics(selectedTopic);
+            return;
+        }
+
+        Subtopic selectedSubtopic = selectedTopic.getSubtopics().stream()
+                .filter(s -> s.getSubtopicName().equalsIgnoreCase(subtopic.strip()))
+                .findFirst()
+                .orElse(null);
+            
+        if (selectedSubtopic == null) {
+            System.out.println("The subtopic you are looking for doesn't exist.");
+            return;
+        }
+
+        testSubtopic(selectedSubtopic);
+    }
+
+    private void testAllSubtopics(Topic selectedTopic) {
+        Simulation simulation = new Simulation();
+        simulation.select(selectedTopic, 1);
+        simulation.start();
+
+        String input = Controller.takeInput("Press Enter to start the test.");
+        System.out.println("Test started. Good luck!\n" + input);
+        
+
+    }
+
+    private void testSubtopic(Subtopic selectedSubtopic) {
+        
     }
 
     @Override

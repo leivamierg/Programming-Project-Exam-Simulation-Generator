@@ -30,15 +30,28 @@ public class Controller {
                 }
                 break;
             case "test":
-                if (args.length < 3) {
+                if (args.length < 2) 
                     System.out.println("Need to write: Test <topic> <subtopic>");
-                } else {
+                else if (args.length == 2) 
+                    model.test(args[1], null); 
+                else 
                     model.test(args[1], args[2]);
-                }
                 break;
             default:
                 System.out.println("Invalid command");
                 break;
         }
+    }
+
+    public static String takeInput(String message) {
+        System.out.println(message);
+
+        if (System.console() == null) {
+            System.out.println("No console available. Exiting.");
+            System.exit(1);
+        }
+
+        // no scanner becaouse this is faster to write
+        return System.console().readLine();
     }
 }

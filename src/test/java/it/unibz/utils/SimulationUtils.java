@@ -2,12 +2,8 @@ package it.unibz.utils;
 
 import it.unibz.model.implementations.Question;
 import it.unibz.model.implementations.Simulation;
-import it.unibz.model.implementations.Stats;
 import it.unibz.model.implementations.Subtopic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 import static it.unibz.utils.TopicUtils.*;

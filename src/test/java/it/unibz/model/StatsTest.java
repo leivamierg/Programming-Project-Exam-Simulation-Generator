@@ -1,6 +1,5 @@
 package it.unibz.model;
 
-import it.unibz.model.implementations.CorrectAnswersAndPercentage;
 import it.unibz.model.implementations.Correct_Selected_TotalQuestionsAndPercentage;
 import it.unibz.model.implementations.Stats;
 import it.unibz.utils.SimulationUtils;
@@ -8,8 +7,6 @@ import static it.unibz.utils.SimulationUtils.*;
 import static it.unibz.utils.SubtopicUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import it.unibz.utils.TopicUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

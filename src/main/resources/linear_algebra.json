@@ -24,7 +24,8 @@
           "rightAnswer": "Neither",
           "wrongAnswers": [
             "Skew symmetric",
-            "Symmetric"
+            "Symmetric",
+            "Both"
           ],
           "subtopic": "Matrices"
         }

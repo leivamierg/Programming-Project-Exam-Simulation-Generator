@@ -6,7 +6,6 @@ import it.unibz.model.implementations.Topic;
 import java.util.HashSet;
 import java.util.Set;
 
-import static it.unibz.utils.QuestionUtils.*;
 import static it.unibz.utils.SubtopicUtils.*;
 public class TopicUtils {
     // Topic 1 CSA FL -> first topic (CSA) -> for FileLoader

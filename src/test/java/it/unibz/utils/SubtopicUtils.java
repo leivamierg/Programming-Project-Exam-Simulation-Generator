@@ -4,9 +4,6 @@ import it.unibz.model.implementations.Question;
 import it.unibz.model.implementations.Subtopic;
 
 import java.util.HashSet;
-import static it.unibz.utils.TopicUtils.*;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Set;
 
 import static it.unibz.utils.QuestionUtils.*;

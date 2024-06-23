@@ -1,16 +1,12 @@
 package it.unibz.model;
 import it.unibz.model.implementations.Model;
-import it.unibz.model.implementations.Topic;
 import it.unibz.utils.SubtopicUtils;
 import it.unibz.utils.TopicUtils;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -41,7 +37,7 @@ public class ModelTest {
         model.list();
 
         // Get the output
-        String output = outputStream.toString().trim();
+        // String output = outputStream.toString().trim();
 
         // Verify the output
         assertTrue(true);
