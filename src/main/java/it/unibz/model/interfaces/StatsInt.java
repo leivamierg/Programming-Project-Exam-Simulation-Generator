@@ -1,6 +1,6 @@
 package it.unibz.model.interfaces;
 
-import it.unibz.model.implementations.Correct_Selected_TotalQuestionsAndPercentage;
+import it.unibz.model.implementations.Score;
 import it.unibz.model.implementations.Simulation;
 import it.unibz.model.implementations.Subtopic;
 import it.unibz.model.implementations.Topic;
@@ -58,18 +58,18 @@ public interface StatsInt {
      * @return a map containing the evolution of the stats of every topic after every sim
      */
 
-    Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> getTopicToStats();
+    Map<String, List<Score>> getTopicToStats();
     /**
      *
      * @return a map containing the evolution of the stats of every subtopic after every sim
      */
-    Map<String, List<Correct_Selected_TotalQuestionsAndPercentage>> getSubtopicToStats();
+    Map<String, List<Score>> getSubtopicToStats();
 
     /**
      *
      * @return a record containing the general stats after every sim
      */
-    Correct_Selected_TotalQuestionsAndPercentage updateGeneralStats();
+    Score updateGeneralStats();
 
 
 

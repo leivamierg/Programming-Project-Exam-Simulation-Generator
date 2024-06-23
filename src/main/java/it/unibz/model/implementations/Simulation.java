@@ -25,9 +25,18 @@ public class Simulation implements SimulationInt {
             }
     }
     @Override
+<<<<<<< HEAD
     public void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic) throws IllegalStateException {
+=======
+    public void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic) throws
+            IllegalStateException, IllegalArgumentException, NullPointerException {
+>>>>>>> main
         if (!subtopics.isEmpty()) {
+            List<Subtopic> temp = new ArrayList<>(subtopics);
+            String topic = temp.get(0).getTopic();
             for (Subtopic subtopic : subtopics) {
+                if (!subtopic.getTopic().equals(topic))
+                    throw new IllegalArgumentException();
                 updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
             }
         } else throw new IllegalStateException();
@@ -89,7 +98,7 @@ public class Simulation implements SimulationInt {
     public String terminate(Stats stats) {
         // update all parameters
         updateNonSelectedQuestions();
-        updateCorrectAndWrongQuestions();
+        updateCorrectWrongAndBlankQuestions();
         stats.updateStats(this);
         return computeResult();
 
@@ -100,12 +109,15 @@ public class Simulation implements SimulationInt {
                 forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 1));
     }
 
-    private void updateCorrectAndWrongQuestions() {
+    private void updateCorrectWrongAndBlankQuestions() {
         // correct
         getAllCorrectQuestions().stream().
                 forEach(q -> q.setPriorityLevel(0));
         // wrong
         getAllWrongQuestions().stream().
+                forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 2));
+        // blank
+        getAllBlankQuestions().stream().
                 forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 2));
     }
 
@@ -120,6 +132,11 @@ public class Simulation implements SimulationInt {
     }
 
     @Override
+    public Set<Question> getSubtopicBlankQuestions(Subtopic subtopic) {
+        return getBlankQuestions(subtopicToQuestions.get(subtopic));
+    }
+
+    @Override
     public Set<Question> getAllWrongQuestions() {
         return getWrongQuestions(new HashSet<>(getAllQuestions()));
     }
@@ -127,6 +144,11 @@ public class Simulation implements SimulationInt {
     @Override
     public Set<Question> getAllCorrectQuestions() {
         return getCorrectQuestions(new HashSet<>(getAllQuestions()));
+    }
+
+    @Override
+    public Set<Question> getAllBlankQuestions() {
+        return getBlankQuestions(new HashSet<>(getAllQuestions()));
     }
     private Set<Question> getCorrectQuestions(Set<Question> questions) {
         return questions.stream().
@@ -136,7 +158,13 @@ public class Simulation implements SimulationInt {
 
     private Set<Question> getWrongQuestions(Set<Question> questions) {
         return questions.stream().
-                filter(q -> !isCorrect(q)).
+                filter(q -> !isCorrect(q) && questionToAnswer.get(q) != '-').
+                collect(Collectors.toSet());
+    }
+
+    private Set<Question> getBlankQuestions(Set<Question> questions) {
+        return questions.stream().
+                filter(q -> questionToAnswer.get(q) == '-').
                 collect(Collectors.toSet());
     }
     @Override
@@ -145,46 +173,60 @@ public class Simulation implements SimulationInt {
                 filter(q -> !getAllQuestions().contains(q)).
                 collect(Collectors.toSet());
     }
-
-    private Set<Question> getAllSelected_NonSelectedQuestions() {
+    @Override
+    public Set<Question> getAllSelected_NonSelectedQuestions() {
         return subtopicToQuestions.keySet().stream().
                 flatMap(s -> s.getQuestions().stream()).
                 collect(Collectors.toSet());
     }
+    @Override
+    public Set<Question> getSubtopicSelected_NonSelectedQuestions(Subtopic subtopic) {
+        return subtopic.getQuestions();
+    }
 
     private String computeResult () {
-        CorrectAnswersAndPercentage simStats = computeSimStats();
-        String simCorAns = "Number of correct answers: " + simStats.correctAnswers() + "/" + getAllQuestions().size();
-        String simPerc = "Percentage of correct answers: " + simStats.percentage() + "%";
-        String result = "Simulation result: " + System.lineSeparator() + simCorAns + System.lineSeparator()
-                + simPerc + System.lineSeparator();
+        Score simStats = computeSimStats();
+        String simResult = getResult(simStats, "Simulation");
+        String subtopicsResult = "";
         for (Subtopic subtopic : subtopicToQuestions.keySet()) {
-            CorrectAnswersAndPercentage subtopicStats = computeSubtopicStats(subtopic);
-            String subtopicCorAns = "Number of correct answers: " + subtopicStats.correctAnswers() + "/" + getAllQuestions().size();
-            String subtopicPerc = "Percentage of correct answers: " + subtopicStats.percentage() + "%";
-            result += subtopic.getSubtopicName() + ": " + System.lineSeparator() + subtopicCorAns + System.lineSeparator()
-                    + subtopicPerc + System.lineSeparator();
+            Score subtopicStats = computeSubtopicStats(subtopic);
+            subtopicsResult += getResult(subtopicStats, subtopic.getSubtopicName());
         }
+        return simResult + subtopicsResult;
+    }
+
+    private static String getResult(Score score, String subtopicSim) {
+        String corAns = "Number of correct answers: " + score.correct() + "/" + score.selected();
+        String wrongAns = "Number of wrong answers: " + score.wrong() + "/" + score.selected();
+        String blankAns = "Number of blank answers: " + score.blank() + "/" + score.selected();
+        String perc = "Percentage of correct answers: " + score.percentage() + "%";
+        String result = subtopicSim + " result:" + System.lineSeparator() + corAns + System.lineSeparator()
+                + wrongAns + System.lineSeparator() + blankAns + System.lineSeparator() +
+                perc + System.lineSeparator() + System.lineSeparator();
         return result;
     }
 
 
     @Override
-    public CorrectAnswersAndPercentage computeSubtopicStats(Subtopic subtopic) throws NullPointerException {
+    public Score computeSubtopicStats(Subtopic subtopic) throws NullPointerException {
             Set<Question> questions = subtopicToQuestions.get(subtopic);
-            return computeStats(questions);
-        }
+            return computeStats(questions, subtopic);
+    }
     @Override
-    public CorrectAnswersAndPercentage computeSimStats() {
-        return computeStats(new HashSet<>(getAllQuestions()));
+    public Score computeSimStats() {
+        return computeStats(new HashSet<>(getAllQuestions()), null);
     }
 
-    private CorrectAnswersAndPercentage computeStats(Set<Question> questions) {
-        long numberOfCorrectAnswers = questions.stream().
-                filter(this::isCorrect).
-                count();
-        double percentage = ((double) numberOfCorrectAnswers / questions.size()) * 100;
-        return new CorrectAnswersAndPercentage(numberOfCorrectAnswers, percentage);
+    private Score computeStats(Set<Question> questions, Subtopic subtopic) {
+        int nrOfCorrectAnswers = getCorrectQuestions(questions).size();
+        int nrOfWrongAnswers = getWrongQuestions(questions).size();
+        int nrOfBlankAnswers = getBlankQuestions(questions).size();
+        int selected = (subtopic == null) ? getAllQuestions().size() : subtopicToQuestions.get(subtopic).size();
+        int total = (subtopic == null) ? getAllSelected_NonSelectedQuestions().size() :
+                getSubtopicSelected_NonSelectedQuestions(subtopic).size();
+
+        double percentage = ((double) nrOfCorrectAnswers / questions.size()) * 100;
+        return new Score(nrOfCorrectAnswers, nrOfWrongAnswers, nrOfBlankAnswers, selected, total, percentage);
     }
     @Override
     public boolean isCorrect(Question question) throws NullPointerException {
@@ -200,7 +242,7 @@ public class Simulation implements SimulationInt {
     }
 
     @Override
-    public Map<Subtopic, Set<Question>> getQuestionsPerSubtopic() {
+    public Map<Subtopic, Set<Question>> getSubtopicToQuestions() {
         return subtopicToQuestions;
     }
 
