@@ -44,7 +44,7 @@ public class Controller {
     }
 
     public static String takeInput(String message) {
-        System.out.println(message);
+        System.out.print(message);
 
         if (System.console() == null) {
             System.out.println("No console available. Exiting.");

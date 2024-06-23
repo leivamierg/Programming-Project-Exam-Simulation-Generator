@@ -79,10 +79,13 @@ public class Model extends Simulation implements ModelInt {
         simulation.start();
 
         String input = Controller.takeInput("Use '+' to go to the next question and '-' for the previous. Press Enter to start the test.");
-        
+        Question currentQuestion;
+
         do {
+            currentQuestion = simulation.getCurrentQuestion();
+            System.out.println(currentQuestion.getQuestionAndAnswers());
+            input = Controller.takeInput("Select an answer:");
             simulation.answer(sanitizeAnswer(input));
-            input = Controller.takeInput("Use '+' to go to the next question and '-' for the previous. Press Enter to start the test.");
         } while (!input.equals(""));
 
 

@@ -101,6 +101,14 @@ public class Question implements QuestionInt {
         return getWrongAnswers().stream().collect(Collectors.joining("; "));
     }
 
+    public String getQuestionAndAnswers() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getQuestionStatement()).append(System.lineSeparator());
+        Map<String, Character> shuffleMap = getShuffleMap();
+  
+        return sb.toString();
+    }
+
     public Map<String, Character> getShuffleMap() {
         List<String> everyQuestionList = new ArrayList<>(getWrongAnswers());
         everyQuestionList.add(getRightAnswer());
