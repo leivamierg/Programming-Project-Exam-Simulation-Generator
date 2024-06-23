@@ -9,12 +9,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class FileLoader {
-    // attributes
+
     private static final Set<Topic> topics = new HashSet<>();
 
     private FileLoader() {}
-    // methods
-    // loadFile
+
     /**
      * loads an input bank file -> transforms the input file into a Topic object
      * @param filePath path to the bank file you want to load
@@ -46,6 +45,9 @@ public class FileLoader {
     public static Set<Topic> loadBank(String bankPath) throws NullPointerException, IOException {
             Set<String> fileNames = new HashSet<>();
             File folder = new File(bankPath);
+            if (!folder.exists()) {
+                throw new IOException("Bank folder does not exist");
+            }
             Set<File> files = Set.of(folder.listFiles());
             for (File file : files) {
                 if (file.getName().endsWith(".json"))

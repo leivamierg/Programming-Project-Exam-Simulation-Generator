@@ -1,7 +1,7 @@
 package it.unibz.app;
 
 import it.unibz.controller.Controller;
-import it.unibz.model.interfaces.ModelInt;
+import it.unibz.model.implementations.Model;
 
 /**
  * Hello world!
@@ -10,8 +10,7 @@ import it.unibz.model.interfaces.ModelInt;
 public class App {
     public static void main( String[] args )
     {
-        // ModelInt model = new ModelImpl();
-        // Controller controller = new Controller(model);
-        // controller.elaborateArgs(args);
+        Controller controller = new Controller(new Model());
+        controller.elaborateArgs(args);
     }
 }

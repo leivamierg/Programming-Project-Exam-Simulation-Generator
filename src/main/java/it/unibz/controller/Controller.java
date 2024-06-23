@@ -12,24 +12,24 @@ public class Controller {
 
     public void elaborateArgs(String[] args) {
         if (args.length == 0) {
-            System.out.println("Usage: java Controller <command>");
+            System.out.println("Tester needs arguments to work. Pass as help to see the list of commands.");
             return;
         }
 
-        String command = args[0];
+        String command = args[0].toLowerCase().strip();
 
         switch (command) {
-            case "List":
+            case "list":
                 model.list();
                 break;
-            case "Subtopics":
+            case "subtopics":
                 if (args.length < 2) {
                     System.out.println("Need to write: Subtopics <topic>");
                 } else {
                     model.listSubtopics(args[1]);
                 }
                 break;
-            case "Test":
+            case "test":
                 if (args.length < 3) {
                     System.out.println("Need to write: Test <topic> <subtopic>");
                 } else {
