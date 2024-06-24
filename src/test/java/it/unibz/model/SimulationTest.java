@@ -264,11 +264,11 @@ public class SimulationTest {
             simulation.select(topic1, 1);
             simulation.start();
             // first question -> correct
-            simulation.answer(getCorrectAnswer(question1_1_1));
+            simulation.answer(question1_1_1, getCorrectAnswer(question1_1_1));
             // second question -> correct
-            simulation.answer(getCorrectAnswer(question1_2_1));
+            simulation.answer(question1_2_1, getCorrectAnswer(question1_2_1));
             // third question
-            simulation.answer(getWrongAnswer(question1_3_1));
+            simulation.answer(question1_3_1, getWrongAnswer(question1_3_1));
         }
         private char getCorrectAnswer(Question question) {
             return question.getCorrectAnswerLabel(simulation.getQuestionToShuffledAnswers().get(question));
@@ -318,14 +318,14 @@ public class SimulationTest {
             simulation.select(topic1, 2);
             simulation.start();
             // first subtopic -> both questions correct
-            simulation.answer(getCorrectAnswer(question1_1_1));
-            simulation.answer(getCorrectAnswer(question1_1_2));
+            simulation.answer(question1_1_1, getCorrectAnswer(question1_1_1));
+            simulation.answer(question1_1_2, getCorrectAnswer(question1_1_2));
             // second subtopic -> one question correct, one question wrong
-            simulation.answer(getCorrectAnswer(question1_2_1));
-            simulation.answer(getWrongAnswer(question1_2_2));
+            simulation.answer(question1_2_1, getCorrectAnswer(question1_2_1));
+            simulation.answer(question1_2_2, getWrongAnswer(question1_2_2));
             // third subtopic -> one question wrong, one question blank
-            simulation.answer(getWrongAnswer(question1_3_1));
-            simulation.answer('-');
+            simulation.answer(question1_3_1, getWrongAnswer(question1_3_1));
+            simulation.answer(question1_3_3, '-');
         }
 
         private char getCorrectAnswer(Question question) {
@@ -534,14 +534,14 @@ public class SimulationTest {
             simulation.select(topic1, 2);
             simulation.start();
             // first subtopic -> both questions correct
-            simulation.answer(getCorrectAnswer(question1_1_1));
-            simulation.answer(getCorrectAnswer(question1_1_2));
+            simulation.answer(question1_1_1, getCorrectAnswer(question1_1_1));
+            simulation.answer(question1_1_2, getCorrectAnswer(question1_1_2));
             // second subtopic -> one question correct, one question wrong
-            simulation.answer(getCorrectAnswer(question1_2_1));
-            simulation.answer('-');
+            simulation.answer(question1_2_1, getCorrectAnswer(question1_2_1));
+            simulation.answer(question1_2_2, '-');
             // third subtopic -> both questions wrong
-            simulation.answer(getWrongAnswer(question1_3_1));
-            simulation.answer('-');
+            simulation.answer(question1_3_1, getWrongAnswer(question1_3_1));
+            simulation.answer(question1_3_3, '-');
         }
         private char getCorrectAnswer(Question question) {
             return question.getCorrectAnswerLabel(simulation.getQuestionToShuffledAnswers().get(question));
@@ -602,14 +602,14 @@ public class SimulationTest {
             simulation.select(topic1, 2);
             simulation.start();
             // first subtopic -> both questions correct
-            simulation.answer(getCorrectAnswer(question1_1_1));
-            simulation.answer(getCorrectAnswer(question1_1_2));
+            simulation.answer(question1_1_1, getCorrectAnswer(question1_1_1));
+            simulation.answer(question1_1_2, getCorrectAnswer(question1_1_2));
             // second subtopic -> one question correct, one question wrong
-            simulation.answer(getCorrectAnswer(question1_2_1));
-            simulation.answer('-');
+            simulation.answer(question1_2_1, getCorrectAnswer(question1_2_1));
+            simulation.answer(question1_2_2, '-');
             // third subtopic -> both questions wrong
-            simulation.answer(getWrongAnswer(question1_3_1));
-            simulation.answer('-');
+            simulation.answer(question1_3_1, getWrongAnswer(question1_3_1));
+            simulation.answer(question1_3_3, '-');
         }
 
         private char getCorrectAnswer(Question question) {

@@ -20,10 +20,11 @@ public class Simulation implements SimulationInt {
 
     @Override
     public void select(Topic topic, int nrQuestionsPerSubtopic) throws NullPointerException {
-            for (Subtopic subtopic : topic.getSubtopics()) {
-                updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
-            }
+        for (Subtopic subtopic : topic.getSubtopics()) {
+            updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
+        }
     }
+
     @Override
     public void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic) throws
             IllegalStateException, IllegalArgumentException, NullPointerException {
@@ -45,7 +46,7 @@ public class Simulation implements SimulationInt {
     }
 
     private void updateQuestionToShuffledAnswers(Set<Question> questions) {
-        for (Question question: questions) {
+        for (Question question : questions) {
             questionToShuffledAnswers.put(question, question.getShuffleMap());
         }
     }
@@ -54,6 +55,7 @@ public class Simulation implements SimulationInt {
     public void start() {
         setCurrentQuestion(getAllQuestions().get(0));
     }
+
     @Override
     public void answer(char answer) throws IllegalArgumentException {
         switch (Character.toUpperCase(answer)) {
@@ -61,13 +63,30 @@ public class Simulation implements SimulationInt {
             case 'B':
             case 'C':
             case 'D':
-            case '-': questionToAnswer.put(currentQuestion, Character.toUpperCase(answer));
+            case '-':
+                questionToAnswer.put(currentQuestion, Character.toUpperCase(answer));
                 break;
-            default: throw new IllegalArgumentException();
+            default:
+                throw new IllegalArgumentException();
         }
         List<Question> allQuestions = getAllQuestions();
         if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
             changeQuestion('+');
+        }
+    }
+
+    @Override
+    public void answer(Question question, char answer) throws IllegalArgumentException {
+        switch (Character.toUpperCase(answer)) {
+            case 'A':
+            case 'B':
+            case 'C':
+            case 'D':
+            case '-':
+                questionToAnswer.put(question, Character.toUpperCase(answer));
+                break;
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
@@ -222,6 +241,7 @@ public class Simulation implements SimulationInt {
                 getSubtopicSelected_NonSelectedQuestions(subtopic).size();
 
         double percentage = ((double) nrOfCorrectAnswers / questions.size()) * 100;
+        percentage = Math.floor(percentage * 100)/100;
         return new Score(nrOfCorrectAnswers, nrOfWrongAnswers, nrOfBlankAnswers, selected, total, percentage);
     }
     @Override

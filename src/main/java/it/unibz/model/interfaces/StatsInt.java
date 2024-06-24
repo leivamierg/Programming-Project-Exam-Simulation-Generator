@@ -67,11 +67,8 @@ public interface StatsInt {
 
     /**
      *
-     * @return a record containing the general stats after every sim
+     * @return a list containing the evolution of the general stats after every sim
      */
-    Score updateGeneralStats();
 
-
-
-
+    List<Score> getGeneralStats();
 }
