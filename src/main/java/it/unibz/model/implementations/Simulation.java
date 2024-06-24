@@ -11,6 +11,7 @@ public class Simulation implements SimulationInt {
     private Map<Question, Character> questionToAnswer;
     private Map<Question, Map<String, Character>> questionToShuffledAnswers;
     private Question currentQuestion;
+    private ExamTimer timer;
 
     public Simulation() {
         subtopicToQuestions = new HashMap<>();
@@ -56,6 +57,11 @@ public class Simulation implements SimulationInt {
     @Override
     public void start() {
         setCurrentQuestion(getAllQuestions().get(0));
+
+        int examDurationSeconds = 60 * 30; //30 mins
+        timer = new ExamTimer(examDurationSeconds, this);
+        Thread timerThread = new Thread(timer);
+        timerThread.start();
     }
 
     @Override
@@ -97,6 +103,8 @@ public class Simulation implements SimulationInt {
 
     @Override
     public String terminate(Stats stats) {
+        timer.stopTimer();
+
         // update all parameters
         updateNonSelectedQuestions();
         updateCorrectWrongAndBlankQuestions();

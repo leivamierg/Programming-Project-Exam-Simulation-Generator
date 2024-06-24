@@ -2,6 +2,9 @@ package it.unibz.controller;
 
 import it.unibz.model.interfaces.ModelInt;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Controller {
 
     private ModelInt model;
@@ -16,30 +19,34 @@ public class Controller {
             return;
         }
 
-        String command = args[0].toLowerCase().strip();
+        String input = String.join(" ", args);
+        input = input.strip();
 
-        switch (command) {
-            case "list":
-                model.list();
-                break;
-            case "subtopics":
-                if (args.length < 2) {
-                    System.out.println("Need to write: Subtopics <topic>");
-                } else {
-                    model.listSubtopics(args[1]);
-                }
-                break;
-            case "test":
-                if (args.length < 2) 
-                    System.out.println("Need to write: Test <topic> <subtopic>");
-                else if (args.length == 2) 
-                    model.test(args[1], null); 
-                else 
-                    model.test(args[1], args[2]);
-                break;
-            default:
-                System.out.println("Invalid command");
-                break;
+        Pattern listTopicsPattern = Pattern.compile("^tester\\s+-t|--topics$");
+        Pattern listSubtopicsPattern = Pattern.compile("^tester\\s+([^\\s]+)\\s+-s|--subtopics$");
+        Pattern startTestPattern = Pattern.compile("^tester\\s+([^\\s]+)$");
+        Pattern selectSubtopicsPattern = Pattern.compile("^tester\\s+([^\\s]+)\\s+--select$");
+
+        Matcher matcher;
+
+        if ((matcher = listTopicsPattern.matcher(input)).find())
+        {
+            model.list();
+        } else if ((matcher = listSubtopicsPattern.matcher(input)).find())
+        {
+            String topic = matcher.group(1);
+            model.listSubtopics(topic);
+        } else if ((matcher = startTestPattern.matcher(input)).find())
+        {
+            String topic = matcher.group(1);
+            model.test(topic, null);
+        } else if ((matcher = selectSubtopicsPattern.matcher(input)).find())
+        {
+            String topic = matcher.group(1);
+            //Selection of subtopic from Model to  be implemented
+            System.out.println("Subtopic selection feature not implemented.");
+        } else {
+            System.out.println("Invalid command. Please check your input.");
         }
     }
 
@@ -51,7 +58,6 @@ public class Controller {
             System.exit(1);
         }
 
-        // no scanner becaouse this is faster to write
         return System.console().readLine();
     }
 }
