@@ -70,26 +70,12 @@ public class Stats implements StatsInt {
                         currentSim.getAllBlankQuestions(), new HashSet<>(currentSim.getAllQuestions()),
                         currentSim.getAllSelected_NonSelectedQuestions());
         }
-        double percentage = ((double) correctQuestions.size() / selectedQuestions.size()) * 100;
-        percentage = Math.floor(percentage * 100)/100;
+        double percentage = computePercentage(correctQuestions.size(), selectedQuestions.size());
 
         List<Score> temp = topicToStats.get(simulation.getTopic());
         updateMap(topicToStats, simulation.getTopic(), temp,
                 correctQuestions.size(), wrongQuestions.size(), blankQuestions.size(),
                 selectedQuestions.size(), allQuestions.size(), percentage);
-
-
-        /*if (temp == null) {
-            List<Correct_Selected_TotalQuestionsAndPercentage> stats = new ArrayList<>();
-            stats.add(new Correct_Selected_TotalQuestionsAndPercentage(correctQuestions.size(),
-                    selectedQuestions.size(), allQuestions.size(), percentage));
-            topicToStats.put(simulation.getTopic(), stats);
-        } else {
-            temp.add(new Correct_Selected_TotalQuestionsAndPercentage(correctQuestions.size(),
-                    selectedQuestions.size(), allQuestions.size(), percentage));
-            topicToStats.put(simulation.getTopic(), temp);
-        }*/
-
     }
 
     private void updateSubtopicToStats(Simulation simulation) {
@@ -97,10 +83,6 @@ public class Stats implements StatsInt {
         for (Subtopic subtopic : selectedSubtopics) {
                 updateSubtopicStats(subtopic);
         }
-
-        /*simulations.stream().
-                flatMap(s -> s.getSubtopicToQuestions().keySet().stream()).
-                forEach(this::updateSubtopicStats);*/
     }
 
     private void updateSubtopicStats(Subtopic subtopic) {
@@ -119,23 +101,12 @@ public class Stats implements StatsInt {
             }
 
         }
-        double percentage = ((double) correctQuestions.size() / selectedQuestions.size()) * 100;
-        percentage = Math.floor(percentage * 100)/100;
+        double percentage = computePercentage(correctQuestions.size(), selectedQuestions.size());
 
         List<Score> temp = subtopicToStats.get(subtopic.getSubtopicName());
         updateMap(subtopicToStats, subtopic.getSubtopicName(), temp,
                 correctQuestions.size(), wrongQuestions.size(), blankQuestions.size(),
                 selectedQuestions.size(), allQuestions.size(), percentage);
-        /*if (temp == null) {
-            List<Correct_Selected_TotalQuestionsAndPercentage> stats = new ArrayList<>();
-            stats.add(new Correct_Selected_TotalQuestionsAndPercentage(correctQuestions.size(),
-                    selectedQuestions.size(), allQuestions.size(), percentage));
-            subtopicToStats.put(subtopic.getSubtopicName(), stats);
-        } else {
-            temp.add(new Correct_Selected_TotalQuestionsAndPercentage(correctQuestions.size(),
-                    selectedQuestions.size(), allQuestions.size(), percentage));
-            topicToStats.put(subtopic.getSubtopicName(), temp);
-        }*/
     }
 
     private void updateGeneralStats() {
@@ -149,8 +120,7 @@ public class Stats implements StatsInt {
             selected += topicStats.selected();
             total += topicStats.total();
         }
-        double percentage = ((double) correct/selected) * 100;
-        percentage = Math.floor(percentage * 100)/100;
+        double percentage = computePercentage(correct, selected);
         generalStats.add(new Score(correct, wrong, blank, selected, total, percentage));
     }
 
@@ -188,6 +158,11 @@ public class Stats implements StatsInt {
         } else {
             temp.add(score);
         }
+    }
+
+    private double computePercentage(int correct, int selected) {
+        double percentage = ((double) correct / selected) * 100;
+        return Math.floor(percentage * 100)/100;
     }
 
     @Override

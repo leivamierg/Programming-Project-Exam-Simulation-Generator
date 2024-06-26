@@ -1,5 +1,7 @@
 package it.unibz.model.implementations;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.unibz.model.interfaces.SimulationInt;
 
 import java.util.*;
@@ -16,6 +18,14 @@ public class Simulation implements SimulationInt {
         subtopicToQuestions = new HashMap<>();
         questionToAnswer = new HashMap<>();
         questionToShuffledAnswers = new HashMap<>();
+    }
+    @JsonCreator
+    public Simulation(@JsonProperty("subtopicToQuestions") Map<Subtopic, Set<Question>> subtopicToQuestions,
+                      @JsonProperty("questionToAnswer") Map<Question, Character> questionToAnswer,
+                      @JsonProperty("questionToShuffledAnswers") Map<Question, Map<String, Character>> questionToShuffledAnswers) {
+        setSubtopicToQuestions(subtopicToQuestions);
+        setQuestionToAnswer(questionToAnswer);
+        setQuestionToShuffledAnswers(questionToShuffledAnswers);
     }
 
     @Override
@@ -297,5 +307,15 @@ public class Simulation implements SimulationInt {
         this.currentQuestion = currentQuestion;
     }
 
+    public void setSubtopicToQuestions(Map<Subtopic, Set<Question>> subtopicToQuestions) {
+        this.subtopicToQuestions = subtopicToQuestions;
+    }
 
+    public void setQuestionToAnswer(Map<Question, Character> questionToAnswer) {
+        this.questionToAnswer = questionToAnswer;
+    }
+
+    public void setQuestionToShuffledAnswers(Map<Question, Map<String, Character>> questionToShuffledAnswers) {
+        this.questionToShuffledAnswers = questionToShuffledAnswers;
+    }
 }

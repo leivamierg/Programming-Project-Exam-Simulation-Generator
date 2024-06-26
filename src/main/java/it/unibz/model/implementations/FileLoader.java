@@ -16,7 +16,7 @@ public class FileLoader {
     // methods
     // loadFile
     /**
-     * loads an input bank file -> transforms the input file into a Topic object
+     * loads an input bank file -> transforms the input file into a Topic object -> deserialization
      * @param filePath path to the bank file you want to load
      * @return a Topic object that corresponds to the input file
      * @throws IOException if the input file doesn't exist
@@ -37,7 +37,7 @@ public class FileLoader {
     }
     // loadBank
     /**
-     * loads all files in the given bank
+     * loads all files in the given bank -> deserialization
      * @param bankPath path to the bank you want to load files from
      * @throws NullPointerException if the given bank doesn't exist
      * @throws IOException
