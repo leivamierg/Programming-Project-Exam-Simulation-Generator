@@ -2,8 +2,7 @@ package it.unibz.model.interfaces;
 
 public interface ModelInt {
 
-    
-    /**
+        /**
      * Prints a list of all general topics known by the programm
      * 
      */
@@ -12,6 +11,7 @@ public interface ModelInt {
     /**
      * Prints a list of all the subtopics of the provided topic
      * 
+     * private
      * @param topic of witch you want to know the sobtopics
      */
     void listSubtopics(String topic);

@@ -13,6 +13,7 @@ public class Simulation implements SimulationInt {
     private Map<Question, Character> questionToAnswer;
     private Map<Question, Map<String, Character>> questionToShuffledAnswers;
     private Question currentQuestion;
+    private ExamTimer timer;
 
     public Simulation() {
         subtopicToQuestions = new HashMap<>();
@@ -36,8 +37,8 @@ public class Simulation implements SimulationInt {
     }
 
     @Override
-    public void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic) throws
-            IllegalStateException, IllegalArgumentException, NullPointerException {
+    public void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic)
+            throws IllegalStateException, IllegalArgumentException, NullPointerException {
         if (!subtopics.isEmpty()) {
             List<Subtopic> temp = new ArrayList<>(subtopics);
             String topic = temp.get(0).getTopic();
@@ -64,6 +65,11 @@ public class Simulation implements SimulationInt {
     @Override
     public void start() {
         setCurrentQuestion(getAllQuestions().get(0));
+
+        int examDurationSeconds = 60 * 30; //30 mins
+        timer = new ExamTimer(examDurationSeconds, this);
+        Thread timerThread = new Thread(timer);
+        timerThread.start();
     }
 
     @Override
@@ -118,9 +124,10 @@ public class Simulation implements SimulationInt {
         setCurrentQuestion(allQuestions.get(idxQuestion - 1));
     }
 
-
     @Override
     public String terminate(Stats stats) {
+        timer.stopTimer();
+
         // update all parameters
         updateNonSelectedQuestions();
         updateCorrectWrongAndBlankQuestions();
@@ -130,20 +137,16 @@ public class Simulation implements SimulationInt {
     }
 
     private void updateNonSelectedQuestions() {
-        getNonSelectedQuestions().stream().
-                forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 1));
+        getNonSelectedQuestions().stream().forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 1));
     }
 
     private void updateCorrectWrongAndBlankQuestions() {
         // correct
-        getAllCorrectQuestions().stream().
-                forEach(q -> q.setPriorityLevel(0));
+        getAllCorrectQuestions().stream().forEach(q -> q.setPriorityLevel(0));
         // wrong
-        getAllWrongQuestions().stream().
-                forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 2));
+        getAllWrongQuestions().stream().forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 2));
         // blank
-        getAllBlankQuestions().stream().
-                forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 2));
+        getAllBlankQuestions().stream().forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 2));
     }
 
     @Override
@@ -175,41 +178,38 @@ public class Simulation implements SimulationInt {
     public Set<Question> getAllBlankQuestions() {
         return getBlankQuestions(new HashSet<>(getAllQuestions()));
     }
+
     private Set<Question> getCorrectQuestions(Set<Question> questions) {
-        return questions.stream().
-                filter(this::isCorrect).
-                collect(Collectors.toSet());
+        return questions.stream().filter(this::isCorrect).collect(Collectors.toSet());
     }
 
     private Set<Question> getWrongQuestions(Set<Question> questions) {
-        return questions.stream().
-                filter(q -> !isCorrect(q) && questionToAnswer.get(q) != '-').
-                collect(Collectors.toSet());
+        return questions.stream().filter(q -> !isCorrect(q) && questionToAnswer.get(q) != '-')
+                .collect(Collectors.toSet());
     }
 
     private Set<Question> getBlankQuestions(Set<Question> questions) {
-        return questions.stream().
-                filter(q -> questionToAnswer.get(q) == '-').
-                collect(Collectors.toSet());
+        return questions.stream().filter(q -> questionToAnswer.get(q) == '-').collect(Collectors.toSet());
     }
+
     @Override
     public Set<Question> getNonSelectedQuestions() {
-        return getAllSelected_NonSelectedQuestions().stream().
-                filter(q -> !getAllQuestions().contains(q)).
-                collect(Collectors.toSet());
+        return getAllSelected_NonSelectedQuestions().stream().filter(q -> !getAllQuestions().contains(q))
+                .collect(Collectors.toSet());
     }
+
     @Override
     public Set<Question> getAllSelected_NonSelectedQuestions() {
-        return subtopicToQuestions.keySet().stream().
-                flatMap(s -> s.getQuestions().stream()).
-                collect(Collectors.toSet());
+        return subtopicToQuestions.keySet().stream().flatMap(s -> s.getQuestions().stream())
+                .collect(Collectors.toSet());
     }
+
     @Override
     public Set<Question> getSubtopicSelected_NonSelectedQuestions(Subtopic subtopic) {
         return subtopic.getQuestions();
     }
 
-    private String computeResult () {
+    private String computeResult() {
         Score simStats = computeSimStats();
         String simResult = getResult(simStats, "Simulation");
         String subtopicsResult = "";
@@ -231,12 +231,12 @@ public class Simulation implements SimulationInt {
         return result;
     }
 
-
     @Override
     public Score computeSubtopicStats(Subtopic subtopic) throws NullPointerException {
-            Set<Question> questions = subtopicToQuestions.get(subtopic);
-            return computeStats(questions, subtopic);
+        Set<Question> questions = subtopicToQuestions.get(subtopic);
+        return computeStats(questions, subtopic);
     }
+
     @Override
     public Score computeSimStats() {
         return computeStats(new HashSet<>(getAllQuestions()), null);
@@ -247,24 +247,25 @@ public class Simulation implements SimulationInt {
         int nrOfWrongAnswers = getWrongQuestions(questions).size();
         int nrOfBlankAnswers = getBlankQuestions(questions).size();
         int selected = (subtopic == null) ? getAllQuestions().size() : subtopicToQuestions.get(subtopic).size();
-        int total = (subtopic == null) ? getAllSelected_NonSelectedQuestions().size() :
-                getSubtopicSelected_NonSelectedQuestions(subtopic).size();
+        int total = (subtopic == null) ? getAllSelected_NonSelectedQuestions().size()
+                : getSubtopicSelected_NonSelectedQuestions(subtopic).size();
 
         double percentage = ((double) nrOfCorrectAnswers / questions.size()) * 100;
         percentage = Math.floor(percentage * 100)/100;
         return new Score(nrOfCorrectAnswers, nrOfWrongAnswers, nrOfBlankAnswers, selected, total, percentage);
     }
+
     @Override
     public boolean isCorrect(Question question) throws NullPointerException {
         if (questionToAnswer.get(question) == null)
             throw new NullPointerException();
-        return questionToAnswer.get(question) == question.getCorrectAnswerLabel(questionToShuffledAnswers.get(question));
+        return questionToAnswer.get(question) == question
+                .getCorrectAnswerLabel(questionToShuffledAnswers.get(question));
     }
+
     @Override
     public List<Question> getAllQuestions() {
-        return subtopicToQuestions.entrySet().stream().
-                flatMap(e -> e.getValue().stream()).
-                collect(Collectors.toList());
+        return subtopicToQuestions.entrySet().stream().flatMap(e -> e.getValue().stream()).collect(Collectors.toList());
     }
 
     @Override
@@ -301,6 +302,7 @@ public class Simulation implements SimulationInt {
 
     /**
      * do not use this method, only for debug purposes
+     * 
      * @param currentQuestion the question you want to set as the current one
      */
     public void setCurrentQuestion(Question currentQuestion) {

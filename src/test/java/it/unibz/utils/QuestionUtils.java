@@ -1,9 +1,9 @@
 package it.unibz.utils;
 
 import it.unibz.model.implementations.Question;
+import static it.unibz.utils.SubtopicUtils.*;
 
 import java.util.Set;
-import static it.unibz.utils.SubtopicUtils.*;
 
 public class QuestionUtils {
 

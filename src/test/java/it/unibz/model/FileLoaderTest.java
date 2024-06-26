@@ -2,10 +2,7 @@ package it.unibz.model;
 
 
 import it.unibz.model.implementations.FileLoader;
-import it.unibz.model.implementations.Question;
 import it.unibz.model.implementations.Topic;
-import static it.unibz.utils.QuestionUtils.*;
-import static it.unibz.utils.SubtopicUtils.*;
 import it.unibz.utils.TopicUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

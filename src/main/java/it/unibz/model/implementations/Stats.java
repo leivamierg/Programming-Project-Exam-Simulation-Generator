@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.unibz.model.interfaces.StatsInt;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Stats implements StatsInt {
     private List<Simulation> simulations;
