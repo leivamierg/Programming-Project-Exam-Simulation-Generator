@@ -64,11 +64,11 @@ public class Stats implements StatsInt {
         Set<Question> selectedQuestions = new HashSet<>();
         Set<Question> allQuestions = new HashSet<>();
         for (Simulation currentSim : simulations) {
-            // if (currentSim.getTopic().equals(simulation.getTopic()))
+            if (currentSim.getTopic().equals(simulation.getTopic()))
                 updateCorWrongBlankSelTot(correctQuestions, wrongQuestions, blankQuestions, selectedQuestions, allQuestions,
                         currentSim.getAllCorrectQuestions(), currentSim.getAllWrongQuestions(),
                         currentSim.getAllBlankQuestions(), new HashSet<>(currentSim.getAllQuestions()),
-                        currentSim.getAllSelected_NonSelectedQuestions(), simulation.getTopic(), currentSim.getTopic());
+                        currentSim.getAllSelected_NonSelectedQuestions());
         }
         double percentage = ((double) correctQuestions.size() / selectedQuestions.size()) * 100;
         percentage = Math.floor(percentage * 100)/100;
@@ -109,13 +109,13 @@ public class Stats implements StatsInt {
         Set<Question> blankQuestions = new HashSet<>();
         Set<Question> selectedQuestions = new HashSet<>();
         Set<Question> allQuestions = new HashSet<>();
-        for (Simulation simulation : simulations) {
-            for (Subtopic currentSubtopic : simulation.getSubtopicToQuestions().keySet()) {
-                // if (subtopic.getSubtopicName().equals(currentSubtopic.getSubtopicName()))
+        for (Simulation currentSim : simulations) {
+            for (Subtopic currentSubtopic : currentSim.getSubtopicToQuestions().keySet()) {
+                if (subtopic.getSubtopicName().equals(currentSubtopic.getSubtopicName()))
                     updateCorWrongBlankSelTot(correctQuestions, wrongQuestions, blankQuestions, selectedQuestions, allQuestions,
-                            simulation.getSubtopicCorrectQuestions(subtopic), simulation.getSubtopicWrongQuestions(subtopic),
-                            simulation.getSubtopicBlankQuestions(subtopic), simulation.getSubtopicToQuestions().get(subtopic),
-                            subtopic.getQuestions(), subtopic.getSubtopicName(), currentSubtopic.getSubtopicName());
+                            currentSim.getSubtopicCorrectQuestions(subtopic), currentSim.getSubtopicWrongQuestions(subtopic),
+                            currentSim.getSubtopicBlankQuestions(subtopic), currentSim.getSubtopicToQuestions().get(subtopic),
+                            subtopic.getQuestions());
             }
 
         }
@@ -157,9 +157,7 @@ public class Stats implements StatsInt {
     private void updateCorWrongBlankSelTot(Set<Question> correct, Set<Question> wrong,
                                         Set<Question> blank, Set<Question> selected, Set<Question> total,
                                         Set<Question> corToAdd, Set<Question> wrongToAdd,
-                                        Set<Question> blankToAdd, Set<Question> selToAdd, Set<Question> totToAdd, 
-                                        String topicSubtopic, String currentTopicSubtopic) {
-        if (topicSubtopic.equals(currentTopicSubtopic)) {
+                                        Set<Question> blankToAdd, Set<Question> selToAdd, Set<Question> totToAdd) {
             correct.addAll(corToAdd);
             wrong.addAll(wrongToAdd);
             blank.addAll(blankToAdd);
@@ -178,7 +176,6 @@ public class Stats implements StatsInt {
                 blank.remove(question);
             }
         }
-    }
 
     private void updateMap(Map<String, List<Score>> map,
                            String topicSubtopic, List<Score> temp,

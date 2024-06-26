@@ -76,4 +76,6 @@ public interface QuestionInt {
     String toString();
 
     boolean equals(Question question);
+
+    // boolean equals(Question question);
 }
