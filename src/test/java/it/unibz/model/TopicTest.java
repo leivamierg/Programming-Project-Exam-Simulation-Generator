@@ -41,7 +41,7 @@ public class TopicTest {
                 Subtopic sX = new Subtopic(s.getSubtopicName(), newSet, topicA.getTopicName());
                 for (Question q : s.getQuestions()) {
                     Question newQuestion = new Question(q.getQuestionStatement(), q.getRightAnswer(),
-                            q.getWrongAnswers(), q.getSubtopic());
+                            q.getWrongAnswers(), q.getSubtopic(), 1);
                     sX.getQuestions().add(newQuestion);
                 }
                 topicC.getSubtopics().add(sX);

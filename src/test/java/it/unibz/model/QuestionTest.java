@@ -32,7 +32,7 @@ public class QuestionTest {
             Question q2 = q1;
             Question q3 = new Question(new String(q1.getQuestionStatement()), new String(q1.getRightAnswer()),
                     new HashSet<String>(q1.getWrongAnswers()),
-                    new String(q1.getSubtopic()));
+                    new String(q1.getSubtopic()), 1);
 
             assertEquals(q1, q2);
             assertEquals(q1, q3);

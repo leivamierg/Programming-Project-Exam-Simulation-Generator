@@ -139,7 +139,7 @@ public class SubtopicTest {
             for (Question q : sTA.getQuestions()) {
                 questionsSet.add(new Question(new String(q.getQuestionStatement()), new String(q.getRightAnswer()),
                         new HashSet<String>(q.getWrongAnswers()),
-                        new String(q.getSubtopic())));
+                        new String(q.getSubtopic()), 1));
             }
 
             Subtopic sTC = new Subtopic(new String(sTA.getSubtopicName()), questionsSet, new String(sTA.getTopic()));

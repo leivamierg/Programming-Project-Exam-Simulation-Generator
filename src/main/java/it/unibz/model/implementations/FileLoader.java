@@ -5,17 +5,16 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class FileLoader {
 
     private static final Set<Topic> topics = new HashSet<>();
+    private static final Map<String, List<String>> bankToFiles = new HashMap<>();
 
     /**
-     * loads an input bank file -> transforms the input file into a Topic object ->
-     * deserialization
+     * loads an input bank file -> transforms the input file into a Topic object -> deserialization
      * 
      * @param filePath path to the bank file you want to load
      * @return the Topic object that corresponds to the input file
@@ -45,39 +44,33 @@ public class FileLoader {
      * @return the set of loaded topics
      */
     public static Set<Topic> loadBank(String bankPath) throws IOException {
-        Set<String> fileNames = new HashSet<>();
+        List<String> fileNames = new ArrayList<>();
         File folder = new File(bankPath);
         if (!folder.exists()) {
             throw new IOException("Bank folder does not exist");
         }
-        Set<File> files = Set.of(folder.listFiles());
+        List<File> files = List.of(folder.listFiles());
         for (File file : files) {
             if (file.getName().endsWith(".json"))
                 fileNames.add(file.getName());
         }
+        bankToFiles.put(bankPath, fileNames);
         Set<Topic> bank = new HashSet<>();
         for (String fileName : fileNames) {
             bank.add(loadFile(bankPath + fileName));
         }
-        topics.addAll(bank);
         return bank;
     }
 
-    // getTopics
     /**
-     * TODO implement this method
-     * 
-     * @return a set of all available topics for the user
+     * save a topic into a json file -> serialization
+     * @param topic the topic to serialize
+     * @param jsonFilePath the path of the file where the topic is stored
+     * @throws IOException
      */
-    public static Set<Topic> getTopics() {
-        return topics;
-    }
-
-    // Serializes a single topic into a String
     public static void saveFile(Topic topic, String jsonFilePath) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
         try {
             mapper.writeValue(new File(jsonFilePath), topic);
         } catch (IOException e) {
@@ -86,13 +79,42 @@ public class FileLoader {
 
     }
 
-    public static void saveBank(List<String> jsonPaths, List<Topic> topics) {
+    /**
+     *
+     * @param bankPath the path to the bank where you want to save the topics
+     * @param topics the list of topics you want to save
+     * @throws IOException
+     * @throws IllegalArgumentException if the list of topics doesn't perfectly match the list of file names
+     * in the given bank
+     */
+
+    public static void saveBank(String bankPath, List<Topic> topics) throws IOException, IllegalArgumentException {
+        if (bankToFiles.get(bankPath) == null)
+            throw new IOException();
+        if (topics == null || topics.isEmpty())
+            throw new IllegalArgumentException();
+        List<String> fileNames = bankToFiles.get(bankPath);
+        if (fileNames.size() != topics.size())
+            throw new IllegalArgumentException();
         for (int i = 0; i < topics.size(); i++) {
-            try {
-                saveFile(topics.get(i), jsonPaths.get(i));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            if (correctFile(fileNames.get(i), topics.get(i))) {
+                saveFile(topics.get(i), bankPath + fileNames.get(i));
+            } else throw new IllegalArgumentException();
         }
+    }
+
+    private static boolean correctFile(String fileName, Topic topic) {
+        String[] temp = fileName.split("_");
+        String constructedTopicName = String.join(" ", temp).toLowerCase();
+        return constructedTopicName.equals(topic.getTopicName().toLowerCase());
+    }
+
+
+    // getTopics
+    /**
+     * @return a set of all available topics for the user
+     */
+    public static Set<Topic> getTopics() {
+        return topics;
     }
 }
