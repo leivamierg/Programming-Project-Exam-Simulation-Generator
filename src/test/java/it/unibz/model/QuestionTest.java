@@ -3,7 +3,6 @@ package it.unibz.model;
 import static it.unibz.utils.QuestionUtils.question1_1_1;
 import static it.unibz.utils.QuestionUtils.question1_2_1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -35,11 +34,11 @@ public class QuestionTest {
                     new HashSet<String>(q1.getWrongAnswers()),
                     new String(q1.getSubtopic()));
 
-            assertTrue(q1.equals(q2));
-            assertTrue(q1.equals(q3));
+            assertEquals(q1, q2);
+            assertEquals(q1, q3);
 
-            assertTrue(q1.hashCode() == q2.hashCode());
-            assertTrue(q1.hashCode() == q3.hashCode());
+            assertEquals(q1.hashCode(), q2.hashCode());
+            assertEquals(q1.hashCode(), q3.hashCode());
         }
     }
 
@@ -58,6 +57,7 @@ public class QuestionTest {
 
             assertEquals(shuffleMapQ4_1.get(q4.getRightAnswer()), shuffleMapKey1);
             assertEquals(shuffleMapQ4_2.get(q4.getRightAnswer()), shuffleMapKey2);
+
         }
     }
 }

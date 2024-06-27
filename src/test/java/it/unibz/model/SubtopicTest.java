@@ -144,11 +144,11 @@ public class SubtopicTest {
 
             Subtopic sTC = new Subtopic(new String(sTA.getSubtopicName()), questionsSet, new String(sTA.getTopic()));
 
-            assertTrue(sTA.equals(sTB));
-            assertTrue(sTA.equals(sTC));
+            assertEquals(sTA, sTB);
+            assertEquals(sTA, sTC);
 
-            assertTrue(sTA.hashCode() == sTB.hashCode());
-            assertTrue(sTA.hashCode() == sTC.hashCode());
+            assertEquals(sTA.hashCode(), sTB.hashCode());
+            assertEquals(sTA.hashCode(), sTC.hashCode());
         }
     }
 }

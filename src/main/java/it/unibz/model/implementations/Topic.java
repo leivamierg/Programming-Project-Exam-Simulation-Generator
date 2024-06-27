@@ -59,14 +59,15 @@ public class Topic implements TopicInt {
     }
 
     @Override
-    public boolean equals(Topic topic) {
-        if (topic == null || topic.getClass() != getClass()) {
+    public boolean equals(Object topic) {
+        if (topic == null || !(topic instanceof Topic)) {
             return false;
         } else if (this == topic) {
             return true;
         }
 
-        return (getTopicName().equals(topic.getTopicName()) && equalsSubtopics(topic.getSubtopics()));
+        return (getTopicName().equals(((Topic) topic).getTopicName())
+                && getSubtopics().equals(((Topic) topic).getSubtopics()));
     }
 
     /*
@@ -74,35 +75,27 @@ public class Topic implements TopicInt {
      * if (getSubtopics().size() != subtopics.size() || subtopics == null) {
      * return false;
      * } else {
-     * return subtopics.containsAll(getSubtopics());
+     * boolean condition = true;
+     * 
+     * for (Subtopic s1 : getSubtopics()) {
+     * condition = false;
+     * for (Subtopic s2 : getSubtopics()) {
+     * if (s1.equals(s2)) {
+     * condition = true;
+     * break;
      * }
+     * }
+     * if (!condition) {
+     * return false;
+     * }
+     * 
+     * }
+     * 
+     * return true;
+     * }
+     * 
      * }
      */
-
-    private boolean equalsSubtopics(Set<Subtopic> subtopics) {
-        if (getSubtopics().size() != subtopics.size() || subtopics == null) {
-            return false;
-        } else {
-            boolean condition = true;
-
-            for (Subtopic s1 : getSubtopics()) {
-                condition = false;
-                for (Subtopic s2 : getSubtopics()) {
-                    if (s1.equals(s2)) {
-                        condition = true;
-                        break;
-                    }
-                }
-                if (!condition) {
-                    return false;
-                }
-
-            }
-
-            return true;
-        }
-
-    }
 
     @Override
     public int hashCode() {

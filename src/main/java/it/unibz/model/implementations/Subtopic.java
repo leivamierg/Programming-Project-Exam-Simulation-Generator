@@ -111,42 +111,44 @@ public class Subtopic implements SubtopicInt {
     }
 
     @Override
-    public boolean equals(Subtopic subtopic) {
-        if (subtopic == null || subtopic.getClass() != getClass()) {
+    public boolean equals(Object subtopic) {
+        if (subtopic == null || !(subtopic instanceof Subtopic)) {
             return false;
-        } else if (this == subtopic) {
+        } else if (this == (Object) subtopic) {
             return true;
         }
 
-        return (getTopic().equals(subtopic.getTopic())
-                && getSubtopicName().equals(subtopic.getSubtopicName())
-                && equalsQuestions(subtopic.getQuestions()));
+        return (getTopic().equals(((Subtopic) subtopic).getTopic())
+                && getSubtopicName().equals(((Subtopic) subtopic).getSubtopicName())
+                && getQuestions().equals((((Subtopic) subtopic).getQuestions())));
     }
 
-    private boolean equalsQuestions(Set<Question> questions) {
-        if (getQuestions().size() != questions.size() || questions == null) {
-            return false;
-        } else {
-            boolean condition = true;
-
-            for (Question q1 : getQuestions()) {
-                condition = false;
-                for (Question q2 : questions) {
-                    if (q1.equals(q2)) {
-                        condition = true;
-                        break;
-                    }
-                }
-                if (!condition) {
-                    return false;
-                }
-
-            }
-
-            return true;
-        }
-
-    }
+    /*
+     * private boolean equalsQuestions(Set<Question> questions) {
+     * if (getQuestions().size() != questions.size() || questions == null) {
+     * return false;
+     * } else {
+     * boolean condition = true;
+     * 
+     * for (Question q1 : getQuestions()) {
+     * condition = false;
+     * for (Question q2 : questions) {
+     * if (q1.equals(q2)) {
+     * condition = true;
+     * break;
+     * }
+     * }
+     * if (!condition) {
+     * return false;
+     * }
+     * 
+     * }
+     * 
+     * return true;
+     * }
+     * 
+     * }
+     */
 
     @Override
     public int hashCode() {
