@@ -19,7 +19,8 @@ public class Question implements QuestionInt {
     @JsonCreator
     public Question(@JsonProperty("questionStatement") String questionStatement,
             @JsonProperty("rightAnswer") String rightAnswer,
-            @JsonProperty("wrongAnswers") Set<String> wrongAnswers, @JsonProperty("subtopic") String subtopic
+            @JsonProperty("wrongAnswers") Set<String> wrongAnswers, @JsonProperty("subtopic") String subtopic,
+            @JsonProperty("priorityLevel") int priorityLevel // aggiungere in json e corregere i tests
     /* , Subtopic subtopic */) { // TODO: add priority level initializer json
         // TODO: displya le stats
         setQuestionStatement(questionStatement);
@@ -27,7 +28,7 @@ public class Question implements QuestionInt {
         setWrongAnswers(wrongAnswers);
         setSubtopic(subtopic);
         // setSubtopicReference(subtopic);
-        setPriorityLevel(1);// starts at 1 by default
+        setPriorityLevel(priorityLevel);// starts at 1 by default
     }
 
     // setters
