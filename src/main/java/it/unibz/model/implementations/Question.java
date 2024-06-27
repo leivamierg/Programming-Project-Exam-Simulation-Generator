@@ -20,7 +20,8 @@ public class Question implements QuestionInt {
     public Question(@JsonProperty("questionStatement") String questionStatement,
             @JsonProperty("rightAnswer") String rightAnswer,
             @JsonProperty("wrongAnswers") Set<String> wrongAnswers, @JsonProperty("subtopic") String subtopic
-    /* , Subtopic subtopic */) {
+    /* , Subtopic subtopic */) { // TODO: add priority level initializer json
+        // TODO: displya le stats
         setQuestionStatement(questionStatement);
         setRightAnswer(rightAnswer);
         setWrongAnswers(wrongAnswers);
