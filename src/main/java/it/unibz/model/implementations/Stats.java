@@ -227,4 +227,17 @@ public class Stats implements StatsInt {
     public List<Score> getGeneralStats() {
         return generalStats;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Stats stats = (Stats) o;
+        return Objects.equals(simulations, stats.simulations) && Objects.equals(topicToStats, stats.topicToStats) && Objects.equals(subtopicToStats, stats.subtopicToStats) && Objects.equals(generalStats, stats.generalStats);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(simulations, topicToStats, subtopicToStats, generalStats);
+    }
 }

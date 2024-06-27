@@ -41,8 +41,7 @@ public class FileLoader {
      * loads all files in the given bank -> deserialization
      * 
      * @param bankPath path to the bank you want to load files from
-     * @throws NullPointerException if the given bank doesn't exist
-     * @throws IOException
+     * @throws IOException if the given bank doesn't exist
      * @return the set of loaded topics
      */
     public static Set<Topic> loadBank(String bankPath) throws IOException {
