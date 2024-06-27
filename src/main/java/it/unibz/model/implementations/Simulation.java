@@ -27,7 +27,6 @@ public class Simulation implements SimulationInt {
     }
 
     @Override
-
     public void select(Set<Subtopic> subtopics, int nrQuestionsPerSubtopic)
             throws IllegalStateException, IllegalArgumentException, NullPointerException {
         if (!subtopics.isEmpty()) {
@@ -58,8 +57,7 @@ public class Simulation implements SimulationInt {
     public void start() {
         setCurrentQuestion(getAllQuestions().get(0));
 
-        int examDurationSeconds = 60 * 30; //30 mins
-        timer = new ExamTimer(examDurationSeconds, this);
+        timer = new ExamTimer(this);
         Thread timerThread = new Thread(timer);
         timerThread.start();
     }
