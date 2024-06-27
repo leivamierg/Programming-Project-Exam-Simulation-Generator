@@ -1,5 +1,7 @@
 package it.unibz.model.implementations;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.unibz.model.interfaces.SimulationInt;
 
 import java.util.*;
@@ -18,9 +20,17 @@ public class Simulation implements SimulationInt {
         questionToAnswer = new HashMap<>();
         questionToShuffledAnswers = new HashMap<>();
     }
+    @JsonCreator
+    public Simulation(@JsonProperty("subtopicToQuestions") Map<Subtopic, Set<Question>> subtopicToQuestions,
+                      @JsonProperty("questionToAnswer") Map<Question, Character> questionToAnswer,
+                      @JsonProperty("questionToShuffledAnswers") Map<Question, Map<String, Character>> questionToShuffledAnswers) {
+        setSubtopicToQuestions(subtopicToQuestions);
+        setQuestionToAnswer(questionToAnswer);
+        setQuestionToShuffledAnswers(questionToShuffledAnswers);
+    }
 
     @Override
-    public void select(Topic topic, int nrQuestionsPerSubtopic) {
+    public void select(Topic topic, int nrQuestionsPerSubtopic) throws NullPointerException {
         for (Subtopic subtopic : topic.getSubtopics()) {
             updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
         }
@@ -37,8 +47,7 @@ public class Simulation implements SimulationInt {
                     throw new IllegalArgumentException();
                 updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
             }
-        } else
-            throw new IllegalStateException();
+        } else throw new IllegalStateException();
     }
 
     private void updateSubtopicToQuestions(Subtopic subtopic, int nrQuestionsPerSubtopic) {
@@ -78,6 +87,21 @@ public class Simulation implements SimulationInt {
         List<Question> allQuestions = getAllQuestions();
         if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
             changeQuestion('+');
+        }
+    }
+
+    @Override
+    public void answer(Question question, char answer) throws IllegalArgumentException {
+        switch (Character.toUpperCase(answer)) {
+            case 'A':
+            case 'B':
+            case 'C':
+            case 'D':
+            case '-':
+                questionToAnswer.put(question, Character.toUpperCase(answer));
+                break;
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
@@ -226,6 +250,7 @@ public class Simulation implements SimulationInt {
                 : getSubtopicSelected_NonSelectedQuestions(subtopic).size();
 
         double percentage = ((double) nrOfCorrectAnswers / questions.size()) * 100;
+        percentage = Math.floor(percentage * 100)/100;
         return new Score(nrOfCorrectAnswers, nrOfWrongAnswers, nrOfBlankAnswers, selected, total, percentage);
     }
 
@@ -283,4 +308,28 @@ public class Simulation implements SimulationInt {
         this.currentQuestion = currentQuestion;
     }
 
+    private void setSubtopicToQuestions(Map<Subtopic, Set<Question>> subtopicToQuestions) {
+        this.subtopicToQuestions = subtopicToQuestions;
+    }
+
+    private void setQuestionToAnswer(Map<Question, Character> questionToAnswer) {
+        this.questionToAnswer = questionToAnswer;
+    }
+
+    private void setQuestionToShuffledAnswers(Map<Question, Map<String, Character>> questionToShuffledAnswers) {
+        this.questionToShuffledAnswers = questionToShuffledAnswers;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Simulation that = (Simulation) o;
+        return Objects.equals(subtopicToQuestions, that.subtopicToQuestions) && Objects.equals(questionToAnswer, that.questionToAnswer) && Objects.equals(questionToShuffledAnswers, that.questionToShuffledAnswers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(subtopicToQuestions, questionToAnswer, questionToShuffledAnswers);
+    }
 }

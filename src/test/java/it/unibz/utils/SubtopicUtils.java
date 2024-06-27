@@ -37,6 +37,7 @@ public class SubtopicUtils {
     public static Subtopic nullSubtopic;
     
     public static void init() {
+        QuestionUtils.init();
         // Subtopic 1.1 CSA FL
         Set<Question> questions1_1_CSA_FL = new HashSet<>();
         questions1_1_CSA_FL.add(question1_1_1_CSA_FL);

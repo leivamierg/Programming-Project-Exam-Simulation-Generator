@@ -3,7 +3,6 @@ package it.unibz.model.interfaces;
 import java.util.Set;
 
 import it.unibz.model.implementations.Subtopic;
-import it.unibz.model.implementations.Topic;
 
 public interface TopicInt {
     // :p
@@ -32,5 +31,4 @@ public interface TopicInt {
 
     public void addSubTopic(Subtopic subtopic);// * */
 
-    boolean equals(Topic topic);
 }

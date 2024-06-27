@@ -20,7 +20,8 @@ public class Question implements QuestionInt {
     public Question(@JsonProperty("questionStatement") String questionStatement,
             @JsonProperty("rightAnswer") String rightAnswer,
             @JsonProperty("wrongAnswers") Set<String> wrongAnswers, @JsonProperty("subtopic") String subtopic
-    /* , Subtopic subtopic */) {
+    /* , Subtopic subtopic */) { // TODO: add priority level initializer json
+        // TODO: displya le stats
         setQuestionStatement(questionStatement);
         setRightAnswer(rightAnswer);
         setWrongAnswers(wrongAnswers);
@@ -104,8 +105,8 @@ public class Question implements QuestionInt {
     public String getQuestionAndAnswers() {
         StringBuilder sb = new StringBuilder();
         sb.append(getQuestionStatement()).append(System.lineSeparator());
-        Map<String, Character> shuffleMap = getShuffleMap();
-  
+        // Map<String, Character> shuffleMap = getShuffleMap();
+
         return sb.toString();
     }
 
@@ -128,17 +129,17 @@ public class Question implements QuestionInt {
     }
 
     @Override
-    public boolean equals(Question question) {
-        if (question == null || question.getClass() != getClass()) {
+    public boolean equals(Object question) {
+        if (question == null || !(question instanceof Question)) {
             return false;
-        } else if (question == this) {
+        } else if (question == (Question) this) {
             return true;
         }
 
-        return getQuestionStatement().equals(question.getQuestionStatement())
-                && getRightAnswer().equals(question.getRightAnswer())
-                && getWrongAnswers().equals(question.getWrongAnswers())
-                && getSubtopic().equals(question.getSubtopic());
+        return getQuestionStatement().equals(((Question) question).getQuestionStatement())
+                && getRightAnswer().equals(((Question) question).getRightAnswer())
+                && getWrongAnswers().equals(((Question) question).getWrongAnswers())
+                && getSubtopic().equals(((Question) question).getSubtopic());
     }
 
     @Override

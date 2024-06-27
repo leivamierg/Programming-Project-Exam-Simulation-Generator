@@ -31,7 +31,7 @@ public class FileLoaderTest {
         try {
             Topic producedTopic = FileLoader.loadFile(inputBank + "input_csa_bank_test.json");
             // producedTopic.equals(topic1_CSA_FL);
-            assertTrue(topic1_CSA_FL.equals(producedTopic));
+            assertEquals(topic1_CSA_FL, producedTopic);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -42,7 +42,7 @@ public class FileLoaderTest {
     public void loadLABank() {
         try {
             Topic producedTopic = FileLoader.loadFile(inputBank + "input_la_bank_test.json");
-            assertTrue(topic2_LA_FL.equals(producedTopic));
+            assertEquals(topic2_LA_FL, producedTopic);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -63,39 +63,15 @@ public class FileLoaderTest {
             Set<Topic> expectedBank = new HashSet<>();
             expectedBank.add(topic1_CSA_FL);
             expectedBank.add(topic2_LA_FL);
-            assertTrue(equalsBank(producedBank, expectedBank));
+            assertEquals(expectedBank, producedBank);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    @DisplayName("loadBank(invalid bank) should throw a NullPointerException")
+    @DisplayName("loadBank(invalid bank) should throw a IOException")
     @Test
     public void loadInvalidBank() {
-        assertThrows(NullPointerException.class, () -> FileLoader.loadBank("abc"));
-    }
-
-    private boolean equalsBank(Set<Topic> producedBank, Set<Topic> expectedBank) {
-        if (producedBank.size() != expectedBank.size()) {
-            return false;
-        } else {
-            boolean condition = true;
-            for (Topic t1 : expectedBank) {
-                condition = false;
-                for (Topic t2 : producedBank) {
-                    if (t1.equals(t2)) {
-                        condition = true;
-                        break;
-                    }
-                }
-                if (!condition) {
-                    return false;
-                }
-
-            }
-
-            return true;
-        }
-
+        assertThrows(IOException.class, () -> FileLoader.loadBank("abc"));
     }
 }
 

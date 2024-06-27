@@ -48,6 +48,15 @@ public interface SimulationInt {
     void answer(char answer);
 
     /**
+     * answers to the the given question -> only for debug purposes
+     * @param answer the given answer (A, B, C, D, - -> no answer)
+     * @param question the question you want to answer to
+     * @throws IllegalArgumentException if the answer is invalid
+     */
+
+    void answer(Question question, char answer);
+
+    /**
      * moves either to the previous question or to the next one
      * @param prevOrNext '+' for the next question, '-' for the previous one
      * @throws IllegalArgumentException if the given input is neither '+' nor '-'
