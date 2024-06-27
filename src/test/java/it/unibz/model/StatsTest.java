@@ -119,10 +119,6 @@ public class StatsTest {
         temp1_2.add(new Score(1, 1, 0, 2, 2, 50));
         expectedSubtopicToStats.put(subtopic1_2.getSubtopicName(), temp1_2);
 
-        /*List<Score> temp1_3 = new ArrayList<>(expectedSubtopicToStats.get(subtopic1_3.getSubtopicName()));
-        temp1_3.add(new Score(0,1, 1, 2, 3, 0));
-        expectedSubtopicToStats.put(subtopic1_3.getSubtopicName(), temp1_3);*/
-
         // expectedGeneralStats
         int idxLastStats = expectedTopicToStats.get(simulationT1_S1_S2.getTopic()).size() - 1;
         expectedGeneralStats.add(expectedTopicToStats.get(

@@ -499,7 +499,8 @@ public class SimulationTest {
             Set<Question> expected = new HashSet<>();
             expected.add(question1_1_1);
             expected.add(question1_1_2);
-            assertTrue(equalsSet(simulation.getSubtopicSelected_NonSelectedQuestions(subtopic1_1), expected));
+            Set<Question> produced = simulation.getSubtopicSelected_NonSelectedQuestions(subtopic1_1);
+            assertEquals(expected, produced);
         }
 
         @DisplayName("getSubtopicSelected_NonSelectedQuestions(subtopic 1.3) should return: " +
@@ -510,7 +511,8 @@ public class SimulationTest {
             expected.add(question1_3_1);
             expected.add(question1_3_2);
             expected.add(question1_3_3);
-            assertTrue(equalsSet(simulation.getSubtopicSelected_NonSelectedQuestions(subtopic1_3), expected));
+            Set<Question> produced = simulation.getSubtopicSelected_NonSelectedQuestions(subtopic1_3);
+            assertEquals(expected, produced);
         }
 
         @DisplayName("getAllSelected_NonSelectedQuestions() should return: " +
@@ -523,7 +525,8 @@ public class SimulationTest {
             expected.add(question1_3_1);
             expected.add(question1_3_2);
             expected.add(question1_3_3);
-            assertTrue(equalsSet(simulation.getAllSelected_NonSelectedQuestions(), expected));
+            Set<Question> produced = simulation.getAllSelected_NonSelectedQuestions();
+            assertEquals(expected, produced);
         }
     }
 
