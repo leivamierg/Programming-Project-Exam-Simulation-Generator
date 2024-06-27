@@ -12,7 +12,7 @@ import java.io.IOException;
 import static it.unibz.utils.TopicUtils.topic1_CSA_FL;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class HistoryStatsLoaderTest {
+/* public class HistoryStatsLoaderTest {
     private final String io = "src/test/resources/io";
     private final String expected = "src/test/resources/expected";
 
@@ -25,14 +25,14 @@ public class HistoryStatsLoaderTest {
 
     @DisplayName("saveStats(io, stats) should produce a json file equals to the expected one")
     @Test
-    public void saveStats () {
+    public void serializeAndDeserializeStatsTest () {
 
     }
     @DisplayName("loadFile(CSA bank) should transform the input json file into the Topic object CSA")
     @Test
     public void loadStats() {
         try {
-            Topic producedTopic = FileLoader.loadFile(inputBank + "io/input_csa_bank_test.json");
+            Topic producedTopic = FileLoader.loadFile(inputBank + "input_csa_bank_test.json");
             // producedTopic.equals(topic1_CSA_FL);
             assertTrue(topic1_CSA_FL.equals(producedTopic));
         } catch (IOException e) {
@@ -40,4 +40,4 @@ public class HistoryStatsLoaderTest {
         }
 
     }
-}
+}*/

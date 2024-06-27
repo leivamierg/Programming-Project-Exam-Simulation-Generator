@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class FileLoaderTest {
-    private final String inputBank = "src/test/resources/input/";
+    private final String inputBank = "src/test/resources/";
     @BeforeEach
     void init() {
         // QuestionUtils.init();
