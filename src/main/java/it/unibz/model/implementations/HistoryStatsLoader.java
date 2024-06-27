@@ -8,7 +8,9 @@ import java.io.IOException;
 
 public class HistoryStatsLoader {
     /**
-     * loads the stats -> transforms the input file into a Stats object -> deserialization
+     * loads the stats -> transforms the input file into a Stats object ->
+     * deserialization
+     * 
      * @param filePath path to the file that stores the stats
      * @return a Stats object that corresponds to the input file
      * @throws IOException if the input file doesn't exist
@@ -21,8 +23,9 @@ public class HistoryStatsLoader {
 
     /**
      * save a Stats object into a json file -> serialization
+     * 
      * @param filePath path to the file you want to store the stats
-     * @param stats the Stats object to be serialized
+     * @param stats    the Stats object to be serialized
      * @throws IOException
      */
     public static void saveStats(String filePath, Stats stats) throws IOException {
@@ -31,3 +34,4 @@ public class HistoryStatsLoader {
         mapper.writeValue(new File(filePath), stats);
     }
 }
+// }

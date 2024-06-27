@@ -1,6 +1,7 @@
 package it.unibz.model;
 
 import static it.unibz.utils.TopicUtils.topic1;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
@@ -46,11 +47,11 @@ public class TopicTest {
                 topicC.getSubtopics().add(sX);
             }
 
-            assertTrue(topicA.equals(topicB));
-            assertTrue(topicA.equals(topicC));
+            assertEquals(topicA, topicB);
+            assertEquals(topicA, topicC);
 
-            assertTrue(topicA.hashCode() == topicB.hashCode());
-            assertTrue(topicA.hashCode() == topicC.hashCode());
+            assertEquals(topicA.hashCode(), topicB.hashCode());
+            assertEquals(topicA.hashCode(), topicC.hashCode());
         }
     }
 }

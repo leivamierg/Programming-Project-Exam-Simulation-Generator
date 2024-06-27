@@ -1,6 +1,5 @@
 package it.unibz.model.interfaces;
 
-import it.unibz.model.implementations.Question;
 import it.unibz.model.implementations.Topic;
 
 import java.util.Map;
@@ -75,7 +74,7 @@ public interface QuestionInt {
 
     String toString();
 
-    boolean equals(Question question);
+    // boolean equals(Question question);
 
     // boolean equals(Question question);
 }

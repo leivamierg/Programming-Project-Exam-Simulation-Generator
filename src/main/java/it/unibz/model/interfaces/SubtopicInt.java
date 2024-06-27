@@ -67,9 +67,10 @@ public interface SubtopicInt {
 
     /**
      * set the topic reference of the subtopic
+     * 
      * @param topics all the current loaded topics
      */
     void linkSubtopicToTopic(Set<Topic> topics);
 
-    boolean equals(Subtopic subtopic);
+    // boolean equals(Subtopic subtopic);
 }
