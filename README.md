@@ -1,24 +1,25 @@
 # Programming-Project-Exam-Simulation-Simulator
 Free Choice-Group project for the "Programming Project" course of the Free University of Bozen-Bolzano, 2nd semester 2023-2024. 
 
-## come funzionano pull requests in github?
-Pull requests ti permettono di far vedere agli altri i cambiamenti che hai fatto tu `sul tuo branch` prima di unirli al branch main.
-Sotto il tab `Pull request` su github viene creata automaticamente una discussione per ogni singola pull request, dove si puo discutere cosa fanno i cambiamenti e chiedere chiarimenti.
+## Members of the group and its GitHub identifiers
+- Sebatiano Nardin (sebanardin)
+- Gersson Leiva Mier (leivamierg / cool27027)
+- Violetta (Vaiolo)
+- Masimiliano (Masimiliano)
+## Instructions to build and run the project
 
-### come creare una pull request?
-1. vai sulla pagina principale del repository
-2. clicca sul tab `Pull requests`
-3. clicca su `New pull request`
-4. seleziona il branch che vuoi unire al branch main
-5. clicca su `Create pull request`
-6. scrivi un titolo e una descrizione per la tua pull request
-7. clicca su `Create pull request`
+## Project's overall description
+Our project is bla bla bla, and does bla bla bla, focused for ... so they can ..., which is achieved through ...
+## User-guide for our project
+Commands...
+## Implementation of the project (components)
+### Structure
+### Model classes and interfaces
+### FileLoading and FileSaving
+### Command Handling
+### The Simulation Class
+### Stats and history
+### The Model and the Controller
 
-in alternativa, puoi creare una pull request direttamente dal terminal con la github cli:
-```bash
-# installa la github cli
-sudo apt update
-sudo apt install gh
-# crea la pull request (si deve essere dentro la repository)
-gh pr create --title "Your PR title" --body "Your PR description"
-```
+## Human experience in this project
+The workload on the team was... We liked that... If we could change something... In order to organize ourselves...
