@@ -59,10 +59,6 @@ public class FileLoader {
     }
 
     // getTopics
-    /**
-     * TODO implement this method
-     * @return a set of all available topics for the user
-     */
     public static Set<Topic> getTopics() {
         return topics;
     }

@@ -12,6 +12,7 @@ import java.util.*;
 
 public class StatsUtils {
     public static Stats stats;
+    public static Stats nullStats;
 
     public static void init () {
         SimulationUtils.init();
@@ -35,5 +36,7 @@ public class StatsUtils {
         List<Score> generalStats = new ArrayList<>();
         generalStats.add(new Score(1, 4, 1, 6, 7, 16.66));
         stats = new Stats(simulations, topicToStats, subtopicToStats, generalStats);
+
+        nullStats = null;
     }
 }

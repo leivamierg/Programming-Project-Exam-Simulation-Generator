@@ -309,15 +309,28 @@ public class Simulation implements SimulationInt {
         this.currentQuestion = currentQuestion;
     }
 
-    public void setSubtopicToQuestions(Map<Subtopic, Set<Question>> subtopicToQuestions) {
+    private void setSubtopicToQuestions(Map<Subtopic, Set<Question>> subtopicToQuestions) {
         this.subtopicToQuestions = subtopicToQuestions;
     }
 
-    public void setQuestionToAnswer(Map<Question, Character> questionToAnswer) {
+    private void setQuestionToAnswer(Map<Question, Character> questionToAnswer) {
         this.questionToAnswer = questionToAnswer;
     }
 
-    public void setQuestionToShuffledAnswers(Map<Question, Map<String, Character>> questionToShuffledAnswers) {
+    private void setQuestionToShuffledAnswers(Map<Question, Map<String, Character>> questionToShuffledAnswers) {
         this.questionToShuffledAnswers = questionToShuffledAnswers;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Simulation that = (Simulation) o;
+        return Objects.equals(subtopicToQuestions, that.subtopicToQuestions) && Objects.equals(questionToAnswer, that.questionToAnswer) && Objects.equals(questionToShuffledAnswers, that.questionToShuffledAnswers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(subtopicToQuestions, questionToAnswer, questionToShuffledAnswers);
     }
 }
