@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class FileLoaderTest {
-    private final String inputBank = "src/test/resources/";
+    private final String inputBank = "src/test/resources/input/";
     @BeforeEach
     void init() {
         // QuestionUtils.init();
@@ -68,10 +68,10 @@ public class FileLoaderTest {
             throw new RuntimeException(e);
         }
     }
-    @DisplayName("loadBank(invalid bank) should throw a NullPointerException")
+    @DisplayName("loadBank(invalid bank) should throw a IOException")
     @Test
     public void loadInvalidBank() {
-        assertThrows(NullPointerException.class, () -> FileLoader.loadBank("abc"));
+        assertThrows(IOException.class, () -> FileLoader.loadBank("abc"));
     }
 
     private boolean equalsBank(Set<Topic> producedBank, Set<Topic> expectedBank) {

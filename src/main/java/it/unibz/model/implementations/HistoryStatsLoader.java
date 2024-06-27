@@ -13,7 +13,7 @@ public class HistoryStatsLoader {
      * @return a Stats object that corresponds to the input file
      * @throws IOException if the input file doesn't exist
      */
-    Stats loadStats(String filePath) throws IOException {
+    public static Stats loadStats(String filePath) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         return mapper.readValue(new File(filePath), Stats.class);
@@ -25,10 +25,9 @@ public class HistoryStatsLoader {
      * @param stats the Stats object to be serialized
      * @throws IOException
      */
-    void saveStats(String filePath, Stats stats) throws IOException {
+    public static void saveStats(String filePath, Stats stats) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.writeValue(new File(filePath), stats);
-        }
     }
 }
