@@ -66,17 +66,19 @@ public class FileLoader {
      * save a topic into a json file -> serialization
      * @param topic the topic to serialize
      * @param jsonFilePath the path of the file where the topic is stored
-     * @throws IOException
+     * @throws
      */
-    public static void saveFile(Topic topic, String jsonFilePath) throws IOException {
+    public static void saveFile(Topic topic, String jsonFilePath) throws IllegalArgumentException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            mapper.writeValue(new File(jsonFilePath), topic);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            if (correctFile(jsonFilePath, topic)) {
+                mapper.writeValue(new File(jsonFilePath), topic);
+            } catch (IOException e){
+                throw new RuntimeException(e);
+            }
 
+        }
     }
 
     /**
@@ -97,9 +99,7 @@ public class FileLoader {
         if (fileNames.size() != topics.size())
             throw new IllegalArgumentException();
         for (int i = 0; i < topics.size(); i++) {
-            if (correctFile(fileNames.get(i), topics.get(i))) {
                 saveFile(topics.get(i), bankPath + fileNames.get(i));
-            } else throw new IllegalArgumentException();
         }
     }
 

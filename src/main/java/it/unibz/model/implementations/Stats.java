@@ -228,7 +228,7 @@ public class Stats implements StatsInt {
         return generalStats;
     }
 
-    public List<Simulation> getSimulations() {
+    private List<Simulation> getSimulations() {
         return simulations;
     }
 
