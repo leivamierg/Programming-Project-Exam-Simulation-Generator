@@ -115,7 +115,7 @@ public class Model extends Simulation implements ModelInt {
                 break;
             }
 
-            simulation.answer(sanitizeAnswer(input));
+            simulation.insertCommand(sanitizeAnswer(input));
         }
 
         System.out.println("Test completed.");

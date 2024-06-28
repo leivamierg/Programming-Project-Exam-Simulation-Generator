@@ -34,8 +34,13 @@ public class Simulation implements SimulationInt {
 
     @Override
     public void select(Topic topic, int nrQuestionsPerSubtopic) throws NullPointerException {
-        for (Subtopic subtopic : topic.getSubtopics()) {
-            updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
+        try {
+            for (Subtopic subtopic : topic.getSubtopics()) {
+                updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
+            }
+        } catch (NullPointerException e)
+        {
+            System.out.println("No topic");
         }
     }
 
