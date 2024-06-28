@@ -2,18 +2,20 @@ package it.unibz.controller;
 
 import it.unibz.model.interfaces.ModelInt;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Controller {
 
     private ModelInt model;
+    private static final Scanner scanner = new Scanner(System.in);
 
     public Controller(ModelInt model) {
         this.model = model;
     }
 
-    public void elaborateArgs(String[] arguments) throws InterruptedException {
+    public void elaborateArgs(String[] arguments) {
         if (arguments.length == 0) {
             System.out.println("Tester needs arguments to work. Pass as help to see the list of commands.");
             return;
@@ -50,14 +52,9 @@ public class Controller {
         }
     }
 
+
     public static String takeInput(String message) {
         System.out.print(message);
-
-        if (System.console() == null) {
-            System.out.println("No console available. Exiting.");
-            System.exit(1);
-        }
-
-        return System.console().readLine();
+        return scanner.nextLine();
     }
 }
