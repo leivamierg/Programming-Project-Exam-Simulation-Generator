@@ -66,7 +66,7 @@ public class FileLoader {
      * save a topic into a json file -> serialization
      * @param topic the topic to serialize
      * @param jsonFilePath the path of the file where the topic is stored
-     * @throws
+     * @throws IllegalArgumentException if the json file doesn't exist
      */
     public static void saveFile(Topic topic, String jsonFilePath) throws IllegalArgumentException {
         ObjectMapper mapper = new ObjectMapper();
@@ -74,10 +74,9 @@ public class FileLoader {
         try {
             if (correctFile(jsonFilePath, topic)) {
                 mapper.writeValue(new File(jsonFilePath), topic);
-            } catch (IOException e){
-                throw new RuntimeException(e);
-            }
-
+            } else throw new IllegalArgumentException();
+        } catch (Exception e) {
+            throw new IllegalArgumentException();
         }
     }
 
