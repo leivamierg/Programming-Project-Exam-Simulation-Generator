@@ -4,12 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.unibz.model.interfaces.SimulationInt;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Simulation implements SimulationInt {
     // attributes
+    private Map<String, Set<Question>> subtopicNameToQuestions;
     private Map<Subtopic, Set<Question>> subtopicToQuestions;
+    private String pathToTopicFile;
     private Map<Question, Character> questionToAnswer;
     private Map<Question, Map<String, Character>> questionToShuffledAnswers;
     private Question currentQuestion;
@@ -23,13 +26,26 @@ public class Simulation implements SimulationInt {
         timer = new ExamTimer();
     }
     @JsonCreator
-    public Simulation(@JsonProperty("subtopicToQuestions") Map<Subtopic, Set<Question>> subtopicToQuestions,
+    public Simulation(@JsonProperty("subtopicToQuestions") Map<String, Set<Question>> subtopicNameToQuestions,
                       @JsonProperty("questionToAnswer") Map<Question, Character> questionToAnswer,
+                      @JsonProperty("pathToTopicFile") String pathToTopicFile,
                       @JsonProperty("questionToShuffledAnswers") Map<Question, Map<String, Character>> questionToShuffledAnswers) {
-        setSubtopicToQuestions(subtopicToQuestions);
+        Topic topic;
+        try {
+            topic = FileLoader.loadFile(pathToTopicFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        buildSubtopicToQuestionsMap(topic, subtopicNameToQuestions);
+//        setSubtopicToQuestions(subtopicToQuestions);
         setQuestionToAnswer(questionToAnswer);
         setQuestionToShuffledAnswers(questionToShuffledAnswers);
         timer = new ExamTimer();
+    }
+
+    private void buildSubtopicToQuestionsMap(Topic topics, Map<String, Set<Question>> subtopicNameToQuestions) {
+
+
     }
 
     @Override
@@ -350,5 +366,13 @@ public class Simulation implements SimulationInt {
     @Override
     public int hashCode() {
         return Objects.hash(subtopicToQuestions, questionToAnswer, questionToShuffledAnswers);
+    }
+
+    public String getPathToTopicFile() {
+        return pathToTopicFile;
+    }
+
+    public void setPathToTopicFile(String pathToTopicFile) {
+        this.pathToTopicFile = pathToTopicFile;
     }
 }

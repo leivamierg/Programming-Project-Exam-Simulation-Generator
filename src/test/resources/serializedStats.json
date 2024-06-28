@@ -4,7 +4,7 @@
       "Subtopic: Subtopic 1.1\nTopic: Topic 1\nNr. questions: 2" : [ {
         "questionStatement" : "Question 1.1.1",
         "rightAnswer" : "Right answer 1.1.1",
-        "wrongAnswers" : [ "Wrong answer 1.1.1.2", "Wrong answer 1.1.1.3", "Wrong answer 1.1.1.1" ],
+        "wrongAnswers" : [ "Wrong answer 1.1.1.1", "Wrong answer 1.1.1.2", "Wrong answer 1.1.1.3" ],
         "subtopic" : "Subtopic 1.1",
         "priorityLevel" : 1,
         "subtopicReference" : {
@@ -16,13 +16,13 @@
             "subtopic" : "Subtopic 1.1",
             "priorityLevel" : 1,
             "subtopicReference" : "Subtopic 1.1",
+            "questionAndAnswers" : "Question 1.1.2\n",
             "shuffleMap" : {
-              "Wrong answer 1.1.2.1" : "A",
+              "Right answer 1.1.2" : "A",
               "Wrong answer 1.1.2.3" : "B",
-              "Wrong answer 1.1.2.2" : "C",
-              "Right answer 1.1.2" : "D"
-            },
-            "questionAndAnswers" : "Question 1.1.2\n"
+              "Wrong answer 1.1.2.1" : "C",
+              "Wrong answer 1.1.2.2" : "D"
+            }
           } ],
           "topic" : "Topic 1",
           "topicReference" : {
@@ -36,13 +36,13 @@
                 "subtopic" : "Subtopic 1.2",
                 "priorityLevel" : 1,
                 "subtopicReference" : "Subtopic 1.2",
+                "questionAndAnswers" : "Question 1.2.1\n",
                 "shuffleMap" : {
-                  "Right answer 1.2.1" : "A",
+                  "Wrong answer 1.2.1.3" : "A",
                   "Wrong answer 1.2.1.1" : "B",
-                  "Wrong answer 1.2.1.3" : "C",
-                  "Wrong answer 1.2.1.2" : "D"
-                },
-                "questionAndAnswers" : "Question 1.2.1\n"
+                  "Wrong answer 1.2.1.2" : "C",
+                  "Right answer 1.2.1" : "D"
+                }
               }, {
                 "questionStatement" : "Question 1.2.2",
                 "rightAnswer" : "Right answer 1.2.2",
@@ -50,13 +50,13 @@
                 "subtopic" : "Subtopic 1.2",
                 "priorityLevel" : 1,
                 "subtopicReference" : "Subtopic 1.2",
+                "questionAndAnswers" : "Question 1.2.2\n",
                 "shuffleMap" : {
-                  "Right answer 1.2.2" : "A",
-                  "Wrong answer 1.2.2.1" : "B",
+                  "Wrong answer 1.2.2.1" : "A",
+                  "Right answer 1.2.2" : "B",
                   "Wrong answer 1.2.2.3" : "C",
                   "Wrong answer 1.2.2.2" : "D"
-                },
-                "questionAndAnswers" : "Question 1.2.2\n"
+                }
               } ],
               "topic" : "Topic 1",
               "topicReference" : {
@@ -70,41 +70,41 @@
                     "subtopic" : "Subtopic 1.3",
                     "priorityLevel" : 1,
                     "subtopicReference" : "Subtopic 1.3",
+                    "questionAndAnswers" : "Question 1.3.1\n",
                     "shuffleMap" : {
-                      "Wrong answer 1.3.1.3" : "A",
-                      "Wrong answer 1.3.1.2" : "B",
-                      "Wrong answer 1.3.1.1" : "C",
-                      "Right answer 1.3.1" : "D"
-                    },
-                    "questionAndAnswers" : "Question 1.3.1\n"
+                      "Wrong answer 1.3.1.2" : "A",
+                      "Right answer 1.3.1" : "B",
+                      "Wrong answer 1.3.1.3" : "C",
+                      "Wrong answer 1.3.1.1" : "D"
+                    }
                   }, {
                     "questionStatement" : "Question 1.3.3",
                     "rightAnswer" : "Right answer 1.3.3",
-                    "wrongAnswers" : [ "Wrong answer 1.3.3.1", "Wrong answer 1.3.3.2", "Wrong answer 1.3.3.3" ],
+                    "wrongAnswers" : [ "Wrong answer 1.3.3.2", "Wrong answer 1.3.3.3", "Wrong answer 1.3.3.1" ],
                     "subtopic" : "Subtopic 1.3",
                     "priorityLevel" : 1,
                     "subtopicReference" : "Subtopic 1.3",
+                    "questionAndAnswers" : "Question 1.3.3\n",
                     "shuffleMap" : {
-                      "Wrong answer 1.3.3.1" : "A",
-                      "Wrong answer 1.3.3.3" : "B",
+                      "Wrong answer 1.3.3.3" : "A",
+                      "Right answer 1.3.3" : "B",
                       "Wrong answer 1.3.3.2" : "C",
-                      "Right answer 1.3.3" : "D"
-                    },
-                    "questionAndAnswers" : "Question 1.3.3\n"
+                      "Wrong answer 1.3.3.1" : "D"
+                    }
                   }, {
                     "questionStatement" : "Question 1.3.2",
                     "rightAnswer" : "Right answer 1.3.2",
-                    "wrongAnswers" : [ "Wrong answer 1.3.2.1", "Wrong answer 1.3.2.2", "Wrong answer 1.3.2.3" ],
+                    "wrongAnswers" : [ "Wrong answer 1.3.2.3", "Wrong answer 1.3.2.1", "Wrong answer 1.3.2.2" ],
                     "subtopic" : "Subtopic 1.3",
                     "priorityLevel" : 1,
                     "subtopicReference" : "Subtopic 1.3",
+                    "questionAndAnswers" : "Question 1.3.2\n",
                     "shuffleMap" : {
                       "Wrong answer 1.3.2.3" : "A",
-                      "Right answer 1.3.2" : "B",
-                      "Wrong answer 1.3.2.2" : "C",
-                      "Wrong answer 1.3.2.1" : "D"
-                    },
-                    "questionAndAnswers" : "Question 1.3.2\n"
+                      "Wrong answer 1.3.2.2" : "B",
+                      "Wrong answer 1.3.2.1" : "C",
+                      "Right answer 1.3.2" : "D"
+                    }
                   } ],
                   "topic" : "Topic 1",
                   "topicReference" : {
@@ -119,75 +119,75 @@
           },
           "availableQuestions" : [ "Question 1.1.1", "Question 1.1.2" ]
         },
+        "questionAndAnswers" : "Question 1.1.1\n",
         "shuffleMap" : {
-          "Right answer 1.1.1" : "A",
-          "Wrong answer 1.1.1.2" : "B",
-          "Wrong answer 1.1.1.3" : "C",
-          "Wrong answer 1.1.1.1" : "D"
-        },
-        "questionAndAnswers" : "Question 1.1.1\n"
+          "Wrong answer 1.1.1.1" : "A",
+          "Wrong answer 1.1.1.3" : "B",
+          "Wrong answer 1.1.1.2" : "C",
+          "Right answer 1.1.1" : "D"
+        }
       }, "Question 1.1.2" ],
       "Subtopic: Subtopic 1.2\nTopic: Topic 1\nNr. questions: 2" : [ "Question 1.2.1", "Question 1.2.2" ],
       "Subtopic: Subtopic 1.3\nTopic: Topic 1\nNr. questions: 3" : [ "Question 1.3.1", "Question 1.3.3" ]
     },
     "questionToAnswer" : {
-      "Question: Question 1.3.1\nRight answer: Right answer 1.3.1\nWrong answers: Wrong answer 1.3.1.1; Wrong answer 1.3.1.2; Wrong answer 1.3.1.3\nSubtopic: Subtopic 1.3\nPriority: 1" : "B",
-      "Question: Question 1.1.1\nRight answer: Right answer 1.1.1\nWrong answers: Wrong answer 1.1.1.2; Wrong answer 1.1.1.3; Wrong answer 1.1.1.1\nSubtopic: Subtopic 1.1\nPriority: 1" : "C",
-      "Question: Question 1.2.1\nRight answer: Right answer 1.2.1\nWrong answers: Wrong answer 1.2.1.1; Wrong answer 1.2.1.2; Wrong answer 1.2.1.3\nSubtopic: Subtopic 1.2\nPriority: 1" : "A",
+      "Question: Question 1.3.1\nRight answer: Right answer 1.3.1\nWrong answers: Wrong answer 1.3.1.1; Wrong answer 1.3.1.2; Wrong answer 1.3.1.3\nSubtopic: Subtopic 1.3\nPriority: 1" : "A",
+      "Question: Question 1.1.1\nRight answer: Right answer 1.1.1\nWrong answers: Wrong answer 1.1.1.1; Wrong answer 1.1.1.2; Wrong answer 1.1.1.3\nSubtopic: Subtopic 1.1\nPriority: 1" : "C",
+      "Question: Question 1.2.1\nRight answer: Right answer 1.2.1\nWrong answers: Wrong answer 1.2.1.1; Wrong answer 1.2.1.2; Wrong answer 1.2.1.3\nSubtopic: Subtopic 1.2\nPriority: 1" : "B",
       "Question: Question 1.1.2\nRight answer: Right answer 1.1.2\nWrong answers: Wrong answer 1.1.2.1; Wrong answer 1.1.2.2; Wrong answer 1.1.2.3\nSubtopic: Subtopic 1.1\nPriority: 1" : "A",
-      "Question: Question 1.3.3\nRight answer: Right answer 1.3.3\nWrong answers: Wrong answer 1.3.3.1; Wrong answer 1.3.3.2; Wrong answer 1.3.3.3\nSubtopic: Subtopic 1.3\nPriority: 1" : " ",
-      "Question: Question 1.2.2\nRight answer: Right answer 1.2.2\nWrong answers: Wrong answer 1.2.2.1; Wrong answer 1.2.2.2; Wrong answer 1.2.2.3\nSubtopic: Subtopic 1.2\nPriority: 1" : "A"
+      "Question: Question 1.3.3\nRight answer: Right answer 1.3.3\nWrong answers: Wrong answer 1.3.3.2; Wrong answer 1.3.3.3; Wrong answer 1.3.3.1\nSubtopic: Subtopic 1.3\nPriority: 1" : " ",
+      "Question: Question 1.2.2\nRight answer: Right answer 1.2.2\nWrong answers: Wrong answer 1.2.2.1; Wrong answer 1.2.2.2; Wrong answer 1.2.2.3\nSubtopic: Subtopic 1.2\nPriority: 1" : "B"
     },
     "questionToShuffledAnswers" : {
       "Question: Question 1.3.1\nRight answer: Right answer 1.3.1\nWrong answers: Wrong answer 1.3.1.1; Wrong answer 1.3.1.2; Wrong answer 1.3.1.3\nSubtopic: Subtopic 1.3\nPriority: 1" : {
-        "Right answer 1.3.1" : "A",
-        "Wrong answer 1.3.1.1" : "B",
-        "Wrong answer 1.3.1.2" : "C",
-        "Wrong answer 1.3.1.3" : "D"
+        "Wrong answer 1.3.1.1" : "A",
+        "Right answer 1.3.1" : "B",
+        "Wrong answer 1.3.1.3" : "C",
+        "Wrong answer 1.3.1.2" : "D"
       },
-      "Question: Question 1.1.1\nRight answer: Right answer 1.1.1\nWrong answers: Wrong answer 1.1.1.2; Wrong answer 1.1.1.3; Wrong answer 1.1.1.1\nSubtopic: Subtopic 1.1\nPriority: 1" : {
+      "Question: Question 1.1.1\nRight answer: Right answer 1.1.1\nWrong answers: Wrong answer 1.1.1.1; Wrong answer 1.1.1.2; Wrong answer 1.1.1.3\nSubtopic: Subtopic 1.1\nPriority: 1" : {
         "Wrong answer 1.1.1.2" : "A",
         "Wrong answer 1.1.1.3" : "B",
         "Right answer 1.1.1" : "C",
         "Wrong answer 1.1.1.1" : "D"
       },
       "Question: Question 1.2.1\nRight answer: Right answer 1.2.1\nWrong answers: Wrong answer 1.2.1.1; Wrong answer 1.2.1.2; Wrong answer 1.2.1.3\nSubtopic: Subtopic 1.2\nPriority: 1" : {
-        "Wrong answer 1.2.1.1" : "A",
-        "Wrong answer 1.2.1.3" : "B",
-        "Right answer 1.2.1" : "C",
-        "Wrong answer 1.2.1.2" : "D"
+        "Right answer 1.2.1" : "A",
+        "Wrong answer 1.2.1.1" : "B",
+        "Wrong answer 1.2.1.2" : "C",
+        "Wrong answer 1.2.1.3" : "D"
       },
       "Question: Question 1.1.2\nRight answer: Right answer 1.1.2\nWrong answers: Wrong answer 1.1.2.1; Wrong answer 1.1.2.2; Wrong answer 1.1.2.3\nSubtopic: Subtopic 1.1\nPriority: 1" : {
-        "Wrong answer 1.1.2.3" : "A",
-        "Wrong answer 1.1.2.1" : "B",
-        "Right answer 1.1.2" : "C",
-        "Wrong answer 1.1.2.2" : "D"
+        "Wrong answer 1.1.2.1" : "A",
+        "Wrong answer 1.1.2.2" : "B",
+        "Wrong answer 1.1.2.3" : "C",
+        "Right answer 1.1.2" : "D"
       },
-      "Question: Question 1.3.3\nRight answer: Right answer 1.3.3\nWrong answers: Wrong answer 1.3.3.1; Wrong answer 1.3.3.2; Wrong answer 1.3.3.3\nSubtopic: Subtopic 1.3\nPriority: 1" : {
+      "Question: Question 1.3.3\nRight answer: Right answer 1.3.3\nWrong answers: Wrong answer 1.3.3.2; Wrong answer 1.3.3.3; Wrong answer 1.3.3.1\nSubtopic: Subtopic 1.3\nPriority: 1" : {
         "Wrong answer 1.3.3.1" : "A",
-        "Right answer 1.3.3" : "B",
+        "Wrong answer 1.3.3.2" : "B",
         "Wrong answer 1.3.3.3" : "C",
-        "Wrong answer 1.3.3.2" : "D"
+        "Right answer 1.3.3" : "D"
       },
       "Question: Question 1.2.2\nRight answer: Right answer 1.2.2\nWrong answers: Wrong answer 1.2.2.1; Wrong answer 1.2.2.2; Wrong answer 1.2.2.3\nSubtopic: Subtopic 1.2\nPriority: 1" : {
-        "Wrong answer 1.2.2.2" : "A",
-        "Wrong answer 1.2.2.1" : "B",
-        "Wrong answer 1.2.2.3" : "C",
-        "Right answer 1.2.2" : "D"
+        "Right answer 1.2.2" : "A",
+        "Wrong answer 1.2.2.2" : "B",
+        "Wrong answer 1.2.2.1" : "C",
+        "Wrong answer 1.2.2.3" : "D"
       }
     },
     "currentQuestion" : "Question 1.1.1",
-    "allSelected_NonSelectedQuestions" : [ "Question 1.3.1", "Question 1.1.1", "Question 1.2.1", "Question 1.1.2", "Question 1.3.3", "Question 1.2.2", "Question 1.3.2" ],
-    "nonSelectedQuestions" : [ "Question 1.3.2" ],
     "topic" : "Topic 1",
+    "nonSelectedQuestions" : [ "Question 1.3.2" ],
+    "allCorrectQuestions" : [ "Question 1.1.1" ],
+    "allWrongQuestions" : [ "Question 1.3.1", "Question 1.2.1", "Question 1.1.2", "Question 1.2.2" ],
+    "allBlankQuestions" : [ "Question 1.3.3" ],
+    "allSelected_NonSelectedQuestions" : [ "Question 1.3.1", "Question 1.1.1", "Question 1.2.1", "Question 1.1.2", "Question 1.3.3", "Question 1.2.2", "Question 1.3.2" ],
+    "allQuestions" : [ "Question 1.1.1", "Question 1.1.2", "Question 1.2.1", "Question 1.2.2", "Question 1.3.1", "Question 1.3.3" ],
     "topicReference" : {
       "topicName" : "Topic 1",
       "subtopics" : [ "Subtopic 1.1", "Subtopic 1.2", "Subtopic 1.3" ]
-    },
-    "allQuestions" : [ "Question 1.1.1", "Question 1.1.2", "Question 1.2.1", "Question 1.2.2", "Question 1.3.1", "Question 1.3.3" ],
-    "allCorrectQuestions" : [ "Question 1.1.1" ],
-    "allWrongQuestions" : [ "Question 1.3.1", "Question 1.2.1", "Question 1.1.2", "Question 1.2.2" ],
-    "allBlankQuestions" : [ "Question 1.3.3" ]
+    }
   } ],
   "topicToStats" : {
     "Topic 1" : [ {
