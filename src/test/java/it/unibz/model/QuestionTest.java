@@ -52,6 +52,8 @@ public class QuestionTest {
             Map<String, Character> shuffleMapQ4_1 = q4.getShuffleMap();
             Map<String, Character> shuffleMapQ4_2 = q4.getShuffleMap();
 
+            System.out.println(shuffleMapQ4_1); // aggiungere un comparator
+
             Character shuffleMapKey1 = q4.getCorrectAnswerLabel(shuffleMapQ4_1);
             Character shuffleMapKey2 = q4.getCorrectAnswerLabel(shuffleMapQ4_2);
 
@@ -60,4 +62,18 @@ public class QuestionTest {
 
         }
     }
+
+    /*
+     * @Nested
+     * class shuffleMapTest{
+     * 
+     * @DisplayName("Should return a shuffle of the correct answer and the incorrect answers"
+     * )
+     * 
+     * @Test
+     * void test3(){
+     * Question q5 =
+     * }
+     * }
+     */
 }

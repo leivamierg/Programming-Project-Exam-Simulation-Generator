@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class HistoryStatsLoaderTest {
     private final String io = "src/test/resources/";
+
     @Nested
     class StatsTest {
         @BeforeEach
@@ -51,17 +52,32 @@ public class HistoryStatsLoaderTest {
             assertThrows(IllegalArgumentException.class,
                     () -> HistoryStatsLoader.saveStats(io + "serializedStats.json", nullStats));
         }
-    /*@DisplayName("loadFile(CSA bank) should transform the input json file into the Topic object CSA")
-    @Test
-    public void loadStats() {
-        try {
-            Topic producedTopic = FileLoader.loadFile(inputBank + "input_csa_bank_test.json");
-            // producedTopic.equals(topic1_CSA_FL);
-            assertTrue(topic1_CSA_FL.equals(producedTopic));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        /*
+         * @DisplayName("loadFile(CSA bank) should transform the input json file into the Topic object CSA"
+         * )
+         * 
+         * @Test
+         * public void loadStats() {
+         * try {
+         * Topic producedTopic = FileLoader.loadFile(inputBank +
+         * "input_csa_bank_test.json");
+         * // producedTopic.equals(topic1_CSA_FL);
+         * assertTrue(topic1_CSA_FL.equals(producedTopic));
+         * } catch (IOException e) {
+         * throw new RuntimeException(e);
+         * }
+         * 
+         * }
+         */
 
-    }*/
+        @Nested
+        class HistoryTest {
+            @BeforeEach
+            void init() {
+                // QuestionUtils.init();
+                // SubtopicUtils.init();
+                //HistoryUtils.init();
+            }
+        }
     }
 }
