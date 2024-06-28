@@ -1,5 +1,6 @@
 package it.unibz.model.implementations;
 
+import java.util.Scanner;
 import java.util.Set;
 
 import it.unibz.controller.Controller;
@@ -9,6 +10,8 @@ public class Model extends Simulation implements ModelInt {
 
     private String RESOURCES_PATH = System.getProperty("user.dir") + "/src/main/resources/";
     private Set<Topic> topics = null;
+    private final int DURATION_SIMULATION = 60 * 30;
+    private int remainingTime;
 
     public Model() {
         super();
@@ -78,19 +81,66 @@ public class Model extends Simulation implements ModelInt {
         simulation.select(selectedTopic, 1);
         simulation.start();
 
-        String input = Controller.takeInput("Use '+' to go to the next question and '-' for the previous. Press Enter to start the test.");
-        Question currentQuestion;
+        int remainingTime = DURATION_SIMULATION;
+        Scanner scanner = new Scanner(System.in);
 
-        do {
-            currentQuestion = simulation.getCurrentQuestion();
+        while (remainingTime > 0) {
+            long questionStartTime = System.currentTimeMillis();
+
+            clearConsole();
+            System.out.println("Timer: " + formatTime(remainingTime));
+
+            Question currentQuestion = simulation.getCurrentQuestion();
             System.out.println(currentQuestion.getQuestionAndAnswers());
-            input = Controller.takeInput("Select an answer:");
+            System.out.print("Select an answer: ");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("exit"))
+            {
+                System.out.println("Exiting the simulation");
+                return;
+            }
+
+            if (input.equalsIgnoreCase("terminate"))
+            {
+                System.out.println(simulation.terminate(new Stats()));
+            }
+
+            long questionEndTime = System.currentTimeMillis();
+            int timeSpentOnQuestion = (int) ((questionEndTime - questionStartTime) / 1000);
+            remainingTime -= timeSpentOnQuestion;
+
+            if (input.equals("") || remainingTime <= 0)
+            {
+                break;
+            }
+
             simulation.answer(sanitizeAnswer(input));
-        } while (!input.equals(""));
+        }
 
+        System.out.println("Test completed.");
+        System.out.println(simulation.terminate(new Stats()));
 
-        
+        System.out.print("Type 'exit' to leave the program");
+        String input = scanner.nextLine().trim();
 
+        if (input.equalsIgnoreCase("exit"))
+        {
+            System.out.println("Exiting the simulation");
+            return;
+        }
+
+    }
+
+    private void clearConsole() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+    private String formatTime(int seconds) {
+        int mins = seconds / 60;
+        int secs = seconds % 60;
+        return String.format("%02d:%02d", mins, secs);
     }
 
     private void testSubtopic(Subtopic selectedSubtopic) {

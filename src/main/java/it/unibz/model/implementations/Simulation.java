@@ -14,11 +14,13 @@ public class Simulation implements SimulationInt {
     private Map<Question, Map<String, Character>> questionToShuffledAnswers;
     private Question currentQuestion;
     private ExamTimer timer;
+    private long questionStartTime;
 
     public Simulation() {
         subtopicToQuestions = new HashMap<>();
         questionToAnswer = new HashMap<>();
         questionToShuffledAnswers = new HashMap<>();
+        timer = new ExamTimer();
     }
     @JsonCreator
     public Simulation(@JsonProperty("subtopicToQuestions") Map<Subtopic, Set<Question>> subtopicToQuestions,
@@ -27,6 +29,7 @@ public class Simulation implements SimulationInt {
         setSubtopicToQuestions(subtopicToQuestions);
         setQuestionToAnswer(questionToAnswer);
         setQuestionToShuffledAnswers(questionToShuffledAnswers);
+        timer = new ExamTimer();
     }
 
     @Override
@@ -64,11 +67,15 @@ public class Simulation implements SimulationInt {
 
     @Override
     public void start() {
-        setCurrentQuestion(getAllQuestions().get(0));
+        if (timer == null || !timer.getRunning()) {
+            System.out.println("Simulation Test " + getTopic());
+            timer = new ExamTimer();
+            Thread timerThread = new Thread(timer);
+            timerThread.start();
+        }
 
-        timer = new ExamTimer(this);
-        Thread timerThread = new Thread(timer);
-        timerThread.start();
+        setCurrentQuestion(getAllQuestions().get(0));
+        questionStartTime = System.currentTimeMillis();
     }
 
     @Override
@@ -87,8 +94,7 @@ public class Simulation implements SimulationInt {
                     break;
             case '+':
             case '-': changeQuestion(command);
-                questionToAnswer.put(currentQuestion, ' ')
-                break;
+                questionToAnswer.put(currentQuestion, ' ');
             default:
                 int idx = Character.getNumericValue(command);
                 if (questionsIdxs.contains(idx)) {
@@ -116,7 +122,6 @@ public class Simulation implements SimulationInt {
                 throw new IllegalArgumentException();
         }
     }
-
     private void changeQuestion(char prevOrNext) {
         List<Question> allQuestions = getAllQuestions();
         int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
@@ -140,7 +145,6 @@ public class Simulation implements SimulationInt {
         updateCorrectWrongAndBlankQuestions();
         stats.updateStats(this);
         return computeResult();
-
     }
 
     private void updateNonSelectedQuestions() {
@@ -309,7 +313,7 @@ public class Simulation implements SimulationInt {
 
     /**
      * do not use this method, only for debug purposes
-     * 
+     *
      * @param currentQuestion the question you want to set as the current one
      */
     public void setCurrentQuestion(Question currentQuestion) {

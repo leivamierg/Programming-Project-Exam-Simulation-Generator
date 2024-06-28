@@ -3,6 +3,8 @@ package it.unibz.model.implementations;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import javax.xml.stream.events.Characters;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -115,7 +117,7 @@ public class Question implements QuestionInt {
         List<String> everyQuestionList = new ArrayList<>(getWrongAnswers());
         everyQuestionList.add(getRightAnswer());
         Collections.shuffle(everyQuestionList);
-        Map<String, Character> shufflemap = new HashMap<>();
+        Map<String, Character> shufflemap = new LinkedHashMap<>();
 
         shufflemap.put(everyQuestionList.get(0), 'A');
         shufflemap.put(everyQuestionList.get(1), 'B');
