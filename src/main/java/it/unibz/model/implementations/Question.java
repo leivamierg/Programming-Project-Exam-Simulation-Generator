@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unibz.model.interfaces.QuestionInt;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "questionStatement")
+// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "questionStatement")
 public class Question implements QuestionInt {
     private String questionStatement;
     private String rightAnswer;

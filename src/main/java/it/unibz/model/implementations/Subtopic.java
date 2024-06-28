@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import it.unibz.model.interfaces.SubtopicInt;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "subtopicName")
+// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "subtopicName")
 public class Subtopic implements SubtopicInt {
     private String subtopicName;
     private String topic;

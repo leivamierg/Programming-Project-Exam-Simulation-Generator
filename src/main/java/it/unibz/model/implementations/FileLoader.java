@@ -1,5 +1,6 @@
 package it.unibz.model.implementations;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -12,6 +13,7 @@ public class FileLoader {
 
     private static final Set<Topic> topics = new HashSet<>();
     private static final Map<String, List<String>> bankToFiles = new HashMap<>();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     /**
      * loads an input bank file -> transforms the input file into a Topic object -> deserialization
@@ -21,10 +23,10 @@ public class FileLoader {
      * @throws IOException if the input file doesn't exist
      */
     public static Topic loadFile(String filePath) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        setMapper();
         Topic topic = mapper.readValue(new File(filePath), Topic.class);
         topics.add(topic);
+        bankToFiles.put(getBankFromFile(filePath), filePath)
         for (Subtopic subtopic : topic.getSubtopics()) {
             subtopic.linkSubtopicToTopic(topics);
             for (Question question : subtopic.getQuestions()) {
@@ -66,17 +68,19 @@ public class FileLoader {
      * save a topic into a json file -> serialization
      * @param topic the topic to serialize
      * @param jsonFilePath the path of the file where the topic is stored
-     * @throws IllegalArgumentException if the json file doesn't exist
+     * @throws IllegalArgumentException if the json file doesn't exist or topic is null
      */
     public static void saveFile(Topic topic, String jsonFilePath) throws IllegalArgumentException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        if (topic == null)
+            throw new IllegalArgumentException();
+        for (Subtopic subtopic : topic.getSubtopics()) {
+            subtopic.setTopicReference(null);
+            for (Question question : subtopic.getQuestions()) {
+                question.setSubtopicReference(null);
+            }
+        }
+        setMapper();
         try {
-            topic.getSubtopics().stream().
-                    forEach(s -> s.setTopicReference(null));
-            topic.getSubtopics().stream().
-                    flatMap(s -> s.getQuestions().stream()).
-                    forEach(q -> q.setSubtopicReference(null));
             if (correctFile(jsonFilePath, topic)) {
                 mapper.writeValue(new File(jsonFilePath), topic);
             } else throw new IllegalArgumentException();
@@ -89,8 +93,8 @@ public class FileLoader {
      *
      * @param bankPath the path to the bank where you want to save the topics
      * @param topics the list of topics you want to save
-     * @throws IllegalArgumentException if the list of topics doesn't perfectly match the list of file names
-     * in the given bank
+     * @throws IllegalArgumentException if the list of topics is null, empty or the topic names don't
+     * match with the name of the files
      */
 
     public static void saveBank(String bankPath, List<Topic> topics) throws IllegalArgumentException {
@@ -99,19 +103,21 @@ public class FileLoader {
         if (topics == null || topics.isEmpty())
             throw new IllegalArgumentException();
         List<String> fileNames = bankToFiles.get(bankPath);
-        if (fileNames.size() != topics.size())
-            throw new IllegalArgumentException();
+        // if (fileNames.size() != topics.size())
+           // throw new IllegalArgumentException();
         for (int i = 0; i < topics.size(); i++) {
                 saveFile(topics.get(i), bankPath + fileNames.get(i));
         }
     }
 
     private static boolean correctFile(String fileName, Topic topic) {
-        String[] temp = fileName.split("_");
-        String constructedTopicName = String.join(" ", temp).toLowerCase();
-        return constructedTopicName.equals(topic.getTopicName().toLowerCase());
+        String[] temp = topic.getTopicName().split(" ");
+        for (String word : temp) {
+            if (!fileName.toLowerCase().contains(word.toLowerCase()))
+                return false;
+        }
+        return true;
     }
-
 
     // getTopics
     /**
@@ -119,5 +125,20 @@ public class FileLoader {
      */
     public static Set<Topic> getTopics() {
         return topics;
+    }
+
+    private static void setMapper() {
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        mapper.setVisibility(mapper.getSerializationConfig().getDefaultVisibilityChecker()
+                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
+    }
+
+    private static String getBankFromFile(String filePath) {
+        String[] temp = filePath.split("/");
+        temp[temp.length - 1] = "";
+        return String.join("/", temp);
     }
 }

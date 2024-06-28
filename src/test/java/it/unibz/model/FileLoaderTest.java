@@ -2,6 +2,8 @@ package it.unibz.model;
 
 
 import it.unibz.model.implementations.FileLoader;
+import it.unibz.model.implementations.HistoryStatsLoader;
+import it.unibz.model.implementations.Stats;
 import it.unibz.model.implementations.Topic;
 import it.unibz.utils.TopicUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +12,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import static it.unibz.utils.StatsUtils.stats;
 import static it.unibz.utils.TopicUtils.topic1_CSA_FL;
 import static it.unibz.utils.TopicUtils.topic2_LA_FL;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,25 +29,28 @@ public class FileLoaderTest {
         // SubtopicUtils.init();
         TopicUtils.init();
     }
-    @DisplayName("loadFile(CSA bank) should transform the input json file into the Topic object CSA")
+    @DisplayName("first I save the topic object into a file, then I deserialize it " +
+            "and it should be equal to the initial one")
     @Test
-    public void loadCSABank() {
+    public void serializeAndDeserializeFileTest() {
         try {
-            Topic producedTopic = FileLoader.loadFile(inputBank + "input_csa_bank_test.json");
-            // producedTopic.equals(topic1_CSA_FL);
-            assertEquals(topic1_CSA_FL, producedTopic);
-        } catch (IOException e) {
+            FileLoader.saveFile(topic2_LA_FL, inputBank + "serialized_linear_algebra.json");
+            Topic deserializedTopic = FileLoader.loadFile(inputBank + "serialized_linear_algebra.json");
+            assertEquals(topic2_LA_FL, deserializedTopic);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
-    @DisplayName("loadFile(LA bank) should transform the input json file into the Topic object LA")
+    @DisplayName("first I save the bank object into a several files, then I deserialize them " +
+            "and it should be equal to the initial one")
     @Test
-    public void loadLABank() {
+    public void serializeAndDeserializeBankTest() {
         try {
-            Topic producedTopic = FileLoader.loadFile(inputBank + "input_la_bank_test.json");
-            assertEquals(topic2_LA_FL, producedTopic);
-        } catch (IOException e) {
+            FileLoader.saveBank(inputBank, List.of(topic2_LA_FL, topic1_CSA_FL));
+            Set<Topic> deserializedTopics = FileLoader.loadBank(inputBank);
+            assertEquals(Set.of(topic2_LA_FL, topic1_CSA_FL), deserializedTopics);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
