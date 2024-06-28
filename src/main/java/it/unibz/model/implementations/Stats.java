@@ -19,7 +19,7 @@ public class Stats implements StatsInt {
         generalStats = new ArrayList<>();
     }
     @JsonCreator
-    public Stats(@JsonProperty("simulations") List<Simulation> simulations, 
+    public Stats(@JsonProperty("simulations") List<Simulation> simulations,
                  @JsonProperty("topicToStats") Map<String, List<Score>> topicToStats,
                  @JsonProperty("subtopicToStats") Map<String, List<Score>> subtopicToStats,
                  @JsonProperty("generalStats") List<Score> generalStats) {
@@ -228,7 +228,7 @@ public class Stats implements StatsInt {
         return generalStats;
     }
 
-    private List<Simulation> getSimulations() {
+    public List<Simulation> getSimulations() {
         return simulations;
     }
 

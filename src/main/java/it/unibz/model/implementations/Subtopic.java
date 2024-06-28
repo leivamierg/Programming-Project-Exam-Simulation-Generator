@@ -1,5 +1,7 @@
 package it.unibz.model.implementations;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unibz.model.comparators.QuestionPriorityComparator;
 
 import java.util.*;
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import it.unibz.model.interfaces.SubtopicInt;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "subtopicName")
 public class Subtopic implements SubtopicInt {
     private String subtopicName;
     private String topic;

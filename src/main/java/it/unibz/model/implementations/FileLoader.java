@@ -72,6 +72,11 @@ public class FileLoader {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
+            topic.getSubtopics().stream().
+                    forEach(s -> s.setTopicReference(null));
+            topic.getSubtopics().stream().
+                    flatMap(s -> s.getQuestions().stream()).
+                    forEach(q -> q.setSubtopicReference(null));
             if (correctFile(jsonFilePath, topic)) {
                 mapper.writeValue(new File(jsonFilePath), topic);
             } else throw new IllegalArgumentException();
@@ -84,14 +89,13 @@ public class FileLoader {
      *
      * @param bankPath the path to the bank where you want to save the topics
      * @param topics the list of topics you want to save
-     * @throws IOException
      * @throws IllegalArgumentException if the list of topics doesn't perfectly match the list of file names
      * in the given bank
      */
 
-    public static void saveBank(String bankPath, List<Topic> topics) throws IOException, IllegalArgumentException {
+    public static void saveBank(String bankPath, List<Topic> topics) throws IllegalArgumentException {
         if (bankToFiles.get(bankPath) == null)
-            throw new IOException();
+            throw new IllegalArgumentException();
         if (topics == null || topics.isEmpty())
             throw new IllegalArgumentException();
         List<String> fileNames = bankToFiles.get(bankPath);
