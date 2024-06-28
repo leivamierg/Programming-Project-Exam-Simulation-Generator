@@ -85,7 +85,7 @@ public class Simulation implements SimulationInt {
             case 'B':
             case 'C':
             case 'D':
-            case '-':
+            case ' ':
                 questionToAnswer.put(currentQuestion, Character.toUpperCase(answer));
                 break;
             default:
@@ -104,7 +104,7 @@ public class Simulation implements SimulationInt {
             case 'B':
             case 'C':
             case 'D':
-            case '-':
+            case ' ':
                 questionToAnswer.put(question, Character.toUpperCase(answer));
                 break;
             default:
@@ -113,7 +113,7 @@ public class Simulation implements SimulationInt {
     }
 
     @Override
-    public void changeQuestion(char prevOrNext) throws IllegalArgumentException {
+    public void changeQuestion(char prevOrNext) {
         List<Question> allQuestions = getAllQuestions();
         int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
         if (prevOrNext != '+' && prevOrNext != '-')
@@ -139,7 +139,6 @@ public class Simulation implements SimulationInt {
         updateCorrectWrongAndBlankQuestions();
         stats.updateStats(this);
         return computeResult();
-
     }
 
     private void updateNonSelectedQuestions() {
@@ -190,12 +189,12 @@ public class Simulation implements SimulationInt {
     }
 
     private Set<Question> getWrongQuestions(Set<Question> questions) {
-        return questions.stream().filter(q -> !isCorrect(q) && questionToAnswer.get(q) != '-')
+        return questions.stream().filter(q -> !isCorrect(q) && questionToAnswer.get(q) != ' ')
                 .collect(Collectors.toSet());
     }
 
     private Set<Question> getBlankQuestions(Set<Question> questions) {
-        return questions.stream().filter(q -> questionToAnswer.get(q) == '-').collect(Collectors.toSet());
+        return questions.stream().filter(q -> questionToAnswer.get(q) == ' ').collect(Collectors.toSet());
     }
 
     @Override
