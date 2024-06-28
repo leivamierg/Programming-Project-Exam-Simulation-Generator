@@ -67,130 +67,130 @@ public class QuestionUtils {
         question1_1_1_CSA_FL = new Question("What happens to the binary representation of a number when it gets multiplied by 2?",
                 "The bits get shifted to the left",
                 Set.of(new String[]{"The bits get flipped", "The bits get shifted to the right", "The bits are shuffled"}),
-                "Binary arithmetics");
+                "Binary arithmetics", 1);
         question1_1_1_CSA_FL.setSubtopicReference(subtopic1_1_CSA_FL);
         // Question 1.2.1 CSA FL
         question1_2_1_CSA_FL = new Question("A Set-Reset flip-flop has the purpose of:",
                 "memorizing one bit of information",
                 Set.of(new String[]{"setting or resetting an external circuit", "memorizing a word of N bits", "generating a clock signal"}),
-                "Sequential and Combinatorial circuits");
+                "Sequential and Combinatorial circuits", 1);
         question1_2_1_CSA_FL.setSubtopicReference(subtopic1_2_CSA_FL);
 
         // Question 1.1.1
         question1_1_1 = new Question("Question 1.1.1",
                 "Right answer 1.1.1",
                 Set.of(new String[]{"Wrong answer 1.1.1.1", "Wrong answer 1.1.1.2", "Wrong answer 1.1.1.3"}), // last number is the number of answer
-                "Subtopic 1.1");
+                "Subtopic 1.1", 1);
         question1_1_1.setSubtopicReference(subtopic1_1);
         // Question 1.1.2
         question1_1_2 = new Question("Question 1.1.2",
                 "Right answer 1.1.2",
                 Set.of(new String[]{"Wrong answer 1.1.2.1", "Wrong answer 1.1.2.2", "Wrong answer 1.1.2.3"}),
-                "Subtopic 1.1");
+                "Subtopic 1.1", 1);
         question1_1_2.setSubtopicReference(subtopic1_1);
         // Question 1.2.1
         question1_2_1 = new Question("Question 1.2.1",
                 "Right answer 1.2.1",
                 Set.of(new String[]{"Wrong answer 1.2.1.1", "Wrong answer 1.2.1.2", "Wrong answer 1.2.1.3"}),
-                "Subtopic 1.2");
+                "Subtopic 1.2", 1);
         question1_2_1.setSubtopicReference(subtopic1_2);
         // Question 1.2.2
         question1_2_2 = new Question("Question 1.2.2",
                 "Right answer 1.2.2",
                 Set.of(new String[]{"Wrong answer 1.2.2.1", "Wrong answer 1.2.2.2", "Wrong answer 1.2.2.3"}),
-                "Subtopic 1.2");
+                "Subtopic 1.2", 1);
         question1_2_2.setSubtopicReference(subtopic1_2);
         // Question 1.3.1
         question1_3_1 = new Question("Question 1.3.1",
                 "Right answer 1.3.1",
                 Set.of(new String[]{"Wrong answer 1.3.1.1", "Wrong answer 1.3.1.2", "Wrong answer 1.3.1.3"}),
-                "Subtopic 1.3");
+                "Subtopic 1.3", 1);
         question1_3_1.setSubtopicReference(subtopic1_3);
         // Question 1.3.2
         question1_3_2 = new Question("Question 1.3.2",
                 "Right answer 1.3.2",
                 Set.of(new String[]{"Wrong answer 1.3.2.1", "Wrong answer 1.3.2.2", "Wrong answer 1.3.2.3"}),
-                "Subtopic 1.3");
+                "Subtopic 1.3", 1);
         question1_3_2.setSubtopicReference(subtopic1_3);
         // Question 1.3.3
         question1_3_3= new Question("Question 1.3.3",
                 "Right answer 1.3.3",
                 Set.of(new String[]{"Wrong answer 1.3.3.1", "Wrong answer 1.3.3.2", "Wrong answer 1.3.3.3"}),
-                "Subtopic 1.3");
+                "Subtopic 1.3", 1);
         question1_3_3.setSubtopicReference(subtopic1_3);
 
         // Question 2.1.1 LA FL
         question2_1_1_LA_FL = new Question("Let vectors v and w. v + w = (5, 1) and v - w = (1, 5). Compute v and w. ",
                 "v = (3, 3) and w = (2, -2)",
                 Set.of(new String[]{"v = (3, -3) and w = (2, -2)", "v = (5, 2) and w = (4, -3)", "v = (-3, 3) and w = (-2, -2)"}),
-                "Vectors");
+                "Vectors", 1);
         question2_1_1_LA_FL.setSubtopicReference(subtopic2_1_LA_FL);
         // Question 2.2.1 LA FL
         question2_2_1_LA_FL = new Question("Is this matrix symmetric, skew symmetric or neither?\n[1, -3, 3]\n[-3, 4, -3]\n[3, 3, 0] ",
                 "Neither",
                 Set.of(new String[]{"Skew symmetric", "Symmetric"}),
-                "Matrices");
+                "Matrices", 1);
         question2_2_1_LA_FL.setSubtopicReference(subtopic2_2_LA_FL);
 
         // Question 2.1.1
         question2_1_1= new Question("Question 2.1.1",
                 "Right answer 2.1.1",
                 Set.of(new String[]{"Wrong answer 2.1.1.1", "Wrong answer 2.1.1.2", "Wrong answer 2.1.1.3"}),
-                "Subtopic 2.1");
+                "Subtopic 2.1", 1);
         question2_1_1.setSubtopicReference(subtopic2_1);
         // Question 2.1.2
         question2_1_2 = new Question("Question 2.1.2",
                 "Right answer 2.1.2",
                 Set.of(new String[]{"Wrong answer 2.1.2.1", "Wrong answer 2.1.2.2", "Wrong answer 2.1.2.3"}),
-                "Subtopic 2.1");
+                "Subtopic 2.1", 1);
         question2_1_2.setSubtopicReference(subtopic2_1);
         // Question 2.1.3
         question2_1_3 = new Question("Question 2.1.3",
                 "Right answer 2.1.3",
                 Set.of(new String[]{"Wrong answer 2.1.3.1", "Wrong answer 2.1.3.2", "Wrong answer 2.1.3.3"}),
-                "Subtopic 2.1");
+                "Subtopic 2.1", 1);
         question2_1_3.setSubtopicReference(subtopic2_1);
         // Question 2.2.1
         question2_2_1 = new Question("Question 2.2.1",
                 "Right answer 2.2.1",
                 Set.of(new String[]{"Wrong answer 2.2.1.1", "Wrong answer 2.2.1.2", "Wrong answer 2.2.1.3"}),
-                "Subtopic 2.2");
+                "Subtopic 2.2", 1);
         question2_2_1.setSubtopicReference(subtopic2_2);
         // Question 2.2.2
         question2_2_2 = new Question("Question 2.2.2",
                 "Right answer 2.2.2",
                 Set.of(new String[]{"Wrong answer 2.2.2.1", "Wrong answer 2.2.2.2", "Wrong answer 2.2.2.3"}),
-                "Subtopic 2.2");
+                "Subtopic 2.2", 1);
         question2_2_2.setSubtopicReference(subtopic2_2);
         // Question 2.3.1
         question2_3_1 = new Question("Question 2.3.1",
                 "Right answer 2.3.1",
                 Set.of(new String[]{"Wrong answer 2.3.1.1", "Wrong answer 2.3.1.2", "Wrong answer 2.3.1.3"}),
-                "Subtopic 2.3");
+                "Subtopic 2.3", 1);
         question2_3_1.setSubtopicReference(subtopic2_3);
         // Question 2.3.2
         question2_3_2 = new Question("Question 2.3.2",
                 "Right answer 2.3.2",
                 Set.of(new String[]{"Wrong answer 2.3.2.1", "Wrong answer 2.3.2.2", "Wrong answer 2.3.2.3"}),
-                "Subtopic 2.3");
+                "Subtopic 2.3", 1);
         question2_3_2.setSubtopicReference(subtopic2_3);
         // Question 2.3.3
         question2_3_3= new Question("Question 2.3.3",
                 "Right answer 2.3.3",
                 Set.of(new String[]{"Wrong answer 2.3.3.1", "Wrong answer 2.3.3.2", "Wrong answer 2.3.3.3"}),
-                "Subtopic 2.3");
+                "Subtopic 2.3", 1);
         question2_3_3.setSubtopicReference(subtopic2_3);
         // Question 2.4.1
         question2_4_1 = new Question("Question 2.4.1",
                 "Right answer 2.4.1",
                 Set.of(new String[]{"Wrong answer 2.4.1.1", "Wrong answer 2.4.1.2", "Wrong answer 2.4.1.3"}),
-                "Subtopic 2.4");
+                "Subtopic 2.4", 1);
         question2_4_1.setSubtopicReference(subtopic2_4);
         // Question 2.4.2
         question2_4_2 = new Question("Question 2.4.2",
                 "Right answer 2.4.2",
                 Set.of(new String[]{"Wrong answer 2.4.2.1", "Wrong answer 2.4.2.2", "Wrong answer 2.4.2.3"}),
-                "Subtopic 2.4");
+                "Subtopic 2.4", 1);
         question2_4_2.setSubtopicReference(subtopic2_4);
         // Question null
         nullQuestion = null;

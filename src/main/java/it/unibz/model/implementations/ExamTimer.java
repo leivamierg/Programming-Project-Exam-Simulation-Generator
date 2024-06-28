@@ -3,20 +3,28 @@ package it.unibz.model.implementations;
 import java.util.concurrent.TimeUnit;
 
 public class ExamTimer implements Runnable {
-
-    private int seconds;
     private Simulation simulation;
-    private volatile boolean running;
+    private boolean running;
+    private int remainingTime;
+    private final int DURATION_SIMULATION = 60*30;
 
-    public ExamTimer(int seconds, Simulation simulation) {
-        this.seconds = seconds;
+    public ExamTimer(Simulation simulation) {
         this.simulation = simulation;
         this.running = true;
+        this.remainingTime = DURATION_SIMULATION;
+    }
+
+    public int getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(int remainingTime) {
+        this.remainingTime = remainingTime;
     }
 
     @Override
     public void run() {
-        int i = seconds;
+        int i = DURATION_SIMULATION;
         try {
             while (i >= 0 && running) {
                 int mins = i / 60;
@@ -25,8 +33,10 @@ public class ExamTimer implements Runnable {
                 System.out.printf("\r%02d:%02d", mins, remSecs);
                 System.out.flush();
 
+                --i;
+
+                setRemainingTime(i);
                 TimeUnit.SECONDS.sleep(1);
-                i--;
             }
             if (running) {
                 System.out.println("\nSimulation ended due to timeout.");
@@ -40,4 +50,11 @@ public class ExamTimer implements Runnable {
     public void stopTimer() {
         running = false;
     }
+
+
+    public String calculateTimeTaken_String()
+    {
+        return String.valueOf(DURATION_SIMULATION - getRemainingTime());
+    }
+
 }

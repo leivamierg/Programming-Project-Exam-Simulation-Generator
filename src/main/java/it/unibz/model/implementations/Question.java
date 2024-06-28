@@ -20,9 +20,9 @@ public class Question implements QuestionInt {
     public Question(@JsonProperty("questionStatement") String questionStatement,
             @JsonProperty("rightAnswer") String rightAnswer,
             @JsonProperty("wrongAnswers") Set<String> wrongAnswers, @JsonProperty("subtopic") String subtopic,
-            @JsonProperty("priorityLevel") int priorityLevel // aggiungere in json e corregere i tests
-    /* , Subtopic subtopic */) { // TODO: add priority level initializer json
-        // TODO: displya le stats
+            @JsonProperty("priorityLevel") int priorityLevel
+    /* , Subtopic subtopic */) {
+        // TODO: display le stats
         setQuestionStatement(questionStatement);
         setRightAnswer(rightAnswer);
         setWrongAnswers(wrongAnswers);

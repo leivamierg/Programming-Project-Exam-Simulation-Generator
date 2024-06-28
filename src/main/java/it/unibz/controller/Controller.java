@@ -13,23 +13,23 @@ public class Controller {
         this.model = model;
     }
 
-    public void elaborateArgs(String[] args) {
-        if (args.length == 0) {
+    public void elaborateArgs(String[] arguments) throws InterruptedException {
+        if (arguments.length == 0) {
             System.out.println("Tester needs arguments to work. Pass as help to see the list of commands.");
             return;
         }
 
-        String input = String.join(" ", args);
+        String input = String.join(" ", arguments);
         input = input.strip();
 
-        Pattern listTopicsPattern = Pattern.compile("^tester\\s+-t|--topics$");
-        Pattern listSubtopicsPattern = Pattern.compile("^tester\\s+([^\\s]+)\\s+-s|--subtopics$");
-        Pattern startTestPattern = Pattern.compile("^tester\\s+([^\\s]+)$");
-        Pattern selectSubtopicsPattern = Pattern.compile("^tester\\s+([^\\s]+)\\s+--select$");
+        Pattern listTopicsPattern = Pattern.compile("^(-t|--topics)$");
+        Pattern listSubtopicsPattern = Pattern.compile("^([A-Za-z\\s]+)\\s+(-s|--subtopics)$");
+        Pattern startTestPattern = Pattern.compile("^([A-Za-z\\s]+)$");
+        Pattern selectSubtopicsPattern = Pattern.compile("^([A-Za-z\\s]+)\\s+--select$");
 
         Matcher matcher;
 
-        if ((matcher = listTopicsPattern.matcher(input)).find())
+        if (listTopicsPattern.matcher(input).find())
         {
             model.list();
         } else if ((matcher = listSubtopicsPattern.matcher(input)).find())

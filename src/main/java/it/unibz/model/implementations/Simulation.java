@@ -66,8 +66,7 @@ public class Simulation implements SimulationInt {
     public void start() {
         setCurrentQuestion(getAllQuestions().get(0));
 
-        int examDurationSeconds = 60 * 30; //30 mins
-        timer = new ExamTimer(examDurationSeconds, this);
+        timer = new ExamTimer(this);
         Thread timerThread = new Thread(timer);
         timerThread.start();
     }
