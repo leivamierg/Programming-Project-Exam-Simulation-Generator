@@ -19,15 +19,16 @@ public class Question implements QuestionInt {
     @JsonCreator
     public Question(@JsonProperty("questionStatement") String questionStatement,
             @JsonProperty("rightAnswer") String rightAnswer,
-            @JsonProperty("wrongAnswers") Set<String> wrongAnswers, @JsonProperty("subtopic") String subtopic
-    /* , Subtopic subtopic */) { // TODO: add priority level initializer json
-        // TODO: displya le stats
+            @JsonProperty("wrongAnswers") Set<String> wrongAnswers, @JsonProperty("subtopic") String subtopic,
+            @JsonProperty("priorityLevel") int priorityLevel
+    /* , Subtopic subtopic */) {
+        // TODO: display le stats
         setQuestionStatement(questionStatement);
         setRightAnswer(rightAnswer);
         setWrongAnswers(wrongAnswers);
         setSubtopic(subtopic);
         // setSubtopicReference(subtopic);
-        setPriorityLevel(1);// starts at 1 by default
+        setPriorityLevel(priorityLevel);// starts at 1 by default
     }
 
     // setters

@@ -228,6 +228,10 @@ public class Stats implements StatsInt {
         return generalStats;
     }
 
+    public List<Simulation> getSimulations() {
+        return simulations;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
