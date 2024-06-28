@@ -105,7 +105,9 @@ public class Simulation implements SimulationInt {
                 if (questionsIdxs.contains(idx)) {
                     changeQuestion(idx);
                     questionToAnswer.put(currentQuestion, ' ');
-                } else throw new IllegalArgumentException();
+                } else {
+                    throw new IllegalArgumentException("Illegal Character");
+                }
 
         }
         if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {

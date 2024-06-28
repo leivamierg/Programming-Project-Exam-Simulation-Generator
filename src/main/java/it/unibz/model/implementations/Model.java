@@ -115,7 +115,12 @@ public class Model extends Simulation implements ModelInt {
                 break;
             }
 
-            simulation.insertCommand(sanitizeAnswer(input));
+            try {
+                simulation.insertCommand(sanitizeAnswer(input));
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                continue;
+            }
         }
 
         System.out.println("Test completed.");
