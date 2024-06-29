@@ -10,8 +10,8 @@ import java.util.Scanner;
  *
  */
 public class App {
+    
     public static void main( String[] args ) throws InterruptedException {
-        //String GREEN_TEXT = "\u001B[32m";
 
         Controller controller = new Controller(new Model());
         Scanner scanner = new Scanner(System.in);
@@ -21,9 +21,8 @@ public class App {
 
         while (true) {
             if (showWelcomeMessage)
-            {
                 System.out.println("Welcome to the exam simulation program! Click -h for commands");
-            }
+            
 
             input = scanner.nextLine();
 

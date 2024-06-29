@@ -1,5 +1,6 @@
 package it.unibz.model.implementations;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -17,8 +18,9 @@ public class Model extends Simulation implements ModelInt {
         super();
         try {
             topics = FileLoader.loadBank(RESOURCES_PATH);
-        } catch (Exception e) {
-            System.out.println("We couldn't find any topics for the test. Please report this bug on GitHub.");
+        } catch (IOException e) {
+            System.out.println("We couldn't find any topics for the test in " + RESOURCES_PATH);
+            e.printStackTrace();
         }
     }
 
