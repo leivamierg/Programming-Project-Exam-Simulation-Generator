@@ -5,7 +5,7 @@
     "questions" : [ {
       "questionStatement" : "A Set-Reset flip-flop has the purpose of:",
       "rightAnswer" : "memorizing one bit of information",
-      "wrongAnswers" : [ "generating a clock signal", "memorizing a word of N bits", "setting or resetting an external circuit" ],
+      "wrongAnswers" : [ "memorizing a word of N bits", "generating a clock signal", "setting or resetting an external circuit" ],
       "subtopic" : "Sequential and Combinatorial circuits",
       "priorityLevel" : 1
     } ],
@@ -15,7 +15,7 @@
     "questions" : [ {
       "questionStatement" : "What happens to the binary representation of a number when it gets multiplied by 2?",
       "rightAnswer" : "The bits get shifted to the left",
-      "wrongAnswers" : [ "The bits are shuffled", "The bits get flipped", "The bits get shifted to the right" ],
+      "wrongAnswers" : [ "The bits get flipped", "The bits are shuffled", "The bits get shifted to the right" ],
       "subtopic" : "Binary arithmetics",
       "priorityLevel" : 1
     } ],

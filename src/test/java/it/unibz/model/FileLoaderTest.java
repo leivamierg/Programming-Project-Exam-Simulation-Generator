@@ -8,6 +8,7 @@ import it.unibz.model.implementations.Topic;
 import it.unibz.utils.TopicUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -16,75 +17,128 @@ import java.util.List;
 import java.util.Set;
 
 import static it.unibz.utils.StatsUtils.stats;
-import static it.unibz.utils.TopicUtils.topic1_CSA_FL;
-import static it.unibz.utils.TopicUtils.topic2_LA_FL;
+import static it.unibz.utils.TopicUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class FileLoaderTest {
     private final String inputBank = "src/test/resources/io/";
+
     @BeforeEach
     void init() {
         // QuestionUtils.init();
         // SubtopicUtils.init();
         TopicUtils.init();
     }
-    @DisplayName("first I deserialize the original file, then I save the topic object into a file, then I deserialize it again" +
-            "and it should be equal to the initial one")
-    @Test
-    public void loadSaveLoadFileTest() {
-        try {
-            Topic originalDes = FileLoader.loadFile(inputBank + "input_linear_algebra.json");
-            assertEquals(topic2_LA_FL, originalDes);
-            FileLoader.saveFile(topic2_LA_FL, inputBank + "input_linear_algebra.json");
-            Topic deserializedTopic = FileLoader.loadFile(inputBank + "input_linear_algebra.json");
-            assertEquals(topic2_LA_FL, deserializedTopic);
-            assertEquals(originalDes, deserializedTopic);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    @Nested
+    class SuccessFullLoadAndSave {
+        @DisplayName("first I deserialize the original file, then I save the topic object into a file, then I deserialize it again" +
+                "and it should be equal to the initial one")
+        @Test
+        void loadSaveLoadFileTest() {
+            try {
+                Topic originalDes = FileLoader.loadFile(inputBank + "input_linear_algebra.json");
+                assertEquals(topic2_LA_FL, originalDes);
+                FileLoader.saveFile(topic2_LA_FL, inputBank + "input_linear_algebra.json");
+                Topic deserializedTopic = FileLoader.loadFile(inputBank + "input_linear_algebra.json");
+                assertEquals(topic2_LA_FL, deserializedTopic);
+                assertEquals(originalDes, deserializedTopic);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
         }
 
-    }
-    @DisplayName("first I deserialize the original bank, then I save the bank object into a several files, then I deserialize them " +
-            "and it should be equal to the initial one")
-    @Test
-    public void loadSaveLoadBankTest() {
-        try {
-            Set<Topic> originalDes = FileLoader.loadBank(inputBank);
-            assertEquals(Set.of(topic1_CSA_FL, topic2_LA_FL), originalDes);
-            FileLoader.saveBank(inputBank, List.of(topic1_CSA_FL, topic2_LA_FL));
-            Set<Topic> deserializedBank = FileLoader.loadBank(inputBank);
-            assertEquals(Set.of(topic1_CSA_FL, topic2_LA_FL), deserializedBank);
-            assertEquals(originalDes, deserializedBank);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        @DisplayName("first I deserialize the original bank, then I save the bank object into a several files, then I deserialize them " +
+                "and it should be equal to the initial one")
+        @Test
+        void loadSaveLoadBankTest() {
+            try {
+                Set<Topic> originalDes = FileLoader.loadBank(inputBank);
+                assertEquals(Set.of(topic1_CSA_FL, topic2_LA_FL), originalDes);
+                FileLoader.saveBank(inputBank, List.of(topic1_CSA_FL, topic2_LA_FL));
+                Set<Topic> deserializedBank = FileLoader.loadBank(inputBank);
+                assertEquals(Set.of(topic1_CSA_FL, topic2_LA_FL), deserializedBank);
+                assertEquals(originalDes, deserializedBank);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
 
-    }
-
-    @DisplayName("loadFile(invalid file) should throw a IOException")
-    @Test
-    public void loadInvalidFile() {
-        assertThrows(IOException.class, () -> FileLoader.loadFile("abc"));
-    }
-
-    @DisplayName("loadBank() should transform the whole input bank into Topic objects")
-    @Test
-    public void loadBank() {
-        try {
-            Set<Topic> producedBank = FileLoader.loadBank(inputBank);
-            Set<Topic> expectedBank = new HashSet<>();
-            expectedBank.add(topic1_CSA_FL);
-            expectedBank.add(topic2_LA_FL);
-            assertEquals(expectedBank, producedBank);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
-    @DisplayName("loadBank(invalid bank) should throw a IOException")
-    @Test
-    public void loadInvalidBank() {
-        assertThrows(IOException.class, () -> FileLoader.loadBank("abc"));
+
+    @Nested
+    class FailedLoadAndSaveFile {
+        @BeforeEach
+         void load() {
+            try {
+                FileLoader.loadFile(inputBank + "input_linear_algebra.json");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        @DisplayName("loadFile(invalid path) should throw an IOException")
+        @Test
+        void loadInvalidFilePath() {
+            assertThrows(IOException.class, () -> FileLoader.loadFile("abc"));
+        }
+
+        @DisplayName("saveFile(valid topic, invalid path) should throw an IllegalArgumentException")
+        @Test
+        void saveValidTopicInvalidFilePath() {
+            assertThrows(IllegalArgumentException.class, () -> FileLoader.saveFile(topic1_CSA_FL, inputBank + "abc"));
+        }
+
+        @DisplayName("saveFile(invalid topic, valid path) should throw an IllegalArgumentException")
+        @Test
+        void saveInvalidTopicValidFilePath() {
+            assertThrows(IllegalArgumentException.class, () -> FileLoader.saveFile(topic1, inputBank + "input_linear_algebra.json"));
+        }
+
+        @DisplayName("saveFile(null topic, valid path) should throw an IllegalArgumentException")
+        @Test
+        void saveNullTopicValidFilePath() {
+            assertThrows(IllegalArgumentException.class, () -> FileLoader.saveFile(nullTopic, inputBank + "input_linear_algebra.json"));
+        }
+    }
+
+    @Nested
+    class FailedSaveBank {
+        @BeforeEach
+        void load () {
+            try {
+                FileLoader.loadBank(inputBank);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @DisplayName("saveBank(valid list of topics, invalid path) should throw an IllegalArgumentException")
+        @Test
+        void saveValidTopicsInvalidBankPath() {
+            assertThrows(IllegalArgumentException.class, () -> FileLoader.saveBank("abc", List.of(topic1_CSA_FL, topic2_LA_FL)));
+        }
+
+        @DisplayName("saveBank(null list of topics, valid path) should throw an IllegalArgumentException")
+        @Test
+        void saveNullTopicsValidBankPath() {
+            assertThrows(IllegalArgumentException.class, () -> FileLoader.saveBank(inputBank, null));
+        }
+
+        @DisplayName("saveBank(list of 3 topics, valid path) should throw an IllegalArgumentException")
+        @Test
+        void saveTooManyTopicsValidBankPath() {
+            assertThrows(IllegalArgumentException.class, () -> FileLoader.saveBank(inputBank,
+                    List.of(topic1_CSA_FL, topic2_LA_FL, topic1)));
+        }
+
+        @DisplayName("saveBank(list with one invalid topic, valid path) should throw an IllegalArgumentException")
+        @Test
+        void saveListWith1InvalidTopicValidBankPath() {
+            assertThrows(IllegalArgumentException.class, () -> FileLoader.saveBank(inputBank,
+                    List.of(topic1_CSA_FL, topic1)));
+        }
+
     }
 }
 
