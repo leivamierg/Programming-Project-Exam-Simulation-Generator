@@ -22,10 +22,11 @@ public class Simulation implements SimulationInt {
         questionToShuffledAnswers = new HashMap<>();
         timer = new ExamTimer();
     }
+
     @JsonCreator
     public Simulation(@JsonProperty("subtopicToQuestions") Map<Subtopic, Set<Question>> subtopicToQuestions,
-                      @JsonProperty("questionToAnswer") Map<Question, Character> questionToAnswer,
-                      @JsonProperty("questionToShuffledAnswers") Map<Question, Map<String, Character>> questionToShuffledAnswers) {
+            @JsonProperty("questionToAnswer") Map<Question, Character> questionToAnswer,
+            @JsonProperty("questionToShuffledAnswers") Map<Question, Map<String, Character>> questionToShuffledAnswers) {
         setSubtopicToQuestions(subtopicToQuestions);
         setQuestionToAnswer(questionToAnswer);
         setQuestionToShuffledAnswers(questionToShuffledAnswers);
@@ -50,7 +51,8 @@ public class Simulation implements SimulationInt {
                     throw new IllegalArgumentException();
                 updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
             }
-        } else throw new IllegalStateException();
+        } else
+            throw new IllegalStateException();
     }
 
     private void updateSubtopicToQuestions(Subtopic subtopic, int nrQuestionsPerSubtopic) {
@@ -131,13 +133,15 @@ public class Simulation implements SimulationInt {
     }
 
     @Override
-    public String terminate(Stats stats) {
+    public String terminate(Stats stats, History history) {
         timer.stopTimer();
 
         // update all parameters
         updateNonSelectedQuestions();
         updateCorrectWrongAndBlankQuestions();
         stats.updateStats(this);
+        // TODO:
+        history.updateHistory(this);
         return computeResult();
 
     }
@@ -215,6 +219,14 @@ public class Simulation implements SimulationInt {
         return subtopic.getQuestions();
     }
 
+    public int getNumberOfQuestions() {
+        return this.getAllQuestions().size();
+    }
+
+    public ExamTimer getTimer() {
+        return this.timer;
+    }
+
     private String computeResult() {
         Score simStats = computeSimStats();
         String simResult = getResult(simStats, "Simulation");
@@ -257,7 +269,7 @@ public class Simulation implements SimulationInt {
                 : getSubtopicSelected_NonSelectedQuestions(subtopic).size();
 
         double percentage = ((double) nrOfCorrectAnswers / questions.size()) * 100;
-        percentage = Math.floor(percentage * 100)/100;
+        percentage = Math.floor(percentage * 100) / 100;
         return new Score(nrOfCorrectAnswers, nrOfWrongAnswers, nrOfBlankAnswers, selected, total, percentage);
     }
 
@@ -329,10 +341,14 @@ public class Simulation implements SimulationInt {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Simulation that = (Simulation) o;
-        return Objects.equals(subtopicToQuestions, that.subtopicToQuestions) && Objects.equals(questionToAnswer, that.questionToAnswer) && Objects.equals(questionToShuffledAnswers, that.questionToShuffledAnswers);
+        return Objects.equals(subtopicToQuestions, that.subtopicToQuestions)
+                && Objects.equals(questionToAnswer, that.questionToAnswer)
+                && Objects.equals(questionToShuffledAnswers, that.questionToShuffledAnswers);
     }
 
     @Override

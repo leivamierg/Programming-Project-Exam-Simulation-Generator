@@ -25,4 +25,16 @@ public class History {
     public void addTestRegister(TestRegister register) {
         this.testRegisters.add(register);
     }
+
+    // TODO: add updateHistory
+    public void updateHistory(Simulation simulation) {
+        TestRegister newTestRegister = new TestRegister(this.getTestRegisters().size() + 1,
+                simulation.getTimer().getRemainingTime() + " out of " + simulation.getTimer().DURATION_SIMULATION,
+                simulation.getNumberOfQuestions(), simulation.getAllCorrectQuestions().size(),
+                simulation.getAllWrongQuestions().size(), simulation.getAllBlankQuestions().size(),
+                simulation.computeSimStats().percentage(),
+                simulation.getTopic(), (String[]) simulation.getSubtopicToQuestions().keySet().stream()
+                        .map((subtopic) -> (subtopic.getSubtopicName())).toArray());
+        this.addTestRegister(newTestRegister);
+    }
 }

@@ -72,11 +72,13 @@ public class HistoryStatsLoaderTest {
 
         @Nested
         class HistoryTest {
+            private final String io = "src/test/resources/";
+
             @BeforeEach
             void init() {
                 // QuestionUtils.init();
                 // SubtopicUtils.init();
-                //HistoryUtils.init();
+                HistoryUtils.init();
             }
         }
     }
