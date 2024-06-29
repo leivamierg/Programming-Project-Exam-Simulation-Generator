@@ -1,6 +1,8 @@
 package it.unibz.model.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +13,10 @@ public class History {
     @JsonCreator
     public History(@JsonProperty("testRegisters") List<TestRegister> testRegisters) {
         setTestRegisters(testRegisters);
+    }
+
+    public History() {
+        setTestRegisters(new ArrayList<TestRegister>());
     }
     // methods
 
@@ -36,5 +42,18 @@ public class History {
                 simulation.getTopic(), (String[]) simulation.getSubtopicToQuestions().keySet().stream()
                         .map((subtopic) -> (subtopic.getSubtopicName())).toArray());
         this.addTestRegister(newTestRegister);
+    }
+
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof History)) {
+            return false;
+        }
+
+        else
+            return ((History) o).getTestRegisters().equals(this.getTestRegisters());
+    }
+
+    public int hashCode() {
+        return Objects.hash(testRegisters);
     }
 }

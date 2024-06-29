@@ -67,7 +67,7 @@ public class Model extends Simulation implements ModelInt {
                 .filter(s -> s.getSubtopicName().equalsIgnoreCase(subtopic.strip()))
                 .findFirst()
                 .orElse(null);
-            
+
         if (selectedSubtopic == null) {
             System.out.println("The subtopic you are looking for doesn't exist.");
             return;
@@ -95,23 +95,20 @@ public class Model extends Simulation implements ModelInt {
             System.out.print("Select an answer: ");
             String input = scanner.nextLine().trim();
 
-            if (input.equalsIgnoreCase("exit"))
-            {
+            if (input.equalsIgnoreCase("exit")) {
                 System.out.println("Exiting the simulation");
                 return;
             }
 
-            if (input.equalsIgnoreCase("terminate"))
-            {
-                System.out.println(simulation.terminate(new Stats()));
+            if (input.equalsIgnoreCase("terminate")) {
+                System.out.println(simulation.terminate(new Stats(), new History()));
             }
 
             long questionEndTime = System.currentTimeMillis();
             int timeSpentOnQuestion = (int) ((questionEndTime - questionStartTime) / 1000);
             remainingTime -= timeSpentOnQuestion;
 
-            if (input.equals("") || remainingTime <= 0)
-            {
+            if (input.equals("") || remainingTime <= 0) {
                 break;
             }
 
@@ -124,13 +121,12 @@ public class Model extends Simulation implements ModelInt {
         }
 
         System.out.println("Test completed.");
-        System.out.println(simulation.terminate(new Stats()));
+        System.out.println(simulation.terminate(new Stats(), new History()));
 
         System.out.print("Type 'exit' to leave the program");
         String input = scanner.nextLine().trim();
 
-        if (input.equalsIgnoreCase("exit"))
-        {
+        if (input.equalsIgnoreCase("exit")) {
             System.out.println("Exiting the simulation");
             return;
         }
@@ -149,11 +145,11 @@ public class Model extends Simulation implements ModelInt {
     }
 
     private void testSubtopic(Subtopic selectedSubtopic) {
-        
+
     }
 
     private char sanitizeAnswer(String answer) {
-        char res = Character.toUpperCase(answer.toUpperCase().charAt(0)) ;
+        char res = Character.toUpperCase(answer.toUpperCase().charAt(0));
         if (!Character.toString(res).matches("[A-D\\+\\-]")) {
             return 'n';
         }

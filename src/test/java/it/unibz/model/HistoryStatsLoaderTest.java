@@ -3,12 +3,14 @@ package it.unibz.model;
 import it.unibz.model.implementations.FileLoader;
 import it.unibz.model.implementations.HistoryStatsLoader;
 import it.unibz.model.implementations.Stats;
+import it.unibz.utils.HistoryUtils;
 import it.unibz.utils.StatsUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import static it.unibz.utils.StatsUtils.*;
+import static it.unibz.utils.HistoryUtils.*;
 
 import java.io.IOException;
 
@@ -79,6 +81,18 @@ public class HistoryStatsLoaderTest {
                 // QuestionUtils.init();
                 // SubtopicUtils.init();
                 HistoryUtils.init();
+            }
+
+            @DisplayName("The serialization and following deserialization of the same json file should result in the same thing")
+            @Test
+            public void serializeAndDeserializeHistoryTest() {
+                try {
+                    HistoryStatsLoader.saveHistory(io + "serializedHistory.json", history);
+                    Stats deserializedHistory = HistoryStatsLoader.loadStats(io + "serializedHistory.json");
+                    assertEquals(history, deserializedHistory);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
