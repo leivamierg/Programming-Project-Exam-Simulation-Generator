@@ -2,21 +2,17 @@ package it.unibz.model;
 
 
 import it.unibz.model.implementations.FileLoader;
-import it.unibz.model.implementations.HistoryStatsLoader;
-import it.unibz.model.implementations.Stats;
 import it.unibz.model.implementations.Topic;
 import it.unibz.utils.TopicUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
+import java.nio.channels.FileChannel;
 import java.util.List;
 import java.util.Set;
 
-import static it.unibz.utils.StatsUtils.stats;
 import static it.unibz.utils.TopicUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,9 +25,26 @@ public class FileLoaderTest {
         // QuestionUtils.init();
         // SubtopicUtils.init();
         TopicUtils.init();
+        try {
+            FileChannel src1 = new FileInputStream(
+                    "src/test/resources/original/input_linear_algebra.json").getChannel();
+            FileChannel dest1 = new FileOutputStream(
+                    "src/test/resources/io/input_linear_algebra.json").getChannel();
+            dest1.transferFrom(src1, 0, src1.size());
+
+            FileChannel src2 = new FileInputStream(
+                    "src/test/resources/original/input_computer_system_architecture.json").getChannel();
+            FileChannel dest2 = new FileOutputStream(
+                    "src/test/resources/io/input_computer_system_architecture.json").getChannel();
+            dest2.transferFrom(src2, 0, src2.size());
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+
     }
+
     @Nested
-    class SuccessFullLoadAndSave {
+    class SuccessfullyLoadAndSave {
         @DisplayName("first I deserialize the original file, then I save the topic object into a file, then I deserialize it again" +
                 "and it should be equal to the initial one")
         @Test
@@ -77,6 +90,7 @@ public class FileLoaderTest {
                 throw new RuntimeException(e);
             }
         }
+
         @DisplayName("loadFile(invalid path) should throw an IOException")
         @Test
         void loadInvalidFilePath() {
