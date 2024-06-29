@@ -26,7 +26,12 @@ public class FileLoader {
         setMapper();
         Topic topic = mapper.readValue(new File(filePath), Topic.class);
         topics.add(topic);
-        bankToFiles.put(getBankFromFile(filePath), filePath)
+        List<String> files = bankToFiles.get(getBankFromFile(filePath));
+        if (files == null) {
+            List<String> temp = new ArrayList<>();
+            temp.add(filePath);
+            bankToFiles.put(getBankFromFile(filePath), temp);
+        } else files.add(filePath);
         for (Subtopic subtopic : topic.getSubtopics()) {
             subtopic.linkSubtopicToTopic(topics);
             for (Question question : subtopic.getQuestions()) {
@@ -34,7 +39,6 @@ public class FileLoader {
             }
         }
         return topic;
-
     }
 
     // loadBank
@@ -56,7 +60,6 @@ public class FileLoader {
             if (file.getName().endsWith(".json"))
                 fileNames.add(file.getName());
         }
-        bankToFiles.put(bankPath, fileNames);
         Set<Topic> bank = new HashSet<>();
         for (String fileName : fileNames) {
             bank.add(loadFile(bankPath + fileName));
@@ -73,12 +76,12 @@ public class FileLoader {
     public static void saveFile(Topic topic, String jsonFilePath) throws IllegalArgumentException {
         if (topic == null)
             throw new IllegalArgumentException();
-        for (Subtopic subtopic : topic.getSubtopics()) {
+        /*for (Subtopic subtopic : topic.getSubtopics()) {
             subtopic.setTopicReference(null);
             for (Question question : subtopic.getQuestions()) {
                 question.setSubtopicReference(null);
             }
-        }
+        }*/
         setMapper();
         try {
             if (correctFile(jsonFilePath, topic)) {
@@ -93,21 +96,24 @@ public class FileLoader {
      *
      * @param bankPath the path to the bank where you want to save the topics
      * @param topics the list of topics you want to save
-     * @throws IllegalArgumentException if the list of topics is null, empty or the topic names don't
-     * match with the name of the files
+     * @throws IllegalArgumentException if the list of topics doesn't perfectly match the list of files in the bank
      */
 
     public static void saveBank(String bankPath, List<Topic> topics) throws IllegalArgumentException {
         if (bankToFiles.get(bankPath) == null)
             throw new IllegalArgumentException();
-        if (topics == null || topics.isEmpty())
-            throw new IllegalArgumentException();
         List<String> fileNames = bankToFiles.get(bankPath);
-        // if (fileNames.size() != topics.size())
-           // throw new IllegalArgumentException();
-        for (int i = 0; i < topics.size(); i++) {
-                saveFile(topics.get(i), bankPath + fileNames.get(i));
+        if (topics == null  || topics.size() != fileNames.size())
+            throw new IllegalArgumentException();
+        for (Topic topic: topics) {
+            int idxPath = searchCorrectFile(fileNames, topic);
+            if (idxPath == -1)
+                throw new IllegalArgumentException();
+            saveFile(topic, fileNames.get(idxPath));
         }
+        /*for (int i = 0; i < topics.size(); i++) {
+                saveFile(topics.get(i), bankPath + fileNames.get(i));
+        }*/
     }
 
     private static boolean correctFile(String fileName, Topic topic) {
@@ -117,6 +123,20 @@ public class FileLoader {
                 return false;
         }
         return true;
+    }
+
+    private static int searchCorrectFile(List<String> fileNames, Topic topic) {
+        int idx = -1;
+        int i = 0;
+        boolean found = false;
+        while (i < fileNames.size() && !found) {
+            if (correctFile(fileNames.get(i), topic)) {
+                idx = i;
+                found = true;
+            }
+            i++;
+        }
+        return idx;
     }
 
     // getTopics
