@@ -44,12 +44,12 @@ public interface SimulationInt {
   void start();
 
   /**
-   * answers to the current question and moves to the next one
+   * it allows to answer to or change a question
    * 
-   * @param answer the given answer (A, B, C, D, - -> no answer)
-   * @throws IllegalArgumentException if the answer is invalid
+   * @param command the input command (A, B, C, D, ' ', +, -, questionIdx)
+   * @throws IllegalArgumentException if the command is invalid
    */
-  void answer(char answer);
+  void insertCommand(char command) throws IllegalArgumentException;
 
   /**
    * answers to the the given question -> only for debug purposes
@@ -60,23 +60,6 @@ public interface SimulationInt {
    */
 
   void answer(Question question, char answer);
-
-  /**
-   * moves either to the previous question or to the next one
-   * 
-   * @param prevOrNext '+' for the next question, '-' for the previous one
-   * @throws IllegalArgumentException if the given input is neither '+' nor '-'
-   */
-  void changeQuestion(char prevOrNext);
-
-  /**
-   * moves to the desired question (if it exists)
-   * 
-   * @param idxQuestion index of the question you want to move to (from 1 to the
-   *                    total number of questions)
-   * @throws IndexOutOfBoundsException if the given index doesn't exist
-   */
-  void changeQuestion(int idxQuestion);
 
   /**
    * terminates the simulation, compute the stats, updates all parameters for the

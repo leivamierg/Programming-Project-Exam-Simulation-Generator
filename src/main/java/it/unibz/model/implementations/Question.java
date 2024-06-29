@@ -5,11 +5,12 @@ import java.util.stream.Collectors;
 
 import javax.xml.stream.events.Characters;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 import it.unibz.model.interfaces.QuestionInt;
 
+// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "questionStatement")
+@JsonIgnoreProperties(value = { "subtopicReference" })
 public class Question implements QuestionInt {
     private String questionStatement;
     private String rightAnswer;

@@ -35,8 +35,13 @@ public class Simulation implements SimulationInt {
 
     @Override
     public void select(Topic topic, int nrQuestionsPerSubtopic) throws NullPointerException {
-        for (Subtopic subtopic : topic.getSubtopics()) {
-            updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
+        try {
+            for (Subtopic subtopic : topic.getSubtopics()) {
+                updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
+            }
+        } catch (NullPointerException e)
+        {
+            System.out.println("No topic");
         }
     }
 
@@ -81,19 +86,32 @@ public class Simulation implements SimulationInt {
     }
 
     @Override
-    public void answer(char answer) throws IllegalArgumentException {
-        switch (Character.toUpperCase(answer)) {
+    public void insertCommand(char command) throws IllegalArgumentException {
+        List<Integer> questionsIdxs = new ArrayList<>();
+        List<Question> allQuestions = getAllQuestions();
+        for (int i = 0; i < allQuestions.size(); i++) {
+            questionsIdxs.add(i + 1);
+        }
+        switch (Character.toUpperCase(command)) {
             case 'A':
             case 'B':
             case 'C':
             case 'D':
-            case '-':
-                questionToAnswer.put(currentQuestion, Character.toUpperCase(answer));
-                break;
+            case ' ': questionToAnswer.put(currentQuestion, Character.toUpperCase(command));
+                    break;
+            case '+':
+            case '-': changeQuestion(command);
+                questionToAnswer.put(currentQuestion, ' ');
             default:
-                throw new IllegalArgumentException();
+                int idx = Character.getNumericValue(command);
+                if (questionsIdxs.contains(idx)) {
+                    changeQuestion(idx);
+                    questionToAnswer.put(currentQuestion, ' ');
+                } else {
+                    throw new IllegalArgumentException("Illegal Character");
+                }
+
         }
-        List<Question> allQuestions = getAllQuestions();
         if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
             changeQuestion('+');
         }
@@ -106,28 +124,23 @@ public class Simulation implements SimulationInt {
             case 'B':
             case 'C':
             case 'D':
-            case '-':
+            case ' ':
                 questionToAnswer.put(question, Character.toUpperCase(answer));
                 break;
             default:
                 throw new IllegalArgumentException();
         }
     }
-
-    @Override
-    public void changeQuestion(char prevOrNext) throws IllegalArgumentException {
+    private void changeQuestion(char prevOrNext) {
         List<Question> allQuestions = getAllQuestions();
         int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
-        if (prevOrNext != '+' && prevOrNext != '-')
-            throw new IllegalArgumentException();
         if (idxCurrentQuestion >= 0 && idxCurrentQuestion < allQuestions.size() - 1 && prevOrNext == '+') {
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
         } else if (idxCurrentQuestion > 0 && idxCurrentQuestion <= allQuestions.size() - 1 && prevOrNext == '-')
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion - 1));
     }
 
-    @Override
-    public void changeQuestion(int idxQuestion) throws IndexOutOfBoundsException {
+    private void changeQuestion(int idxQuestion) {
         List<Question> allQuestions = getAllQuestions();
         setCurrentQuestion(allQuestions.get(idxQuestion - 1));
     }
@@ -143,7 +156,6 @@ public class Simulation implements SimulationInt {
         // TODO:
         history.updateHistory(this);
         return computeResult();
-
     }
 
     private void updateNonSelectedQuestions() {
@@ -194,12 +206,12 @@ public class Simulation implements SimulationInt {
     }
 
     private Set<Question> getWrongQuestions(Set<Question> questions) {
-        return questions.stream().filter(q -> !isCorrect(q) && questionToAnswer.get(q) != '-')
+        return questions.stream().filter(q -> !isCorrect(q) && questionToAnswer.get(q) != ' ')
                 .collect(Collectors.toSet());
     }
 
     private Set<Question> getBlankQuestions(Set<Question> questions) {
-        return questions.stream().filter(q -> questionToAnswer.get(q) == '-').collect(Collectors.toSet());
+        return questions.stream().filter(q -> questionToAnswer.get(q) == ' ').collect(Collectors.toSet());
     }
 
     @Override

@@ -41,6 +41,11 @@ public class App {
                 continue;
             }
             controller.elaborateArgs(input.split("\\s+"));
+
+            if (input.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting the simulation");
+                break;
+            }
         }
 
         scanner.close();

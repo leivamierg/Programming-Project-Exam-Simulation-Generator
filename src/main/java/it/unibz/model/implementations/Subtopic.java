@@ -1,15 +1,16 @@
 package it.unibz.model.implementations;
 
+import com.fasterxml.jackson.annotation.*;
 import it.unibz.model.comparators.QuestionPriorityComparator;
 
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import it.unibz.model.interfaces.SubtopicInt;
+
+// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "subtopicName")
+@JsonIgnoreProperties(value = { "topicReference" })
 
 public class Subtopic implements SubtopicInt {
     private String subtopicName;
