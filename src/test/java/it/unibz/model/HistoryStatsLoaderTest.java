@@ -60,7 +60,7 @@ public class HistoryStatsLoaderTest {
          * public void loadStats() {
          * try {
          * Topic producedTopic = FileLoader.loadFile(inputBank +
-         * "input_csa_bank_test.json");
+         * "input_computer_system_architecture.json");
          * // producedTopic.equals(topic1_CSA_FL);
          * assertTrue(topic1_CSA_FL.equals(producedTopic));
          * } catch (IOException e) {

@@ -22,34 +22,40 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class FileLoaderTest {
-    private final String inputBank = "src/test/resources/";
+    private final String inputBank = "src/test/resources/io/";
     @BeforeEach
     void init() {
         // QuestionUtils.init();
         // SubtopicUtils.init();
         TopicUtils.init();
     }
-    @DisplayName("first I save the topic object into a file, then I deserialize it " +
+    @DisplayName("first I deserialize the original file, then I save the topic object into a file, then I deserialize it again" +
             "and it should be equal to the initial one")
     @Test
-    public void serializeAndDeserializeFileTest() {
+    public void loadSaveLoadFileTest() {
         try {
-            FileLoader.saveFile(topic2_LA_FL, inputBank + "serialized_linear_algebra.json");
-            Topic deserializedTopic = FileLoader.loadFile(inputBank + "serialized_linear_algebra.json");
+            Topic originalDes = FileLoader.loadFile(inputBank + "input_linear_algebra.json");
+            assertEquals(topic2_LA_FL, originalDes);
+            FileLoader.saveFile(topic2_LA_FL, inputBank + "input_linear_algebra.json");
+            Topic deserializedTopic = FileLoader.loadFile(inputBank + "input_linear_algebra.json");
             assertEquals(topic2_LA_FL, deserializedTopic);
+            assertEquals(originalDes, deserializedTopic);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
-    @DisplayName("first I save the bank object into a several files, then I deserialize them " +
+    @DisplayName("first I deserialize the original bank, then I save the bank object into a several files, then I deserialize them " +
             "and it should be equal to the initial one")
     @Test
-    public void serializeAndDeserializeBankTest() {
+    public void loadSaveLoadBankTest() {
         try {
-            FileLoader.saveBank(inputBank, List.of(topic2_LA_FL, topic1_CSA_FL));
-            Set<Topic> deserializedTopics = FileLoader.loadBank(inputBank);
-            assertEquals(Set.of(topic2_LA_FL, topic1_CSA_FL), deserializedTopics);
+            Set<Topic> originalDes = FileLoader.loadBank(inputBank);
+            assertEquals(Set.of(topic1_CSA_FL, topic2_LA_FL), originalDes);
+            FileLoader.saveBank(inputBank, List.of(topic1_CSA_FL, topic2_LA_FL));
+            Set<Topic> deserializedBank = FileLoader.loadBank(inputBank);
+            assertEquals(Set.of(topic1_CSA_FL, topic2_LA_FL), deserializedBank);
+            assertEquals(originalDes, deserializedBank);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

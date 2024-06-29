@@ -26,12 +26,13 @@ public class FileLoader {
         setMapper();
         Topic topic = mapper.readValue(new File(filePath), Topic.class);
         topics.add(topic);
-        List<String> files = bankToFiles.get(getBankFromFile(filePath));
-        if (files == null) {
+        List<String> fileNames = bankToFiles.get(getBankFromFile(filePath));
+        if (fileNames == null) {
             List<String> temp = new ArrayList<>();
             temp.add(filePath);
             bankToFiles.put(getBankFromFile(filePath), temp);
-        } else files.add(filePath);
+        } else if (!fileNames.contains(filePath))
+            fileNames.add(filePath);
         for (Subtopic subtopic : topic.getSubtopics()) {
             subtopic.linkSubtopicToTopic(topics);
             for (Question question : subtopic.getQuestions()) {
