@@ -13,7 +13,8 @@
             "The bits get shifted to the right",
             "The bits are shuffled"
           ],
-          "subtopic": "Binary arithmetics"
+          "subtopic": "Binary arithmetics",
+          "priorityLevel": 1
         }
       ], "topic": "Computer System Architecture"
     },
@@ -28,7 +29,8 @@
             "memorizing a word of N bits",
             "generating a clock signal"
           ],
-          "subtopic": "Sequential and Combinatorial circuits"
+          "subtopic": "Sequential and Combinatorial circuits",
+          "priorityLevel": 1
         }
       ], "topic": "Computer System Architecture"
     }
