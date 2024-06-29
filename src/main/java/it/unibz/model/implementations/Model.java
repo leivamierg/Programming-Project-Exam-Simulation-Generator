@@ -6,7 +6,7 @@ import java.util.Set;
 import it.unibz.controller.Controller;
 import it.unibz.model.interfaces.ModelInt;
 
-/*public class Model extends Simulation implements ModelInt {
+public class Model extends Simulation implements ModelInt {
 
     private String RESOURCES_PATH = System.getProperty("user.dir") + "/src/main/resources/";
     private Set<Topic> topics = null;
@@ -152,10 +152,10 @@ import it.unibz.model.interfaces.ModelInt;
         
     }
 
-    private char sanitizeAnswer(String answer) {
-        char res = Character.toUpperCase(answer.toUpperCase().charAt(0)) ;
-        if (!Character.toString(res).matches("[A-D\\+\\-]")) {
-            return 'n';
+    private String sanitizeAnswer(String answer) {
+        String res = answer.toUpperCase();
+        if (!res.matches("[A-D\\+\\-]")) {
+            return "n";
         }
 
         return res;
@@ -179,4 +179,4 @@ import it.unibz.model.interfaces.ModelInt;
         throw new UnsupportedOperationException("Unimplemented method 'notes'");
     }
 
-}*/
+}

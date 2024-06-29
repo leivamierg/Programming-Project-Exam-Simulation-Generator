@@ -292,7 +292,8 @@
           ],
           "subtopic": "Gaussian elimination",
           "priorityLevel": 1
-        }, {
+        },
+        {
           "questionStatement": "Use the Gauss-Jordan method to solve the following system:\n{0x+4y − 3z = 3,\n{−x + 7y − 5z = 4\n{−x + 8y − 6z = 5\nGive the solution vector (x, y, z) as the answer.",
           "rightAnswer": "(1, 0, −1)",
           "wrongAnswers": [
@@ -302,6 +303,7 @@
           ],
           "subtopic": "Gaussian elimination",
           "priorityLevel": 1
+        }
           ],
           "topic": "Linear Algebra"
         }, {
