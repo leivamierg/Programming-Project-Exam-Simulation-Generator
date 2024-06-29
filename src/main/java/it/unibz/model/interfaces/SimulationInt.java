@@ -44,8 +44,10 @@ public interface SimulationInt {
      * it allows to answer to or change a question
      * @param command the input command (A, B, C, D, ' ', +, -, questionIdx)
      * @throws IllegalArgumentException if the command is invalid
+     * @throws IllegalStateException either if the current question is the first one, and you want to change to the previous one,
+     * or if the current question is the last one, and you want to change to the next one
      */
-    void insertCommand(char command) throws IllegalArgumentException;
+    void insertCommand(String command) throws IllegalArgumentException;
 
     /**
      * answers to the the given question -> only for debug purposes

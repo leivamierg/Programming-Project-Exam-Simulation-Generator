@@ -6,7 +6,7 @@ import java.util.Set;
 import it.unibz.controller.Controller;
 import it.unibz.model.interfaces.ModelInt;
 
-public class Model extends Simulation implements ModelInt {
+/*public class Model extends Simulation implements ModelInt {
 
     private String RESOURCES_PATH = System.getProperty("user.dir") + "/src/main/resources/";
     private Set<Topic> topics = null;
@@ -179,4 +179,4 @@ public class Model extends Simulation implements ModelInt {
         throw new UnsupportedOperationException("Unimplemented method 'notes'");
     }
 
-}
+}*/

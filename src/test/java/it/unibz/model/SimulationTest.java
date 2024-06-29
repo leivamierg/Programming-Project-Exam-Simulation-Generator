@@ -1,11 +1,8 @@
 package it.unibz.model;
-/*
+
 import it.unibz.model.implementations.*;
 import it.unibz.utils.TopicUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.*;
 
 import java.util.*;
 
@@ -142,118 +139,132 @@ public class SimulationTest {
 
         }
     }
-
     @Nested
-    class ChangeQuestionTest {
-        @BeforeEach
-        void setUpSim() {
-            simulation.select(topic1, 2);
-            simulation.start();
-        }
-        @DisplayName("The current question is the first one; therefore, changeQuestion('+') should change the current question to the second one")
+    class InsertCommandTest {
+        @DisplayName("The input command is invalid, therefore insertCommand(char) should throw an IllegalArgumentException")
         @Test
-        void nextWithFirstQuestion() {
-            Question expected = simulation.getAllQuestions().get(1);
-            simulation.changeQuestion('+');
-            Question produced = simulation.getCurrentQuestion();
-            assertEquals(expected, produced);
+        void insertInvalidCommand() {
+            assertThrows(IllegalArgumentException.class, () -> simulation.insertCommand("?"));
         }
 
-        @DisplayName("The current question is the last one; therefore, changeQuestion('-') should change the current question to the penultimate one")
-        @Test
-        void prevWithLastQuestion() {
-            simulation.setCurrentQuestion(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1));
-            Question expected = simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 2);
-            simulation.changeQuestion('-');
-            Question produced = simulation.getCurrentQuestion();
-            assertEquals(expected, produced);
+        @Nested
+        class ChangeQuestionTest {
+            @BeforeEach
+            void setUpSim() {
+                simulation.select(topic1, 2);
+                simulation.start();
+            }
+
+            @DisplayName("The current question is the first one; therefore, insertCommand('+') should change the current question to the second one")
+            @Test
+            void nextWithFirstQuestion() {
+                Question expected = simulation.getAllQuestions().get(1);
+                simulation.insertCommand("+");
+                Question produced = simulation.getCurrentQuestion();
+                assertEquals(expected, produced);
+                Map<Question, Character> expectedMap = new HashMap<>();
+                expectedMap.put(simulation.getAllQuestions().get(0), ' ');
+                assertEquals(expectedMap, simulation.getQuestionToAnswer());
+            }
+
+            @DisplayName("The current question is the last one; therefore, insertCommand('-') should change the current question to the penultimate one")
+            @Test
+            void prevWithLastQuestion() {
+                int idxLast = simulation.getAllQuestions().size() - 1;
+                simulation.setCurrentQuestion(simulation.getAllQuestions().get(idxLast));
+                Question expected = simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 2);
+                simulation.insertCommand("-");
+                Question produced = simulation.getCurrentQuestion();
+                assertEquals(expected, produced);
+                Map<Question, Character> expectedMap = new HashMap<>();
+                expectedMap.put(simulation.getAllQuestions().get(idxLast), ' ');
+                assertEquals(expectedMap, simulation.getQuestionToAnswer());
+            }
+
+            @DisplayName("The current question is the first one; therefore, insertCommand('-') should throw an IllegalStateException")
+            @Test
+            void prevWithFirstQuestion() {
+                assertThrows(IllegalStateException.class, () -> simulation.insertCommand("-"));
+            }
+
+            @DisplayName("The current question is the last one; therefore, insertCommand('+') should throw an IllegalStateException")
+            @Test
+            void nextWithLastQuestion() {
+                simulation.setCurrentQuestion(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1));
+                assertThrows(IllegalStateException.class, () -> simulation.insertCommand("+"));
+            }
+
+            /*@DisplayName("The input is neither '+' nor '-'; therefore insertCommand(char) should throw an IllegalArgumentException")
+            @Test
+            void changeQuestionWithWrongChar() {
+                assertThrows(IllegalArgumentException.class, () -> simulation.insertCommand('?'));
+            }*/
+
+            @DisplayName("The current question is the last one and I change to the first one: insertCommand('1') should work")
+            @Test
+            void changeQuestionWithIdx1() {
+                int idxLast = simulation.getAllQuestions().size() - 1;
+                simulation.setCurrentQuestion(simulation.getAllQuestions().get(idxLast));
+                Question expected = simulation.getAllQuestions().get(0);
+                simulation.insertCommand("1");
+                Question produced = simulation.getCurrentQuestion();
+                assertEquals(expected, produced);
+                Map<Question, Character> expectedMap = new HashMap<>();
+                expectedMap.put(simulation.getAllQuestions().get(idxLast), ' ');
+                assertEquals(expectedMap, simulation.getQuestionToAnswer());
+            }
+
+            @DisplayName("The input index is too small: insertCommand(too small index) should throw an IllegalArgumentException")
+            @Test
+            void changeQuestionWithTooSmallIdx() {
+                assertThrows(IllegalArgumentException.class, () -> simulation.insertCommand("0"));
+            }
+
+            @DisplayName("The input index is too big: insertCommand(too big index) should throw an IllegalArgumentException")
+            @Test
+            void changeQuestionWithTooBigIdx() {
+                assertThrows(IllegalArgumentException.class, () -> simulation.insertCommand("" + simulation.getAllQuestions().size() + 1));
+            }
         }
 
-        @DisplayName("The current question is the first one; therefore, changeQuestion('-') should not change the current question")
-        @Test
-        void prevWithFirstQuestion() {
-            Question expected = simulation.getAllQuestions().get(0);
-            simulation.changeQuestion('-');
-            Question produced = simulation.getCurrentQuestion();
-            assertEquals(expected, produced);
-        }
+        @Nested
+        class AnswerTest {
+            @BeforeEach
+            void setUpSim() {
+                simulation.select(topic1, 1);
+                simulation.start();
+            }
 
-        @DisplayName("The current question is the last one; therefore, changeQuestion('+') should not change the current question")
-        @Test
-        void nextWithLastQuestion() {
-            simulation.setCurrentQuestion(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1));
-            Question expected = simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1);
-            simulation.changeQuestion('+');
-            Question produced = simulation.getCurrentQuestion();
-            assertEquals(expected, produced);
-        }
+            @DisplayName("The answer to the first question is valid but in lower-case: map questionToAnswer should contain " +
+                    "the answer (in upper-case) and the current question should be the second one")
+            @Test
+            void validAnswerToFirstQuestion() {
+                Map<Question, Character> expectedMap = new HashMap<>();
+                expectedMap.put(simulation.getAllQuestions().get(0), 'A');
+                Question expectedCurrentQuestion = simulation.getAllQuestions().get(1);
+                simulation.insertCommand("a");
+                assertEquals(expectedMap, simulation.getQuestionToAnswer());
+                assertEquals(expectedCurrentQuestion, simulation.getCurrentQuestion());
+            }
 
-        @DisplayName("The input is neither '+' nor '-'; therefore changeQuestion(char) should throw an IllegalArgumentException")
-        @Test
-        void changeQuestionWithWrongChar() {
-            assertThrows(IllegalArgumentException.class, () -> simulation.changeQuestion('?'));
-        }
+            @DisplayName("The answer to the last is valid: map questionToAnswer should contain " +
+                    "the answer and the current question should remain the last one")
+            @Test
+            void validAnswerToLastQuestion() {
+                simulation.setCurrentQuestion(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1));
+                Map<Question, Character> expectedMap = new HashMap<>();
+                expectedMap.put(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1), ' ');
+                Question expectedCurrentQuestion = simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1);
+                simulation.insertCommand(" ");
+                assertEquals(expectedMap, simulation.getQuestionToAnswer());
+                assertEquals(expectedCurrentQuestion, simulation.getCurrentQuestion());
+            }
 
-        @DisplayName("The current question is the last one and I change to the first one: changeQuestion(1) should work")
-        @Test
-        void changeQuestionWithIdx1() {
-            simulation.setCurrentQuestion(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1));
-            Question expected = simulation.getAllQuestions().get(0);
-            simulation.changeQuestion(1);
-            Question produced = simulation.getCurrentQuestion();
-            assertEquals(expected, produced);
-        }
-
-        @DisplayName("The input index is too small: changeQuestion(too small index) should throw an IndexOutOfBoundException")
-        @Test
-        void changeQuestionWithTooSmallIdx() {
-            assertThrows(IndexOutOfBoundsException.class, () -> simulation.changeQuestion(-1));
-        }
-
-        @DisplayName("The input index is too big: changeQuestion(too big index) should throw an IndexOutOfBoundException")
-        @Test
-        void changeQuestionWithTooBigIdx() {
-            assertThrows(IndexOutOfBoundsException.class, () -> simulation.changeQuestion(simulation.getAllQuestions().size() + 1));
-        }
-    }
-
-    @Nested
-    class AnswerTest {
-        @BeforeEach
-        void setUpSim() {
-            simulation.select(topic1, 1);
-            simulation.start();
-        }
-
-        @DisplayName("The answer to the first question is valid but in lower-case: map questionToAnswer should contain " +
-                "the answer (in upper-case) and the current question should be the second one")
-        @Test
-        void validAnswerToFirstQuestion() {
-            Map<Question, Character> expectedMap = new HashMap<>();
-            expectedMap.put(simulation.getAllQuestions().get(0), 'A');
-            Question expectedCurrentQuestion = simulation.getAllQuestions().get(1);
-            simulation.insertCommand('a');
-            assertEquals(expectedMap, simulation.getQuestionToAnswer());
-            assertEquals(expectedCurrentQuestion, simulation.getCurrentQuestion());
-        }
-
-        @DisplayName("The answer to the last is valid: map questionToAnswer should contain " +
-                "the answer and the current question should remain the last one")
-        @Test
-        void validAnswerToLastQuestion() {
-            simulation.setCurrentQuestion(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1));
-            Map<Question, Character> expectedMap = new HashMap<>();
-            expectedMap.put(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1), '-');
-            Question expectedCurrentQuestion = simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1);
-            simulation.insertCommand('-');
-            assertEquals(expectedMap, simulation.getQuestionToAnswer());
-            assertEquals(expectedCurrentQuestion, simulation.getCurrentQuestion());
-        }
-
-        @DisplayName("The answer is invalid but: answer(invalid answer) should throw an IllegalArgumentException")
-        @Test
-        void invalidAnswerToFirstQuestion() {
-            assertThrows(IllegalArgumentException.class, () -> simulation.insertCommand('?'));
+            /*@DisplayName("The answer is invalid but: answer(invalid answer) should throw an IllegalArgumentException")
+            @Test
+            void invalidAnswerToFirstQuestion() {
+                assertThrows(IllegalArgumentException.class, () -> simulation.insertCommand('?'));
+            }*/
         }
     }
 
@@ -325,7 +336,7 @@ public class SimulationTest {
             simulation.answer(question1_2_2, getWrongAnswer(question1_2_2));
             // third subtopic -> one question wrong, one question blank
             simulation.answer(question1_3_1, getWrongAnswer(question1_3_1));
-            simulation.answer(question1_3_3, '-');
+            simulation.answer(question1_3_3, ' ');
         }
 
         private char getCorrectAnswer(Question question) {
@@ -465,28 +476,6 @@ public class SimulationTest {
     }
     @Nested
     class Selected_NonSelectedQuestionsTest {
-        private boolean equalsSet(Set<Question> producedSet, Set<Question> expectedSet) {
-            if (producedSet.size() != expectedSet.size()) {
-                return false;
-            } else {
-                boolean condition = true;
-                for (Question q1 : expectedSet) {
-                    condition = false;
-                    for (Question q2 : producedSet) {
-                        if (q1.equals(q2)) {
-                            condition = true;
-                            break;
-                        }
-                    }
-                    if (!condition) {
-                        return false;
-                    }
-
-                }
-
-                return true;
-            }
-        }
         @BeforeEach
         void setUpSim() {
             simulation.select(Set.of(new Subtopic[]{subtopic1_1, subtopic1_3}), 2);
@@ -541,10 +530,10 @@ public class SimulationTest {
             simulation.answer(question1_1_2, getCorrectAnswer(question1_1_2));
             // second subtopic -> one question correct, one question wrong
             simulation.answer(question1_2_1, getCorrectAnswer(question1_2_1));
-            simulation.answer(question1_2_2, '-');
+            simulation.answer(question1_2_2, ' ');
             // third subtopic -> both questions wrong
             simulation.answer(question1_3_1, getWrongAnswer(question1_3_1));
-            simulation.answer(question1_3_3, '-');
+            simulation.answer(question1_3_3, ' ');
         }
         private char getCorrectAnswer(Question question) {
             return question.getCorrectAnswerLabel(simulation.getQuestionToShuffledAnswers().get(question));
@@ -609,10 +598,10 @@ public class SimulationTest {
             simulation.answer(question1_1_2, getCorrectAnswer(question1_1_2));
             // second subtopic -> one question correct, one question wrong
             simulation.answer(question1_2_1, getCorrectAnswer(question1_2_1));
-            simulation.answer(question1_2_2, '-');
+            simulation.answer(question1_2_2, ' ');
             // third subtopic -> both questions wrong
             simulation.answer(question1_3_1, getWrongAnswer(question1_3_1));
-            simulation.answer(question1_3_3, '-');
+            simulation.answer(question1_3_3, ' ');
         }
 
         private char getCorrectAnswer(Question question) {
@@ -638,4 +627,3 @@ public class SimulationTest {
         }
     }
 }
-*/

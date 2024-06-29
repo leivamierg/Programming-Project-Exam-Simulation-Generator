@@ -1,7 +1,7 @@
 package it.unibz.app;
 
 import it.unibz.controller.Controller;
-import it.unibz.model.implementations.Model;
+//import it.unibz.model.implementations.Model;
 
 import java.util.Scanner;
 
@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Hello world!
  *
  */
-public class App {
+/*public class App {
     public static void main( String[] args ) throws InterruptedException {
         //String GREEN_TEXT = "\u001B[32m";
 
@@ -50,4 +50,4 @@ public class App {
 
         scanner.close();
     }
-}
+}*/
