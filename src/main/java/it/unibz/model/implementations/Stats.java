@@ -10,24 +10,24 @@ public class Stats implements StatsInt {
     private List<Simulation> simulations;
     private Map<String, List<Score>> topicToStats;
     private Map<String, List<Score>> subtopicToStats;
-    private List<Score> generalStats;
+    private Score generalStats;
 
     public Stats() {
         simulations = new ArrayList<>();
         topicToStats = new HashMap<>();
         subtopicToStats = new HashMap<>();
-        generalStats = new ArrayList<>();
     }
+
     @JsonCreator
     public Stats(@JsonProperty("simulations") List<Simulation> simulations,
-                 @JsonProperty("topicToStats") Map<String, List<Score>> topicToStats,
-                 @JsonProperty("subtopicToStats") Map<String, List<Score>> subtopicToStats,
-                 @JsonProperty("generalStats") List<Score> generalStats) {
+            @JsonProperty("topicToStats") Map<String, List<Score>> topicToStats,
+            @JsonProperty("subtopicToStats") Map<String, List<Score>> subtopicToStats,
+            @JsonProperty("generalStats") Score generalStats) {
         setSimulations(simulations);
         setTopicToStats(topicToStats);
         setSubtopicToStats(subtopicToStats);
         setGeneralStats(generalStats);
-        
+
     }
     // setter
 
@@ -43,7 +43,7 @@ public class Stats implements StatsInt {
         this.subtopicToStats = subtopicToStats;
     }
 
-    private void setGeneralStats(List<Score> generalStats) {
+    private void setGeneralStats(Score generalStats) {
         this.generalStats = generalStats;
     }
     // methods
@@ -64,7 +64,8 @@ public class Stats implements StatsInt {
         Set<Question> allQuestions = new HashSet<>();
         for (Simulation currentSim : simulations) {
             if (currentSim.getTopic().equals(simulation.getTopic()))
-                updateCorWrongBlankSelTot(correctQuestions, wrongQuestions, blankQuestions, selectedQuestions, allQuestions,
+                updateCorWrongBlankSelTot(correctQuestions, wrongQuestions, blankQuestions, selectedQuestions,
+                        allQuestions,
                         currentSim.getAllCorrectQuestions(), currentSim.getAllWrongQuestions(),
                         currentSim.getAllBlankQuestions(), new HashSet<>(currentSim.getAllQuestions()),
                         currentSim.getAllSelected_NonSelectedQuestions());
@@ -80,7 +81,7 @@ public class Stats implements StatsInt {
     private void updateSubtopicToStats(Simulation simulation) {
         Set<Subtopic> selectedSubtopics = simulation.getSubtopicToQuestions().keySet();
         for (Subtopic subtopic : selectedSubtopics) {
-                updateSubtopicStats(subtopic);
+            updateSubtopicStats(subtopic);
         }
     }
 
@@ -93,9 +94,12 @@ public class Stats implements StatsInt {
         for (Simulation currentSim : simulations) {
             for (Subtopic currentSubtopic : currentSim.getSubtopicToQuestions().keySet()) {
                 if (subtopic.getSubtopicName().equals(currentSubtopic.getSubtopicName()))
-                    updateCorWrongBlankSelTot(correctQuestions, wrongQuestions, blankQuestions, selectedQuestions, allQuestions,
-                            currentSim.getSubtopicCorrectQuestions(subtopic), currentSim.getSubtopicWrongQuestions(subtopic),
-                            currentSim.getSubtopicBlankQuestions(subtopic), currentSim.getSubtopicToQuestions().get(subtopic),
+                    updateCorWrongBlankSelTot(correctQuestions, wrongQuestions, blankQuestions, selectedQuestions,
+                            allQuestions,
+                            currentSim.getSubtopicCorrectQuestions(subtopic),
+                            currentSim.getSubtopicWrongQuestions(subtopic),
+                            currentSim.getSubtopicBlankQuestions(subtopic),
+                            currentSim.getSubtopicToQuestions().get(subtopic),
                             subtopic.getQuestions());
             }
 
@@ -120,35 +124,35 @@ public class Stats implements StatsInt {
             total += topicStats.total();
         }
         double percentage = computePercentage(correct, selected);
-        generalStats.add(new Score(correct, wrong, blank, selected, total, percentage));
+        generalStats = new Score(correct, wrong, blank, selected, total, percentage);
     }
 
     private void updateCorWrongBlankSelTot(Set<Question> correct, Set<Question> wrong,
-                                        Set<Question> blank, Set<Question> selected, Set<Question> total,
-                                        Set<Question> corToAdd, Set<Question> wrongToAdd,
-                                        Set<Question> blankToAdd, Set<Question> selToAdd, Set<Question> totToAdd) {
-            correct.addAll(corToAdd);
-            wrong.addAll(wrongToAdd);
-            blank.addAll(blankToAdd);
-            selected.addAll(selToAdd);
-            total.addAll(totToAdd);
-            // if a question was answered once correctly and one wrongly or in blank
-            // it is considered correct
-            for (Question question : correct) {
-                wrong.remove(question);
-                blank.remove(question);
-            }
-
-            // if a question was answered once wrongly and one in blank
-            // it is considered wrong
-            for (Question question : wrong) {
-                blank.remove(question);
-            }
+            Set<Question> blank, Set<Question> selected, Set<Question> total,
+            Set<Question> corToAdd, Set<Question> wrongToAdd,
+            Set<Question> blankToAdd, Set<Question> selToAdd, Set<Question> totToAdd) {
+        correct.addAll(corToAdd);
+        wrong.addAll(wrongToAdd);
+        blank.addAll(blankToAdd);
+        selected.addAll(selToAdd);
+        total.addAll(totToAdd);
+        // if a question was answered once correctly and one wrongly or in blank
+        // it is considered correct
+        for (Question question : correct) {
+            wrong.remove(question);
+            blank.remove(question);
         }
 
+        // if a question was answered once wrongly and one in blank
+        // it is considered wrong
+        for (Question question : wrong) {
+            blank.remove(question);
+        }
+    }
+
     private void updateMap(Map<String, List<Score>> map,
-                           String topicSubtopic, List<Score> temp,
-                           int nrCorrect, int nrWrong, int nrBlank, int nrSelected, int nrTotal, double percentage) {
+            String topicSubtopic, List<Score> temp,
+            int nrCorrect, int nrWrong, int nrBlank, int nrSelected, int nrTotal, double percentage) {
         Score score = new Score(nrCorrect, nrWrong, nrBlank, nrSelected, nrTotal, percentage);
         if (temp == null) {
             List<Score> stats = new ArrayList<>();
@@ -161,7 +165,7 @@ public class Stats implements StatsInt {
 
     private double computePercentage(int correct, int selected) {
         double percentage = ((double) correct / selected) * 100;
-        return Math.floor(percentage * 100)/100;
+        return Math.floor(percentage * 100) / 100;
     }
 
     @Override
@@ -171,7 +175,8 @@ public class Stats implements StatsInt {
 
     @Override
     public String compareStats(Topic topic, int start) {
-        return printStatsComparison(topicToStats, start, topicToStats.get(topic.getTopicName()).size(), topic.getTopicName());
+        return printStatsComparison(topicToStats, start, topicToStats.get(topic.getTopicName()).size(),
+                topic.getTopicName());
     }
 
     @Override
@@ -181,11 +186,12 @@ public class Stats implements StatsInt {
 
     @Override
     public String compareStats(Subtopic subtopic, int start) {
-        return printStatsComparison(subtopicToStats, start, subtopicToStats.get(subtopic.getSubtopicName()).size(), subtopic.getSubtopicName());
+        return printStatsComparison(subtopicToStats, start, subtopicToStats.get(subtopic.getSubtopicName()).size(),
+                subtopic.getSubtopicName());
     }
 
     private String printStatsComparison(Map<String, List<Score>> map,
-                                        int start, int end, String topicSubtopic) {
+            int start, int end, String topicSubtopic) {
         Score startingStats = map.get(topicSubtopic).get(start - 1);
         Score endingStats = map.get(topicSubtopic).get(end - 1);
         String result = topicSubtopic + ":" + System.lineSeparator();
@@ -195,8 +201,10 @@ public class Stats implements StatsInt {
                 "Total number of questions of " + topicSubtopic + ": " + startingStats.total(),
                 "Total number of questions of " + topicSubtopic + ": " + endingStats.total());
         result += String.format("%-10s %-10s" + System.lineSeparator(),
-                "Correctly answered questions/Selected questions: " + startingStats.correct() + "/" + startingStats.selected(),
-                "Correctly answered questions/Selected questions: " + endingStats.correct() + "/" + endingStats.selected());
+                "Correctly answered questions/Selected questions: " + startingStats.correct() + "/"
+                        + startingStats.selected(),
+                "Correctly answered questions/Selected questions: " + endingStats.correct() + "/"
+                        + endingStats.selected());
         result += String.format("%-10s %-10s",
                 "Score: " + startingStats.percentage(),
                 "Score: " + endingStats.percentage());
@@ -205,13 +213,13 @@ public class Stats implements StatsInt {
 
     @Override
     public String showStats() {
-        return null;
-        // update general stats
+        return getGeneralStats().toString();
         // general stats (average with all topics)
         // number of topics (with names)
         // stats for every topic
         // number of subtopics (with name) per topic
         // stats for every subtopic
+
     }
 
     @Override
@@ -223,8 +231,9 @@ public class Stats implements StatsInt {
     public Map<String, List<Score>> getSubtopicToStats() {
         return subtopicToStats;
     }
+
     @Override
-    public List<Score> getGeneralStats() {
+    public Score getGeneralStats() {
         return generalStats;
     }
 
@@ -234,10 +243,14 @@ public class Stats implements StatsInt {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Stats stats = (Stats) o;
-        return Objects.equals(simulations, stats.simulations) && Objects.equals(topicToStats, stats.topicToStats) && Objects.equals(subtopicToStats, stats.subtopicToStats) && Objects.equals(generalStats, stats.generalStats);
+        return Objects.equals(simulations, stats.simulations) && Objects.equals(topicToStats, stats.topicToStats)
+                && Objects.equals(subtopicToStats, stats.subtopicToStats)
+                && Objects.equals(generalStats, stats.generalStats);
     }
 
     @Override
