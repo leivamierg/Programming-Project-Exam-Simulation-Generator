@@ -1,5 +1,6 @@
 package it.unibz.model.implementations;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -7,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class HistoryStatsLoader {
+    private static final ObjectMapper mapper = new ObjectMapper();
+
     /**
      * loads the stats -> transforms the input file into a Stats object ->
      * deserialization
@@ -16,8 +19,7 @@ public class HistoryStatsLoader {
      * @throws IOException if the input file doesn't exist
      */
     public static Stats loadStats(String filePath) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        setMapper();
         return mapper.readValue(new File(filePath), Stats.class);
     }
 
@@ -33,15 +35,13 @@ public class HistoryStatsLoader {
     public static void saveStats(String filePath, Stats stats) throws IOException, IllegalArgumentException {
         if (stats == null)
             throw new IllegalArgumentException();
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        setMapper();
         mapper.writeValue(new File(filePath), stats);
     }
 
     // TODO:
     public static History loadHistory(String filePath) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        setMapper();
         return mapper.readValue(new File(filePath), History.class);
     }
 
@@ -49,9 +49,17 @@ public class HistoryStatsLoader {
         if (history == null) {
             throw new IllegalArgumentException();
         }
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        setMapper();
         mapper.writeValue(new File(filePath), history);
+    }
+
+    private static void setMapper() {
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        mapper.setVisibility(mapper.getSerializationConfig().getDefaultVisibilityChecker()
+                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withSetterVisibility(JsonAutoDetect.Visibility.ANY)
+                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
     }
 }
 // }

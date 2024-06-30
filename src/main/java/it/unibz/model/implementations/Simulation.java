@@ -1,19 +1,33 @@
 package it.unibz.model.implementations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.unibz.model.interfaces.SimulationInt;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-
+// @JsonIgnoreProperties(value = { "subtopicToQuestions" })
 public class Simulation implements SimulationInt {
     // attributes
+    @JsonIgnore
     private Map<Subtopic, Set<Question>> subtopicToQuestions;
+    private Map<String, Set<Question>> subtopicNameToQuestions;
+
+    @JsonIgnore
     private Map<Question, Character> questionToAnswer;
+    private Map<String, Character> questionStatementToAnswer;
+    @JsonIgnore
     private Map<Question, Map<String, Character>> questionToShuffledAnswers;
+    private Map<String, Map<String, Character>> questionStatementToShuffledAnswers;
+    private String pathToTopicFile;
+    @JsonIgnore
     private Question currentQuestion;
+    @JsonIgnore
     private ExamTimer timer;
+    @JsonIgnore
     private long questionStartTime;
 
     public Simulation() {
@@ -23,13 +37,55 @@ public class Simulation implements SimulationInt {
         timer = new ExamTimer();
     }
     @JsonCreator
-    public Simulation(@JsonProperty("subtopicToQuestions") Map<Subtopic, Set<Question>> subtopicToQuestions,
-                      @JsonProperty("questionToAnswer") Map<Question, Character> questionToAnswer,
-                      @JsonProperty("questionToShuffledAnswers") Map<Question, Map<String, Character>> questionToShuffledAnswers) {
-        setSubtopicToQuestions(subtopicToQuestions);
-        setQuestionToAnswer(questionToAnswer);
-        setQuestionToShuffledAnswers(questionToShuffledAnswers);
+    public Simulation(@JsonProperty("subtopicNameToQuestions") Map<String, Set<Question>> subtopicNameToQuestions,
+                      @JsonProperty("questionStatementToAnswer") Map<String, Character> questionStatementToAnswer,
+                      @JsonProperty("questionStatementToShuffledAnswers") Map<String, Map<String, Character>> questionStatementToShuffledAnswers,
+                      @JsonProperty("pathToTopicFile") String pathToTopicFile) {
+        Topic topic;
+        setPathToTopicFile(pathToTopicFile);
+        try {
+            topic = FileLoader.loadFile(pathToTopicFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        setSubtopicNameToQuestions(subtopicNameToQuestions);
+        buildSubtopicToQuestionsMap(topic, subtopicNameToQuestions);
+
+        setQuestionStatementToAnswer(questionStatementToAnswer);
+        buildQuestionToAnswerMap(questionStatementToAnswer);
+        setQuestionStatementToShuffledAnswers(questionStatementToShuffledAnswers);
+        buildQuestionToShuffledAnswersMap(questionStatementToShuffledAnswers);
+
+
+
+        //setSubtopicToQuestions(subtopicToQuestions);
+        //setQuestionToAnswer(questionToAnswer);
+        //setQuestionToShuffledAnswers(questionToShuffledAnswers);
         timer = new ExamTimer();
+    }
+
+    private void buildSubtopicToQuestionsMap(Topic topic, Map<String, Set<Question>> subtopicNameToQuestions) {
+        List<Subtopic> selectedSubtopics = topic.getSubtopics().stream().
+                filter(s -> subtopicNameToQuestions.containsKey(s.getSubtopicName())).
+                toList();
+        for (Subtopic selectedSubtopic : selectedSubtopics) {
+            String subtopicName = selectedSubtopic.getSubtopicName();
+            subtopicToQuestions.put(selectedSubtopic, subtopicNameToQuestions.get(subtopicName));
+        }
+    }
+    private void buildQuestionToShuffledAnswersMap(Map<String, Map<String, Character>> questionStatementToShuffledAnswers) {
+        List<Question> allQuestions = getAllQuestions();
+        for (Question question : allQuestions) {
+            String questionStatement = question.getQuestionStatement();
+            questionToShuffledAnswers.put(question, questionStatementToShuffledAnswers.get(questionStatement));
+        }
+    }
+    private void buildQuestionToAnswerMap(Map<String, Character> questionStatementToAnswer) {
+        List<Question> allQuestions = getAllQuestions();
+        for (Question question : allQuestions) {
+            String questionStatement = question.getQuestionStatement();
+            questionToAnswer.put(question, questionStatementToAnswer.get(questionStatement));
+        }
     }
 
     @Override
@@ -322,20 +378,37 @@ public class Simulation implements SimulationInt {
      *
      * @param currentQuestion the question you want to set as the current one
      */
+    @JsonIgnore
     public void setCurrentQuestion(Question currentQuestion) {
         this.currentQuestion = currentQuestion;
     }
-
+    @JsonIgnore
     private void setSubtopicToQuestions(Map<Subtopic, Set<Question>> subtopicToQuestions) {
         this.subtopicToQuestions = subtopicToQuestions;
     }
-
+    @JsonIgnore
     private void setQuestionToAnswer(Map<Question, Character> questionToAnswer) {
         this.questionToAnswer = questionToAnswer;
     }
-
+    @JsonIgnore
     private void setQuestionToShuffledAnswers(Map<Question, Map<String, Character>> questionToShuffledAnswers) {
         this.questionToShuffledAnswers = questionToShuffledAnswers;
+    }
+
+    private void setSubtopicNameToQuestions(Map<String, Set<Question>> subtopicNameToQuestions) {
+        this.subtopicNameToQuestions = subtopicNameToQuestions;
+    }
+
+    private void setQuestionStatementToAnswer(Map<String, Character> questionStatementToAnswer) {
+        this.questionStatementToAnswer = questionStatementToAnswer;
+    }
+
+    private void setQuestionStatementToShuffledAnswers(Map<String, Map<String, Character>> questionStatementToShuffledAnswers) {
+        this.questionStatementToShuffledAnswers = questionStatementToShuffledAnswers;
+    }
+
+    private void setPathToTopicFile(String pathToTopicFile) {
+        this.pathToTopicFile = pathToTopicFile;
     }
 
     @Override

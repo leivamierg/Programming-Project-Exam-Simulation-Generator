@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class FileLoaderTest {
-    private final String inputBank = "src/test/resources/io/";
+    private final String inputBank = "src/test/resources/bank/io/";
 
     @BeforeEach
     void init() {
@@ -27,15 +27,15 @@ public class FileLoaderTest {
         TopicUtils.init();
         try {
             FileChannel src1 = new FileInputStream(
-                    "src/test/resources/original/input_linear_algebra.json").getChannel();
+                    "src/test/resources/bank/original/input_linear_algebra.json").getChannel();
             FileChannel dest1 = new FileOutputStream(
-                    "src/test/resources/io/input_linear_algebra.json").getChannel();
+                    "src/test/resources/bank/io/input_linear_algebra.json").getChannel();
             dest1.transferFrom(src1, 0, src1.size());
 
             FileChannel src2 = new FileInputStream(
-                    "src/test/resources/original/input_computer_system_architecture.json").getChannel();
+                    "src/test/resources/bank/original/input_computer_system_architecture.json").getChannel();
             FileChannel dest2 = new FileOutputStream(
-                    "src/test/resources/io/input_computer_system_architecture.json").getChannel();
+                    "src/test/resources/bank/io/input_computer_system_architecture.json").getChannel();
             dest2.transferFrom(src2, 0, src2.size());
         } catch (Exception e) {
             throw new RuntimeException();

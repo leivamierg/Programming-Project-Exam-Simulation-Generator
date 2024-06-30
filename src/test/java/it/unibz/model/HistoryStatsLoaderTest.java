@@ -16,7 +16,7 @@ import static it.unibz.utils.TopicUtils.topic1_CSA_FL;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HistoryStatsLoaderTest {
-    private final String io = "src/test/resources/";
+    private final String io = "src/test/resources/h_s/";
 
     @Nested
     class StatsTest {
