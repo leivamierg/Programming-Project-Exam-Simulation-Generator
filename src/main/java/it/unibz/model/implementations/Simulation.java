@@ -35,13 +35,8 @@ public class Simulation implements SimulationInt {
 
     @Override
     public void select(Topic topic, int nrQuestionsPerSubtopic) throws NullPointerException {
-        try {
-            for (Subtopic subtopic : topic.getSubtopics()) {
-                updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
-            }
-        } catch (NullPointerException e)
-        {
-            System.out.println("No topic");
+        for (Subtopic subtopic : topic.getSubtopics()) {
+            updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
         }
     }
 
@@ -86,34 +81,34 @@ public class Simulation implements SimulationInt {
     }
 
     @Override
-    public void insertCommand(char command) throws IllegalArgumentException {
+    public void insertCommand(String command) throws IllegalArgumentException, IllegalStateException {
         List<Integer> questionsIdxs = new ArrayList<>();
         List<Question> allQuestions = getAllQuestions();
         for (int i = 0; i < allQuestions.size(); i++) {
             questionsIdxs.add(i + 1);
         }
-        switch (Character.toUpperCase(command)) {
-            case 'A':
-            case 'B':
-            case 'C':
-            case 'D':
-            case ' ': questionToAnswer.put(currentQuestion, Character.toUpperCase(command));
-                    break;
-            case '+':
-            case '-': changeQuestion(command);
-                questionToAnswer.put(currentQuestion, ' ');
+        switch (command.toUpperCase()) {
+            case "A":
+            case "B":
+            case "C":
+            case "D":
+            case " " : questionToAnswer.put(currentQuestion, Character.toUpperCase(command.charAt(0)));
+                if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
+                    int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
+                    setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
+                }
+                break;
+            case "+":
+            case "-": changeQuestion(command.charAt(0));
+                break;
             default:
-                int idx = Character.getNumericValue(command);
+                int idx = Integer.parseInt(command);
                 if (questionsIdxs.contains(idx)) {
                     changeQuestion(idx);
-                    questionToAnswer.put(currentQuestion, ' ');
                 } else {
                     throw new IllegalArgumentException("Illegal Character");
                 }
 
-        }
-        if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
-            changeQuestion('+');
         }
     }
 
@@ -135,12 +130,16 @@ public class Simulation implements SimulationInt {
         List<Question> allQuestions = getAllQuestions();
         int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
         if (idxCurrentQuestion >= 0 && idxCurrentQuestion < allQuestions.size() - 1 && prevOrNext == '+') {
+            questionToAnswer.put(currentQuestion, ' ');
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
-        } else if (idxCurrentQuestion > 0 && idxCurrentQuestion <= allQuestions.size() - 1 && prevOrNext == '-')
+        } else if (idxCurrentQuestion > 0 && idxCurrentQuestion <= allQuestions.size() - 1 && prevOrNext == '-') {
+            questionToAnswer.put(currentQuestion, ' ');
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion - 1));
+        } else throw new IllegalStateException();
     }
 
     private void changeQuestion(int idxQuestion) {
+        questionToAnswer.put(currentQuestion, ' ');
         List<Question> allQuestions = getAllQuestions();
         setCurrentQuestion(allQuestions.get(idxQuestion - 1));
     }

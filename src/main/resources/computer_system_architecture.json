@@ -113,7 +113,7 @@
           "subtopic": "Binary arithmetics",
           "priorityLevel": 1
         }, {
-          "questionStatement": "In the two’s complement encoding for negative numbers:",,,
+          "questionStatement": "In the two’s complement encoding for negative numbers:",
           "rightAnswer": "there is only one representation of zero",
           "wrongAnswers": [
             "even numbers are represented better",

@@ -148,10 +148,10 @@ public class Model extends Simulation implements ModelInt {
 
     }
 
-    private char sanitizeAnswer(String answer) {
-        char res = Character.toUpperCase(answer.toUpperCase().charAt(0));
-        if (!Character.toString(res).matches("[A-D\\+\\-]")) {
-            return 'n';
+    private String sanitizeAnswer(String answer) {
+        String res = answer.toUpperCase();
+        if (!res.matches("[A-D\\+\\-]")) {
+            return "n";
         }
 
         return res;
