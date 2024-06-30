@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Set;
 
-import it.unibz.controller.Controller;
 import it.unibz.model.interfaces.ModelInt;
 
 public class Model extends Simulation implements ModelInt {

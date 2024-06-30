@@ -46,8 +46,6 @@ public interface QuestionInt {
      */
     void setPriorityLevel(int priorityLevel);
 
-    // getters
-
     String getSubtopic();
 
     String getQuestionStatement();
@@ -58,7 +56,12 @@ public interface QuestionInt {
 
     int getPriorityLevel();
 
-    // other methods
+    
+    /**
+     * Returns a map containing shuffled options for a question.
+     *
+     * @return a map where the keys are the shuffled options and the values are the corresponding characters.
+     */
     Map<String, Character> getShuffleMap();
 
     /**
@@ -71,7 +74,6 @@ public interface QuestionInt {
     /**
      * @return a list of the 4 possible answers shuffled in a random order
      */
-
     String toString();
 
     // boolean equals(Question question);

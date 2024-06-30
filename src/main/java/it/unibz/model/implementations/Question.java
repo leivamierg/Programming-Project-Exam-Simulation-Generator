@@ -109,7 +109,13 @@ public class Question implements QuestionInt {
     public String getQuestionAndAnswers() {
         StringBuilder sb = new StringBuilder();
         sb.append(getQuestionStatement()).append(System.lineSeparator());
-        // Map<String, Character> shuffleMap = getShuffleMap();
+
+        Map<String, Character> shuffleMap = getShuffleMap();
+
+        for (Map.Entry<String, Character> entry : shuffleMap.entrySet()) {
+            sb.append(entry.getValue() + ") " + entry.getKey() +  System.lineSeparator());
+        }
+
 
         return sb.toString();
     }
@@ -119,11 +125,9 @@ public class Question implements QuestionInt {
         everyQuestionList.add(getRightAnswer());
         Collections.shuffle(everyQuestionList);
         Map<String, Character> shufflemap = new LinkedHashMap<>();
-
-        shufflemap.put(everyQuestionList.get(0), 'A');
-        shufflemap.put(everyQuestionList.get(1), 'B');
-        shufflemap.put(everyQuestionList.get(2), 'C');
-        shufflemap.put(everyQuestionList.get(3), 'D');
+        for (int i = 0; i < everyQuestionList.size(); i++) {
+            shufflemap.put(everyQuestionList.get(i), (char) ('A' + i));
+        }
 
         return shufflemap;
     }
