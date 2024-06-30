@@ -1,3 +1,4 @@
+
 {
   "topicName": "Computer System Architecture",
   "subtopics": [
@@ -15,8 +16,7 @@
           "subtopic": "Binary arithmetics",
           "priorityLevel": 1
         }
-      ],
-      "topic": "Computer System Architecture"
+      ], "topic": "Computer System Architecture"
     },
     {
       "subtopicName": "Sequential and Combinatorial circuits",
@@ -32,8 +32,7 @@
           "subtopic": "Sequential and Combinatorial circuits",
           "priorityLevel": 1
         }
-      ],
-      "topic": "Computer System Architecture"
+      ], "topic": "Computer System Architecture"
     }
   ]
 }
