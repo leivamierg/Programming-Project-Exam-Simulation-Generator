@@ -5,6 +5,7 @@ import it.unibz.model.implementations.Stats;
 import it.unibz.utils.SimulationUtils;
 import static it.unibz.utils.SimulationUtils.*;
 import static it.unibz.utils.SubtopicUtils.*;
+import static it.unibz.utils.TopicUtils.topic1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -161,4 +162,13 @@ public class StatsTest {
                 statsAfter3SimsTest();
                 System.out.println(stats.showStats());
         }
+
+        @DisplayName("Comparing stats of topic 1, from sim1 to sim2")
+        @Test
+        public void compareTopicStatsTest() {
+                statsAfter3SimsTest();
+                System.out.println(stats.compareStats(topic1, 1, 2));
+
+        }
+
 }

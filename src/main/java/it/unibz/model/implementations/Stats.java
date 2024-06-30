@@ -192,28 +192,55 @@ public class Stats implements StatsInt {
 
     private String printStatsComparison(Map<String, List<Score>> map,
             int start, int end, String topicSubtopic) {
+        if (start < 1) {
+            start = 1;
+            System.err.println("The start index is too small, so it was set to 1");
+        }
+        if (end > map.get(topicSubtopic).size()) {
+            end = map.get(topicSubtopic).size();
+            System.err.println("The end index is too big, so it was reset to the last one");
+        }
         Score startingStats = map.get(topicSubtopic).get(start - 1);
         Score endingStats = map.get(topicSubtopic).get(end - 1);
         String result = topicSubtopic + ":" + System.lineSeparator();
-        result += String.format("%-10s %-10s" + System.lineSeparator(),
+        result += String.format("%-60s %-60s" + System.lineSeparator(),
                 "From simulation number " + start + ":", "To simulation number " + end + ":");
-        result += String.format("%-10s %-10s" + System.lineSeparator(),
+        result += String.format("%-60s %-60s" + System.lineSeparator(),
                 "Total number of questions of " + topicSubtopic + ": " + startingStats.total(),
                 "Total number of questions of " + topicSubtopic + ": " + endingStats.total());
-        result += String.format("%-10s %-10s" + System.lineSeparator(),
+        result += String.format("%-60s %-60s" + System.lineSeparator(),
                 "Correctly answered questions/Selected questions: " + startingStats.correct() + "/"
                         + startingStats.selected(),
                 "Correctly answered questions/Selected questions: " + endingStats.correct() + "/"
                         + endingStats.selected());
-        result += String.format("%-10s %-10s",
-                "Score: " + startingStats.percentage(),
-                "Score: " + endingStats.percentage());
+        result += String.format("%-60s %-60s" + System.lineSeparator(),
+                "Incorrectly answered questions/Selected questions: " + startingStats.wrong() + "/"
+                        + startingStats.selected(),
+                "Incorrectly answered questions/Selected questions: " + endingStats.wrong() + "/"
+                        + endingStats.selected());
+        result += String.format("%-60s %-60s" + System.lineSeparator(),
+                "Not answered questions/Selected questions: " + startingStats.blank() + "/"
+                        + startingStats.selected(),
+                "Not answered questions/Selected questions: " + endingStats.blank() + "/"
+                        + endingStats.selected());
+        result += String.format("%-60s %-60s",
+                "Score: " + startingStats.percentage() + "%",
+                "Score: " + endingStats.percentage() + "%");
         return result;
     }
 
     @Override
     public String showStats() {
-        return getGeneralStats().toString();
+        int selected = getGeneralStats().selected();
+        int correct = getGeneralStats().correct();
+        int incorrect = getGeneralStats().wrong();
+        int blank = getGeneralStats().blank();
+        int total = getGeneralStats().total();
+        double percentage = getGeneralStats().percentage();
+        return "General Stats:" + System.lineSeparator() + "Number of correct answers: " + correct + "/" + selected
+                + System.lineSeparator() + "Number of wrong answers: " + incorrect + "/" + selected
+                + System.lineSeparator() + "Number of blank answers: " + blank + "/" + selected + System.lineSeparator()
+                + "Total of questions: " + total + System.lineSeparator() + "Percentage: " + percentage + "%";
         // general stats (average with all topics)
         // number of topics (with names)
         // stats for every topic
