@@ -623,7 +623,7 @@ public class SimulationTest {
         @DisplayName("Once the simulation is terminated, the program should print the result of the simulation")
         @Test
         void terminateTest() {
-            System.out.println(simulation.terminate(new Stats()));
+            System.out.println(simulation.terminate(new Stats(), new History()));
         }
     }
 }

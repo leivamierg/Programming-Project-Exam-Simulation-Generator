@@ -21,7 +21,7 @@ public class StatsTest {
         private final Stats stats = new Stats();
         private final Map<String, List<Score>> expectedTopicToStats = new HashMap<>();
         private final Map<String, List<Score>> expectedSubtopicToStats = new HashMap<>();
-        private final List<Score> expectedGeneralStats = new ArrayList<>();
+        private Score expectedGeneralStats;
 
         @BeforeEach
         void init() {
@@ -51,8 +51,7 @@ public class StatsTest {
                                 new Score(0, 1, 1, 2, 3, 0) }));
                 // expectedGeneralStats
                 int idxLastStats = expectedTopicToStats.get(simulationT1.getTopic()).size() - 1;
-                expectedGeneralStats.add(expectedTopicToStats.get(
-                                simulationT1.getTopic()).get(idxLastStats));
+                expectedGeneralStats = expectedTopicToStats.get(simulationT1.getTopic()).get(idxLastStats);
         }
 
         private void updateStatsAfter2Sim() {
@@ -72,8 +71,7 @@ public class StatsTest {
 
                 // expectedGeneralStats
                 int idxLastStats = expectedTopicToStats.get(simulationT1.getTopic()).size() - 1;
-                expectedGeneralStats.add(expectedTopicToStats.get(
-                                simulationT1.getTopic()).get(idxLastStats));
+                expectedGeneralStats = (expectedTopicToStats.get(simulationT1.getTopic()).get(idxLastStats));
 
         }
 
@@ -95,8 +93,7 @@ public class StatsTest {
                                 new Score(0, 1, 1, 2, 3, 0) }));
                 // expectedGeneralStats
                 int idxLastStats = expectedTopicToStats.get(simulationT1.getTopic()).size() - 1;
-                expectedGeneralStats.add(expectedTopicToStats.get(
-                                simulationT1.getTopic()).get(idxLastStats));
+                expectedGeneralStats = expectedTopicToStats.get(simulationT1.getTopic()).get(idxLastStats);
 
                 check();
         }
@@ -123,8 +120,7 @@ public class StatsTest {
 
                 // expectedGeneralStats
                 int idxLastStats = expectedTopicToStats.get(simulationT1_S1_S2.getTopic()).size() - 1;
-                expectedGeneralStats.add(expectedTopicToStats.get(
-                                simulationT1.getTopic()).get(idxLastStats));
+                expectedGeneralStats = expectedTopicToStats.get(simulationT1.getTopic()).get(idxLastStats);
 
                 check();
         }
@@ -154,7 +150,7 @@ public class StatsTest {
                                 new Score(0, 1, 1, 2, 2, 0) }));
 
                 // expectedGeneralStats
-                expectedGeneralStats.add(new Score(5, 7, 2, 14, 17, 35.71));
+                expectedGeneralStats = new Score(5, 7, 2, 14, 17, 35.71);
 
                 check();
         }
