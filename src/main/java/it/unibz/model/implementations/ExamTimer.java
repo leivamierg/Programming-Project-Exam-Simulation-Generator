@@ -3,13 +3,13 @@ package it.unibz.model.implementations;
 import java.util.concurrent.TimeUnit;
 
 public class ExamTimer implements Runnable {
-//    private Simulation simulation;
+    // private Simulation simulation;
     private boolean running;
     private int remainingTime;
-    private final int DURATION_SIMULATION = 60*30;
+    public final int DURATION_SIMULATION = 60 * 30;
 
     public ExamTimer() {
-    //    this.simulation = simulation;
+        // this.simulation = simulation;
         this.running = true;
         this.remainingTime = DURATION_SIMULATION;
     }
@@ -43,7 +43,7 @@ public class ExamTimer implements Runnable {
             }
 
             System.out.println("\nSimulation ended due to timeout.");
-//          simulation.terminate(new Stats());
+            // simulation.terminate(new Stats());
 
         } catch (InterruptedException e) {
             System.out.println("\nTimer stopped");
@@ -54,9 +54,7 @@ public class ExamTimer implements Runnable {
         running = false;
     }
 
-
-    public String calculateTimeTaken_String()
-    {
+    public String calculateTimeTaken_String() {
         return String.valueOf(DURATION_SIMULATION - getRemainingTime());
     }
 

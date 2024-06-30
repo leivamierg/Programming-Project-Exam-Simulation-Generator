@@ -33,8 +33,7 @@ public class StatsUtils {
         subtopicToStats.put(subtopic1_3.getSubtopicName(),
                 List.of(new Score[]{new Score(0, 1, 1, 2, 3, 0)}));
         // generalStats
-        List<Score> generalStats = new ArrayList<>();
-        generalStats.add(new Score(1, 4, 1, 6, 7, 16.66));
+        Score generalStats = new Score(1, 4, 1, 6, 7, 16.66);
         stats = new Stats(simulations, topicToStats, subtopicToStats, generalStats);
 
         nullStats = null;

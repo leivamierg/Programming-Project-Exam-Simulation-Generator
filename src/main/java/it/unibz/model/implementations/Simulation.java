@@ -1,19 +1,33 @@
 package it.unibz.model.implementations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.unibz.model.interfaces.SimulationInt;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-
+// @JsonIgnoreProperties(value = { "subtopicToQuestions" })
 public class Simulation implements SimulationInt {
     // attributes
+    @JsonIgnore
     private Map<Subtopic, Set<Question>> subtopicToQuestions;
+    private Map<String, Set<Question>> subtopicNameToQuestions;
+
+    @JsonIgnore
     private Map<Question, Character> questionToAnswer;
+    private Map<String, Character> questionStatementToAnswer;
+    @JsonIgnore
     private Map<Question, Map<String, Character>> questionToShuffledAnswers;
+    private Map<String, Map<String, Character>> questionStatementToShuffledAnswers;
+    private String pathToTopicFile;
+    @JsonIgnore
     private Question currentQuestion;
+    @JsonIgnore
     private ExamTimer timer;
+    @JsonIgnore
     private long questionStartTime;
 
     public Simulation() {
@@ -22,25 +36,61 @@ public class Simulation implements SimulationInt {
         questionToShuffledAnswers = new HashMap<>();
         timer = new ExamTimer();
     }
+
     @JsonCreator
-    public Simulation(@JsonProperty("subtopicToQuestions") Map<Subtopic, Set<Question>> subtopicToQuestions,
-                      @JsonProperty("questionToAnswer") Map<Question, Character> questionToAnswer,
-                      @JsonProperty("questionToShuffledAnswers") Map<Question, Map<String, Character>> questionToShuffledAnswers) {
-        setSubtopicToQuestions(subtopicToQuestions);
-        setQuestionToAnswer(questionToAnswer);
-        setQuestionToShuffledAnswers(questionToShuffledAnswers);
-        timer = new ExamTimer();
+    public Simulation(@JsonProperty("subtopicNameToQuestions") Map<String, Set<Question>> subtopicNameToQuestions,
+                      @JsonProperty("questionStatementToAnswer") Map<String, Character> questionStatementToAnswer,
+                      @JsonProperty("questionStatementToShuffledAnswers") Map<String, Map<String, Character>> questionStatementToShuffledAnswers,
+                      @JsonProperty("pathToTopicFile") String pathToTopicFile) {
+        Topic topic;
+        setPathToTopicFile(pathToTopicFile);
+        try {
+            topic = FileLoader.loadFile(pathToTopicFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        setSubtopicNameToQuestions(subtopicNameToQuestions);
+        buildSubtopicToQuestionsMap(topic, subtopicNameToQuestions);
+
+        setQuestionStatementToAnswer(questionStatementToAnswer);
+        buildQuestionToAnswerMap(questionStatementToAnswer);
+        setQuestionStatementToShuffledAnswers(questionStatementToShuffledAnswers);
+        buildQuestionToShuffledAnswersMap(questionStatementToShuffledAnswers);
+
+
+        //setSubtopicToQuestions(subtopicToQuestions);
+        //setQuestionToAnswer(questionToAnswer);
+        //setQuestionToShuffledAnswers(questionToShuffledAnswers);
+    }
+
+    private void buildSubtopicToQuestionsMap(Topic topic, Map<String, Set<Question>> subtopicNameToQuestions) {
+        List<Subtopic> selectedSubtopics = topic.getSubtopics().stream().
+                filter(s -> subtopicNameToQuestions.containsKey(s.getSubtopicName())).
+                toList();
+        for (Subtopic selectedSubtopic : selectedSubtopics) {
+            String subtopicName = selectedSubtopic.getSubtopicName();
+            subtopicToQuestions.put(selectedSubtopic, subtopicNameToQuestions.get(subtopicName));
+        }
+    }
+    private void buildQuestionToShuffledAnswersMap(Map<String, Map<String, Character>> questionStatementToShuffledAnswers) {
+        List<Question> allQuestions = getAllQuestions();
+        for (Question question : allQuestions) {
+            String questionStatement = question.getQuestionStatement();
+            questionToShuffledAnswers.put(question, questionStatementToShuffledAnswers.get(questionStatement));
+        }
+    }
+    private void buildQuestionToAnswerMap(Map<String, Character> questionStatementToAnswer) {
+        List<Question> allQuestions = getAllQuestions();
+        for (Question question : allQuestions) {
+            String questionStatement = question.getQuestionStatement();
+            questionToAnswer.put(question, questionStatementToAnswer.get(questionStatement));
+        }
     }
 
     @Override
     public void select(Topic topic, int nrQuestionsPerSubtopic) throws NullPointerException {
-        try {
-            for (Subtopic subtopic : topic.getSubtopics()) {
-                updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
-            }
-        } catch (NullPointerException e)
-        {
-            System.out.println("No topic");
+        for (Subtopic subtopic : topic.getSubtopics()) {
+            updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
         }
     }
 
@@ -55,7 +105,8 @@ public class Simulation implements SimulationInt {
                     throw new IllegalArgumentException();
                 updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
             }
-        } else throw new IllegalStateException();
+        } else
+            throw new IllegalStateException();
     }
 
     private void updateSubtopicToQuestions(Subtopic subtopic, int nrQuestionsPerSubtopic) {
@@ -84,34 +135,34 @@ public class Simulation implements SimulationInt {
     }
 
     @Override
-    public void insertCommand(char command) throws IllegalArgumentException {
+    public void insertCommand(String command) throws IllegalArgumentException, IllegalStateException {
         List<Integer> questionsIdxs = new ArrayList<>();
         List<Question> allQuestions = getAllQuestions();
         for (int i = 0; i < allQuestions.size(); i++) {
             questionsIdxs.add(i + 1);
         }
-        switch (Character.toUpperCase(command)) {
-            case 'A':
-            case 'B':
-            case 'C':
-            case 'D':
-            case ' ': questionToAnswer.put(currentQuestion, Character.toUpperCase(command));
-                    break;
-            case '+':
-            case '-': changeQuestion(command);
-                questionToAnswer.put(currentQuestion, ' ');
+        switch (command.toUpperCase()) {
+            case "A":
+            case "B":
+            case "C":
+            case "D":
+            case " " : questionToAnswer.put(currentQuestion, Character.toUpperCase(command.charAt(0)));
+                if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
+                    int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
+                    setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
+                }
+                break;
+            case "+":
+            case "-": changeQuestion(command.charAt(0));
+                break;
             default:
-                int idx = Character.getNumericValue(command);
+                int idx = Integer.parseInt(command);
                 if (questionsIdxs.contains(idx)) {
                     changeQuestion(idx);
-                    questionToAnswer.put(currentQuestion, ' ');
                 } else {
                     throw new IllegalArgumentException("Illegal Character");
                 }
 
-        }
-        if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
-            changeQuestion('+');
         }
     }
 
@@ -133,24 +184,30 @@ public class Simulation implements SimulationInt {
         List<Question> allQuestions = getAllQuestions();
         int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
         if (idxCurrentQuestion >= 0 && idxCurrentQuestion < allQuestions.size() - 1 && prevOrNext == '+') {
+            questionToAnswer.put(currentQuestion, ' ');
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
-        } else if (idxCurrentQuestion > 0 && idxCurrentQuestion <= allQuestions.size() - 1 && prevOrNext == '-')
+        } else if (idxCurrentQuestion > 0 && idxCurrentQuestion <= allQuestions.size() - 1 && prevOrNext == '-') {
+            questionToAnswer.put(currentQuestion, ' ');
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion - 1));
+        } else throw new IllegalStateException();
     }
 
     private void changeQuestion(int idxQuestion) {
+        questionToAnswer.put(currentQuestion, ' ');
         List<Question> allQuestions = getAllQuestions();
         setCurrentQuestion(allQuestions.get(idxQuestion - 1));
     }
 
     @Override
-    public String terminate(Stats stats) {
+    public String terminate(Stats stats, History history) {
         timer.stopTimer();
 
         // update all parameters
         updateNonSelectedQuestions();
         updateCorrectWrongAndBlankQuestions();
         stats.updateStats(this);
+        // TODO:
+        history.updateHistory(this);
         return computeResult();
     }
 
@@ -227,6 +284,14 @@ public class Simulation implements SimulationInt {
         return subtopic.getQuestions();
     }
 
+    public int getNumberOfQuestions() {
+        return this.getAllQuestions().size();
+    }
+
+    public ExamTimer getTimer() {
+        return this.timer;
+    }
+
     private String computeResult() {
         Score simStats = computeSimStats();
         String simResult = getResult(simStats, "Simulation");
@@ -269,7 +334,7 @@ public class Simulation implements SimulationInt {
                 : getSubtopicSelected_NonSelectedQuestions(subtopic).size();
 
         double percentage = ((double) nrOfCorrectAnswers / questions.size()) * 100;
-        percentage = Math.floor(percentage * 100)/100;
+        percentage = Math.floor(percentage * 100) / 100;
         return new Score(nrOfCorrectAnswers, nrOfWrongAnswers, nrOfBlankAnswers, selected, total, percentage);
     }
 
@@ -323,28 +388,49 @@ public class Simulation implements SimulationInt {
      *
      * @param currentQuestion the question you want to set as the current one
      */
+    @JsonIgnore
     public void setCurrentQuestion(Question currentQuestion) {
         this.currentQuestion = currentQuestion;
     }
-
+    @JsonIgnore
     private void setSubtopicToQuestions(Map<Subtopic, Set<Question>> subtopicToQuestions) {
         this.subtopicToQuestions = subtopicToQuestions;
     }
-
+    @JsonIgnore
     private void setQuestionToAnswer(Map<Question, Character> questionToAnswer) {
         this.questionToAnswer = questionToAnswer;
     }
-
+    @JsonIgnore
     private void setQuestionToShuffledAnswers(Map<Question, Map<String, Character>> questionToShuffledAnswers) {
         this.questionToShuffledAnswers = questionToShuffledAnswers;
     }
 
+    private void setSubtopicNameToQuestions(Map<String, Set<Question>> subtopicNameToQuestions) {
+        this.subtopicNameToQuestions = subtopicNameToQuestions;
+    }
+
+    private void setQuestionStatementToAnswer(Map<String, Character> questionStatementToAnswer) {
+        this.questionStatementToAnswer = questionStatementToAnswer;
+    }
+
+    private void setQuestionStatementToShuffledAnswers(Map<String, Map<String, Character>> questionStatementToShuffledAnswers) {
+        this.questionStatementToShuffledAnswers = questionStatementToShuffledAnswers;
+    }
+
+    private void setPathToTopicFile(String pathToTopicFile) {
+        this.pathToTopicFile = pathToTopicFile;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Simulation that = (Simulation) o;
-        return Objects.equals(subtopicToQuestions, that.subtopicToQuestions) && Objects.equals(questionToAnswer, that.questionToAnswer) && Objects.equals(questionToShuffledAnswers, that.questionToShuffledAnswers);
+        return Objects.equals(subtopicToQuestions, that.subtopicToQuestions)
+                && Objects.equals(questionToAnswer, that.questionToAnswer)
+                && Objects.equals(questionToShuffledAnswers, that.questionToShuffledAnswers);
     }
 
     @Override
