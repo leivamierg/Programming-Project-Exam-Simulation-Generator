@@ -94,6 +94,19 @@ public class HistoryStatsLoaderTest {
                     throw new RuntimeException(e);
                 }
             }
+
+            @DisplayName("loadHistory(invalid path) should throw a IOException")
+            @Test
+            public void loadInvalidStatsPath() {
+                assertThrows(IOException.class, () -> HistoryStatsLoader.loadHistory("abc"));
+            }
+
+            @DisplayName("saveHistory(null stats) should throw a IllegalArgumentException")
+            @Test
+            public void saveNullStats() {
+                assertThrows(IllegalArgumentException.class,
+                        () -> HistoryStatsLoader.saveHistory(io + "serializedHistory.json", nullHistory));
+            }
         }
     }
 }

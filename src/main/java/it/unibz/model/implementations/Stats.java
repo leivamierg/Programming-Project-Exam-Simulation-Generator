@@ -10,20 +10,19 @@ public class Stats implements StatsInt {
     private List<Simulation> simulations;
     private Map<String, List<Score>> topicToStats;
     private Map<String, List<Score>> subtopicToStats;
-    private List<Score> generalStats;
+    private Score generalStats;
 
     public Stats() {
         simulations = new ArrayList<>();
         topicToStats = new HashMap<>();
         subtopicToStats = new HashMap<>();
-        generalStats = new ArrayList<>();
     }
 
     @JsonCreator
     public Stats(@JsonProperty("simulations") List<Simulation> simulations,
             @JsonProperty("topicToStats") Map<String, List<Score>> topicToStats,
             @JsonProperty("subtopicToStats") Map<String, List<Score>> subtopicToStats,
-            @JsonProperty("generalStats") List<Score> generalStats) {
+            @JsonProperty("generalStats") Score generalStats) {
         setSimulations(simulations);
         setTopicToStats(topicToStats);
         setSubtopicToStats(subtopicToStats);
@@ -44,7 +43,7 @@ public class Stats implements StatsInt {
         this.subtopicToStats = subtopicToStats;
     }
 
-    private void setGeneralStats(List<Score> generalStats) {
+    private void setGeneralStats(Score generalStats) {
         this.generalStats = generalStats;
     }
     // methods
@@ -125,7 +124,7 @@ public class Stats implements StatsInt {
             total += topicStats.total();
         }
         double percentage = computePercentage(correct, selected);
-        generalStats.add(new Score(correct, wrong, blank, selected, total, percentage));
+        generalStats = new Score(correct, wrong, blank, selected, total, percentage);
     }
 
     private void updateCorWrongBlankSelTot(Set<Question> correct, Set<Question> wrong,
@@ -214,15 +213,12 @@ public class Stats implements StatsInt {
 
     @Override
     public String showStats() {
-        return null;
-        // update general stats
+        return getGeneralStats().toString();
         // general stats (average with all topics)
         // number of topics (with names)
         // stats for every topic
         // number of subtopics (with name) per topic
         // stats for every subtopic
-
-        // updateGeneralStats();
 
     }
 
@@ -237,7 +233,7 @@ public class Stats implements StatsInt {
     }
 
     @Override
-    public List<Score> getGeneralStats() {
+    public Score getGeneralStats() {
         return generalStats;
     }
 
