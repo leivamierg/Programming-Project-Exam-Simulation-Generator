@@ -90,6 +90,10 @@ public class Model implements ModelInt {
             System.out.println("Timer: " + formatTime(remainingTime));
 
             Question currentQuestion = simulation.getCurrentQuestion();
+            int indexCurrentQuestion = simulation.getAllQuestions().indexOf(currentQuestion) + 1;
+            int totalNumberQuestions = simulation.getAllQuestions().size();
+
+            System.out.print("index question:" + indexCurrentQuestion + "/" + totalNumberQuestions);
             System.out.println(currentQuestion.getQuestionAndAnswers());
             System.out.print("Select an answer: ");
             String input = scanner.nextLine().trim();
