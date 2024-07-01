@@ -124,6 +124,8 @@ public class Model implements ModelInt {
             int indexCurrentQuestion = simulation.getAllQuestions().indexOf(currentQuestion) + 1;
             int totalNumberQuestions = simulation.getAllQuestions().size();
 
+            System.out.println("Subtopic: " + currentQuestion.getSubtopic());
+
             System.out.println("Index question: " + indexCurrentQuestion + "/" + totalNumberQuestions);
             System.out.println("Previous answer: " + simulation.getAnswer(currentQuestion));
             System.out.println(currentQuestion.getQuestionAndAnswers());
