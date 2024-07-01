@@ -6,11 +6,9 @@ import it.unibz.utils.SimulationUtils;
 import static it.unibz.utils.SimulationUtils.*;
 import static it.unibz.utils.SubtopicUtils.*;
 import static it.unibz.utils.TopicUtils.topic1;
-import static it.unibz.utils.TopicUtils.topic2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -2,7 +2,6 @@ package it.unibz.model;
 
 import static it.unibz.utils.TopicUtils.topic1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;

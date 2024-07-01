@@ -11,12 +11,17 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- * Hello world!
+ * The main class of the program.
  *
  */
 public class App {
 
-    public static void main( String[] args ) throws InterruptedException {
+    /**
+     * The main method of the program.
+     * 
+     * @param args The command-line arguments.
+     */
+    public static void main( String[] args )  {
 
         Controller controller = new Controller(new Model());
         Scanner scanner = new Scanner(System.in);

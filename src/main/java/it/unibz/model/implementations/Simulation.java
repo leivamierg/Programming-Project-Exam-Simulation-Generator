@@ -8,7 +8,7 @@ import it.unibz.model.interfaces.SimulationInt;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// @JsonIgnoreProperties(value = { "subtopicToQuestions" })
+
 public class Simulation implements SimulationInt {
     // attributes
     @JsonIgnore
@@ -41,6 +41,15 @@ public class Simulation implements SimulationInt {
         setTopic(topic);
     }
 
+
+    /**
+     * Json constructor for the Simulation class.
+     * 
+     * @param subtopicNameToQuestions
+     * @param questionStatementToAnswer
+     * @param questionStatementToShuffledAnswers
+     * @param topic
+     */
     @JsonCreator
     public Simulation(@JsonProperty("subtopicNameToQuestions") Map<String, Set<Question>> subtopicNameToQuestions,
             @JsonProperty("questionStatementToAnswer") Map<String, Character> questionStatementToAnswer,

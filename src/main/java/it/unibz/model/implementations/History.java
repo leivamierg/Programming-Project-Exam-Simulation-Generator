@@ -9,19 +9,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import it.unibz.model.interfaces.HistoryInt;
 
+/**
+ * Represents the history of test registers.
+ */
 public class History implements HistoryInt {
     private List<TestRegister> testRegisters;
 
+    /**
+     * Constructs a History object with the given test registers.
+     * 
+     * @param testRegisters the list of test registers
+     */
     @JsonCreator
     public History(@JsonProperty("testRegisters") List<TestRegister> testRegisters) {
         setTestRegisters(testRegisters);
     }
 
+    /**
+     * Constructs a History object with an empty list of test registers.
+     */
     public History() {
         setTestRegisters(new ArrayList<TestRegister>());
     }
-    // methods
 
+    /**
+     * Gets the list of test registers.
+     * 
+     * @return the list of test registers
+     */
     @Override
     public List<TestRegister> getTestRegisters() {
         return this.testRegisters;
@@ -31,11 +46,21 @@ public class History implements HistoryInt {
         this.testRegisters = registers;
     }
 
+    /**
+     * Adds a test register to the history.
+     * 
+     * @param register the test register to add
+     */
     @Override
     public void addTestRegister(TestRegister register) {
         this.testRegisters.add(register);
     }
 
+    /**
+     * Updates the history with the information from the given simulation.
+     * 
+     * @param simulation the simulation object
+     */
     @Override
     public void updateHistory(Simulation simulation) {
         List<String> selectedSubtopics = simulation.getSubtopicToQuestions().keySet().stream()
@@ -50,6 +75,12 @@ public class History implements HistoryInt {
         this.addTestRegister(newTestRegister);
     }
 
+    /**
+     * Checks if this History object is equal to the given object.
+     * 
+     * @param o the object to compare
+     * @return true if the objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (o == null || !(o instanceof History)) {
@@ -60,6 +91,11 @@ public class History implements HistoryInt {
             return ((History) o).getTestRegisters().equals(this.getTestRegisters());
     }
 
+    /**
+     * Returns the hash code value for this History object.
+     * 
+     * @return the hash code value
+     */
     @Override
     public int hashCode() {
         return Objects.hash(testRegisters);
@@ -83,6 +119,11 @@ public class History implements HistoryInt {
         return minutesString + ":" + secondsString;
     }
 
+    /**
+     * Returns a string representation of the complete history.
+     * 
+     * @return the string representation of the complete history
+     */
     @Override
     public String showHistory() {
         String wholeString = new String("Complete History:" + System.lineSeparator());

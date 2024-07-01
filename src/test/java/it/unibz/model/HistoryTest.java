@@ -4,18 +4,13 @@ import static it.unibz.utils.SimulationUtils.simulationT1;
 import static it.unibz.utils.SimulationUtils.simulationT1_S1_S2;
 import static it.unibz.utils.SimulationUtils.simulationT2;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import it.unibz.model.implementations.History;
-import it.unibz.model.implementations.Score;
 import it.unibz.utils.SimulationUtils;
-import it.unibz.utils.SimulationUtils.*;
 
 public class HistoryTest {
     private History history = new History();
