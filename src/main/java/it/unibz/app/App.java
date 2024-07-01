@@ -10,12 +10,8 @@ import java.util.Scanner;
  * Hello world!
  *
  */
-<<<<<<< HEAD
 /*public class App {
-=======
-public class App {
-    
->>>>>>> main
+
     public static void main( String[] args ) throws InterruptedException {
 
         Controller controller = new Controller(new Model());

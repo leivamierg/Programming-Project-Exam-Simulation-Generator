@@ -3,7 +3,7 @@
 
 src/main/resources/h_s/*
 src/test/resources/h_s/*
-abc
+abc.json
 ### Eclipse ###
 .metadata
 bin/
