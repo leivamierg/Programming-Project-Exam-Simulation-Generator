@@ -2,11 +2,9 @@ package it.unibz.model.implementations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.unibz.model.interfaces.SimulationInt;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -95,7 +93,7 @@ public class Simulation implements SimulationInt {
     @Override
     public void select(Topic topic, int nrQuestionsPerSubtopic) throws NullPointerException {
         for (Subtopic subtopic : topic.getSubtopics()) {
-            updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);//
+            updateSubtopicToQuestions(subtopic, nrQuestionsPerSubtopic);
         }
     }
 
@@ -119,6 +117,14 @@ public class Simulation implements SimulationInt {
         subtopicToQuestions.put(subtopic, pickedQuestions);
         subtopicNameToQuestions.put(subtopic.getSubtopicName(), pickedQuestions);
         updateQuestionToShuffledAnswers(pickedQuestions);
+        updateQuestionToAnswer(pickedQuestions);
+    }
+
+    private void updateQuestionToAnswer(Set<Question> questions) {
+        for (Question question : questions) {
+            questionToAnswer.put(question, ' ');
+            questionStatementToAnswer.put(question.getQuestionStatement(), ' ');
+        }
     }
 
     private void updateQuestionToShuffledAnswers(Set<Question> questions) {
@@ -221,7 +227,7 @@ public class Simulation implements SimulationInt {
         timer.stopTimer();
 
         // update all parameters
-        setBlankQuestions();
+        // setBlankQuestions();
         updateNonSelectedQuestions();
         updateCorrectWrongAndBlankQuestions();
         stats.updateStats(this);
@@ -230,7 +236,7 @@ public class Simulation implements SimulationInt {
         return computeResult();
     }
 
-    private void setBlankQuestions () {
+    /*private void setBlankQuestions () {
         List<Question> allQuestions = getAllQuestions();
         Set<Question> notAnsweredQuestions = allQuestions.stream().
                 filter(q -> !questionToAnswer.keySet().contains(q)).
@@ -239,7 +245,7 @@ public class Simulation implements SimulationInt {
             questionToAnswer.put(question, ' ');
             questionStatementToAnswer.put(question.getQuestionStatement(), ' ');
         }
-    }
+    }*/
 
     private void updateNonSelectedQuestions() {
         getNonSelectedQuestions().stream().forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 1));
@@ -404,6 +410,10 @@ public class Simulation implements SimulationInt {
     @Override
     public Map<Question, Character> getQuestionToAnswer() {
         return questionToAnswer;
+    }
+    @Override
+    public char getAnswer(Question question) {
+        return questionToAnswer.get(question);
     }
 
     @Override
