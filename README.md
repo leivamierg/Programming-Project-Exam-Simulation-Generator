@@ -51,40 +51,56 @@ The whole model of the app is saved in src/controller, and its divided in three 
 
 #### Interfaces
 
-In this directory we can find every interface of the controller classes, including all the public methods of each class implementing an interface together with a javadoc giving a brief explanation on what the method does, its parameters, return types and possible exceptions. Every interface has the same name as its implementing class + the Int sufix./
+In this directory we can find every interface of the controller classes, including all the public methods of each class implementing an interface together with a javadoc giving a brief explanation on what the method does, its parameters, return types and possible exceptions. Every interface has the same name as its implementing class + the Int sufix.\
 There are no interfaces available for the records and the comparators.
 
 #### Implementations
 
 ##### Base structural classes
 
-We have only three different classes to keep the different questions organised and separated in different areas: Topic, Subtopic and Question./
+We have only three different classes to keep the different questions organised and separated in different areas: Topic, Subtopic and Question.\
 The highest hierarchy class would be Topic, parting from there, each Topic object contains many Subtopic objects, and each Subtopic object contains many Question objects. The lowest class on the hierarchy would be Question, not containing any structural class between its various data members.
 
 ###### Topic class
 
-Represents a specific university course, for instance: Linear Algebra or Computer Systems Architecture./
-It has the following data members:
+Represents a specific university course, for instance: Linear Algebra or Computer Systems Architecture.\
+It contains a Set of subtopic representing the different sections of the course.
 
-- topicName: the name of the Topic
-- subtopics: A set of the subtopics contained in the specific topic/
-  And the following methods:
-- [- private -] setters(x)
-- {+ public +} getters()
-- {+ public +} toString(): returns the Topic name, and the number of subtopics it contains
-- {+ public +} addSubtopic(Subtopic subtopic): adds the given Subtopic object to the subtopics Set of the current Topic.
-- {+ public +} equals(Object o)
-- {+ public +} hashCode()
+###### Subtopic class
+
+Represents an university course Chapter/Lesson, for example: (Linear Algebra) Spectral Analysis, etc.\
+It contains a set of questions of the current Subtopic and its linked to its appartaining Topic object.
+
+###### Question class
+
+Represents a single possible question in a simulation.\
+Contains the question statement and the possible answers. It is by far the most complex class of the structural classes as it provides many methods to shuffle the possible answers and assign them randomly a letter from A to D.
 
 ##### FileLoading, FileSaving and Serialization
 
 ##### Stats and history
+
+These two classes give a sense of progress to the user saving data of previous simulations, they use serialization and deserialization as well to save and load their content.
+
+###### Stats
+
+###### History
+
+This class is quuite simple, it only contains a list of TestRegister records, created specifically to store the previous simulation data. Other than supporting JSON serialization and deserialization it also has methods to see the full or a part of the history in the command line./
+Some of the data saved in the history are: number of questions, correct answers, wrong questions, used time / available time, etc.
 
 ##### Command Handling
 
 ##### The Simulation and the Model
 
 #### Comparators
+
+Even though having its own directory, actually there is only one comparator:
+
+##### QuestionPriorityComparator
+
+It is a useful tool to sort a question list based on their "priorityLevel" ordering them from lower priority to higher priority./
+It is used on the Subtopic class, for the "pickQuestions" method.
 
 ### The Controller
 
