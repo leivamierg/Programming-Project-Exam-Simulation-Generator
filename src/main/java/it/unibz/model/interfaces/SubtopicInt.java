@@ -11,16 +11,9 @@ public interface SubtopicInt {
     // void setTopicReference(Topic topic);
 
     /**
-     * 
-     * @param topic name of the referenced topic
      */
     // void setTopic(String topic);
 
-    /**
-     * 
-     * @param questions the list of questions that the current Subtopic contains
-     */
-    // void setQuestions(List<Question> questions);// TODO: private
 
     // getters
     String getTopic();

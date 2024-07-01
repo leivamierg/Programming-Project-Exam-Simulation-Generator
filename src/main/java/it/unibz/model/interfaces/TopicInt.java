@@ -5,21 +5,13 @@ import java.util.Set;
 import it.unibz.model.implementations.Subtopic;
 
 public interface TopicInt {
-    // :p
-    // setters
+
     /**
      * Sets the name attribute of the topic to a specific String
      * 
-     * @param name the given name of the Topic
+     * @param topicName the given name of the Topic
      */
-    /* public */ void setTopicName(String topicName);
-
-    /**
-     * Sets the contained subtopics of the topic to a list of subtopis
-     * 
-     * @param subtopics list of the subtopics contained by the current Topic
-     */
-    /* public void setSubtopics(List<Subtopic> subtopics) */
+    public void setTopicName(String topicName);
 
     // getters
     String getTopicName();
