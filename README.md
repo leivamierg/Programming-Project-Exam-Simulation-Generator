@@ -19,11 +19,6 @@ To build the project, run the following command in the root directory of the pro
 mvn clean compile assembly:single
 ```
 
-If you want also the javadoc, run the following command:
-
-```bash
-mvn javadoc:javadoc
-```
 the documentation will be generated in the `target/site/apidocs` folder.
 
 ### Run
@@ -75,9 +70,13 @@ List of possible commands during the simulation:
 
 ### Overall Structure: Model, Controller and App
 
-### Model classes and interfaces
+If you want also a more in depth explanation of the project you can generate the javadoc by running the following command in the root directory of the project:
 
-The whole model of the app is saved in src/controller, and its divided in three files: TO FIX
+```bash
+mvn javadoc:javadoc
+```
+the documentation will be generated in the `target/site/apidocs` folder.
+
 
 #### Interfaces
 
@@ -85,16 +84,6 @@ In this directory we can find every interface of the controller classes, includi
 There are no interfaces available for the records and the comparators.
 
 #### Implementations
-
-more detailed explanation of the classes and their methods can be found in the javadoc of the classes.
-
-run the following command to generate the javadoc:
-
-```bash
-mvn javadoc:javadoc
-```
-
-and navigate to `target/site/apidocs/index.html` to see the documentation.
 
 ##### Base structural classes (@leivamierg)
 
