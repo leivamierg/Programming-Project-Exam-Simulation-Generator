@@ -77,11 +77,25 @@ public class Model implements ModelInt {
 
     private void testAllSubtopics(Topic selectedTopic) {
         Simulation simulation = new Simulation(selectedTopic);
-        simulation.select(selectedTopic, 1);
+        Scanner scanner = new Scanner(System.in);
+        int numberOfQuestionsSubtopic = 0;
+
+        while (true) {
+            try {
+                System.out.println("How many questions per subtopic?");
+                numberOfQuestionsSubtopic = scanner.nextInt();
+                break;
+            } catch (Exception e)
+            {
+                scanner.nextLine();
+            }
+        }
+
+        scanner.nextLine();
+        simulation.select(selectedTopic, numberOfQuestionsSubtopic);
         simulation.start();
 
         int remainingTime = DURATION_SIMULATION;
-        Scanner scanner = new Scanner(System.in);
 
         while (remainingTime > 0) {
             long questionStartTime = System.currentTimeMillis();
@@ -93,9 +107,11 @@ public class Model implements ModelInt {
             int indexCurrentQuestion = simulation.getAllQuestions().indexOf(currentQuestion) + 1;
             int totalNumberQuestions = simulation.getAllQuestions().size();
 
-            System.out.println("index question:" + indexCurrentQuestion + "/" + totalNumberQuestions);
+            System.out.println("Index question: " + indexCurrentQuestion + "/" + totalNumberQuestions);
+            System.out.println("Previous answer: " + simulation.getAnswer(currentQuestion));
             System.out.println(currentQuestion.getQuestionAndAnswers());
             System.out.print("Select an answer: ");
+
             String input = scanner.nextLine().trim();
 
             if (input.equalsIgnoreCase("terminate")) {
@@ -107,7 +123,7 @@ public class Model implements ModelInt {
             int timeSpentOnQuestion = (int) ((questionEndTime - questionStartTime) / 1000);
             remainingTime -= timeSpentOnQuestion;
 
-            if (input.equals("") || remainingTime <= 0) {
+            if (remainingTime <= 0) {
                 break;
             }
 
@@ -120,7 +136,6 @@ public class Model implements ModelInt {
         }
 
         System.out.println("Test completed.");
-        System.out.println(simulation.terminate(new Stats(), new History()));
 
     }
 

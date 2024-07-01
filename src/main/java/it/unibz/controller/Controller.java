@@ -45,7 +45,7 @@ public class Controller {
         } else if ((matcher = selectSubtopicsPattern.matcher(input)).find())
         {
             // String topic = matcher.group(1);
-            //Selection of subtopic from Model to  be implemented
+            //Selection of subtopic from Model to  be implemented (not in the first version)
             System.out.println("Subtopic selection feature not implemented.");
         } else {
             System.out.println("Invalid command. Please check your input.");
