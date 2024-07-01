@@ -7,7 +7,7 @@ Free Choice-Group project for the "Programming Project" course of the Free Unive
 - Sebastiano Nardin (sebanardin)
 - Gersson Leiva Mier (leivamierg / cool27027)
 - Violetta Fazzi (Vaiolo)
-- Massimiliano (@MassimiIiano)
+- Massimiliano Mola (@MassimiIiano)
 
 ## Instructions to build and run the project
 
@@ -170,6 +170,7 @@ Simulation class is the 'real backend' of the application, and it is responsible
 
 Model is mainly a facade for interacting with simulation. in retrospective we should have designed it as a part of the controller.
 TO FIX
+
 #### Comparators
 
 Even though having its own directory, actually there is only one comparator:
