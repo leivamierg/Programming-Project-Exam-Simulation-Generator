@@ -56,6 +56,16 @@ There are no interfaces available for the records and the comparators.
 
 #### Implementations
 
+more detailed explanation of the classes and their methods can be found in the javadoc of the classes.
+
+run the following command to generate the javadoc:
+
+```bash
+mvn javadoc:javadoc
+```
+
+and navigate to `target/site/apidocs/index.html` to see the documentation.
+
 ##### Base structural classes (@leivamierg)
 
 We have only three different classes to keep the different questions organised and separated in different areas: Topic, Subtopic and Question.\
