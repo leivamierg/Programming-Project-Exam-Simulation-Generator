@@ -32,25 +32,58 @@ answers and select one of the given choices. In addition, the user can move arou
 - Other features of the project include the visualization of the available topics, past simulations data and stats.
 - The programm selects the questions to put in the simulation based on how many times an answer was present in previous simulations an if it was answered correctly or not, using a priority system for all the questions available.
 - The program also makes sure that once the program is closed it saves the priority of the questions, stats and data, and loads them again whenever the program starts.
+
 ## User-guide for our project
+
 Commands...
+
 ## Implementation of the project
+
 ### Overal Structure: Model, Controller and App
+
 ### Model classes and interfaces
+
 The whole model of the app is saved in src/controller, and its divided in three files:
+
 #### Interfaces
 In this directory we can find every interface of the controller classes, including all the public methods of each class implementing an interface together with a javadoc giving a brief explanation on what the method does, its parameters, return types and possible exceptions. Every interface has the same name as its implementing class + the Int sufix./
 There are no interfaces available for the records and the comparators.
+
 #### Implementations
+
 ##### Base structural classes
+
 ##### FileLoading, FileSaving and Serialization
+
 ##### Stats and history
+
 ##### Command Handling
+
 ##### The Simulation and the Model
+
 #### Comparators
+
 ### The Controller
+
 ### The App
+
 ## Human experience in this project
+
 ### Workload
+
+
+
 ### Use of git
+
 ### Challenges faced by each member
+
+#### @MassimiIiano
+
+- keeping the project organized and structured
+- it was difficult to communicate about changes in each others branches so sometimes we had errors after merging to main
+
+#### @Violetta
+
+#### @Gersson
+
+#### @Sebastiano
