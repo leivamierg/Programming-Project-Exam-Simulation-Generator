@@ -221,12 +221,24 @@ public class Simulation implements SimulationInt {
         timer.stopTimer();
 
         // update all parameters
+        setBlankQuestions();
         updateNonSelectedQuestions();
         updateCorrectWrongAndBlankQuestions();
         stats.updateStats(this);
         // TODO:
         history.updateHistory(this);
         return computeResult();
+    }
+
+    private void setBlankQuestions () {
+        List<Question> allQuestions = getAllQuestions();
+        Set<Question> notAnsweredQuestions = allQuestions.stream().
+                filter(q -> !questionToAnswer.keySet().contains(q)).
+                collect(Collectors.toSet());
+        for (Question question : notAnsweredQuestions) {
+            questionToAnswer.put(question, ' ');
+            questionStatementToAnswer.put(question.getQuestionStatement(), ' ');
+        }
     }
 
     private void updateNonSelectedQuestions() {

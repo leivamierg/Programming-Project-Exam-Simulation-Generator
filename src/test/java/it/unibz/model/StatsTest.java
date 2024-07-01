@@ -39,7 +39,7 @@ public class StatsTest {
                 assertEquals(expectedGeneralStats, stats.getGeneralStats());
         }
 
-        private void updateStatsAfter1Sim() {
+        /*private void updateStatsAfter1Sim() {
                 // expectedTopicToStats
                 expectedTopicToStats.put(simulationT1.getTopicName(), List.of(new Score[] {
                                 new Score(1, 4, 1, 6, 7, 16.66) }));
@@ -76,7 +76,7 @@ public class StatsTest {
                 int idxLastStats = expectedTopicToStats.get(simulationT1.getTopicName()).size() - 1;
                 expectedGeneralStats = (expectedTopicToStats.get(simulationT1.getTopicName()).get(idxLastStats));
 
-        }
+        }*/
 
         @DisplayName("Check the stats after 1 simulation about topic 1")
         @Test

@@ -97,3 +97,14 @@ It has the following data members:
 ### Use of git
 
 ### Challenges faced by each member
+
+#### @MassimiIiano
+
+- keeping the project organized and structured
+- it was difficult to communicate about changes in each others branches so sometimes we had errors after merging to main
+
+#### @Violetta
+
+#### @Gersson
+
+#### @Sebastiano
