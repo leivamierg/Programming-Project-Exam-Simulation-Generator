@@ -141,7 +141,7 @@ public class Model implements ModelInt {
 
     private String sanitizeAnswer(String answer) {
         String res = answer.toUpperCase();
-        if (!res.matches("[A-D\\+\\-]")) {
+        if (!res.matches("[A-D\\d\\+\\-]")) {
             return "n";
         }
 

@@ -164,8 +164,18 @@ public class Simulation implements SimulationInt {
                 }
                 break;
             case "+":
+                if (allQuestions.indexOf(currentQuestion) == allQuestions.size() - 1) {
+                    setCurrentQuestion(allQuestions.get(allQuestions.size() - 1));
+                } else {
+                    changeQuestion(command.charAt(0));
+                }
+                break;
             case "-":
-                changeQuestion(command.charAt(0));
+                if (allQuestions.indexOf(currentQuestion) == 0) {
+                    setCurrentQuestion(allQuestions.get(0));
+                } else {
+                    changeQuestion(command.charAt(0));
+                }
                 break;
             default:
                 int idx = Integer.parseInt(command);
@@ -174,7 +184,6 @@ public class Simulation implements SimulationInt {
                 } else {
                     throw new IllegalArgumentException("Illegal Character");
                 }
-
         }
     }
 
