@@ -13,9 +13,18 @@ Free Choice-Group project for the "Programming Project" course of the Free Unive
 
 ### Build
 
+To build the project, run the following command in the root directory of the project:
+
 ```bash
 mvn clean compile assembly:single
 ```
+
+If you want also the javadoc, run the following command:
+
+```bash
+mvn javadoc:javadoc
+```
+the documentation will be generated in the `target/site/apidocs` folder.
 
 ### Run
 
