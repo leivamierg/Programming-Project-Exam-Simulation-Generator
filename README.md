@@ -34,14 +34,23 @@ answers and select one of the given choices. In addition, the user can move arou
 - The program also makes sure that once the program is closed it saves the priority of the questions, stats and data, and loads them again whenever the program starts.
 ## User-guide for our project
 Commands...
-## Implementation of the project (components)
-### Structure
+## Implementation of the project
+### Overal Structure: Model, Controller and App
 ### Model classes and interfaces
-### FileLoading and FileSaving
-### Command Handling
-### The Simulation Class
-### Stats and history
-### The Model and the Controller
-
+The whole model of the app is saved in src/controller, and its divided in three files:
+#### Interfaces
+In this directory we can find every interface of the controller classes, including all the public methods of each class implementing an interface together with a javadoc giving a brief explanation on what the method does, its parameters, return types and possible exceptions. Every interface has the same name as its implementing class + the Int sufix./
+There are no interfaces available for the records and the comparators.
+#### Implementations
+##### Base structural classes
+##### FileLoading, FileSaving and Serialization
+##### Stats and history
+##### Command Handling
+##### The Simulation and the Model
+#### Comparators
+### The Controller
+### The App
 ## Human experience in this project
-The workload on the team was... We liked that... If we could change something... In order to organize ourselves...
+### Workload
+### Use of git
+### Challenges faced by each member
