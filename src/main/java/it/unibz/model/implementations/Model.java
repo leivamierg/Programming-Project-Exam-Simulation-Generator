@@ -96,7 +96,7 @@ public class Model implements ModelInt {
 
             if (input.equalsIgnoreCase("exit")) {
                 System.out.println("Exiting the simulation");
-                return;
+                break;
             }
 
             if (input.equalsIgnoreCase("terminate")) {
@@ -125,10 +125,9 @@ public class Model implements ModelInt {
         System.out.print("Type 'exit' to leave the program");
         String input = scanner.nextLine().trim();
 
-        if (input.equalsIgnoreCase("exit")) {
+        if (input.equalsIgnoreCase("exit")) 
             System.out.println("Exiting the simulation");
-            return;
-        }
+        
 
         scanner.close();
 
