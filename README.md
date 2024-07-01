@@ -29,6 +29,9 @@ In the simulation the user has a timer indicating the time left, and a Command L
 answers and select one of the given choices. In addition, the user can move around the questions by skiping some parts of the exam or going back to an already seen question.
 The simulation finishes automatically when all the questions has been answered or when the user inserts a command to terminate the simulation. 
 Once the simulation is finished the user sees its results and can decide to do another simulation or not.
+Other features of the project include the visualization of the available topics, past simulations data and stats.
+The programm selects the questions to put in the simulation based on how many times an answer was present in previous simulations an if it was answered correctly or not, using a priority systtem for all the questions available.
+The program also makes sure that once the program is closed it saves the priority of the questions, stats and data, and loads them again whenever the program starts.
 ## User-guide for our project
 Commands...
 ## Implementation of the project (components)
