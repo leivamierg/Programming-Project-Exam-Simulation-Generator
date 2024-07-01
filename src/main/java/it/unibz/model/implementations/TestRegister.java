@@ -1,5 +1,7 @@
 package it.unibz.model.implementations;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -39,12 +41,17 @@ public record TestRegister(@JsonProperty("testNumber") int testNumber,
 
     @Override
     public String toString() {
+        List<String> subtopicsList = new ArrayList<>();
+        for (String subtopic : subtopics()) {
+            subtopicsList.add(subtopic);
+        }
+
         return "Test Number #" + testNumber() + System.lineSeparator() + "Required time over total time: "
                 + requiredTimeOverTotalTime() + System.lineSeparator() + "Number of selected questions: "
                 + numberOfQuestions() + System.lineSeparator() + "Number of correct answers: "
                 + correctlyAnsweredQuestions() + System.lineSeparator() + "Wrong answers: "
                 + incorrectlyAnsweredQuestions() + System.lineSeparator() + "Blank answers: " + blankQuestions()
                 + System.lineSeparator() + "Overall Score: " + overallScore() + System.lineSeparator() + "Topic: "
-                + topic() + System.lineSeparator() + "Subtopics: " + subtopics();
+                + topic() + System.lineSeparator() + "Subtopics: " + subtopicsList;
     }
 }
