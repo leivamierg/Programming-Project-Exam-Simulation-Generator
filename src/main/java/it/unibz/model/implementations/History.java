@@ -3,7 +3,6 @@ package it.unibz.model.implementations;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -33,7 +32,7 @@ public class History {
         this.testRegisters.add(register);
     }
 
-    // TODO: add updateHistory
+    // TODO: add update History
     public void updateHistory(Simulation simulation) {
         List<String> selectedSubtopics =  simulation.getSubtopicToQuestions().keySet().stream()
                 .map((subtopic) -> (subtopic.getSubtopicName())).toList();

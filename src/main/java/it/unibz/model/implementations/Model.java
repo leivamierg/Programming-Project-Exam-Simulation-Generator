@@ -6,15 +6,13 @@ import java.util.Set;
 
 import it.unibz.model.interfaces.ModelInt;
 
-public class Model extends Simulation implements ModelInt {
+public class Model implements ModelInt {
 
     private String RESOURCES_PATH = System.getProperty("user.dir") + "/src/main/resources/bank/";
     private Set<Topic> topics = null;
     private final int DURATION_SIMULATION = 60 * 30;
-    private int remainingTime;
 
     public Model() {
-        super();
         try {
             topics = FileLoader.loadBank(RESOURCES_PATH);
         } catch (IOException e) {
@@ -78,7 +76,7 @@ public class Model extends Simulation implements ModelInt {
     }
 
     private void testAllSubtopics(Topic selectedTopic) {
-        Simulation simulation = new Simulation();
+        Simulation simulation = new Simulation(selectedTopic);
         simulation.select(selectedTopic, 1);
         simulation.start();
 
@@ -131,6 +129,8 @@ public class Model extends Simulation implements ModelInt {
             System.out.println("Exiting the simulation");
             return;
         }
+
+        scanner.close();
 
     }
 

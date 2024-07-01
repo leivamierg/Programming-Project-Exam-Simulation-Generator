@@ -17,7 +17,8 @@
 		"vscode": {
 			"extensions": [
 				"redhat.java",
-				"redhat.fabric8-analytics"
+				"redhat.fabric8-analytics",
+				"eamodio.gitlens"
 			]
 		}
 	}
