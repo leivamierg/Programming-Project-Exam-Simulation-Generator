@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     }
 }*/
 
+
 public record TestRegister(@JsonProperty("testNumber") int testNumber,
         @JsonProperty("requiredTimeOverTotalTime") String requiredTimeOverTotalTime,
         @JsonProperty("numberOfQuestions") int numberOfQuestions,

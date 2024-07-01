@@ -15,10 +15,20 @@ public class Controller {
     private ModelInt model;
     private static final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Constructor for the Controller class.
+     * 
+     * @param model The model to be used by the controller.
+     */
     public Controller(ModelInt model) {
         this.model = model;
     }
 
+    /**
+     * Processes the command-line arguments and performs the corresponding actions.
+     * 
+     * @param arguments The command-line arguments.
+     */
     public void elaborateArgs(String[] arguments) {
         if (arguments.length == 0) {
             System.out.println("Tester needs arguments to work. Pass as help to see the list of commands.");
@@ -52,6 +62,12 @@ public class Controller {
         }
     }
 
+    /**
+     * Takes input from the user.
+     * 
+     * @param message The message to be displayed to the user.
+     * @return The input from the user.
+     */
     public static String takeInput(String message) {
         System.out.print(message);
         return scanner.nextLine();
