@@ -10,9 +10,25 @@ public class Model implements ModelInt {
 
     private String RESOURCES_PATH = System.getProperty("user.dir") + "/src/main/resources/bank/";
     private Set<Topic> topics = null;
+
+    private static Stats stats;
+    private static History history;
     private final int DURATION_SIMULATION = 60 * 30;
 
     public Model() {
+
+        try {
+            stats = HistoryStatsLoader.loadStats("src/main/resources/h_s/stats.json");
+        } catch (Exception e) {
+            stats = new Stats();
+        }
+
+        try {
+            history = HistoryStatsLoader.loadHistory("src/main/resources/h_s/history.json");
+        } catch (Exception e) {
+            history = new History();
+        }
+
         try {
             topics = FileLoader.loadBank(RESOURCES_PATH);
         } catch (IOException e) {
@@ -77,6 +93,7 @@ public class Model implements ModelInt {
 
     private void testAllSubtopics(Topic selectedTopic) {
         Simulation simulation = new Simulation(selectedTopic);
+
         Scanner scanner = new Scanner(System.in);
         int numberOfQuestionsSubtopic = 0;
 
@@ -181,4 +198,13 @@ public class Model implements ModelInt {
         throw new UnsupportedOperationException("Unimplemented method 'notes'");
     }
 
+    public static Stats getLoadedStats()
+    {
+        return stats;
+    }
+
+    public static History getLoadedHistory()
+    {
+        return history;
+    }
 }

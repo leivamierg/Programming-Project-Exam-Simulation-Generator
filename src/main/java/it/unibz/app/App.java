@@ -1,9 +1,7 @@
 package it.unibz.app;
 
 import it.unibz.controller.Controller;
-import it.unibz.model.implementations.FileLoader;
-import it.unibz.model.implementations.Model;
-import it.unibz.model.implementations.Topic;
+import it.unibz.model.implementations.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,9 +19,9 @@ public class App {
      * 
      * @param args The command-line arguments.
      */
-    public static void main( String[] args )  {
+    public static void main( String[] args ) throws IOException {
 
-        Controller controller = new Controller(new Model());
+        Controller controller = new Controller(new Model(), new History(), new Stats());
         Scanner scanner = new Scanner(System.in);
 
         String input;
@@ -38,6 +36,10 @@ public class App {
             if (input.equalsIgnoreCase("exit")) {
                 Set<Topic> loadedTopics = FileLoader.getTopics();
                 FileLoader.saveBank(System.getProperty("user.dir") + "/src/main/resources/bank/", List.copyOf(loadedTopics));
+
+                HistoryStatsLoader.saveStats("src/main/resources/h_s/stats.json", Model.getLoadedStats());
+                HistoryStatsLoader.saveHistory("src/main/resources/h_s/history.json", Model.getLoadedHistory());
+
                 System.out.println("Exiting the simulation");
                 break;
             }
@@ -47,6 +49,9 @@ public class App {
                 System.out.println("<topic> -s, --subtopics to list all subtopics");
                 System.out.println("<topic> to start the test");
                 //System.out.println("<topic> --select to list all subtopics to select from");
+                System.out.println("<history> to show the history of simulation");
+                System.out.println("<stats> to show the general stats");
+                System.out.println("<exit> to close the exam simulation program");
                 showWelcomeMessage = false;
                 continue;
             }

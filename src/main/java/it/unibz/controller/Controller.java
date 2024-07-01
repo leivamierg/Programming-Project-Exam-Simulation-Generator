@@ -1,6 +1,8 @@
 package it.unibz.controller;
 
+import it.unibz.model.interfaces.HistoryInt;
 import it.unibz.model.interfaces.ModelInt;
+import it.unibz.model.interfaces.StatsInt;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -9,10 +11,14 @@ import java.util.regex.Pattern;
 public class Controller {
 
     private ModelInt model;
+    private HistoryInt history;
+    private StatsInt stats;
     private static final Scanner scanner = new Scanner(System.in);
 
-    public Controller(ModelInt model) {
+    public Controller(ModelInt model, HistoryInt history, StatsInt stats) {
         this.model = model;
+        this.history = history;
+        this.stats = stats;
     }
 
     public void elaborateArgs(String[] arguments) {
@@ -28,6 +34,9 @@ public class Controller {
         Pattern listSubtopicsPattern = Pattern.compile("^([A-Za-z\\s]+)\\s+(-s|--subtopics)$");
         Pattern startTestPattern = Pattern.compile("^([A-Za-z\\s]+)$");
         Pattern selectSubtopicsPattern = Pattern.compile("^([A-Za-z\\s]+)\\s+--select$");
+        Pattern historyPattern = Pattern.compile("(?i)--history");
+        Pattern statsPattern = Pattern.compile("(?i)--stats");
+
 
         Matcher matcher;
 
@@ -47,11 +56,16 @@ public class Controller {
             // String topic = matcher.group(1);
             //Selection of subtopic from Model to  be implemented (not in the first version)
             System.out.println("Subtopic selection feature not implemented.");
+        } else if ((historyPattern.matcher(input)).find())
+        {
+            System.out.println(history.showHistory());
+        }  else if ((statsPattern.matcher(input)).find())
+        {
+            System.out.println(stats.showGeneralStats());
         } else {
             System.out.println("Invalid command. Please check your input.");
         }
     }
-
 
     public static String takeInput(String message) {
         System.out.print(message);
