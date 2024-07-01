@@ -4,10 +4,10 @@ Free Choice-Group project for the "Programming Project" course of the Free Unive
 
 ## Members of the group and its GitHub identifiers
 
-- Sebatiano Nardin (sebanardin)
+- Sebastiano Nardin (sebanardin)
 - Gersson Leiva Mier (leivamierg / cool27027)
 - Violetta (Vaiolo)
-- Masimiliano (@MassimiIiano)
+- Massimiliano (@MassimiIiano)
 
 ## Instructions to build and run the project
 
@@ -37,9 +37,9 @@ java -jar target/tester-1.0-jar-with-dependencies.jar
 ## Project's overall description
 
 - Our project is a test simulation software, thought to be used by the users to prepare themselves for a multiple-choice format exam.
-- The main feature of our programm consists in generating an exam simulation of a chosen topic, representing a specific university course.
+- The main feature of our program consists in generating an exam simulation of a chosen topic, representing a specific university course.
 - In the simulation the user has a timer indicating the time left, and a Command Line User Interface to see the current question with its
-  answers and select one of the given choices. In addition, the user can move around the questions by skiping some parts of the exam or going back to an already seen question.
+  answers and select one of the given choices. In addition, the user can move around the questions by skipping some parts of the exam or going back to an already seen question.
   The simulation finishes automatically when the timer expires or when the user inserts a command to terminate the simulation.
 - Once the simulation is finished the user sees its results and can decide to do another simulation or not.
 - Other features of the project include the visualization of the available topics, past simulations data and stats.
@@ -87,8 +87,8 @@ It contains a Set of subtopic representing the different sections of the course.
 
 ###### Subtopic class
 
-Represents an university course Chapter/Lesson, for example: (Linear Algebra) Spectral Analysis, etc.\
-It contains a set of questions of the current Subtopic and its linked to its appartaining Topic object.
+Represents a university course Chapter/Lesson, for example: (Linear Algebra) Spectral Analysis, etc.\
+It contains a set of questions of the current Subtopic and it is linked to its appertaining Topic object.
 
 ###### Question class
 
@@ -119,14 +119,30 @@ Furthermore, it allows the user also to see the stats of a certain topic/subtopi
 ###### History
 
 This class is quite simple, it only contains a list of TestRegister records, created specifically to store the previous simulation data. Other than supporting JSON serialization and deserialization it also has methods to see the full or a part of the history in the command line.\
-Some of the data saved in the history are: number of questions, correct answers, wrong questions, used time / available time, etc.
+Some data saved in the history are: number of questions, correct answers, wrong questions, used time / available time, etc.
+
+##### Timer functionality
+
+The timer functionality was implemented to give a duration to the tests' simulation. Each simulation is set to a duration of 30 minutes and the remaining time is displayed every time the user answers to a question.
+This way, the remaining time is continuously updated. When the remaining time reaches zero or the user ends the test through the command 'terminate', both the test and the timer are stopped.
 
 ##### Command Handling
-TODO
+
+The Exam Simulation Program is based on the interaction between the user and the program itself via command-line inputs. The command handling process ensures that the inputs are interpreted and the actions executed.
+The process handling starts from the entry point of the program through the 'App' class, where the user is asked to insert one of the possible commands.
+Each of the command calls a specific function from the 'ModelInt' interface, where the method 'testAllSubtopics' starts the simulation through the method 'start' from the Simulation class.
+On the method 'testAllSubtopics', two types of input are required: the number of questions per subtopic and the answer for each question.
+Connected to the 'Simulation' class, the user can input letters (A,B,C,D), numbers (0-9), and the characters '+' and '-'. Other characters are not accepted and if an invalid command is inserted during the simulation, the user will be asked the same question again.
+There are three ways of seeing the questions: by pressing 'Enter' after answering, by pressing '+' or '-' to see the next or previous one, and by writing the number of the question.
+If the user presses '-' at the first question or '+' at the last one, respectively the first question or the last one will be asked again, since the person cannot go backwards or forward.
+During the simulation the user can write 'terminate' to finish the simulation and visualize the results, and then write 'exit' to leave the program.
+The command 'exit' can also be written on the main "page" at the beginning.
+In the more advanced version of the project, the commands 'history' and 'stats' can also be written and the general history and statistics can be checked.
+*All the commands can be written in upper case, lower case or both.*
 
 ##### The Simulation and the Model
 
-Simulation class is the 'real backend' of the application and it is responsible for managing the exam simulation itself (keeps track of questins order, answers, time etc.). It has the
+Simulation class is the 'real backend' of the application, and it is responsible for managing the exam simulation itself (keeps track of questins order, answers, time etc.). It has the
 
 Model is mainly a facade for interacting with simulation. in retrospective we should have designed it as a part of the controller.
 TO FIX
@@ -140,10 +156,23 @@ It is a useful tool to sort a question list based on their "priorityLevel" order
 It is used on the Subtopic class, for the "pickQuestions" method.
 
 ### The Controller
-TODO
+
+###### Controller class
+
+The 'Controller' class handles the user's input and interacts principally with the 'ModelInt' interface.
+It parses the commands and calls the relative functions from the 'ModelInt' interface by using regexes. It also relies on 'HistoryInt' and 'StatsInt' for the advanced version of the program.
+The 'elaborateArgs' method is where the list of arguments from the user is processed.
+The 'takeInput' method returns the entered string based on the input from the user.
+The overall class works as an intermediate between the user and the program, to delegate tasks to methods by processing commands.
 
 ### The App
-TODO
+
+###### App class
+
+The 'App' class is the entry point for the program. It manages the program's lifecycle (initialization, command handling and user interaction).
+It is mostly connected with the 'Controller' class, since it delegates command processing.
+It also displays the possible commands for the user, allowing user-friendliness.
+
 ## Tests and Utils (@all)
 Each class was tested separately by using JUnit tests.
 
@@ -165,6 +194,11 @@ Each class was tested separately by using JUnit tests.
 - it was difficult to communicate about changes in each others branches so sometimes we had errors after merging to main
 
 #### @Violetta
+
+- Communication within the group
+- Issues with Libraries
+- Issues with completely understanding the structure of the different classes
+- Issues with working on both the project and the other courses
 
 #### @Gersson
 
