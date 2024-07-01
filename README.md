@@ -19,7 +19,7 @@ mvn clean package
 execute the jar file created in the target folder
 
 ```bash
-java -jar target/tester-1.0-SNAPSHOT.jar
+mvn exec:java -Dexec.mainClass="it.unibz.app.App"
 ```
 
 ## Project's overall description
