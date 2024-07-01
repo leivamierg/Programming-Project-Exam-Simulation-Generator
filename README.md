@@ -48,7 +48,28 @@ java -jar target/tester-1.0-jar-with-dependencies.jar
 
 ## User-guide for our project
 
-Commands... TODO
+N.B Do not use any quotes. Write directly the word needed.
+Example: 
+- linear algebra -s
+- exit
+- terminate
+
+
+List of possible commands after opening the program:
+
+- -t, --topics : to list all the topics
+- 'topic' -s, --subtopics : to list all the subtopics
+- 'topic' : to start the test
+- --history : to show the history of simulation (it will be empty at the beginning)
+- --stats : to show the general statistics (it will be empty at the beginning)
+- 'exit' : to close the exam simulation program
+
+List of possible commands during the simulation:
+
+- A, B, C, D, ' ' : to answer the questions
+- '+', '-' : to navigate through the questions
+- 0-9 : to choose the question by its number
+- 'terminate' : to terminate the simulation and get the results
 
 ## Implementation of the project
 
@@ -102,16 +123,19 @@ Represents a simulation of an exam. It provides several functionalities:
 - answer to a question 
 - change the question (either to the previous/next one or to a specific one)
 - terminate the simulation -> the result (general and for each subtopic) is printed and every parameter needed for the next simulations is updated
+
 ##### FileLoading, FileSaving and Serialization
 We used Jackson to implement JSON serialization and deserialization
 - when the program starts the topics (along with subtopics and questions) are loaded by using the static method loadBank of the FileLoader class
 - when the program ends the topics are saved into the JSON files by using the static method saveBank of the FileLoaderClass -> when the user re-start the program the last state of the program is loaded
 - The same process is valid for History and Stats, which use the HistoryStatsLoader class to be serialized and deserialized
+
 ##### Stats and history (@leivamierg and @sebanardin)
 
 These two classes give a sense of progress to the user saving data of previous simulations, they use serialization and deserialization as well to save and load their content.
 
 ###### Stats
+
 This class is meant to store the stats of every topic, subtopic and the general stats after every simulation.
 In addition, it supports JSON serialization/deserialization. Moreover, it provides some methods to compare the stats of a certain topic or subtopic from simulation x to simulation y.
 Furthermore, it allows the user also to see the stats of a certain topic/subtopic after x simulation.

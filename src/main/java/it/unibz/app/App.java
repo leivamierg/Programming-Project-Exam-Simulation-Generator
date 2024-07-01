@@ -46,12 +46,12 @@ public class App {
 
             if (input.equals("-h")) {
                 System.out.println("-t or --topics to list all topics");
-                System.out.println("<topic> -s, --subtopics to list all subtopics");
-                System.out.println("<topic> to start the test");
+                System.out.println("'topic' -s, --subtopics to list all subtopics");
+                System.out.println("'topic' to start the test");
                 //System.out.println("<topic> --select to list all subtopics to select from");
-                System.out.println("<history> to show the history of simulation");
-                System.out.println("<stats> to show the general stats");
-                System.out.println("<exit> to close the exam simulation program");
+                System.out.println("--history to show the history of simulation");
+                System.out.println("--stats to show the general stats");
+                System.out.println("'exit' to close the exam simulation program");
                 showWelcomeMessage = false;
                 continue;
             }
