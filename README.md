@@ -19,11 +19,11 @@ To build the project, run the following command in the root directory of the pro
 mvn clean compile assembly:single
 ```
 
-the documentation will be generated in the `target/site/apidocs` folder.
+The documentation will be generated in the `target/site/apidocs` folder.
 
 ### Run
 
-execute the jar file created in the target folder
+Execute the jar file created in the target folder
 
 ```bash
 java -jar target/tester-1.0-jar-with-dependencies.jar
@@ -75,7 +75,7 @@ If you want also a more in depth explanation of the project you can generate the
 ```bash
 mvn javadoc:javadoc
 ```
-the documentation will be generated in the `target/site/apidocs` folder.
+The documentation will be generated in the `target/site/apidocs` folder.
 
 
 #### Interfaces
@@ -98,18 +98,18 @@ It contains a Set of subtopic representing the different sections of the course.
 ###### Subtopic class
 
 Represents a university course Chapter/Lesson, for example: (Linear Algebra) Spectral Analysis, etc.\
-It contains a set of questions of the current Subtopic and it is linked to its appertaining Topic object.
+It contains a set of questions of the current Subtopic, and it is linked to its appertaining Topic object.
 
 ###### Question class
 
-Represents a single possible question in a simulation.\
+Represents a single possible question in a simulation.
 Contains the question statement and the possible answers. It is by far the most complex class of the structural classes as it provides many methods to shuffle the possible answers and assign them randomly a letter from A to D.
 
 
 ##### FileLoading, FileSaving and Serialization
 We used Jackson to implement JSON serialization and deserialization
-- when the program starts the topics (along with subtopics and questions) are loaded by using the static method loadBank of the FileLoader class
-- when the program ends the topics are saved into the JSON files by using the static method saveBank of the FileLoaderClass -> when the user re-start the program the last state of the program is loaded
+- When the program starts the topics (along with subtopics and questions) are loaded by using the static method loadBank of the FileLoader class
+- When the program ends the topics are saved into the JSON files by using the static method saveBank of the FileLoaderClass -> when the user re-start the program the last state of the program is loaded
 - The same process is valid for History and Stats, which use the HistoryStatsLoader class to be serialized and deserialized
 
 ##### Stats and history (@leivamierg and @sebanardin)
@@ -143,11 +143,11 @@ In the more advanced version of the project, the commands 'history' and 'stats' 
 
 ###### Simulation class
 Represents a simulation of an exam. It provides several functionalities:
-- select the topic the simulation is about -> all the subtopics of the given topic are part of the simulation (the questions are grouped by subtopic)
-- select only some subtopics of a given topic (not implemented but can be tested by running the tests)
-- answer to a question 
-- change the question (either to the previous/next one or to a specific one)
-- terminate the simulation -> the result (general and for each subtopic) is printed and every parameter needed for the next simulations is updated
+- Select the topic the simulation is about -> all the subtopics of the given topic are part of the simulation (the questions are grouped by subtopic)
+- Select only some subtopics of a given topic (not implemented but can be tested by running the tests)
+- Answer to a question 
+- Change the question (either to the previous/next one or to a specific one)
+- Terminate the simulation -> the result (general and for each subtopic) is printed and every parameter needed for the next simulations is updated
 
 #####  Model
 
@@ -193,7 +193,7 @@ Each class was tested separately by using JUnit tests.
 - @sebanardin: Stats, Simulation, FileLoading, HistoryStatsLoader
 - @leivamierg: Topic, Subtopic, Question, QuestionPriorityComparator, HistoryStatsLoader, History, TestRegisters
 - @MassimiIiano: Controller, App, Model, Simulation, Question, HistoryStatsLoader
-- @Vaiolo: Controller, App, Model, Simulation, ExamTimer
+- @Vaiolo: Controller, App, Model, Simulation, ExamTimer, History, Stats
 
 ### Use of git
 
