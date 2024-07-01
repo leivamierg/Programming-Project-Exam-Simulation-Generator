@@ -12,6 +12,8 @@ public record TestRegister(@JsonProperty("testNumber") int testNumber,
         @JsonProperty("blankQuestions") int blankQuestions,
         @JsonProperty("overallScore") double overallScore, @JsonProperty("topic") String topic,
         @JsonProperty("subtopics") String[] subtopics) {
+
+    @Override
     public boolean equals(Object o) {
         if (o == null || !(o instanceof TestRegister)) {
             return false;
@@ -29,8 +31,20 @@ public record TestRegister(@JsonProperty("testNumber") int testNumber,
                     && ((TestRegister) o).subtopics().equals(this.subtopics());
     }
 
+    @Override
     public int hashCode() {
         return Objects.hash(testNumber, requiredTimeOverTotalTime, numberOfQuestions, correctlyAnsweredQuestions,
                 incorrectlyAnsweredQuestions, blankQuestions, overallScore, topic, subtopics);
+    }
+
+    @Override
+    public String toString() {
+        return "Test Number #" + testNumber() + System.lineSeparator() + "Required time over total time: "
+                + requiredTimeOverTotalTime() + System.lineSeparator() + "Number of selected questions: "
+                + numberOfQuestions() + System.lineSeparator() + "Number of correct answers: "
+                + correctlyAnsweredQuestions() + System.lineSeparator() + "Wrong answers: "
+                + incorrectlyAnsweredQuestions() + System.lineSeparator() + "Blank answers: " + blankQuestions()
+                + System.lineSeparator() + "Overall Score: " + overallScore() + System.lineSeparator() + "Topic: "
+                + topic() + System.lineSeparator() + "Subtopics: " + subtopics();
     }
 }

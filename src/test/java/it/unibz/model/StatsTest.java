@@ -6,7 +6,9 @@ import it.unibz.utils.SimulationUtils;
 import static it.unibz.utils.SimulationUtils.*;
 import static it.unibz.utils.SubtopicUtils.*;
 import static it.unibz.utils.TopicUtils.topic1;
+import static it.unibz.utils.TopicUtils.topic2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -160,14 +162,55 @@ public class StatsTest {
         @Test
         public void showStatsTest() {
                 statsAfter3SimsTest();
-                System.out.println(stats.showStats());
+                System.out.println(stats.showGeneralStats());
         }
 
-        @DisplayName("Comparing stats of topic 1, from sim1 to sim2")
+        @DisplayName("Show a specific Topic stats after 3 sims")
         @Test
-        public void compareTopicStatsTest() {
+        public void showTopicStatsTest() {
+                statsAfter3SimsTest();
+                System.out.println(stats.showTopicStats(topic1, 1));
+                System.out.println(stats.showTopicStats(topic1, 2));
+                // add exception
+        }
+
+        @DisplayName("Comparing stats of topic 1, from sim1 to sim2, giving a start and end parameter")
+        @Test
+        public void compareTopicStatsStartEndTest() {
                 statsAfter3SimsTest();
                 System.out.println(stats.compareStats(topic1, 1, 2));
+
+        }
+
+        @DisplayName("Comparing stats of topic 1, from sim1 to sim2, giving an invalid start parameter")
+        @Test
+        public void compareTopicStatsStartEndTestTooSmall() {
+                statsAfter3SimsTest();
+                System.out.println(stats.compareStats(topic1, -1, 2));
+
+        }
+
+        @DisplayName("Comparing stats of topic 1, from sim1 to sim2, giving invalid arguments")
+        @Test
+        public void compareTopicStatsStartEndError() {
+                statsAfter3SimsTest();
+                assertThrows(IllegalArgumentException.class, () -> stats.compareStats(topic1, 4, 2));
+
+        }
+
+        @DisplayName("Comparing stats of topic 1, from sim1 to sim2, giving an invalid end parameter")
+        @Test
+        public void compareTopicStatsStartEndTestTooBig() {
+                statsAfter3SimsTest();
+                System.out.println(stats.compareStats(topic1, 1, 5));
+
+        }
+
+        @DisplayName("Comparing stats of topic 1, from sim1 to sim2, giving only a start parameter")
+        @Test
+        public void compareTopicStatsStartTest() {
+                statsAfter3SimsTest();
+                System.out.println(stats.compareStats(topic1, 1));
 
         }
 

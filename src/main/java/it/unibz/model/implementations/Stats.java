@@ -169,37 +169,55 @@ public class Stats implements StatsInt {
     }
 
     @Override
-    public String compareStats(Topic topic, int start, int end) {
+    public String compareStats(Topic topic, int start, int end) throws IllegalArgumentException {
+        if (topic == null) {
+            throw new IllegalArgumentException();
+        }
         return printStatsComparison(topicToStats, start, end, topic.getTopicName());
     }
 
     @Override
-    public String compareStats(Topic topic, int start) {
+    public String compareStats(Topic topic, int start) throws IllegalArgumentException {
+        if (topic == null) {
+            throw new IllegalArgumentException();
+        }
         return printStatsComparison(topicToStats, start, topicToStats.get(topic.getTopicName()).size(),
                 topic.getTopicName());
     }
 
     @Override
-    public String compareStats(Subtopic subtopic, int start, int end) {
+    public String compareStats(Subtopic subtopic, int start, int end) throws IllegalArgumentException {
+        if (subtopic == null) {
+            throw new IllegalArgumentException();
+        }
         return printStatsComparison(subtopicToStats, start, end, subtopic.getSubtopicName());
     }
 
     @Override
-    public String compareStats(Subtopic subtopic, int start) {
+    public String compareStats(Subtopic subtopic, int start) throws IllegalArgumentException {
+        if (subtopic == null) {
+            throw new IllegalArgumentException();
+        }
         return printStatsComparison(subtopicToStats, start, subtopicToStats.get(subtopic.getSubtopicName()).size(),
                 subtopic.getSubtopicName());
     }
 
     private String printStatsComparison(Map<String, List<Score>> map,
-            int start, int end, String topicSubtopic) {
+            int start, int end, String topicSubtopic) throws IllegalArgumentException {
+
+        if (start >= end) {
+            throw new IllegalArgumentException();
+
+        }
         if (start < 1) {
             start = 1;
             System.err.println("The start index is too small, so it was set to 1");
         }
         if (end > map.get(topicSubtopic).size()) {
             end = map.get(topicSubtopic).size();
-            System.err.println("The end index is too big, so it was reset to the last one");
+            System.err.println("The end index is too big, so it was reset to the last sim");
         }
+
         Score startingStats = map.get(topicSubtopic).get(start - 1);
         Score endingStats = map.get(topicSubtopic).get(end - 1);
         String result = topicSubtopic + ":" + System.lineSeparator();
@@ -230,7 +248,7 @@ public class Stats implements StatsInt {
     }
 
     @Override
-    public String showStats() {
+    public String showGeneralStats() {
         int selected = getGeneralStats().selected();
         int correct = getGeneralStats().correct();
         int incorrect = getGeneralStats().wrong();
@@ -246,6 +264,50 @@ public class Stats implements StatsInt {
         // stats for every topic
         // number of subtopics (with name) per topic
         // stats for every subtopic
+
+    }
+
+    @Override
+    public String showTopicStats(Topic topic, int simNum) throws IllegalArgumentException {
+        if (simNum < 1 || topicToStats.get(topic.getTopicName()).size() < simNum || topic == null) {
+            throw new IllegalArgumentException();
+        }
+
+        Score topicStats = topicToStats.get(topic.getTopicName()).get(simNum - 1);
+        int selected = topicStats.selected();
+        int correct = topicStats.correct();
+        int incorrect = topicStats.wrong();
+        int blank = topicStats.blank();
+        int total = topicStats.total();
+        double percentage = topicStats.percentage();
+        return topic.getTopicName() + " Stats at Simulation #" + simNum + ":" + System.lineSeparator()
+                + "Number of correct answers: " + correct + "/"
+                + selected
+                + System.lineSeparator() + "Number of wrong answers: " + incorrect + "/" + selected
+                + System.lineSeparator() + "Number of blank answers: " + blank + "/" + selected + System.lineSeparator()
+                + "Total of questions: " + total + System.lineSeparator() + "Percentage: " + percentage + "%";
+
+    }
+
+    @Override
+    public String showSubtopicStats(Subtopic subtopic, int simNum) throws IllegalArgumentException {
+        if (simNum < 1 || subtopicToStats.get(subtopic.getSubtopicName()).size() < simNum || subtopic == null) {
+            throw new IllegalArgumentException();
+        }
+
+        Score subtopicStats = subtopicToStats.get(subtopic.getSubtopicName()).get(simNum - 1);
+        int selected = subtopicStats.selected();
+        int correct = subtopicStats.correct();
+        int incorrect = subtopicStats.wrong();
+        int blank = subtopicStats.blank();
+        int total = subtopicStats.total();
+        double percentage = subtopicStats.percentage();
+        return subtopic.getSubtopicName() + " Stats at Simulation #" + simNum + ":" + System.lineSeparator()
+                + "Number of correct answers: " + correct + "/"
+                + selected
+                + System.lineSeparator() + "Number of wrong answers: " + incorrect + "/" + selected
+                + System.lineSeparator() + "Number of blank answers: " + blank + "/" + selected + System.lineSeparator()
+                + "Total of questions: " + total + System.lineSeparator() + "Percentage: " + percentage + "%";
 
     }
 

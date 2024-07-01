@@ -3,12 +3,13 @@ package it.unibz.model.implementations;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class History {
+import it.unibz.model.interfaces.HistoryInt;
+
+public class History implements HistoryInt {
     private List<TestRegister> testRegisters;
 
     @JsonCreator
@@ -21,6 +22,7 @@ public class History {
     }
     // methods
 
+    @Override
     public List<TestRegister> getTestRegisters() {
         return this.testRegisters;
     }
@@ -29,13 +31,14 @@ public class History {
         this.testRegisters = registers;
     }
 
+    @Override
     public void addTestRegister(TestRegister register) {
         this.testRegisters.add(register);
     }
 
-    // TODO: add updateHistory
+    @Override
     public void updateHistory(Simulation simulation) {
-        List<String> selectedSubtopics =  simulation.getSubtopicToQuestions().keySet().stream()
+        List<String> selectedSubtopics = simulation.getSubtopicToQuestions().keySet().stream()
                 .map((subtopic) -> (subtopic.getSubtopicName())).toList();
         TestRegister newTestRegister = new TestRegister(this.getTestRegisters().size() + 1,
                 simulation.getTimer().getRemainingTime() + " out of " + simulation.getTimer().DURATION_SIMULATION,
@@ -46,6 +49,7 @@ public class History {
         this.addTestRegister(newTestRegister);
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == null || !(o instanceof History)) {
             return false;
@@ -55,7 +59,17 @@ public class History {
             return ((History) o).getTestRegisters().equals(this.getTestRegisters());
     }
 
+    @Override
     public int hashCode() {
         return Objects.hash(testRegisters);
+    }
+
+    @Override
+    public String showHistory() {
+        String wholeString = new String("Complete History:" + System.lineSeparator());
+        for (int i = 0; i < getTestRegisters().size(); i++) {
+            wholeString = wholeString + getTestRegisters().get(i).toString() + System.lineSeparator();
+        }
+        return wholeString;
     }
 }
