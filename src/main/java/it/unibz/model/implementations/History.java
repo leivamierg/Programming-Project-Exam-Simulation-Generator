@@ -46,7 +46,7 @@ public class History implements HistoryInt {
                 simulation.getNumberOfQuestions(), simulation.getAllCorrectQuestions().size(),
                 simulation.getAllWrongQuestions().size(), simulation.getAllBlankQuestions().size(),
                 simulation.computeSimStats().percentage(),
-                simulation.getTopic(), selectedSubtopics.toArray(selectedSubtopics.toArray(new String[0])));
+                simulation.getTopicName(), selectedSubtopics.toArray(selectedSubtopics.toArray(new String[0])));
         this.addTestRegister(newTestRegister);
     }
 

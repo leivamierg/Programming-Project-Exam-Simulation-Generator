@@ -44,7 +44,7 @@ public class Controller {
             model.test(topic, null);
         } else if ((matcher = selectSubtopicsPattern.matcher(input)).find())
         {
-            String topic = matcher.group(1);
+            // String topic = matcher.group(1);
             //Selection of subtopic from Model to  be implemented
             System.out.println("Subtopic selection feature not implemented.");
         } else {

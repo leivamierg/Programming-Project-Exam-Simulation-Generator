@@ -41,7 +41,7 @@ public class StatsTest {
 
         private void updateStatsAfter1Sim() {
                 // expectedTopicToStats
-                expectedTopicToStats.put(simulationT1.getTopic(), List.of(new Score[] {
+                expectedTopicToStats.put(simulationT1.getTopicName(), List.of(new Score[] {
                                 new Score(1, 4, 1, 6, 7, 16.66) }));
                 // expectedSubtopicToStats
                 expectedSubtopicToStats.put(subtopic1_1.getSubtopicName(), List.of(new Score[] {
@@ -53,16 +53,16 @@ public class StatsTest {
                 expectedSubtopicToStats.put(subtopic1_3.getSubtopicName(), List.of(new Score[] {
                                 new Score(0, 1, 1, 2, 3, 0) }));
                 // expectedGeneralStats
-                int idxLastStats = expectedTopicToStats.get(simulationT1.getTopic()).size() - 1;
-                expectedGeneralStats = expectedTopicToStats.get(simulationT1.getTopic()).get(idxLastStats);
+                int idxLastStats = expectedTopicToStats.get(simulationT1.getTopicName()).size() - 1;
+                expectedGeneralStats = expectedTopicToStats.get(simulationT1.getTopicName()).get(idxLastStats);
         }
 
         private void updateStatsAfter2Sim() {
                 updateStatsAfter1Sim();
                 // expectedTopicToStats
-                List<Score> temp = new ArrayList<>(expectedTopicToStats.get(simulationT1.getTopic()));
+                List<Score> temp = new ArrayList<>(expectedTopicToStats.get(simulationT1.getTopicName()));
                 temp.add(new Score(2, 3, 1, 6, 7, 33.33));
-                expectedTopicToStats.put(simulationT1.getTopic(), temp);
+                expectedTopicToStats.put(simulationT1.getTopicName(), temp);
                 // expectedSubtopicToStats
                 List<Score> temp1_1 = new ArrayList<>(expectedSubtopicToStats.get(subtopic1_1.getSubtopicName()));
                 temp1_1.add(new Score(1, 1, 0, 2, 2, 50));
@@ -73,8 +73,8 @@ public class StatsTest {
                 expectedSubtopicToStats.put(subtopic1_2.getSubtopicName(), temp1_2);
 
                 // expectedGeneralStats
-                int idxLastStats = expectedTopicToStats.get(simulationT1.getTopic()).size() - 1;
-                expectedGeneralStats = (expectedTopicToStats.get(simulationT1.getTopic()).get(idxLastStats));
+                int idxLastStats = expectedTopicToStats.get(simulationT1.getTopicName()).size() - 1;
+                expectedGeneralStats = (expectedTopicToStats.get(simulationT1.getTopicName()).get(idxLastStats));
 
         }
 
@@ -83,7 +83,7 @@ public class StatsTest {
         void statsAfter1SimTest() {
                 stats.updateStats(simulationT1);
                 // expectedTopicToStats
-                expectedTopicToStats.put(simulationT1.getTopic(), List.of(new Score[] {
+                expectedTopicToStats.put(simulationT1.getTopicName(), List.of(new Score[] {
                                 new Score(1, 4, 1, 6, 7, 16.66) }));
                 // expectedSubtopicToStats
                 expectedSubtopicToStats.put(subtopic1_1.getSubtopicName(), List.of(new Score[] {
@@ -95,8 +95,8 @@ public class StatsTest {
                 expectedSubtopicToStats.put(subtopic1_3.getSubtopicName(), List.of(new Score[] {
                                 new Score(0, 1, 1, 2, 3, 0) }));
                 // expectedGeneralStats
-                int idxLastStats = expectedTopicToStats.get(simulationT1.getTopic()).size() - 1;
-                expectedGeneralStats = expectedTopicToStats.get(simulationT1.getTopic()).get(idxLastStats);
+                int idxLastStats = expectedTopicToStats.get(simulationT1.getTopicName()).size() - 1;
+                expectedGeneralStats = expectedTopicToStats.get(simulationT1.getTopicName()).get(idxLastStats);
 
                 check();
         }
@@ -109,9 +109,9 @@ public class StatsTest {
                 statsAfter1SimTest();
                 stats.updateStats(simulationT1_S1_S2);
                 // expectedTopicToStats
-                List<Score> temp = new ArrayList<>(expectedTopicToStats.get(simulationT1_S1_S2.getTopic()));
+                List<Score> temp = new ArrayList<>(expectedTopicToStats.get(simulationT1_S1_S2.getTopicName()));
                 temp.add(new Score(2, 3, 1, 6, 7, 33.33));
-                expectedTopicToStats.put(simulationT1.getTopic(), temp);
+                expectedTopicToStats.put(simulationT1.getTopicName(), temp);
                 // expectedSubtopicToStats
                 List<Score> temp1_1 = new ArrayList<>(expectedSubtopicToStats.get(subtopic1_1.getSubtopicName()));
                 temp1_1.add(new Score(1, 1, 0, 2, 2, 50));
@@ -122,8 +122,8 @@ public class StatsTest {
                 expectedSubtopicToStats.put(subtopic1_2.getSubtopicName(), temp1_2);
 
                 // expectedGeneralStats
-                int idxLastStats = expectedTopicToStats.get(simulationT1_S1_S2.getTopic()).size() - 1;
-                expectedGeneralStats = expectedTopicToStats.get(simulationT1.getTopic()).get(idxLastStats);
+                int idxLastStats = expectedTopicToStats.get(simulationT1_S1_S2.getTopicName()).size() - 1;
+                expectedGeneralStats = expectedTopicToStats.get(simulationT1.getTopicName()).get(idxLastStats);
 
                 check();
         }
@@ -137,7 +137,7 @@ public class StatsTest {
                 statsAfter2SimsTest();
                 stats.updateStats(simulationT2);
                 // expectedTopicToStats
-                expectedTopicToStats.put(simulationT2.getTopic(), List.of(new Score[] {
+                expectedTopicToStats.put(simulationT2.getTopicName(), List.of(new Score[] {
                                 new Score(3, 4, 1, 8, 10, 37.5) }));
                 // expectedSubtopicToStats
                 expectedSubtopicToStats.put(subtopic2_1.getSubtopicName(), List.of(new Score[] {

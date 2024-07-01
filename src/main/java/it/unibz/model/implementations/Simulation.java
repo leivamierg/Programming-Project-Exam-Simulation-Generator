@@ -23,7 +23,6 @@ public class Simulation implements SimulationInt {
     @JsonIgnore
     private Map<Question, Map<String, Character>> questionToShuffledAnswers;
     private Map<String, Map<String, Character>> questionStatementToShuffledAnswers;
-    private String pathToTopicFile;
     @JsonIgnore
     private Question currentQuestion;
     @JsonIgnore
@@ -31,30 +30,34 @@ public class Simulation implements SimulationInt {
     @JsonIgnore
     private long questionStartTime;
 
-    public Simulation() {
+    private Topic topic;
+
+    public Simulation(Topic topic) {
         subtopicToQuestions = new HashMap<>();
+        subtopicNameToQuestions = new HashMap<>();
         questionToAnswer = new HashMap<>();
+        questionStatementToAnswer = new HashMap<>();
         questionToShuffledAnswers = new HashMap<>();
+        questionStatementToShuffledAnswers = new HashMap<>();
         timer = new ExamTimer();
+        setTopic(topic);
     }
 
     @JsonCreator
     public Simulation(@JsonProperty("subtopicNameToQuestions") Map<String, Set<Question>> subtopicNameToQuestions,
             @JsonProperty("questionStatementToAnswer") Map<String, Character> questionStatementToAnswer,
             @JsonProperty("questionStatementToShuffledAnswers") Map<String, Map<String, Character>> questionStatementToShuffledAnswers,
-            @JsonProperty("pathToTopicFile") String pathToTopicFile) {
-        Topic topic;
-        setPathToTopicFile(pathToTopicFile);
-        try {
-            topic = FileLoader.loadFile(pathToTopicFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            @JsonProperty("topic") Topic topic) {
+        subtopicToQuestions = new HashMap<>();
+        questionToAnswer = new HashMap<>();
+        questionToShuffledAnswers = new HashMap<>();
+        setTopic(topic);
         setSubtopicNameToQuestions(subtopicNameToQuestions);
         buildSubtopicToQuestionsMap(topic, subtopicNameToQuestions);
 
         setQuestionStatementToAnswer(questionStatementToAnswer);
         buildQuestionToAnswerMap(questionStatementToAnswer);
+
         setQuestionStatementToShuffledAnswers(questionStatementToShuffledAnswers);
         buildQuestionToShuffledAnswersMap(questionStatementToShuffledAnswers);
 
@@ -114,12 +117,15 @@ public class Simulation implements SimulationInt {
     private void updateSubtopicToQuestions(Subtopic subtopic, int nrQuestionsPerSubtopic) {
         Set<Question> pickedQuestions = subtopic.pickQuestions(nrQuestionsPerSubtopic);
         subtopicToQuestions.put(subtopic, pickedQuestions);
+        subtopicNameToQuestions.put(subtopic.getSubtopicName(), pickedQuestions);
         updateQuestionToShuffledAnswers(pickedQuestions);
     }
 
     private void updateQuestionToShuffledAnswers(Set<Question> questions) {
         for (Question question : questions) {
-            questionToShuffledAnswers.put(question, question.getShuffleMap());
+            Map<String, Character> shuffledMap = question.getShuffleMap();
+            questionToShuffledAnswers.put(question, shuffledMap);
+            questionStatementToShuffledAnswers.put(question.getQuestionStatement(), shuffledMap);
         }
     }
 
@@ -150,6 +156,8 @@ public class Simulation implements SimulationInt {
             case "D":
             case " ":
                 questionToAnswer.put(currentQuestion, Character.toUpperCase(command.charAt(0)));
+                questionStatementToAnswer.put(currentQuestion.getQuestionStatement(),
+                        Character.toUpperCase(command.charAt(0)));
                 if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
                     int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
                     setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
@@ -179,6 +187,7 @@ public class Simulation implements SimulationInt {
             case 'D':
             case ' ':
                 questionToAnswer.put(question, Character.toUpperCase(answer));
+                questionStatementToAnswer.put(question.getQuestionStatement(), Character.toUpperCase(answer));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -190,9 +199,11 @@ public class Simulation implements SimulationInt {
         int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
         if (idxCurrentQuestion >= 0 && idxCurrentQuestion < allQuestions.size() - 1 && prevOrNext == '+') {
             questionToAnswer.put(currentQuestion, ' ');
+            questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), ' ');
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
         } else if (idxCurrentQuestion > 0 && idxCurrentQuestion <= allQuestions.size() - 1 && prevOrNext == '-') {
             questionToAnswer.put(currentQuestion, ' ');
+            questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), ' ');
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion - 1));
         } else
             throw new IllegalStateException();
@@ -200,6 +211,7 @@ public class Simulation implements SimulationInt {
 
     private void changeQuestion(int idxQuestion) {
         questionToAnswer.put(currentQuestion, ' ');
+        questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), ' ');
         List<Question> allQuestions = getAllQuestions();
         setCurrentQuestion(allQuestions.get(idxQuestion - 1));
     }
@@ -368,15 +380,13 @@ public class Simulation implements SimulationInt {
     }
 
     @Override
-    public String getTopic() {
-        List<Subtopic> subtopics = new ArrayList<>(subtopicToQuestions.keySet());
-        return subtopics.get(0).getTopic();
+    public Topic getTopic() {
+        return topic;
     }
 
     @Override
-    public Topic getTopicReference() {
-        List<Subtopic> subtopics = new ArrayList<>(subtopicToQuestions.keySet());
-        return subtopics.get(0).getTopicReference();
+    public String getTopicName() {
+        return topic.getTopicName();
     }
 
     @Override
@@ -394,22 +404,18 @@ public class Simulation implements SimulationInt {
      *
      * @param currentQuestion the question you want to set as the current one
      */
-    @JsonIgnore
     public void setCurrentQuestion(Question currentQuestion) {
         this.currentQuestion = currentQuestion;
     }
 
-    @JsonIgnore
     private void setSubtopicToQuestions(Map<Subtopic, Set<Question>> subtopicToQuestions) {
         this.subtopicToQuestions = subtopicToQuestions;
     }
 
-    @JsonIgnore
     private void setQuestionToAnswer(Map<Question, Character> questionToAnswer) {
         this.questionToAnswer = questionToAnswer;
     }
 
-    @JsonIgnore
     private void setQuestionToShuffledAnswers(Map<Question, Map<String, Character>> questionToShuffledAnswers) {
         this.questionToShuffledAnswers = questionToShuffledAnswers;
     }
@@ -427,9 +433,15 @@ public class Simulation implements SimulationInt {
         this.questionStatementToShuffledAnswers = questionStatementToShuffledAnswers;
     }
 
-    private void setPathToTopicFile(String pathToTopicFile) {
-        this.pathToTopicFile = pathToTopicFile;
+    private void setTopic(Topic topic) {
+        this.topic = topic;
     }
+
+    /*
+     * private void setTopicName(String topicName) {
+     * topic.setTopicName(topicName);
+     * }
+     */
 
     @Override
     public boolean equals(Object o) {
@@ -440,11 +452,12 @@ public class Simulation implements SimulationInt {
         Simulation that = (Simulation) o;
         return Objects.equals(subtopicToQuestions, that.subtopicToQuestions)
                 && Objects.equals(questionToAnswer, that.questionToAnswer)
-                && Objects.equals(questionToShuffledAnswers, that.questionToShuffledAnswers);
+                && Objects.equals(questionToShuffledAnswers, that.questionToShuffledAnswers)
+                && Objects.equals(topic, that.topic);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(subtopicToQuestions, questionToAnswer, questionToShuffledAnswers);
+        return Objects.hash(subtopicToQuestions, questionToAnswer, questionToShuffledAnswers, topic);
     }
 }

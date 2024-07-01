@@ -11,11 +11,12 @@ import static it.unibz.utils.TopicUtils.*;
 import static it.unibz.utils.QuestionUtils.*;
 import static it.unibz.utils.SubtopicUtils.*;
 public class SimulationTest {
-    private final Simulation simulation = new Simulation();
+    private Simulation simulation;
 
     @BeforeEach
     void init() {
         TopicUtils.init();
+        simulation = new Simulation(topic1);
         // SubtopicUtils.init();
         // QuestionUtils.init();
     }
