@@ -21,7 +21,6 @@ public class App {
         while (true) {
             if (showWelcomeMessage)
                 System.out.println("Welcome to the exam simulation program! Click -h for commands");
-            
 
             input = scanner.nextLine();
 
