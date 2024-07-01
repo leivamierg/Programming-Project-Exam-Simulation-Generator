@@ -164,7 +164,9 @@ public class SimulationTest {
                 Question produced = simulation.getCurrentQuestion();
                 assertEquals(expected, produced);
                 Map<Question, Character> expectedMap = new HashMap<>();
-                expectedMap.put(simulation.getAllQuestions().get(0), ' ');
+                for (Question question : simulation.getAllQuestions()) {
+                    expectedMap.put(question, ' ');
+                }
                 assertEquals(expectedMap, simulation.getQuestionToAnswer());
             }
 
@@ -178,7 +180,9 @@ public class SimulationTest {
                 Question produced = simulation.getCurrentQuestion();
                 assertEquals(expected, produced);
                 Map<Question, Character> expectedMap = new HashMap<>();
-                expectedMap.put(simulation.getAllQuestions().get(idxLast), ' ');
+                for (Question question : simulation.getAllQuestions()) {
+                    expectedMap.put(question, ' ');
+                }
                 assertEquals(expectedMap, simulation.getQuestionToAnswer());
             }
 
@@ -211,7 +215,9 @@ public class SimulationTest {
                 Question produced = simulation.getCurrentQuestion();
                 assertEquals(expected, produced);
                 Map<Question, Character> expectedMap = new HashMap<>();
-                expectedMap.put(simulation.getAllQuestions().get(idxLast), ' ');
+                for (Question question : simulation.getAllQuestions()) {
+                    expectedMap.put(question, ' ');
+                }
                 assertEquals(expectedMap, simulation.getQuestionToAnswer());
             }
 
@@ -241,6 +247,9 @@ public class SimulationTest {
             @Test
             void validAnswerToFirstQuestion() {
                 Map<Question, Character> expectedMap = new HashMap<>();
+                for (Question question : simulation.getAllQuestions()) {
+                    expectedMap.put(question, ' ');
+                }
                 expectedMap.put(simulation.getAllQuestions().get(0), 'A');
                 Question expectedCurrentQuestion = simulation.getAllQuestions().get(1);
                 simulation.insertCommand("a");
@@ -254,6 +263,9 @@ public class SimulationTest {
             void validAnswerToLastQuestion() {
                 simulation.setCurrentQuestion(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1));
                 Map<Question, Character> expectedMap = new HashMap<>();
+                for (Question question : simulation.getAllQuestions()) {
+                    expectedMap.put(question, ' ');
+                }
                 expectedMap.put(simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1), ' ');
                 Question expectedCurrentQuestion = simulation.getAllQuestions().get(simulation.getAllQuestions().size() - 1);
                 simulation.insertCommand(" ");
