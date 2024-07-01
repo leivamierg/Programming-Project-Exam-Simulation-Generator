@@ -126,6 +126,11 @@ public class History implements HistoryInt {
      */
     @Override
     public String showHistory() {
+        if(getTestRegisters().isEmpty())
+        {
+            return "No simulation was done yet.";
+        }
+
         String wholeString = new String("Complete History:" + System.lineSeparator());
         for (int i = 0; i < getTestRegisters().size(); i++) {
             wholeString = wholeString + getTestRegisters().get(i).toString() + System.lineSeparator();
