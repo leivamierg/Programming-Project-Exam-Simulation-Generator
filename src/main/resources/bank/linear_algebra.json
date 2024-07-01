@@ -108,7 +108,8 @@
           "rightAnswer": "Neither",
           "wrongAnswers": [
             "Skew symmetric",
-            "Symmetric"
+            "Symmetric",
+            "Nonsensical"
           ],
           "subtopic": "Matrices",
           "priorityLevel": 1
