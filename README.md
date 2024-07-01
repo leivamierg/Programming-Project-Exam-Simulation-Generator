@@ -105,13 +105,6 @@ It contains a set of questions of the current Subtopic and it is linked to its a
 Represents a single possible question in a simulation.\
 Contains the question statement and the possible answers. It is by far the most complex class of the structural classes as it provides many methods to shuffle the possible answers and assign them randomly a letter from A to D.
 
-###### Simulation class
-Represents a simulation of an exam. It provides several functionalities:
-- select the topic the simulation is about -> all the subtopics of the given topic are part of the simulation (the questions are grouped by subtopic)
-- select only some subtopics of a given topic (not implemented but can be tested by running the tests)
-- answer to a question 
-- change the question (either to the previous/next one or to a specific one)
-- terminate the simulation -> the result (general and for each subtopic) is printed and every parameter needed for the next simulations is updated
 
 ##### FileLoading, FileSaving and Serialization
 We used Jackson to implement JSON serialization and deserialization
@@ -134,11 +127,6 @@ Furthermore, it allows the user also to see the stats of a certain topic/subtopi
 This class is quite simple, it only contains a list of TestRegister records, created specifically to store the previous simulation data. Other than supporting JSON serialization and deserialization it also has methods to see the full or a part of the history in the command line.\
 Some data saved in the history are: number of questions, correct answers, wrong questions, used time / available time, etc.
 
-##### Timer functionality
-
-The timer functionality was implemented to give a duration to the tests' simulation. Each simulation is set to a duration of 30 minutes and the remaining time is displayed every time the user answers to a question.
-This way, the remaining time is continuously updated. When the remaining time reaches zero or the user ends the test through the command 'terminate', both the test and the timer are stopped.
-
 ##### Command Handling
 
 The Exam Simulation Program is based on the interaction between the user and the program itself via command-line inputs. The command handling process ensures that the inputs are interpreted and the actions executed.
@@ -153,12 +141,22 @@ The command 'exit' can also be written on the main "page" at the beginning.
 In the more advanced version of the project, the commands 'history' and 'stats' can also be written and the general history and statistics can be checked.
 *All the commands can be written in upper case, lower case or both.*
 
-##### The Simulation and the Model
+###### Simulation class
+Represents a simulation of an exam. It provides several functionalities:
+- select the topic the simulation is about -> all the subtopics of the given topic are part of the simulation (the questions are grouped by subtopic)
+- select only some subtopics of a given topic (not implemented but can be tested by running the tests)
+- answer to a question 
+- change the question (either to the previous/next one or to a specific one)
+- terminate the simulation -> the result (general and for each subtopic) is printed and every parameter needed for the next simulations is updated
 
-Simulation class is the 'real backend' of the application, and it is responsible for managing the exam simulation itself (keeps track of questins order, answers, time etc.). It has the
+#####  Model
 
-Model is mainly a facade for interacting with simulation. in retrospective we should have designed it as a part of the controller.
-TO FIX
+Model is mainly a facade for interacting with simulation. In retrospective we should have designed it as a part of the controller.
+
+##### Timer functionality
+
+The timer functionality was implemented to give a duration to the tests' simulation. Each simulation is set to a duration of 30 minutes and the remaining time is displayed every time the user answers to a question.
+This way, the remaining time is continuously updated. When the remaining time reaches zero or the user ends the test through the command 'terminate', both the test and the timer are stopped.
 
 #### Comparators
 
