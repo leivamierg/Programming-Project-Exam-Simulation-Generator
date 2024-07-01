@@ -204,6 +204,7 @@ Each class was tested separately by using JUnit tests.
 
 - keeping the project organized and structured
 - it was difficult to communicate about changes in each others branches so sometimes we had errors after merging to main
+- pom file is not intuitive
 
 #### @Violetta
 
