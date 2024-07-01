@@ -250,12 +250,7 @@ public class Stats implements StatsInt {
     @Override
     public String showGeneralStats() {
         if (getGeneralStats() == null) {
-            return "General Stats:" + System.lineSeparator() +
-                    "Number of correct answers: 0/0" + System.lineSeparator() +
-                    "Number of wrong answers: 0/0" + System.lineSeparator() +
-                    "Number of blank answers: 0/0" + System.lineSeparator() +
-                    "Total number of questions: 0" + System.lineSeparator() +
-                    "Percentage: 0.0%";
+            return "No simulation was done yet.";
         }
 
         int selected = getGeneralStats().selected();

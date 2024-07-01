@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class HistoryStatsLoader {
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -35,6 +38,20 @@ public class HistoryStatsLoader {
     public static void saveStats(String filePath, Stats stats) throws IOException, IllegalArgumentException {
         if (stats == null)
             throw new IllegalArgumentException();
+        
+        Path pathToFile = Paths.get(filePath);
+        Path directoryPath = pathToFile.getParent();
+
+        // Ensure the directory exists
+        if (directoryPath != null && Files.notExists(directoryPath)) {
+            Files.createDirectories(directoryPath);
+        }
+        
+        // Ensure the file exists
+        if (Files.notExists(pathToFile)) {
+            Files.createFile(pathToFile);
+        }
+        
         setMapper();
         mapper.writeValue(new File(filePath), stats);
     }
@@ -63,6 +80,20 @@ public class HistoryStatsLoader {
         if (history == null) {
             throw new IllegalArgumentException();
         }
+
+        Path pathToFile = Paths.get(filePath);
+        Path directoryPath = pathToFile.getParent();
+
+        // Ensure the directory exists
+        if (directoryPath != null && Files.notExists(directoryPath)) {
+            Files.createDirectories(directoryPath);
+        }
+        
+        // Ensure the file exists
+        if (Files.notExists(pathToFile)) {
+            Files.createFile(pathToFile);
+        }
+
         setMapper();
         mapper.writeValue(new File(filePath), history);
     }
