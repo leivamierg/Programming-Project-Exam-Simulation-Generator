@@ -6,7 +6,7 @@ Free Choice-Group project for the "Programming Project" course of the Free Unive
 
 - Sebastiano Nardin (sebanardin)
 - Gersson Leiva Mier (leivamierg / cool27027)
-- Violetta (Vaiolo)
+- Violetta Fazzi (Vaiolo)
 - Massimiliano (@MassimiIiano)
 
 ## Instructions to build and run the project
