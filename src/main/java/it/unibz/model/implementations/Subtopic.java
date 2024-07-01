@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import it.unibz.model.interfaces.SubtopicInt;
 
-// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "subtopicName")
 @JsonIgnoreProperties(value = { "topicReference" })
 
 public class Subtopic implements SubtopicInt {
@@ -53,12 +52,6 @@ public class Subtopic implements SubtopicInt {
     public String getTopic() {
         return this.topic;
     }
-
-    /*
-     * public String getTopicName() {
-     * return this.topicName;
-     * }
-     */
 
     public Set<Question> getQuestions() {
         return this.questions;
@@ -123,33 +116,6 @@ public class Subtopic implements SubtopicInt {
                 && getSubtopicName().equals(((Subtopic) subtopic).getSubtopicName())
                 && getQuestions().equals((((Subtopic) subtopic).getQuestions())));
     }
-
-    /*
-     * private boolean equalsQuestions(Set<Question> questions) {
-     * if (getQuestions().size() != questions.size() || questions == null) {
-     * return false;
-     * } else {
-     * boolean condition = true;
-     * 
-     * for (Question q1 : getQuestions()) {
-     * condition = false;
-     * for (Question q2 : questions) {
-     * if (q1.equals(q2)) {
-     * condition = true;
-     * break;
-     * }
-     * }
-     * if (!condition) {
-     * return false;
-     * }
-     * 
-     * }
-     * 
-     * return true;
-     * }
-     * 
-     * }
-     */
 
     @Override
     public int hashCode() {

@@ -18,17 +18,9 @@ public class Topic implements TopicInt {
         setTopicName(topicName);
         setSubtopics(subtopics);
 
-        /*
-         * for (Subtopic subtopic : subtopics) {
-         * subtopic.setTopic(this);
-         * }
-         */
-
     }
 
     // setters
-
-    @Override
     public void setTopicName(String topicName) {
         this.topicName = topicName;
     }
@@ -69,33 +61,6 @@ public class Topic implements TopicInt {
         return (getTopicName().equals(((Topic) topic).getTopicName())
                 && getSubtopics().equals(((Topic) topic).getSubtopics()));
     }
-
-    /*
-     * private boolean equalsSubtopics(Set<Subtopic> subtopics) {
-     * if (getSubtopics().size() != subtopics.size() || subtopics == null) {
-     * return false;
-     * } else {
-     * boolean condition = true;
-     * 
-     * for (Subtopic s1 : getSubtopics()) {
-     * condition = false;
-     * for (Subtopic s2 : getSubtopics()) {
-     * if (s1.equals(s2)) {
-     * condition = true;
-     * break;
-     * }
-     * }
-     * if (!condition) {
-     * return false;
-     * }
-     * 
-     * }
-     * 
-     * return true;
-     * }
-     * 
-     * }
-     */
 
     @Override
     public int hashCode() {
