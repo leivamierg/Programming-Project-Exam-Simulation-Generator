@@ -189,7 +189,6 @@ It also displays the possible commands for the user, allowing user-friendliness.
 Each class was tested separately by using JUnit tests.
 
 ## Human experience in this project
-
 ### Workload
 - @sebanardin: Stats, Simulation, FileLoading, HistoryStatsLoader
 - @leivamierg: Topic, Subtopic, Question, QuestionPriorityComparator, HistoryStatsLoader, History, TestRegisters
@@ -201,13 +200,11 @@ Each class was tested separately by using JUnit tests.
 We used git to manage the project, each of us had a branch where we worked on our part of the project and then we merged it to the main branch. At the end we had issues with using different branches due to timerush.
 
 ### Challenges faced by each member
-- Sebastiano: the most difficult problem I faced was the Jackson serialization. In fact, Jackson's documentation is not so well described and this makes debugging a tough duty to carry out.
-
 #### @Massimiliano
 
-- keeping the project organized and structured
-- it was difficult to communicate about changes in each others branches so sometimes we had errors after merging to main
-- pom file is not intuitive
+- Keeping the project organized and structured
+- It was difficult to communicate about changes in each others branches so sometimes we had errors after merging to main
+- POM file is not intuitive
 
 #### @Violetta
 
@@ -225,4 +222,5 @@ We used git to manage the project, each of us had a branch where we worked on ou
 #### @Sebastiano
 - Developing and testing simulation and stats classes
 - Developing and testing JSON serialization/deserialization
-- communicate and collaborate was tricky but it gave me experience on how to collaborate within a team of developers
+- Communicate and collaborate was tricky but it gave me experience on how to collaborate within a team of developers
+- The most difficult problem I faced was the Jackson serialization. In fact, Jackson's documentation is not so well described and this makes debugging a tough duty to carry out.
