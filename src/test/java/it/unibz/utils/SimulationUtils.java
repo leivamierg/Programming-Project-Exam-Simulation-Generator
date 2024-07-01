@@ -37,7 +37,7 @@ public class SimulationUtils {
     public static void init() {
         TopicUtils.init();
         // Simulation T1
-        simulationT1 = new Simulation();
+        simulationT1 = new Simulation(topic1);
         simulationT1.select(topic1, 2);
         simulationT1.start();
         // Subtopic 1.1 -> 1 correct, 1 wrong
@@ -51,7 +51,7 @@ public class SimulationUtils {
         simulationT1.answer(question1_3_3, ' ');
 
         // Simulation T1.S1.S2
-        simulationT1_S1_S2 = new Simulation();
+        simulationT1_S1_S2 = new Simulation(topic1);
         simulationT1_S1_S2.select(Set.of(new Subtopic[] {subtopic1_1, subtopic1_2}), 2);
         simulationT1_S1_S2.start();
         // Subtopic 1.1 -> 1 wrong, 1 blank
@@ -62,7 +62,7 @@ public class SimulationUtils {
         simulationT1_S1_S2.answer(question1_2_2, getWrongAnswer(simulationT1_S1_S2, question1_2_2));
 
         // Simulation T2
-        simulationT2 = new Simulation();
+        simulationT2 = new Simulation(topic2);
         simulationT2.select(topic2, 2);
         simulationT2.start();
         // Subtopic 2.1 -> 1 correct, 1 wrong

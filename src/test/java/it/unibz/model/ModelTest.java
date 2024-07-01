@@ -1,5 +1,5 @@
 package it.unibz.model;
-/*import it.unibz.model.implementations.Model;
+import it.unibz.model.implementations.Model;
 import it.unibz.utils.SubtopicUtils;
 import it.unibz.utils.TopicUtils;
 
@@ -42,4 +42,4 @@ public class ModelTest {
         // Verify the output
         assertTrue(true);
     }
-}*/
+}

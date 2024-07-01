@@ -72,8 +72,8 @@ public class Stats implements StatsInt {
         }
         double percentage = computePercentage(correctQuestions.size(), selectedQuestions.size());
 
-        List<Score> temp = topicToStats.get(simulation.getTopic());
-        updateMap(topicToStats, simulation.getTopic(), temp,
+        List<Score> temp = topicToStats.get(simulation.getTopicName());
+        updateMap(topicToStats, simulation.getTopicName(), temp,
                 correctQuestions.size(), wrongQuestions.size(), blankQuestions.size(),
                 selectedQuestions.size(), allQuestions.size(), percentage);
     }

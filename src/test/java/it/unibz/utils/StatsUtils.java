@@ -20,7 +20,7 @@ public class StatsUtils {
         List<Simulation> simulations = List.of(new Simulation[]{simulationT1});
         // topicToStats
         Map<String, List<Score>> topicToStats = new HashMap<>();
-        topicToStats.put(simulationT1.getTopic(),
+        topicToStats.put(simulationT1.getTopicName(),
                 List.of(new Score(1, 4, 1, 6, 7, 16.66)));
         // subtopicToStats
         Map<String, List<Score>> subtopicToStats = new HashMap<>();

@@ -39,12 +39,26 @@ public class HistoryStatsLoader {
         mapper.writeValue(new File(filePath), stats);
     }
 
-    // TODO:
+    /**
+     * loads the history -> transforms the input file into a History object -> deserialization
+     *
+     * @param filePath path to the file that stores the history
+     * @return a history object that corresponds to the input file
+     * @throws IOException if the input file doesn't exist
+     */
     public static History loadHistory(String filePath) throws IOException {
         setMapper();
         return mapper.readValue(new File(filePath), History.class);
     }
-
+    /**
+     * save a History object into a json file -> serialization
+     *
+     * @param filePath path to the file you want to store the history
+     * @param history    the History object to be serialized
+     * @throws IllegalArgumentException if the object history is null
+     * @throws IOException
+     *
+     */
     public static void saveHistory(String filePath, History history) throws IOException, IllegalArgumentException {
         if (history == null) {
             throw new IllegalArgumentException();
@@ -58,7 +72,7 @@ public class HistoryStatsLoader {
         mapper.setVisibility(mapper.getSerializationConfig().getDefaultVisibilityChecker()
                 .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
                 .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
-                .withSetterVisibility(JsonAutoDetect.Visibility.ANY)
+                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
                 .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
     }
 }

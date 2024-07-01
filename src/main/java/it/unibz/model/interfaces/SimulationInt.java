@@ -44,8 +44,7 @@ public interface SimulationInt {
   void start();
 
   /**
-   * it allows to answer to or change a question
-   * 
+   *
    * @param command the input command (A, B, C, D, ' ', +, -, questionIdx)
    * @throws IllegalArgumentException if the command is invalid
    * @throws IllegalStateException    either if the current question is the first
@@ -186,10 +185,10 @@ public interface SimulationInt {
 
   /**
    *
-   * @return the reference to the topic the sim is about
+   * @return the the name of the topic the sim is about
    */
 
-  Topic getTopicReference();
+  String getTopicName();
 
   /**
    *
@@ -206,8 +205,8 @@ public interface SimulationInt {
 
   /**
    *
-   * @return the name of the topic the sim is about
+   * @return the topic the sim is about
    */
 
-  String getTopic();
+  Topic getTopic();
 }

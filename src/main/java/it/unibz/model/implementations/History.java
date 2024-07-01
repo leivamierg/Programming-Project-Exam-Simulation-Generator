@@ -42,10 +42,11 @@ public class History {
                 simulation.getNumberOfQuestions(), simulation.getAllCorrectQuestions().size(),
                 simulation.getAllWrongQuestions().size(), simulation.getAllBlankQuestions().size(),
                 simulation.computeSimStats().percentage(),
-                simulation.getTopic(), selectedSubtopics.toArray(selectedSubtopics.toArray(new String[0])));
+                simulation.getTopicName(), selectedSubtopics.toArray(selectedSubtopics.toArray(new String[0])));
         this.addTestRegister(newTestRegister);
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == null || !(o instanceof History)) {
             return false;
@@ -54,7 +55,7 @@ public class History {
         else
             return ((History) o).getTestRegisters().equals(this.getTestRegisters());
     }
-
+    @Override
     public int hashCode() {
         return Objects.hash(testRegisters);
     }
