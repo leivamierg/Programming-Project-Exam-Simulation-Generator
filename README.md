@@ -189,13 +189,16 @@ It also displays the possible commands for the user, allowing user-friendliness.
 Each class was tested separately by using JUnit tests.
 
 ## Human experience in this project
-- Sebastiano: communicate and collaborate was tricky but it gave me experience on how to collaborate within a team of developers
 
 ### Workload
-- Sebastiano: 50 hours (only for writing and debugging code)
+- @sebanardin: Stats, Simulation, FileLoading, HistoryStatsLoader
+- @leivamierg: Topic, Subtopic, Question, QuestionPriorityComparator, HistoryStatsLoader, History, TestRegisters
+- @MassimiIiano: Controller, App, Model, Simulation, Question, HistoryStatsLoader
+- @Vaiolo: Controller, App, Model, Simulation, ExamTimer
 
 ### Use of git
-- Sebastiano: only in few moments I struggled with git, but it's absolutely essential for developing the project
+
+We used git to manage the project, each of us had a branch where we worked on our part of the project and then we merged it to the main branch. At the end we had issues with using different branches due to timerush.
 
 ### Challenges faced by each member
 - Sebastiano: the most difficult problem I faced was the Jackson serialization. In fact, Jackson's documentation is not so well described and this makes debugging a tough duty to carry out.
@@ -222,3 +225,4 @@ Each class was tested separately by using JUnit tests.
 #### @Sebastiano
 - Developing and testing simulation and stats classes
 - Developing and testing JSON serialization/deserialization
+- communicate and collaborate was tricky but it gave me experience on how to collaborate within a team of developers
