@@ -3,7 +3,6 @@ package it.unibz.utils;
 import it.unibz.model.implementations.Score;
 import it.unibz.model.implementations.Simulation;
 import it.unibz.model.implementations.Stats;
-import it.unibz.model.implementations.Subtopic;
 
 import static it.unibz.utils.SimulationUtils.*;
 import static it.unibz.utils.SubtopicUtils.*;

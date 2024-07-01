@@ -5,7 +5,7 @@ import it.unibz.model.implementations.Model;
 import java.util.Scanner;
 
 /**
- * Hello world!
+ * The main class of the program.
  *
  */
 public class App {
