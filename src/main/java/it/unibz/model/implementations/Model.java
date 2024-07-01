@@ -90,17 +90,17 @@ public class Model implements ModelInt {
             System.out.println("Timer: " + formatTime(remainingTime));
 
             Question currentQuestion = simulation.getCurrentQuestion();
+            int indexCurrentQuestion = simulation.getAllQuestions().indexOf(currentQuestion) + 1;
+            int totalNumberQuestions = simulation.getAllQuestions().size();
+
+            System.out.println("index question:" + indexCurrentQuestion + "/" + totalNumberQuestions);
             System.out.println(currentQuestion.getQuestionAndAnswers());
             System.out.print("Select an answer: ");
             String input = scanner.nextLine().trim();
 
-            if (input.equalsIgnoreCase("exit")) {
-                System.out.println("Exiting the simulation");
-                break;
-            }
-
             if (input.equalsIgnoreCase("terminate")) {
                 System.out.println(simulation.terminate(new Stats(), new History()));
+                break;
             }
 
             long questionEndTime = System.currentTimeMillis();
@@ -121,15 +121,6 @@ public class Model implements ModelInt {
 
         System.out.println("Test completed.");
         System.out.println(simulation.terminate(new Stats(), new History()));
-
-        System.out.print("Type 'exit' to leave the program");
-        String input = scanner.nextLine().trim();
-
-        if (input.equalsIgnoreCase("exit")) 
-            System.out.println("Exiting the simulation");
-        
-
-        scanner.close();
 
     }
 
