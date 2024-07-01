@@ -198,6 +198,14 @@ public interface SimulationInt {
 
   /**
    *
+   * @param question the given question
+   * @return the answer given to the inout question
+   */
+
+    char getAnswer(Question question);
+
+    /**
+   *
    * @return a map mapping every question to its shuffled answers label (A, B, C,
    *         D)
    */
