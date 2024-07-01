@@ -1,5 +1,6 @@
 package it.unibz.controller;
 
+import it.unibz.model.implementations.Model;
 import it.unibz.model.interfaces.HistoryInt;
 import it.unibz.model.interfaces.ModelInt;
 import it.unibz.model.interfaces.StatsInt;
@@ -11,14 +12,14 @@ import java.util.regex.Pattern;
 public class Controller {
 
     private ModelInt model;
-    private HistoryInt history;
-    private StatsInt stats;
+    //private HistoryInt history;
+    //private StatsInt stats;
     private static final Scanner scanner = new Scanner(System.in);
 
-    public Controller(ModelInt model, HistoryInt history, StatsInt stats) {
+    public Controller(ModelInt model/*, HistoryInt history, StatsInt stats*/) {
         this.model = model;
-        this.history = history;
-        this.stats = stats;
+        //this.history = history;
+        //this.stats = stats;
     }
 
     public void elaborateArgs(String[] arguments) {
@@ -58,10 +59,10 @@ public class Controller {
             System.out.println("Subtopic selection feature not implemented.");
         } else if ((historyPattern.matcher(input)).find())
         {
-            System.out.println(history.showHistory());
+            System.out.println(Model.getLoadedHistory().showHistory());
         }  else if ((statsPattern.matcher(input)).find())
         {
-            System.out.println(stats.showGeneralStats());
+            System.out.println(Model.getLoadedStats().showGeneralStats());
         } else {
             System.out.println("Invalid command. Please check your input.");
         }

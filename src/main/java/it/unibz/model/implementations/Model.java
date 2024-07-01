@@ -69,7 +69,7 @@ public class Model implements ModelInt {
                 .orElse(null);
 
         if (selectedTopic == null) {
-            System.out.println("The topic you are looking for doesn't exist.");
+            System.out.println("Invalid command or the topic you are looking for doesn't exist.");
             return;
         }
 
@@ -132,7 +132,7 @@ public class Model implements ModelInt {
             String input = scanner.nextLine().trim();
 
             if (input.equalsIgnoreCase("terminate")) {
-                System.out.println(simulation.terminate(new Stats(), new History()));
+                System.out.println(simulation.terminate(stats, history));
                 break;
             }
 

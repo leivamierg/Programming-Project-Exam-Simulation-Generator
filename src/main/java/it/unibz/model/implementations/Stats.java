@@ -258,7 +258,7 @@ public class Stats implements StatsInt {
         return "General Stats:" + System.lineSeparator() + "Number of correct answers: " + correct + "/" + selected
                 + System.lineSeparator() + "Number of wrong answers: " + incorrect + "/" + selected
                 + System.lineSeparator() + "Number of blank answers: " + blank + "/" + selected + System.lineSeparator()
-                + "Total of questions: " + total + System.lineSeparator() + "Percentage: " + percentage + "%";
+                + "Total number of questions: " + total + System.lineSeparator() + "Percentage: " + percentage + "%";
         // general stats (average with all topics)
         // number of topics (with names)
         // stats for every topic
@@ -285,7 +285,7 @@ public class Stats implements StatsInt {
                 + selected
                 + System.lineSeparator() + "Number of wrong answers: " + incorrect + "/" + selected
                 + System.lineSeparator() + "Number of blank answers: " + blank + "/" + selected + System.lineSeparator()
-                + "Total of questions: " + total + System.lineSeparator() + "Percentage: " + percentage + "%";
+                + "Total number of questions: " + total + System.lineSeparator() + "Percentage: " + percentage + "%";
 
     }
 
@@ -307,7 +307,7 @@ public class Stats implements StatsInt {
                 + selected
                 + System.lineSeparator() + "Number of wrong answers: " + incorrect + "/" + selected
                 + System.lineSeparator() + "Number of blank answers: " + blank + "/" + selected + System.lineSeparator()
-                + "Total of questions: " + total + System.lineSeparator() + "Percentage: " + percentage + "%";
+                + "Total number of questions: " + total + System.lineSeparator() + "Percentage: " + percentage + "%";
 
     }
 

@@ -21,7 +21,7 @@ public class App {
      */
     public static void main( String[] args ) throws IOException {
 
-        Controller controller = new Controller(new Model(), new History(), new Stats());
+        Controller controller = new Controller(new Model()/*, new History(), new Stats()*/);
         Scanner scanner = new Scanner(System.in);
 
         String input;
