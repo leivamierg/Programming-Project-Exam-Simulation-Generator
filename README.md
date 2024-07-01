@@ -23,7 +23,12 @@ java -jar target/tester-1.0-SNAPSHOT.jar
 ```
 
 ## Project's overall description
-Our project is bla bla bla, and does bla bla bla, focused for ... so they can ..., which is achieved through ...
+Our project is a test simulation software, thought to be used by the users to prepare themselves for a multiple-choice format exam. 
+The main feature of our programm consists in generating an exam simulation of a chosen topic, representing a specific university course. 
+In the simulation the user has a timer indicating the time left, and a Command Line User Interface to see the current question with its 
+answers and select one of the given choices. In addition, the user can move around the questions by skiping some parts of the exam or going back to an already seen question.
+The simulation finishes automatically when all the questions has been answered or when the user inserts a command to terminate the simulation. 
+Once the simulation is finished the user sees its results and can decide to do another simulation or not.
 ## User-guide for our project
 Commands...
 ## Implementation of the project (components)
