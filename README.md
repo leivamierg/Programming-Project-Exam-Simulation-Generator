@@ -56,7 +56,7 @@ There are no interfaces available for the records and the comparators.
 
 #### Implementations
 
-##### Base structural classes
+##### Base structural classes (@leivamierg)
 
 We have only three different classes to keep the different questions organised and separated in different areas: Topic, Subtopic and Question.\
 The highest hierarchy class would be Topic, parting from there, each Topic object contains many Subtopic objects, and each Subtopic object contains many Question objects. The lowest class on the hierarchy would be Question, not containing any structural class between its various data members.
@@ -78,7 +78,7 @@ Contains the question statement and the possible answers. It is by far the most 
 
 ##### FileLoading, FileSaving and Serialization
 
-##### Stats and history
+##### Stats and history (@leivamierg and @sebanardin)
 
 These two classes give a sense of progress to the user saving data of previous simulations, they use serialization and deserialization as well to save and load their content.
 
@@ -101,7 +101,7 @@ Model is mainly a facade for interacting with simulation. in retrospective we sh
 
 Even though having its own directory, actually there is only one comparator:
 
-##### QuestionPriorityComparator
+##### QuestionPriorityComparator (@leivamierg)
 
 It is a useful tool to sort a question list based on their "priorityLevel" ordering them from lower priority to higher priority.\
 It is used on the Subtopic class, for the "pickQuestions" method.
@@ -110,7 +110,7 @@ It is used on the Subtopic class, for the "pickQuestions" method.
 
 ### The App
 
-## Tests and Utils
+## Tests and Utils (@all)
 
 ## Human experience in this project
 
