@@ -72,7 +72,7 @@ public record TestRegister(@JsonProperty("testNumber") int testNumber,
                 + numberOfQuestions() + System.lineSeparator() + "Number of correct answers: "
                 + correctlyAnsweredQuestions() + System.lineSeparator() + "Wrong answers: "
                 + incorrectlyAnsweredQuestions() + System.lineSeparator() + "Blank answers: " + blankQuestions()
-                + System.lineSeparator() + "Overall Score: " + overallScore() + System.lineSeparator() + "Topic: "
+                + System.lineSeparator() + "Overall Score: " + overallScore() + "%" + System.lineSeparator() + "Topic: "
                 + topic() + System.lineSeparator() + "Subtopics: " + subtopicsList;
     }
 }
