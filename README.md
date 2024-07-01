@@ -14,7 +14,7 @@ Free Choice-Group project for the "Programming Project" course of the Free Unive
 ### Build
 
 ```bash
-mvn clean package
+mvn clean compile assembly:single
 ```
 
 ### Run
@@ -22,7 +22,7 @@ mvn clean package
 execute the jar file created in the target folder
 
 ```bash
-mvn exec:java -Dexec.mainClass="it.unibz.app.App"
+java -jar target/tester-1.0-jar-with-dependencies.jar 
 ```
 
 ## Project's overall description
@@ -92,6 +92,12 @@ Some of the data saved in the history are: number of questions, correct answers,
 ##### Command Handling
 
 ##### The Simulation and the Model
+
+Simulation class is the 'real backend' of the application and it is responsible for managing the exam simulation itself (keeps track of questins order, answers, time etc.). It has the 
+
+Model is mainly a facade for interacting with simulation. in retrospective we should have designed it as a part of the controller.
+
+
 
 #### Comparators
 
