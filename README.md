@@ -86,7 +86,7 @@ These two classes give a sense of progress to the user saving data of previous s
 
 ###### History
 
-This class is quuite simple, it only contains a list of TestRegister records, created specifically to store the previous simulation data. Other than supporting JSON serialization and deserialization it also has methods to see the full or a part of the history in the command line./
+This class is quuite simple, it only contains a list of TestRegister records, created specifically to store the previous simulation data. Other than supporting JSON serialization and deserialization it also has methods to see the full or a part of the history in the command line.\
 Some of the data saved in the history are: number of questions, correct answers, wrong questions, used time / available time, etc.
 
 ##### Command Handling
@@ -103,12 +103,14 @@ Even though having its own directory, actually there is only one comparator:
 
 ##### QuestionPriorityComparator
 
-It is a useful tool to sort a question list based on their "priorityLevel" ordering them from lower priority to higher priority./
+It is a useful tool to sort a question list based on their "priorityLevel" ordering them from lower priority to higher priority.\
 It is used on the Subtopic class, for the "pickQuestions" method.
 
 ### The Controller
 
 ### The App
+
+## Tests and Utils
 
 ## Human experience in this project
 
