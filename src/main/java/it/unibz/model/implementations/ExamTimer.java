@@ -7,9 +7,10 @@ import java.util.concurrent.TimeUnit;
  * It implements the Runnable interface to allow it to be executed in a separate thread.
  */
 public class ExamTimer implements Runnable {
-    // private Simulation simulation;
     private boolean running;
     private int remainingTime;
+
+    // Duration of the simulation in seconds
     public final int DURATION_SIMULATION = 60 * 30;
 
     /**

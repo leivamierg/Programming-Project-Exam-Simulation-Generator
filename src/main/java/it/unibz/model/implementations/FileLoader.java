@@ -8,6 +8,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * The FileLoader class is responsible for loading and saving files.
+ * It loads files into Topic objects and saves Topic objects into files.
+ */
 public class FileLoader {
 
     private static final Set<Topic> topics = new HashSet<>();
