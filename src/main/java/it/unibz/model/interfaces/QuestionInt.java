@@ -7,37 +7,6 @@ import java.util.Set;
 
 public interface QuestionInt {
     // setters
-    /**
-     * 
-     * @param subtopic the name of the Subtopic object containing the current
-     *                 Question
-     */
-    // void setSubtopic(String subtopic);
-
-    /**
-     * 
-     * @param subtopic reference to the apparteining subtopic
-     */
-    // void setSubtopicReference(Subtopic subtopicReference);//
-
-    /**
-     * 
-     * @param statement the String which can be understood as the question itself
-     */
-    // void setQuestionStatement(String statement);
-
-    /**
-     * 
-     * @param rightAnswer the correct answer to the questionStatement
-     */
-    // void setRightAnswer(String rightAnswer);
-
-    /**
-     * 
-     * @param wrongAnswers a 3 components array containing wrong answers to the
-     *                     questionSatement
-     */
-    // void setWrongAnswers(List<String> wrongAnswers);
 
     /**
      * 
@@ -56,11 +25,12 @@ public interface QuestionInt {
 
     int getPriorityLevel();
 
-    
     /**
-     * Returns a map containing shuffled options for a question.
+     * Returns a map containing the three possible answers to the question with a
+     * character from A to D, chosen randomly
      *
-     * @return a map where the keys are the shuffled options and the values are the corresponding characters.
+     * @return a map where the keys are the shuffled options and the values are the
+     *         corresponding characters.
      */
     Map<String, Character> getShuffleMap();
 
@@ -71,12 +41,24 @@ public interface QuestionInt {
      */
     void linkQuestionToSubtopic(Set<Topic> topics);
 
-    /**
-     * @return a list of the 4 possible answers shuffled in a random order
-     */
     String toString();
 
-    // boolean equals(Question question);
+    /**
+     * Returns the character linked to the correct answer, no matter how the map was
+     * shuffled
+     * 
+     * @param shuffleMap a shufflemap generated through the getShuffleMap method
+     * @return the caracter linked to the correct answer
+     */
 
-    // boolean equals(Question question);
+    public char getCorrectAnswerLabel(Map<String, Character> shuffleMap);
+
+    /**
+     * Returns the string containing the different answers with it corresponding
+     * characters, obtained through the shufflemap method
+     * 
+     * @return (A-D) + string of possible answers
+     */
+    public String getQuestionAndAnswers();
+
 }

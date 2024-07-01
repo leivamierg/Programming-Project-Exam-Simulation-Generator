@@ -3,13 +3,10 @@ package it.unibz.model.implementations;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import javax.xml.stream.events.Characters;
-
 import com.fasterxml.jackson.annotation.*;
 
 import it.unibz.model.interfaces.QuestionInt;
 
-// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "questionStatement")
 @JsonIgnoreProperties(value = { "subtopicReference" })
 public class Question implements QuestionInt {
     private String questionStatement;
@@ -23,19 +20,15 @@ public class Question implements QuestionInt {
     public Question(@JsonProperty("questionStatement") String questionStatement,
             @JsonProperty("rightAnswer") String rightAnswer,
             @JsonProperty("wrongAnswers") Set<String> wrongAnswers, @JsonProperty("subtopic") String subtopic,
-            @JsonProperty("priorityLevel") int priorityLevel
-    /* , Subtopic subtopic */) {
-        // TODO: display le stats
+            @JsonProperty("priorityLevel") int priorityLevel) {
         setQuestionStatement(questionStatement);
         setRightAnswer(rightAnswer);
         setWrongAnswers(wrongAnswers);
         setSubtopic(subtopic);
-        // setSubtopicReference(subtopic);
-        setPriorityLevel(priorityLevel);// starts at 1 by default
+        setPriorityLevel(priorityLevel);
     }
 
     // setters
-    // override????
     public void setSubtopic(String name) {
         subtopic = name;
     }
@@ -113,9 +106,8 @@ public class Question implements QuestionInt {
         Map<String, Character> shuffleMap = getShuffleMap();
 
         for (Map.Entry<String, Character> entry : shuffleMap.entrySet()) {
-            sb.append(entry.getValue() + ") " + entry.getKey() +  System.lineSeparator());
+            sb.append(entry.getValue() + ") " + entry.getKey() + System.lineSeparator());
         }
-
 
         return sb.toString();
     }
