@@ -42,8 +42,8 @@
       } ]
     },
     "questionStatementToAnswer" : {
-      "Question 1.1.1" : "A",
-      "Question 1.2.2" : "B",
+      "Question 1.1.1" : "D",
+      "Question 1.2.2" : "A",
       "Question 1.3.1" : "A",
       "Question 1.1.2" : "A",
       "Question 1.2.1" : "A",
@@ -51,40 +51,40 @@
     },
     "questionStatementToShuffledAnswers" : {
       "Question 1.1.1" : {
-        "Right answer 1.1.1" : "A",
+        "Wrong answer 1.1.1.2" : "A",
         "Wrong answer 1.1.1.3" : "B",
         "Wrong answer 1.1.1.1" : "C",
-        "Wrong answer 1.1.1.2" : "D"
+        "Right answer 1.1.1" : "D"
       },
       "Question 1.2.2" : {
-        "Right answer 1.2.2" : "A",
+        "Wrong answer 1.2.2.2" : "A",
         "Wrong answer 1.2.2.1" : "B",
-        "Wrong answer 1.2.2.2" : "C",
+        "Right answer 1.2.2" : "C",
         "Wrong answer 1.2.2.3" : "D"
       },
       "Question 1.3.1" : {
         "Wrong answer 1.3.1.1" : "A",
         "Wrong answer 1.3.1.2" : "B",
-        "Wrong answer 1.3.1.3" : "C",
-        "Right answer 1.3.1" : "D"
+        "Right answer 1.3.1" : "C",
+        "Wrong answer 1.3.1.3" : "D"
       },
       "Question 1.1.2" : {
-        "Wrong answer 1.1.2.3" : "A",
-        "Wrong answer 1.1.2.2" : "B",
-        "Right answer 1.1.2" : "C",
-        "Wrong answer 1.1.2.1" : "D"
+        "Wrong answer 1.1.2.1" : "A",
+        "Wrong answer 1.1.2.3" : "B",
+        "Wrong answer 1.1.2.2" : "C",
+        "Right answer 1.1.2" : "D"
       },
       "Question 1.2.1" : {
-        "Wrong answer 1.2.1.3" : "A",
-        "Wrong answer 1.2.1.2" : "B",
-        "Wrong answer 1.2.1.1" : "C",
-        "Right answer 1.2.1" : "D"
+        "Wrong answer 1.2.1.1" : "A",
+        "Right answer 1.2.1" : "B",
+        "Wrong answer 1.2.1.3" : "C",
+        "Wrong answer 1.2.1.2" : "D"
       },
       "Question 1.3.3" : {
         "Wrong answer 1.3.3.1" : "A",
         "Right answer 1.3.3" : "B",
-        "Wrong answer 1.3.3.2" : "C",
-        "Wrong answer 1.3.3.3" : "D"
+        "Wrong answer 1.3.3.3" : "C",
+        "Wrong answer 1.3.3.2" : "D"
       }
     },
     "topic" : {
