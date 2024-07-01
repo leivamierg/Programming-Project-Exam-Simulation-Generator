@@ -8,6 +8,20 @@ Free Choice-Group project for the "Programming Project" course of the Free Unive
 - Masimiliano (Masimiliano)
 ## Instructions to build and run the project
 
+### Build
+
+```bash
+mvn clean package
+```
+
+### Run
+
+execute the jar file created in the target folder
+
+```bash
+java -jar target/tester-1.0-SNAPSHOT.jar
+```
+
 ## Project's overall description
 Our project is bla bla bla, and does bla bla bla, focused for ... so they can ..., which is achieved through ...
 ## User-guide for our project
