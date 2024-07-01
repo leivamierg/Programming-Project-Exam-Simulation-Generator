@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import it.unibz.model.implementations.History;
-import it.unibz.model.implementations.Score;
 import it.unibz.utils.SimulationUtils;
 
 public class HistoryTest {
