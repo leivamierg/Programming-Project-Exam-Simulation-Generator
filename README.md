@@ -190,7 +190,7 @@ Each class was tested separately by using JUnit tests.
 
 ## Human experience in this project
 ### Workload
-- @sebanardin: Stats, Simulation, FileLoading, HistoryStatsLoader
+- @sebanardin: Stats, Simulation, FileLoading, HistoryStatsLoader, App, Controller
 - @leivamierg: Topic, Subtopic, Question, QuestionPriorityComparator, HistoryStatsLoader, History, TestRegisters
 - @MassimiIiano: Controller, App, Model, Simulation, Question, HistoryStatsLoader
 - @Vaiolo: Controller, App, Model, Simulation, ExamTimer, History, Stats
@@ -222,5 +222,6 @@ We used git to manage the project, each of us had a branch where we worked on ou
 #### @Sebastiano
 - Developing and testing simulation and stats classes
 - Developing and testing JSON serialization/deserialization
+- Developing a part of stats in App and Controller classes
 - Communicate and collaborate was tricky but it gave me experience on how to collaborate within a team of developers
 - The most difficult problem I faced was the Jackson serialization. In fact, Jackson's documentation is not so well described and this makes debugging a tough duty to carry out.
