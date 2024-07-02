@@ -13,7 +13,8 @@ public class Model implements ModelInt {
 
     private static Stats stats;
     private static History history;
-    private final int DURATION_SIMULATION = 60 * 30;
+    private static final int DURATION_SIMULATION = 60 * 30;
+    private static int remainingTimeSimulation;
 
     public Model() {
 
@@ -112,13 +113,13 @@ public class Model implements ModelInt {
         simulation.select(selectedTopic, numberOfQuestionsSubtopic);
         simulation.start();
 
-        int remainingTime = DURATION_SIMULATION;
+        remainingTimeSimulation = DURATION_SIMULATION;
 
-        while (remainingTime > 0) {
+        while (remainingTimeSimulation > 0) {
             long questionStartTime = System.currentTimeMillis();
 
             clearConsole();
-            System.out.println("Timer: " + formatTime(remainingTime));
+            System.out.println("Timer: " + formatTime(remainingTimeSimulation));
 
             Question currentQuestion = simulation.getCurrentQuestion();
             int indexCurrentQuestion = simulation.getAllQuestions().indexOf(currentQuestion) + 1;
@@ -140,16 +141,16 @@ public class Model implements ModelInt {
 
             long questionEndTime = System.currentTimeMillis();
             int timeSpentOnQuestion = (int) ((questionEndTime - questionStartTime) / 1000);
-            remainingTime -= timeSpentOnQuestion;
+            remainingTimeSimulation -= timeSpentOnQuestion;
 
-            if (remainingTime <= 0) {
+            if (remainingTimeSimulation <= 0) {
                 break;
             }
 
             try {
                 simulation.insertCommand(sanitizeAnswer(input));
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Invalid command!");
                 continue;
             }
         }
@@ -158,12 +159,13 @@ public class Model implements ModelInt {
 
     }
 
+
     private void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    private String formatTime(int seconds) {
+    private static String formatTime(int seconds) {
         int mins = seconds / 60;
         int secs = seconds % 60;
         return String.format("%02d:%02d", mins, secs);
@@ -175,7 +177,7 @@ public class Model implements ModelInt {
 
     private String sanitizeAnswer(String answer) {
         String res = answer.toUpperCase();
-        if (!res.matches("[A-D\\d\\+\\-]")) {
+        if (!res.matches("[A-D+-]|\\s+|\\d+")) {
             return "n";
         }
 
@@ -208,5 +210,10 @@ public class Model implements ModelInt {
     public static History getLoadedHistory()
     {
         return history;
+    }
+
+    public static String getRemainingTime()
+    {
+        return String.valueOf(formatTime(DURATION_SIMULATION - remainingTimeSimulation));
     }
 }
