@@ -149,8 +149,8 @@ public class Model implements ModelInt {
 
             try {
                 simulation.insertCommand(sanitizeAnswer(input));
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Invalid command!");
                 continue;
             }
         }
@@ -177,7 +177,7 @@ public class Model implements ModelInt {
 
     private String sanitizeAnswer(String answer) {
         String res = answer.toUpperCase();
-        if (!res.matches("[A-D\\d\\+\\-]")) {
+        if (!res.matches("[A-D+-]|\\s+|\\d+")) {
             return "n";
         }
 

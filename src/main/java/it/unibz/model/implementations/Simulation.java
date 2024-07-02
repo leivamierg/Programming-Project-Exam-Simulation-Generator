@@ -168,7 +168,7 @@ public class Simulation implements SimulationInt {
                 map(answer -> questionToShuffledAnswers.get(currentQuestion).get(answer)).
                 collect(Collectors.toSet());
         char commandChar = Character.toUpperCase(command.charAt(0));
-        if (possibleAnswers.contains(commandChar) && commandChar != '-' && commandChar != '+') {
+        if ((possibleAnswers.contains(commandChar) || commandChar == ' ') && commandChar != '-' && commandChar != '+') {
             questionToAnswer.put(currentQuestion, commandChar);
             questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), commandChar);
             if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
@@ -232,11 +232,13 @@ public class Simulation implements SimulationInt {
     private void changeQuestion(char prevOrNext) {
         List<Question> allQuestions = getAllQuestions();
         int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
-        if (idxCurrentQuestion >= 0 && idxCurrentQuestion < allQuestions.size() - 1 && prevOrNext == '+') {
+        if (idxCurrentQuestion >= 0 && idxCurrentQuestion < allQuestions.size() - 1 && prevOrNext == '+'
+        /*&& questionToAnswer.get(currentQuestion) != ' '*/) {
             questionToAnswer.put(currentQuestion, ' ');
             questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), ' ');
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
-        } else if (idxCurrentQuestion > 0 && idxCurrentQuestion <= allQuestions.size() - 1 && prevOrNext == '-') {
+        } else if (idxCurrentQuestion > 0 && idxCurrentQuestion <= allQuestions.size() - 1 && prevOrNext == '-'
+                /*&& questionToAnswer.get(currentQuestion) != ' '*/) {
             questionToAnswer.put(currentQuestion, ' ');
             questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), ' ');
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion - 1));
@@ -245,8 +247,10 @@ public class Simulation implements SimulationInt {
     }
 
     private void changeQuestion(int idxQuestion) {
-        questionToAnswer.put(currentQuestion, ' ');
-        questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), ' ');
+        /*if (questionToAnswer.get(currentQuestion) != ' ') {*/
+            questionToAnswer.put(currentQuestion, ' ');
+            questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), ' ');
+        // }
         List<Question> allQuestions = getAllQuestions();
         setCurrentQuestion(allQuestions.get(idxQuestion - 1));
     }
