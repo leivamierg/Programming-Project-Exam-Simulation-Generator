@@ -164,7 +164,28 @@ public class Simulation implements SimulationInt {
         for (int i = 0; i < allQuestions.size(); i++) {
             questionsIdxs.add(i + 1);
         }
-        switch (command.toUpperCase()) {
+        Set<Character> possibleAnswers = questionToShuffledAnswers.get(currentQuestion).keySet().stream().
+                map(answer -> questionToShuffledAnswers.get(currentQuestion).get(answer)).
+                collect(Collectors.toSet());
+        char commandChar = Character.toUpperCase(command.charAt(0));
+        if (possibleAnswers.contains(commandChar) && commandChar != '-' && commandChar != '+') {
+            questionToAnswer.put(currentQuestion, commandChar);
+            questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), commandChar);
+            if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
+                int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
+                setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
+            }
+        } else if (commandChar == '+' || commandChar == '-') {
+            changeQuestion(commandChar);
+        } else {
+            int idx = Integer.parseInt(command);
+            if (questionsIdxs.contains(idx)) {
+                changeQuestion(idx);
+            } else {
+                throw new IllegalArgumentException("Illegal Character");
+            }
+        }
+        /*switch (command.toUpperCase()) {
             case "A":
             case "B":
             case "C":
@@ -189,7 +210,7 @@ public class Simulation implements SimulationInt {
                 } else {
                     throw new IllegalArgumentException("Illegal Character");
                 }
-        }
+        }*/
     }
 
     @Override
