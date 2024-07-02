@@ -66,7 +66,7 @@ public class History implements HistoryInt {
         List<String> selectedSubtopics = simulation.getSubtopicToQuestions().keySet().stream()
                 .map((subtopic) -> (subtopic.getSubtopicName())).toList();
         TestRegister newTestRegister = new TestRegister(this.getTestRegisters().size() + 1,
-                /*secondsToString(simulation.getTimer().getRemainingTime())*/ simulation.getTimer().calculateTimeTaken_String()
+                /*secondsToString(simulation.getTimer().getRemainingTime())*/Model.getRemainingTime()
                 + " out of " + secondsToString(simulation.getTimer().DURATION_SIMULATION),
                 simulation.getNumberOfQuestions(), simulation.getAllCorrectQuestions().size(),
                 simulation.getAllWrongQuestions().size(), simulation.getAllBlankQuestions().size(),
