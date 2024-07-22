@@ -1,13 +1,10 @@
 package it.unibz.controller;
-
-import it.unibz.model.implementations.FileLoader;
-import it.unibz.model.implementations.Model;
-import it.unibz.model.implementations.Subtopic;
-import it.unibz.model.implementations.Topic;
-import it.unibz.model.interfaces.HistoryInt;
+import it.unibz.model.implementations.*;
 import it.unibz.model.interfaces.ModelInt;
-import it.unibz.model.interfaces.StatsInt;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,14 +12,12 @@ import java.util.regex.Pattern;
 public class Controller {
 
     private ModelInt model;
-    //private HistoryInt history;
-    //private StatsInt stats;
     private static final Scanner scanner = new Scanner(System.in);
+    private User user;
 
-    public Controller(ModelInt model/*, HistoryInt history, StatsInt stats*/) {
+    public Controller(ModelInt model, User user) {
         this.model = model;
-        //this.history = history;
-        //this.stats = stats;
+        this.user = user;
     }
 
     public void elaborateArgs(String[] arguments) {
@@ -31,8 +26,7 @@ public class Controller {
             return;
         }
 
-        String input = String.join(" ", arguments);
-        input = input.strip();
+        String input = String.join(" ", arguments).strip();
 
         Pattern listTopicsPattern = Pattern.compile("^(-t|--topics)$");
         Pattern listSubtopicsPattern = Pattern.compile("^([A-Za-z\\s]+)\\s+(-s|--subtopics)$");
@@ -46,7 +40,8 @@ public class Controller {
         Pattern compareSubtopicStatsPattern = Pattern.compile("^(?i)(subtopic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+(\\d+)\\s+--compareStats$");
         Pattern showTopicStatsPattern = Pattern.compile("^(?i)(topic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+--showStats$");
         Pattern showSubtopicStatsPattern = Pattern.compile("^(?i)(subtopic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+--showStats$");
-
+        Pattern startDailyChallengePattern = Pattern.compile("^(-d)$");
+        Pattern showProfile = Pattern.compile("(?i)--profile");
 
         Matcher matcher;
 
@@ -58,9 +53,7 @@ public class Controller {
         } else if ((matcher = startTestPattern.matcher(input)).find()) {
             String topic = matcher.group(1);
             model.test(topic, null);
-        } else if ((matcher = selectSubtopicsPattern.matcher(input)).find()) {
-            // String topic = matcher.group(1);
-            //Selection of subtopic from Model to  be implemented (not in the first version)
+        } else if (selectSubtopicsPattern.matcher(input).find()) {
             System.out.println("Subtopic selection feature not implemented.");
         } else if ((historyPattern.matcher(input)).find()) {
             System.out.println(Model.getLoadedHistory().showHistory());
@@ -81,7 +74,6 @@ public class Controller {
             int end = Integer.parseInt(matcher.group(4));
             try {
                 System.out.println(Model.getLoadedStats().compareStats(subtopic, start, end));
-
             } catch (Exception e) {
                 System.out.println("The ending simulation number is smaller or equals the start one, or the subtopic name is invalid!");
             }
@@ -98,7 +90,6 @@ public class Controller {
             int simNumber = Integer.parseInt(matcher.group(3));
             try {
                 System.out.println(Model.getLoadedStats().showSubtopicStats(subtopic, simNumber));
-
             } catch (Exception e) {
                 System.out.println("The simulation number or the subtopic name is invalid!");
             }
@@ -107,44 +98,50 @@ public class Controller {
             int start = Integer.parseInt(matcher.group(3));
             try {
                 System.out.println(Model.getLoadedStats().compareStats(topic, start));
-
             } catch (Exception e) {
-                System.out.println("The starting simulation number or the subtopic name is invalid!");
+                System.out.println("The starting simulation number or the topic name is invalid!");
             }
         } else if ((matcher = compareSubtopicStatsWithStartPattern.matcher(input)).find()) {
             Subtopic subtopic = getSubtopicFromName(matcher.group(2));
             int start = Integer.parseInt(matcher.group(3));
             try {
                 System.out.println(Model.getLoadedStats().compareStats(subtopic, start));
-
             } catch (Exception e) {
                 System.out.println("The starting simulation number or the subtopic name is invalid!");
             }
-        }
-            else{
-                System.out.println("Invalid command. Please check your input.");
+        } else if ((startDailyChallengePattern.matcher(input)).find()) {
+            LocalDate lastChallengeDate = LocalDate.parse(user.getChallengeDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            if (lastChallengeDate.equals(LocalDate.now())) {
+                System.out.println("You've already completed the daily challenge for today. Please come back tomorrow.");
+                return;
+            } else {
+                List<Question> questions = model.getRandomQuestions(5);
+                DailyChallenge dailyChallenge = new DailyChallenge(questions, user, model);
+                dailyChallenge.startDailyChallenge();
             }
+        } else if((showProfile.matcher(input)).find()) {
+            System.out.println(user.toString());
+        } else {
+            System.out.println("Invalid command. Please check your input.");
+        }
     }
 
-    private Topic getTopicFromName (String name) {
+    private Topic getTopicFromName(String name) {
         for (Topic topic : FileLoader.getTopics()) {
-            if (name.toLowerCase().equals(topic.getTopicName().toLowerCase()))
+            if (name.equalsIgnoreCase(topic.getTopicName()))
                 return topic;
         }
         return null;
     }
-    private Subtopic getSubtopicFromName (String name) {
+
+    private Subtopic getSubtopicFromName(String name) {
         for (Topic topic : FileLoader.getTopics()) {
             for (Subtopic subtopic : topic.getSubtopics()) {
-                if (name.toLowerCase().equals(subtopic.getSubtopicName().toLowerCase()))
+                if (name.equalsIgnoreCase(subtopic.getSubtopicName()))
                     return subtopic;
             }
-
         }
         return null;
     }
-    public static String takeInput(String message) {
-        System.out.print(message);
-        return scanner.nextLine();
-    }
+
 }

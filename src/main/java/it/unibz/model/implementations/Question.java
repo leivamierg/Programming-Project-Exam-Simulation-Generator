@@ -15,6 +15,7 @@ public class Question implements QuestionInt {
     private int priorityLevel;
     private Subtopic subtopicReference;
     private String subtopic;
+    private Map<String, Character> shuffleMap;
 
     @JsonCreator
     public Question(@JsonProperty("questionStatement") String questionStatement,
@@ -26,6 +27,7 @@ public class Question implements QuestionInt {
         setWrongAnswers(wrongAnswers);
         setSubtopic(subtopic);
         setPriorityLevel(priorityLevel);
+        generateShuffleMap();
     }
 
     // setters
@@ -43,6 +45,7 @@ public class Question implements QuestionInt {
 
     private void setWrongAnswers(Set<String> wrongAnswers) {
         this.wrongAnswers = wrongAnswers;
+        generateShuffleMap();
     }
 
     public void setPriorityLevel(int priorityLevel) {
@@ -103,25 +106,37 @@ public class Question implements QuestionInt {
         StringBuilder sb = new StringBuilder();
         sb.append(getQuestionStatement()).append(System.lineSeparator());
 
-        Map<String, Character> shuffleMap = getShuffleMap();
+        Map<String, Character> map = getShuffleMap();
 
-        for (Map.Entry<String, Character> entry : shuffleMap.entrySet()) {
-            sb.append(entry.getValue() + ") " + entry.getKey() + System.lineSeparator());
+        // for Debugging
+        //System.out.println("Shuffled Map: " + map);
+
+        for (Map.Entry<String, Character> entry : map.entrySet()) {
+            sb.append(entry.getValue()).append(") ").append(entry.getKey()).append(System.lineSeparator());
         }
 
         return sb.toString();
     }
 
-    public Map<String, Character> getShuffleMap() {
+    private void generateShuffleMap()
+    {
         List<String> everyQuestionList = new ArrayList<>(getWrongAnswers());
         everyQuestionList.add(getRightAnswer());
         Collections.shuffle(everyQuestionList);
-        Map<String, Character> shufflemap = new LinkedHashMap<>();
-        for (int i = 0; i < everyQuestionList.size(); i++) {
-            shufflemap.put(everyQuestionList.get(i), (char) ('A' + i));
-        }
 
-        return shufflemap;
+        shuffleMap = new LinkedHashMap<>();
+        for (int i = 0; i < everyQuestionList.size(); i++) {
+            shuffleMap.put(everyQuestionList.get(i), (char) ('A' + i));
+        }
+    }
+
+    public Map<String, Character> getShuffleMap()
+    {
+        if (shuffleMap == null)
+        {
+            generateShuffleMap();
+        }
+        return shuffleMap;
     }
 
     public char getCorrectAnswerLabel(Map<String, Character> shuffleMap) {

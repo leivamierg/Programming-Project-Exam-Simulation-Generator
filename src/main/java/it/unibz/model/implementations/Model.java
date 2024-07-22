@@ -1,8 +1,7 @@
 package it.unibz.model.implementations;
 
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 import it.unibz.model.interfaces.ModelInt;
 
@@ -151,7 +150,7 @@ public class Model implements ModelInt {
                 simulation.insertCommand(sanitizeAnswer(input));
             } catch (Exception e) {
                 System.err.println("Invalid command!");
-                continue;
+                continue; //to remove
             }
         }
 
@@ -216,4 +215,16 @@ public class Model implements ModelInt {
     {
         return String.valueOf(formatTime(DURATION_SIMULATION - remainingTimeSimulation));
     }
+
+    public List<Question> getRandomQuestions(int count) {
+        List<Question> allQuestions = new ArrayList<>();
+        for (Topic topic : FileLoader.getTopics()) {
+            for (Subtopic subtopic : topic.getSubtopics()) {
+                allQuestions.addAll(subtopic.getQuestions());
+            }
+        }
+        Collections.shuffle(allQuestions);
+        return allQuestions.subList(0, count);
+    }
+
 }

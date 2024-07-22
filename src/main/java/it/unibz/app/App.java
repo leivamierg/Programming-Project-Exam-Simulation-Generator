@@ -3,6 +3,9 @@ package it.unibz.app;
 import it.unibz.controller.Controller;
 import it.unibz.model.implementations.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -16,13 +19,17 @@ public class App {
 
     /**
      * The main method of the program.
-     * 
+     *
      * @param args The command-line arguments.
      */
-    public static void main( String[] args ) throws IOException {
-
-        Controller controller = new Controller(new Model()/*, new History(), new Stats()*/);
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter your username:");
+        String username = scanner.nextLine();
+        User user = loadUserData(username);
+
+        Controller controller = new Controller(new Model(), user);
 
         String input;
         boolean showWelcomeMessage = true;
@@ -48,7 +55,6 @@ public class App {
                 System.out.println("1) -t or --topics to list all topics");
                 System.out.println("2) 'topic' -s, --subtopics to list all subtopics");
                 System.out.println("3) 'topic' to start the test");
-                //System.out.println("<topic> --select to list all subtopics to select from");
                 System.out.println("4) --history to show the history of simulation");
                 System.out.println("5) --stats to show the general stats");
                 System.out.println("6) topic 'topic' 'from sim number' 'to sim number' --compareStats to compare the stats" +
@@ -63,14 +69,29 @@ public class App {
                         " to show the stats of a certain topic after x simulations");
                 System.out.println("11) subtopic 'subtopic' 'simulation number' --showStats" +
                         " to show the stats of a certain subtopic after x simulations");
-                System.out.println("12) 'exit' to close the exam simulation program");
+                System.out.println("12) '-d' to start the daily challenge");
+                System.out.println("13) '--profile' to see your profile");
+                System.out.println("14) 'exit' to close the exam simulation program");
                 showWelcomeMessage = false;
                 continue;
+            } else {
+                controller.elaborateArgs(input.split("\\s+"));
             }
-            controller.elaborateArgs(input.split("\\s+"));
-
         }
 
         scanner.close();
+    }
+
+    private static User loadUserData(String username) {
+        ObjectMapper mapper = new ObjectMapper();
+        File userFile = new File("src/main/resources/challenge/" + username + ".json");
+        if (userFile.exists()) {
+            try {
+                return mapper.readValue(userFile, User.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return new User(username);
     }
 }

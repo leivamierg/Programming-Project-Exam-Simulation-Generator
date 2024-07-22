@@ -1,5 +1,9 @@
 package it.unibz.model.interfaces;
 
+import it.unibz.model.implementations.Question;
+
+import java.util.List;
+
 public interface ModelInt {
 
         /**
@@ -63,4 +67,5 @@ public interface ModelInt {
      */
     void notes(String path, boolean verbose);
 
+    List<Question> getRandomQuestions(int i);
 }
