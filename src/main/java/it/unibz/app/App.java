@@ -55,23 +55,25 @@ public class App {
                 System.out.println("1) -t or --topics to list all topics");
                 System.out.println("2) 'topic' -s, --subtopics to list all subtopics");
                 System.out.println("3) 'topic' to start the test");
-                System.out.println("4) --history to show the history of simulation");
-                System.out.println("5) --stats to show the general stats");
-                System.out.println("6) topic 'topic' 'from sim number' 'to sim number' --compareStats to compare the stats" +
+                System.out.println("4) 'topic' to start the test");
+                System.out.println("5) --history to show the history of simulation");
+                System.out.println("6) --stats to show the general stats");
+                System.out.println("7) topic 'topic' 'from sim number' 'to sim number' --compareStats to compare the stats" +
                         "of a topic from a certain simulation to another one");
-                System.out.println("7) subtopic 'subtopic' 'from sim number' 'to sim number' --compareStats to compare the stats" +
+                System.out.println("8) subtopic 'subtopic' 'from sim number' 'to sim number' --compareStats to compare the stats" +
                         "of a subtopic from a certain simulation to another one");
-                System.out.println("8) topic 'topic' 'from sim number' --compareStats to compare the stats" +
+                System.out.println("9) topic 'topic' 'from sim number' --compareStats to compare the stats" +
                         "of a topic from a certain simulation to the last one");
-                System.out.println("9) subtopic 'subtopic' 'from sim number' --compareStats to compare the stats" +
+                System.out.println("10) subtopic 'subtopic' 'from sim number' --compareStats to compare the stats" +
                         "of a subtopic from a certain simulation to the last one");
-                System.out.println("10) topic 'topic' 'simulation number' --showStats" +
+                System.out.println("11) topic 'topic' 'simulation number' --showStats" +
                         " to show the stats of a certain topic after x simulations");
-                System.out.println("11) subtopic 'subtopic' 'simulation number' --showStats" +
+                System.out.println("12) subtopic 'subtopic' 'simulation number' --showStats" +
                         " to show the stats of a certain subtopic after x simulations");
-                System.out.println("12) '-d' to start the daily challenge");
-                System.out.println("13) '--profile' to see your profile");
-                System.out.println("14) 'exit' to close the exam simulation program");
+                System.out.println("13) 'topic' --download to download PDF version of exam");
+                System.out.println("14) '-d' to start the daily challenge");
+                System.out.println("15) '--profile' to see your profile");
+                System.out.println("16) 'exit' to close the exam simulation program");
                 showWelcomeMessage = false;
                 continue;
             } else {

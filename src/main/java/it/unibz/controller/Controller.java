@@ -14,10 +14,12 @@ public class Controller {
     private ModelInt model;
     private static final Scanner scanner = new Scanner(System.in);
     private User user;
+    private PdfGenerator pdfGenerator;
 
     public Controller(ModelInt model, User user) {
         this.model = model;
         this.user = user;
+        this.pdfGenerator = new PdfGenerator();
     }
 
     public void elaborateArgs(String[] arguments) {
@@ -31,7 +33,7 @@ public class Controller {
         Pattern listTopicsPattern = Pattern.compile("^(-t|--topics)$");
         Pattern listSubtopicsPattern = Pattern.compile("^([A-Za-z\\s]+)\\s+(-s|--subtopics)$");
         Pattern startTestPattern = Pattern.compile("^([A-Za-z\\s]+)$");
-        Pattern selectSubtopicsPattern = Pattern.compile("^([A-Za-z\\s]+)\\s+--select$");
+        Pattern selectSubtopicsPattern = Pattern.compile("^([A-Za-z\\s]+)\\s+(--select)$");
         Pattern historyPattern = Pattern.compile("(?i)--history");
         Pattern statsPattern = Pattern.compile("(?i)--stats");
         Pattern compareTopicStatsPattern = Pattern.compile("^(?i)(topic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+(\\d+)\\s+--compareStats$");
@@ -42,6 +44,7 @@ public class Controller {
         Pattern showSubtopicStatsPattern = Pattern.compile("^(?i)(subtopic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+--showStats$");
         Pattern startDailyChallengePattern = Pattern.compile("^(-d)$");
         Pattern showProfile = Pattern.compile("(?i)--profile");
+        Pattern downloadPDF = Pattern.compile("^([A-Za-z\\s]+)\\s+(--download)$");
 
         Matcher matcher;
 
@@ -53,8 +56,9 @@ public class Controller {
         } else if ((matcher = startTestPattern.matcher(input)).find()) {
             String topic = matcher.group(1);
             model.test(topic, null);
-        } else if (selectSubtopicsPattern.matcher(input).find()) {
-            System.out.println("Subtopic selection feature not implemented.");
+        } else if ((matcher = selectSubtopicsPattern.matcher(input)).find()) {
+            String topic = matcher.group(1);
+            model.testSubtopics(topic);
         } else if ((historyPattern.matcher(input)).find()) {
             System.out.println(Model.getLoadedHistory().showHistory());
         } else if ((statsPattern.matcher(input)).find()) {
@@ -121,6 +125,16 @@ public class Controller {
             }
         } else if((showProfile.matcher(input)).find()) {
             System.out.println(user.toString());
+        } else if((matcher = downloadPDF.matcher(input)).find()) {
+            String topicName = matcher.group(1);
+            Topic topic = getTopicFromName(topicName);
+            if (topic != null) {
+                String jsonFilePath = "src/main/resources/bank/" + topicName.replaceAll("\\s+", "_") + ".json";
+                String filePath = "src/main/resources/pdf/" + topicName.replaceAll("\\s+", "_") + ".pdf";
+                pdfGenerator.transformJsonIntoPDF(jsonFilePath, filePath);
+            } else {
+                System.out.println("Invalid topic name.");
+            }
         } else {
             System.out.println("Invalid command. Please check your input.");
         }

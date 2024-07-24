@@ -88,8 +88,8 @@ public class ExamTimer implements Runnable {
      * Calculates the time taken for the exam simulation as a string.
      * @return The time taken in seconds as a string.
      */
-    public String calculateTimeTaken_String() {
+/*    public String calculateTimeTaken_String() {
         return String.valueOf(DURATION_SIMULATION - getRemainingTime());
     }
-
+*/
 }

@@ -7,7 +7,7 @@
       "rightAnswer" : "c and d",
       "wrongAnswers" : [ "None of them", "All of them", "a and b" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 4,
+      "priorityLevel" : 6,
       "shuffleMap" : {
         "a and b" : "A",
         "c and d" : "B",
@@ -19,7 +19,7 @@
       "rightAnswer" : "(1) [(1, 2, 3, 3) (0, 2, 1, 0) (0, 0, 0, 3)]\n(2) rank=3\n(3) A*1, A*2 and A*4",
       "wrongAnswers" : [ "(1) [(0, 2, 3, 3) (1, 2, 1, 0) (0, 0, 0, 3)]\n(2) rank=0\n(3) A*2", "(1) [(1, 0, 0, 0) (0, 0, 0, 3) (0, 0, 0, 0)]\n(2) rank=2\n(3) A*1 and A*4", "(1) [(1, 2, 3, 0) (0, 2, 0, 0) (0, 0, 0, 0)]\n(2) rank=2\n(3) A*1, A*2" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 0,
+      "priorityLevel" : 2,
       "shuffleMap" : {
         "(1) [(0, 2, 3, 3) (1, 2, 1, 0) (0, 0, 0, 3)]\n(2) rank=0\n(3) A*2" : "A",
         "(1) [(1, 2, 3, 0) (0, 2, 0, 0) (0, 0, 0, 0)]\n(2) rank=2\n(3) A*1, A*2" : "B",
@@ -31,7 +31,7 @@
       "rightAnswer" : "(1) [(1, 0, 2, 0) (0, 1, 1/2, 0) (0, 0, 0, 1)]\n(2) A*3=2A*1 + 1/2 A*2",
       "wrongAnswers" : [ "(1) [(1, 0, 2, 0) (0, 1, 1, 0) (0, 0, 2, 1)]\n(2) A*3=2A*1 + 1/2 A*2", "(1) [(1, 0, 0, 0) (0, 1, 0, 0) (0, 0, 1, 1)]\n(2) A*3=A*1", "(1) [(1, 0, 2, 0) (0, 1, 1/2, 0) (0, 0, 0, 1)]\n(2) A*3=2A*1 + 2 A*2" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 7,
+      "priorityLevel" : 1,
       "shuffleMap" : {
         "(1) [(1, 0, 2, 0) (0, 1, 1/2, 0) (0, 0, 0, 1)]\n(2) A*3=2A*1 + 1/2 A*2" : "A",
         "(1) [(1, 0, 2, 0) (0, 1, 1, 0) (0, 0, 2, 1)]\n(2) A*3=2A*1 + 1/2 A*2" : "B",
@@ -43,7 +43,7 @@
       "rightAnswer" : "All are consistent",
       "wrongAnswers" : [ "None of them are consistent", "a and b are consistent, while c is inconsistent", "a and c are consistent, while b is inconsistent" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 0,
+      "priorityLevel" : 2,
       "shuffleMap" : {
         "None of them are consistent" : "A",
         "a and c are consistent, while b is inconsistent" : "B",
@@ -55,7 +55,7 @@
       "rightAnswer" : "(a) True\n(b) False\n(c) True\n(d) False",
       "wrongAnswers" : [ "All false", "(a) False\n(b) True\n(c) False\n(d) True", "All true" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 7,
+      "priorityLevel" : 1,
       "shuffleMap" : {
         "All true" : "A",
         "(a) True\n(b) False\n(c) True\n(d) False" : "B",
@@ -67,7 +67,7 @@
       "rightAnswer" : "(a) No\n(b) Yes",
       "wrongAnswers" : [ "(a) No\n(b) No", "(a) Yes\n(b) No", "(a) Yes\n(b) Yes" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 6,
+      "priorityLevel" : 9,
       "shuffleMap" : {
         "(a) Yes\n(b) No" : "A",
         "(a) No\n(b) Yes" : "B",

@@ -6,6 +6,7 @@ import java.util.List;
 public class User {
     private String username;
     private List<Badge> badges;
+    private int numberOfBadges;
     private int streak;
     private String challengeDate;
 
@@ -15,6 +16,7 @@ public class User {
         this.badges = new ArrayList<>();
         this.streak = 0;
         this.challengeDate = "";
+        this.numberOfBadges = 0;
     }
 
     public User(String username)
@@ -23,6 +25,7 @@ public class User {
         this.badges = new ArrayList<>();
         this.streak = 0;
         this.challengeDate = "";
+        this.numberOfBadges = 0;
     }
 
     // Getters and setters
@@ -42,6 +45,7 @@ public class User {
     public void setBadges(List<Badge> badges)
     {
         this.badges = badges;
+        updateNumberOfBadges();
     }
 
     public int getStreak()
@@ -52,6 +56,16 @@ public class User {
     public void setStreak(int streak)
     {
         this.streak = streak;
+    }
+
+    public int getNumberOfBadges()
+    {
+        return numberOfBadges;
+    }
+
+    public void setNumberOfBadges(int numberOfBadges)
+    {
+        this.numberOfBadges = numberOfBadges;
     }
 
     public String getChallengeDate()
@@ -80,6 +94,10 @@ public class User {
         this.streak = 0;
     }
 
+    private void updateNumberOfBadges() {
+        this.numberOfBadges = badges.size();
+    }
+
     @Override
     public String toString() {
         StringBuilder badgesString = new StringBuilder();
@@ -89,7 +107,7 @@ public class User {
 
         return "User Information:\n" +
                 "Username: " + username + "\n" +
-                "Badges: \n" + badgesString +
+                "Badges: " + numberOfBadges + "\n" + badgesString +
                 "Streak: " + streak + "\n" +
                 "Last challenge Date: " + challengeDate + "\n";
     }
