@@ -261,19 +261,6 @@ public class Model implements ModelInt {
         System.out.println("Test completed.");
     }
 
-
-    @Override
-    public void transcribe(String path, boolean verbose) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'transcribe'");
-    }
-
-    @Override
-    public void notes(String path, boolean verbose) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notes'");
-    }
-
     public static Stats getLoadedStats()
     {
         return stats;

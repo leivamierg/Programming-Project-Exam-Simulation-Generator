@@ -4,6 +4,7 @@ import it.unibz.model.interfaces.ModelInt;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -114,15 +115,33 @@ public class Controller {
                 System.out.println("The starting simulation number or the subtopic name is invalid!");
             }
         } else if ((startDailyChallengePattern.matcher(input)).find()) {
-            LocalDate lastChallengeDate = LocalDate.parse(user.getChallengeDate(), DateTimeFormatter.ISO_LOCAL_DATE);
-            if (lastChallengeDate.equals(LocalDate.now())) {
-                System.out.println("You've already completed the daily challenge for today. Please come back tomorrow.");
-                return;
-            } else {
+            String challengeDate = user.getChallengeDate();
+
+            if(challengeDate == null || challengeDate.isEmpty())
+            {
+                user.setChallengeDate(LocalDate.now().toString());
+                user.resetStreak();
                 List<Question> questions = model.getRandomQuestions(5);
                 DailyChallenge dailyChallenge = new DailyChallenge(questions, user, model);
                 dailyChallenge.startDailyChallenge();
+            } else {
+                try {
+                    LocalDate lastChallengeDate = LocalDate.parse(user.getChallengeDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+                    if (lastChallengeDate.equals(LocalDate.now())) {
+                        System.out.println("You've already completed the daily challenge for today. Please come back tomorrow.");
+                        return;
+                    } else {
+                        List<Question> questions = model.getRandomQuestions(5);
+                        DailyChallenge dailyChallenge = new DailyChallenge(questions, user, model);
+                        dailyChallenge.startDailyChallenge();
+                    }
+                } catch (DateTimeParseException e) {
+                    System.out.println("No date parsed");
+                    return;
+                }
             }
+
+
         } else if((showProfile.matcher(input)).find()) {
             System.out.println(user.toString());
         } else if((matcher = downloadPDF.matcher(input)).find()) {

@@ -33,39 +33,11 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public List<Badge> getBadges()
-    {
-        return badges;
-    }
 
     public void setBadges(List<Badge> badges)
     {
         this.badges = badges;
         updateNumberOfBadges();
-    }
-
-    public int getStreak()
-    {
-        return streak;
-    }
-
-    public void setStreak(int streak)
-    {
-        this.streak = streak;
-    }
-
-    public int getNumberOfBadges()
-    {
-        return numberOfBadges;
-    }
-
-    public void setNumberOfBadges(int numberOfBadges)
-    {
-        this.numberOfBadges = numberOfBadges;
     }
 
     public String getChallengeDate()
