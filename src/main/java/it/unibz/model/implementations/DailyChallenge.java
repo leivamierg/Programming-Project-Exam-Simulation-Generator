@@ -48,7 +48,7 @@ public class DailyChallenge implements DailyChallengeInt {
             Question question = questions.get(i);
             String userAnswer = userAnswers.get(i).toUpperCase().trim();
 
-            Map<String, Character> shuffleMap = questionToShuffleMap.get(question);
+            Map<String, Character> shuffleMap = questionToShuffleMap.get(question); //rmb to check whether to remove it or not
             char correctAnswerLabel = questionToCorrectAnswer.get(question);
 
 
@@ -125,7 +125,7 @@ public class DailyChallenge implements DailyChallengeInt {
         saveUserData();
     }
 
-    private void saveUserData()
+    public void saveUserData()
     {
         ObjectMapper mapper = new ObjectMapper();
         try {

@@ -112,20 +112,32 @@ We used Jackson to implement JSON serialization and deserialization
 - When the program ends the topics are saved into the JSON files by using the static method saveBank of the FileLoaderClass -> when the user re-start the program the last state of the program is loaded
 - The same process is valid for History and Stats, which use the HistoryStatsLoader class to be serialized and deserialized
 
-##### Stats and history (@leivamierg and @sebanardin)
+###### PDFGenerator class
+
+This class is designed to convert a JSON file into a well-formatted PDF document. It is based on the Jackson library for JSON processing and Apache PDFBox for the PDF creation. It creates printable simulations for the different topics. 
+
+##### Stats and history classes (@leivamierg and @sebanardin)
 
 These two classes give a sense of progress to the user saving data of previous simulations, they use serialization and deserialization as well to save and load their content.
 
-###### Stats
+###### Stats class
 
 This class is meant to store the stats of every topic, subtopic and the general stats after every simulation.
 In addition, it supports JSON serialization/deserialization. Moreover, it provides some methods to compare the stats of a certain topic or subtopic from simulation x to simulation y.
 Furthermore, it allows the user also to see the stats of a certain topic/subtopic after x simulation.
 
-###### History
+###### History class
 
 This class is quite simple, it only contains a list of TestRegister records, created specifically to store the previous simulation data. Other than supporting JSON serialization and deserialization it also has methods to see the full or a part of the history in the command line.\
 Some data saved in the history are: number of questions, correct answers, wrong questions, used time / available time, etc.
+
+###### User class
+
+This class represents a user in the application who has a username, who can earn badges, mantain streaks and participate in daily challenges. The role of the class is to keep track of the information regarding a specific user.
+
+###### Badge class
+
+This class represents an individual badge that a user can earn during the daily challenges. It provides the model of a badge which can be earned, and it can be used with the 'User' class to represent the badges earned by the user.
 
 ##### Command Handling
 
@@ -149,7 +161,7 @@ Represents a simulation of an exam. It provides several functionalities:
 - Change the question (either to the previous/next one or to a specific one)
 - Terminate the simulation -> the result (general and for each subtopic) is printed and every parameter needed for the next simulations is updated
 
-#####  Model
+#####  Model class
 
 Model is mainly a facade for interacting with simulation. In retrospective we should have designed it as a part of the controller.
 
@@ -167,14 +179,17 @@ Even though having its own directory, actually there is only one comparator:
 It is a useful tool to sort a question list based on their "priorityLevel" ordering them from lower priority to higher priority.\
 It is used on the Subtopic class, for the "pickQuestions" method.
 
+###### DailyChallenge class
+The 'DailyChallenge' class is where the logic for the daily challenge is handled. The daily challenge is based on five random questions about any topic, which are presented only once every day to the logged-in user. The latter must answer correctly to at least three of the five questions to win a badge, moreover, the user can accumulate a streak if he/she does the daily challenge more days in a row. The user's data are then saved after the application is closed in a separate json file with the user's name.
+
 ### The Controller
 
 ###### Controller class
 
 The 'Controller' class handles the user's input and interacts principally with the 'ModelInt' interface.
-It parses the commands and calls the relative functions from the 'ModelInt' interface by using regexes. It also relies on 'HistoryInt' and 'StatsInt' for the advanced version of the program.
+It parses the commands and calls the relative methods from the 'ModelInt' interface by using regexes. It also relies on 'HistoryInt' and 'StatsInt' for the advanced version of the program.
+In the updated version, further interactions with new classes were implemented ('PDFGenerator', 'DailyChallenge', 'User').
 The 'elaborateArgs' method is where the list of arguments from the user is processed.
-The 'takeInput' method returns the entered string based on the input from the user.
 The overall class works as an intermediate between the user and the program, to delegate tasks to methods by processing commands.
 
 ### The App
@@ -193,7 +208,7 @@ Each class was tested separately by using JUnit tests.
 - @sebanardin: Stats, Simulation, FileLoading, HistoryStatsLoader, App, Controller
 - @leivamierg: Topic, Subtopic, Question, QuestionPriorityComparator, HistoryStatsLoader, History, TestRegisters
 - @MassimiIiano: Controller, App, Model, Simulation, Question, HistoryStatsLoader
-- @Vaiolo: Controller, App, Model, Simulation, ExamTimer, History, Stats
+- @Vaiolo: Controller, App, Model, Simulation, ExamTimer, History, Stats, DailyChallenge, Badge, User, PDFGenerator
 
 ### Use of git
 
