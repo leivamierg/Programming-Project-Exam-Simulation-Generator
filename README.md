@@ -58,6 +58,10 @@ List of possible commands after opening the program:
 - --history : to show the history of simulation (it will be empty at the beginning)
 - --stats : to show the general statistics (it will be empty at the beginning)
 - 'exit' : to close the exam simulation program
+- 'topic' --select : to see the list of the subtopics to choose from
+- 'topic' --download : to download the PDF version of the exam
+- -d : to start the daily challenge
+- --profile : to see the profile of the current logged-in user
 
 List of possible commands during the simulation:
 
@@ -65,6 +69,11 @@ List of possible commands during the simulation:
 - '+', '-' : to navigate through the questions
 - 0-9 : to choose the question by its number
 - 'terminate' : to terminate the simulation and get the results
+
+List of possible commands during the daily challenge:
+
+- A, B, C, D : to answer the questions
+- 'exit' : *after* the daily challenge to end the application and save the results
 
 ## Implementation of the project
 

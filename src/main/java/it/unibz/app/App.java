@@ -55,7 +55,7 @@ public class App {
                 System.out.println("1) -t or --topics to list all topics");
                 System.out.println("2) 'topic' -s, --subtopics to list all subtopics");
                 System.out.println("3) 'topic' to start the test");
-                System.out.println("4) 'topic' to start the test");
+                System.out.println("4) 'topic' --select to select the subtopic from the topic to test");
                 System.out.println("5) --history to show the history of simulation");
                 System.out.println("6) --stats to show the general stats");
                 System.out.println("7) topic 'topic' 'from sim number' 'to sim number' --compareStats to compare the stats" +
