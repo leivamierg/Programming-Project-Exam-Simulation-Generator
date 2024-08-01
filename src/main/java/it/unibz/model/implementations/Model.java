@@ -277,7 +277,7 @@ public class Model implements ModelInt {
     }
 
     //randomizer method for daily challenge questions (from all the topics)
-    public List<Question> getRandomQuestions(int count)
+    public List<Question> getRandomQuestions(int numberOfQuestions)
     {
         List<Question> allQuestions = new ArrayList<>();
         for (Topic topic : FileLoader.getTopics())
@@ -288,7 +288,7 @@ public class Model implements ModelInt {
             }
         }
         Collections.shuffle(allQuestions);
-        return allQuestions.subList(0, count);
+        return allQuestions.subList(0, numberOfQuestions);
     }
 
 }

@@ -62,7 +62,6 @@ public class DailyChallenge implements DailyChallengeInt {
             if (userAnswer.length() == 1 && userAnswer.charAt(0) == correctAnswerLabel)
             {
                 correctAnswers++;
-                System.out.println("Correct Answer!");
             } else {
                 System.out.println("Wrong Answer: " + userAnswer + " does not match Correct Label: " + correctAnswerLabel);
             }
@@ -81,18 +80,45 @@ public class DailyChallenge implements DailyChallengeInt {
             return;
         }
 
+        List<String> userAnswers = getUserAnswers();
+
+        boolean passed = checkAnswers(userAnswers);
+
+        checkPassed(passed);
+        updateChallengeDate();
+        saveUserData();
+    }
+
+    //Helpers to improve clarity
+
+    private List<String> getUserAnswers()
+    {
         List<String> userAnswers = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
         for (Question question : questions)
         {
-            System.out.println(question.getQuestionAndAnswers());
-            System.out.print("Your answer: ");
-            userAnswers.add(scanner.nextLine());
+            String userAnswer;
+            while (true)
+            {
+                System.out.println(question.getQuestionAndAnswers());
+                System.out.print("Your answer: ");
+                userAnswer = scanner.nextLine().toUpperCase().trim();
+
+                if (userAnswer.length() == 1 && (userAnswer.charAt(0) == 'A' || userAnswer.charAt(0) == 'B' || userAnswer.charAt(0) == 'C' || userAnswer.charAt(0) == 'D') && userAnswer.charAt(0) != ' ')
+                {
+                    break;
+                } else {
+                    System.out.println("Invalid answer");
+                }
+            }
+            userAnswers.add(userAnswer);
         }
+        return userAnswers;
+    }
 
-        boolean passed = checkAnswers(userAnswers);
-
+    private void checkPassed(boolean passed)
+    {
         if (passed)
         {
             user.addBadge(new Badge("Daily Challenge Winner", "Awarded for passing a daily challenge."));
@@ -100,7 +126,10 @@ public class DailyChallenge implements DailyChallengeInt {
         } else {
             System.out.println("Better luck next time!");
         }
+    }
 
+    private void updateChallengeDate()
+    {
         String today = LocalDate.now().toString();
         if (user.getChallengeDate() == null || user.getChallengeDate().isEmpty())
         {
@@ -117,12 +146,11 @@ public class DailyChallenge implements DailyChallengeInt {
                 }
                 user.setChallengeDate(today);
             } catch (DateTimeParseException e) {
-                e.printStackTrace();
+                System.out.println("Error with oarsing date.");
                 user.setChallengeDate(today);
                 user.resetStreak();
             }
         }
-        saveUserData();
     }
 
     public void saveUserData()

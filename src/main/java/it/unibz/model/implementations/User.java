@@ -28,21 +28,41 @@ public class User {
         this.numberOfBadges = 0;
     }
 
-    // Getters and setters
+    // Getters
     public String getUsername() {
         return username;
     }
 
+    public List<Badge> getBadges()
+    {
+        return badges;
+    }
 
+    public int getStreak()
+    {
+        return streak;
+    }
+
+    public String getChallengeDate()
+    {
+        return challengeDate;
+    }
+
+    //Setters
     public void setBadges(List<Badge> badges)
     {
         this.badges = badges;
         updateNumberOfBadges();
     }
 
-    public String getChallengeDate()
+    public void setStreak(int streak)
     {
-        return challengeDate;
+        this.streak = streak;
+    }
+
+    public void setNumberOfBadges(int numberOfBadges)
+    {
+        this.numberOfBadges = numberOfBadges;
     }
 
     public void setChallengeDate(String challengeDate)
@@ -54,6 +74,7 @@ public class User {
     public void addBadge(Badge badge)
     {
         this.badges.add(badge);
+        updateNumberOfBadges();
     }
 
     public void incrementStreak()
@@ -66,14 +87,17 @@ public class User {
         this.streak = 0;
     }
 
-    private void updateNumberOfBadges() {
+    private void updateNumberOfBadges()
+    {
         this.numberOfBadges = badges.size();
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         StringBuilder badgesString = new StringBuilder();
-        for (Badge badge : badges) {
+        for (Badge badge : badges)
+        {
             badgesString.append(badge.toString()).append("\n");
         }
 
