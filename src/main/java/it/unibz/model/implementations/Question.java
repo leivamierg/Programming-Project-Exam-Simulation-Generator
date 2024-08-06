@@ -109,7 +109,7 @@ public class Question implements QuestionInt {
         Map<String, Character> map = getShuffleMap();
 
         // for Debugging
-        //System.out.println("Shuffled Map: " + map);
+        // System.out.println("Shuffled Map: " + map);
 
         for (Map.Entry<String, Character> entry : map.entrySet()) {
             sb.append(entry.getValue()).append(") ").append(entry.getKey()).append(System.lineSeparator());
@@ -118,8 +118,7 @@ public class Question implements QuestionInt {
         return sb.toString();
     }
 
-    private void generateShuffleMap()
-    {
+    private void generateShuffleMap() {
         List<String> everyQuestionList = new ArrayList<>(getWrongAnswers());
         everyQuestionList.add(getRightAnswer());
         Collections.shuffle(everyQuestionList);
@@ -130,10 +129,8 @@ public class Question implements QuestionInt {
         }
     }
 
-    public Map<String, Character> getShuffleMap()
-    {
-        if (shuffleMap == null)
-        {
+    public Map<String, Character> getShuffleMap() {
+        if (shuffleMap == null) {
             generateShuffleMap();
         }
         return shuffleMap;
@@ -147,14 +144,16 @@ public class Question implements QuestionInt {
     public boolean equals(Object question) {
         if (question == null || !(question instanceof Question)) {
             return false;
-        } else if (question == (Question) this) {
+        } else if (question == this) {
             return true;
         }
 
-        return getQuestionStatement().equals(((Question) question).getQuestionStatement())
-                && getRightAnswer().equals(((Question) question).getRightAnswer())
-                && getWrongAnswers().equals(((Question) question).getWrongAnswers())
-                && getSubtopic().equals(((Question) question).getSubtopic());
+        Question castQuestion = (Question) question;
+
+        return getQuestionStatement().equals(castQuestion.getQuestionStatement())
+                && getRightAnswer().equals(castQuestion.getRightAnswer())
+                && getWrongAnswers().equals(castQuestion.getWrongAnswers())
+                && getSubtopic().equals(castQuestion.getSubtopic());
     }
 
     @Override

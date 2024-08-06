@@ -29,16 +29,13 @@ public class QuestionTest {
         @Test
         void test1() {
             Question q1 = question1_1_1;
-            Question q2 = q1;
-            Question q3 = new Question(new String(q1.getQuestionStatement()), new String(q1.getRightAnswer()),
+            Question q2 = new Question(new String(q1.getQuestionStatement()), new String(q1.getRightAnswer()),
                     new HashSet<String>(q1.getWrongAnswers()),
                     new String(q1.getSubtopic()), 1);
 
             assertEquals(q1, q2);
-            assertEquals(q1, q3);
 
             assertEquals(q1.hashCode(), q2.hashCode());
-            assertEquals(q1.hashCode(), q3.hashCode());
         }
     }
 
@@ -62,18 +59,4 @@ public class QuestionTest {
 
         }
     }
-
-    /*
-     * @Nested
-     * class shuffleMapTest{
-     * 
-     * @DisplayName("Should return a shuffle of the correct answer and the incorrect answers"
-     * )
-     * 
-     * @Test
-     * void test3(){
-     * Question q5 =
-     * }
-     * }
-     */
 }

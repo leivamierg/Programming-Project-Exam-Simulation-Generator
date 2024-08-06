@@ -133,7 +133,6 @@ public class SubtopicTest {
         @Test
         void test7() {
             Subtopic sTA = subtopic2_4;
-            Subtopic sTB = sTA;
 
             Set<Question> questionsSet = new HashSet<>();
             for (Question q : sTA.getQuestions()) {
@@ -142,13 +141,11 @@ public class SubtopicTest {
                         new String(q.getSubtopic()), 1));
             }
 
-            Subtopic sTC = new Subtopic(new String(sTA.getSubtopicName()), questionsSet, new String(sTA.getTopic()));
+            Subtopic sTB = new Subtopic(new String(sTA.getSubtopicName()), questionsSet, new String(sTA.getTopic()));
 
             assertEquals(sTA, sTB);
-            assertEquals(sTA, sTC);
 
             assertEquals(sTA.hashCode(), sTB.hashCode());
-            assertEquals(sTA.hashCode(), sTC.hashCode());
         }
     }
 }

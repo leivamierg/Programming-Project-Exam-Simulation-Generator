@@ -11,18 +11,31 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /**
  * The main class of the program.
  *
  */
-public class App {
+public class App extends Application {
 
     /**
      * The main method of the program.
      *
      * @param args The command-line arguments.
      */
+
+    //
+
+    //
     public static void main(String[] args) throws IOException {
+        //
+        launch();
+        //
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter your username:");
@@ -42,7 +55,8 @@ public class App {
 
             if (input.equalsIgnoreCase("exit")) {
                 Set<Topic> loadedTopics = FileLoader.getTopics();
-                FileLoader.saveBank(System.getProperty("user.dir") + "/src/main/resources/bank/", List.copyOf(loadedTopics));
+                FileLoader.saveBank(System.getProperty("user.dir") + "/src/main/resources/bank/",
+                        List.copyOf(loadedTopics));
 
                 HistoryStatsLoader.saveStats("src/main/resources/h_s/stats.json", Model.getLoadedStats());
                 HistoryStatsLoader.saveHistory("src/main/resources/h_s/history.json", Model.getLoadedHistory());
@@ -58,10 +72,12 @@ public class App {
                 System.out.println("4) 'topic' --select to select the subtopic from the topic to test");
                 System.out.println("5) --history to show the history of simulation");
                 System.out.println("6) --stats to show the general stats");
-                System.out.println("7) topic 'topic' 'from sim number' 'to sim number' --compareStats to compare the stats" +
-                        "of a topic from a certain simulation to another one");
-                System.out.println("8) subtopic 'subtopic' 'from sim number' 'to sim number' --compareStats to compare the stats" +
-                        "of a subtopic from a certain simulation to another one");
+                System.out.println(
+                        "7) topic 'topic' 'from sim number' 'to sim number' --compareStats to compare the stats" +
+                                "of a topic from a certain simulation to another one");
+                System.out.println(
+                        "8) subtopic 'subtopic' 'from sim number' 'to sim number' --compareStats to compare the stats" +
+                                "of a subtopic from a certain simulation to another one");
                 System.out.println("9) topic 'topic' 'from sim number' --compareStats to compare the stats" +
                         "of a topic from a certain simulation to the last one");
                 System.out.println("10) subtopic 'subtopic' 'from sim number' --compareStats to compare the stats" +
@@ -96,4 +112,18 @@ public class App {
         }
         return new User(username);
     }
+
+    public void start(Stage stage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    new File("src/main/java/it/unibz/app/GUI/FXMLS/username.fxml").toURI().toURL());
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

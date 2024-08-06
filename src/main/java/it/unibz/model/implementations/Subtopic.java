@@ -19,11 +19,12 @@ public class Subtopic implements SubtopicInt {
     private Set<Question> questions;
 
     /**
-     * Constructs a Subtopic object with the specified subtopic name, questions, and topic.
+     * Constructs a Subtopic object with the specified subtopic name, questions, and
+     * topic.
      *
      * @param subtopicName the name of the subtopic
-     * @param questions the set of questions associated with the subtopic
-     * @param topic the topic of the subtopic
+     * @param questions    the set of questions associated with the subtopic
+     * @param topic        the topic of the subtopic
      */
     @JsonCreator
     public Subtopic(@JsonProperty("subtopicName") String subtopicName,
@@ -147,7 +148,9 @@ public class Subtopic implements SubtopicInt {
      *
      * @param n the number of questions to pick
      * @return the set of picked questions
-     * @throws IllegalArgumentException if the number of questions requested is greater than the number of available questions
+     * @throws IllegalArgumentException if the number of questions requested is
+     *                                  greater than the number of available
+     *                                  questions
      */
     public Set<Question> pickQuestions(int n) throws IllegalArgumentException {
         if (n > getAvailableQuestions().size()) {
@@ -184,19 +187,22 @@ public class Subtopic implements SubtopicInt {
      * Checks if the subtopic is equal to the specified object.
      *
      * @param subtopic the object to compare
-     * @return true if the subtopic is equal to the specified object, false otherwise
+     * @return true if the subtopic is equal to the specified object, false
+     *         otherwise
      */
     @Override
     public boolean equals(Object subtopic) {
         if (subtopic == null || !(subtopic instanceof Subtopic)) {
             return false;
-        } else if (this == (Object) subtopic) {
+        } else if (this == subtopic) {
             return true;
         }
 
-        return (getTopic().equals(((Subtopic) subtopic).getTopic())
-                && getSubtopicName().equals(((Subtopic) subtopic).getSubtopicName())
-                && getQuestions().equals((((Subtopic) subtopic).getQuestions())));
+        Subtopic subtopicCast = (Subtopic) subtopic;
+
+        return getTopic().equals(subtopicCast.getTopic())
+                && getSubtopicName().equals(subtopicCast.getSubtopicName())
+                && getQuestions().equals(subtopicCast.getQuestions());
     }
 
     /**

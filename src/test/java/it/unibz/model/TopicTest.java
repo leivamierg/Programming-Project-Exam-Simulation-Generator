@@ -30,10 +30,9 @@ public class TopicTest {
         @Test
         void test7() {
             Topic topicA = topic1;
-            Topic topicB = topicA;
 
             Set<Subtopic> subtopicsSet = new HashSet<>();
-            Topic topicC = new Topic(topicA.getTopicName(), subtopicsSet);
+            Topic topicB = new Topic(topicA.getTopicName(), subtopicsSet);
 
             for (Subtopic s : topicA.getSubtopics()) {
                 Set<Question> newSet = new HashSet<>();
@@ -43,14 +42,12 @@ public class TopicTest {
                             q.getWrongAnswers(), q.getSubtopic(), 1);
                     sX.getQuestions().add(newQuestion);
                 }
-                topicC.getSubtopics().add(sX);
+                topicB.getSubtopics().add(sX);
             }
 
             assertEquals(topicA, topicB);
-            assertEquals(topicA, topicC);
 
             assertEquals(topicA.hashCode(), topicB.hashCode());
-            assertEquals(topicA.hashCode(), topicC.hashCode());
         }
     }
 }
