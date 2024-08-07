@@ -65,6 +65,15 @@
             <artifactId>javafx-fxml</artifactId>
             <version>13</version>
         </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.gluonhq/charm-down-core -->
+<dependency>
+    <groupId>com.gluonhq</groupId>
+    <artifactId>charm-down-core</artifactId>
+    <version>3.8.6</version>
+</dependency>
+
   </dependencies>
 
   <build>
@@ -149,6 +158,14 @@
                     </execution>
                 </executions>
             </plugin>
+        <plugin>
+    <groupId>com.gluonhq</groupId>
+    <artifactId>client-maven-plugin</artifactId>
+    <version>0.1.31</version>
+    <configuration>
+        <mainClass>it.unibz.app.App</mainClass>
+    </configuration>
+</plugin>
       </plugins>
     </pluginManagement>
   </build>
