@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-import javafx.application.Application;
+/*import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.stage.Stage;*/
 
 /**
  * The main class of the program.
  *
  */
-public class App extends Application {
+public class App /* extends Application */ {
 
     /**
      * The main method of the program.
@@ -34,7 +34,7 @@ public class App extends Application {
     //
     public static void main(String[] args) throws IOException {
         //
-        launch();
+        // launch();
         //
         Scanner scanner = new Scanner(System.in);
 
@@ -113,17 +113,20 @@ public class App extends Application {
         return new User(username);
     }
 
-    public void start(Stage stage) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    new File("src/main/java/it/unibz/app/GUI/FXMLS/username.fxml").toURI().toURL());
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    /*
+     * public void start(Stage stage) {
+     * try {
+     * FXMLLoader loader = new FXMLLoader(
+     * new
+     * File("src/main/java/it/unibz/app/GUI/FXMLS/username.fxml").toURI().toURL());
+     * Parent root = loader.load();
+     * Scene scene = new Scene(root);
+     * stage.setScene(scene);
+     * stage.show();
+     * } catch (Exception e) {
+     * e.printStackTrace();
+     * }
+     * }
+     */
 
 }
