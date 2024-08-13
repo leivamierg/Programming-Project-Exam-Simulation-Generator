@@ -1,4 +1,5 @@
 package it.unibz.controller;
+
 import it.unibz.model.implementations.*;
 import it.unibz.model.interfaces.ModelInt;
 
@@ -37,12 +38,17 @@ public class Controller {
         Pattern selectSubtopicsPattern = Pattern.compile("^([A-Za-z\\s]+)\\s+(--select)$");
         Pattern historyPattern = Pattern.compile("(?i)--history");
         Pattern statsPattern = Pattern.compile("(?i)--stats");
-        Pattern compareTopicStatsPattern = Pattern.compile("^(?i)(topic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+(\\d+)\\s+--compareStats$");
-        Pattern compareTopicStatsWithStartPattern = Pattern.compile("^(?i)(topic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+--compareStats$");
-        Pattern compareSubtopicStatsWithStartPattern = Pattern.compile("^(?i)(subtopic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+--compareStats$");
-        Pattern compareSubtopicStatsPattern = Pattern.compile("^(?i)(subtopic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+(\\d+)\\s+--compareStats$");
+        Pattern compareTopicStatsPattern = Pattern
+                .compile("^(?i)(topic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+(\\d+)\\s+--compareStats$");
+        Pattern compareTopicStatsWithStartPattern = Pattern
+                .compile("^(?i)(topic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+--compareStats$");
+        Pattern compareSubtopicStatsWithStartPattern = Pattern
+                .compile("^(?i)(subtopic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+--compareStats$");
+        Pattern compareSubtopicStatsPattern = Pattern
+                .compile("^(?i)(subtopic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+(\\d+)\\s+--compareStats$");
         Pattern showTopicStatsPattern = Pattern.compile("^(?i)(topic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+--showStats$");
-        Pattern showSubtopicStatsPattern = Pattern.compile("^(?i)(subtopic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+--showStats$");
+        Pattern showSubtopicStatsPattern = Pattern
+                .compile("^(?i)(subtopic)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+--showStats$");
         Pattern startDailyChallengePattern = Pattern.compile("^(-d)$");
         Pattern showProfile = Pattern.compile("(?i)--profile");
         Pattern downloadPDF = Pattern.compile("^([A-Za-z\\s]+)\\s+(--download)$");
@@ -71,7 +77,8 @@ public class Controller {
             try {
                 System.out.println(Model.getLoadedStats().compareStats(topic, start, end));
             } catch (Exception e) {
-                System.out.println("The ending simulation number is smaller or equals the start one, or the topic name is invalid!");
+                System.out.println(
+                        "The ending simulation number is smaller or equals the start one, or the topic name is invalid!");
             }
         } else if ((matcher = compareSubtopicStatsPattern.matcher(input)).find()) {
             Subtopic subtopic = getSubtopicFromName(matcher.group(2));
@@ -80,7 +87,8 @@ public class Controller {
             try {
                 System.out.println(Model.getLoadedStats().compareStats(subtopic, start, end));
             } catch (Exception e) {
-                System.out.println("The ending simulation number is smaller or equals the start one, or the subtopic name is invalid!");
+                System.out.println(
+                        "The ending simulation number is smaller or equals the start one, or the subtopic name is invalid!");
             }
         } else if ((matcher = showTopicStatsPattern.matcher(input)).find()) {
             Topic topic = getTopicFromName(matcher.group(2));
@@ -117,8 +125,7 @@ public class Controller {
         } else if ((startDailyChallengePattern.matcher(input)).find()) {
             String challengeDate = user.getChallengeDate();
 
-            if(challengeDate == null || challengeDate.isEmpty())
-            {
+            if (challengeDate == null || challengeDate.isEmpty()) {
                 user.setChallengeDate(LocalDate.now().toString());
                 user.resetStreak();
                 List<Question> questions = model.getRandomQuestions(5);
@@ -126,9 +133,11 @@ public class Controller {
                 dailyChallenge.startDailyChallenge();
             } else {
                 try {
-                    LocalDate lastChallengeDate = LocalDate.parse(user.getChallengeDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+                    LocalDate lastChallengeDate = LocalDate.parse(user.getChallengeDate(),
+                            DateTimeFormatter.ISO_LOCAL_DATE);
                     if (lastChallengeDate.equals(LocalDate.now())) {
-                        System.out.println("You've already completed the daily challenge for today. Please come back tomorrow.");
+                        System.out.println(
+                                "You've already completed the daily challenge for today. Please come back tomorrow.");
                         return;
                     } else {
                         List<Question> questions = model.getRandomQuestions(5);
@@ -141,10 +150,9 @@ public class Controller {
                 }
             }
 
-
-        } else if((showProfile.matcher(input)).find()) {
+        } else if ((showProfile.matcher(input)).find()) {
             System.out.println(user.toString());
-        } else if((matcher = downloadPDF.matcher(input)).find()) {
+        } else if ((matcher = downloadPDF.matcher(input)).find()) {
             String topicName = matcher.group(1);
             Topic topic = getTopicFromName(topicName);
             if (topic != null) {
@@ -159,7 +167,7 @@ public class Controller {
         }
     }
 
-    private Topic getTopicFromName(String name) {
+    public Topic getTopicFromName(String name) {// was private
         for (Topic topic : FileLoader.getTopics()) {
             if (name.equalsIgnoreCase(topic.getTopicName()))
                 return topic;
@@ -177,4 +185,9 @@ public class Controller {
         return null;
     }
 
+    //
+    public Model getModel() {
+        return (Model) model;
+    }
+    //
 }
