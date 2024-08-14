@@ -65,31 +65,19 @@ public class TopicSelectorController {
                 //
                 System.out.println(selectedTopic);
                 //
-                App.currentSimulation = new Simulation(selectedTopic);
+                App.currentSimulation = new Simulation(selectedTopic);/// TODO:
 
                 FXMLLoader loader = App.getFXMLLoader("numberOfSubtopics");
                 loader.load();
                 NumberOfSubtopicsController controller = loader.getController();
 
-                controller.showTopicSelected(selectedTopic.getTopicName());
+                controller.displayTopicSelected(selectedTopic);
+                controller.setSpinnerMax(selectedTopic);
 
                 App.setRoot("numberOfSubtopics");
             }
         }
     }
-
-    /*
-     * private static int getMaxQuestionsPerSubtopic(Topic topic) {
-     * int max = 100;
-     * for (Subtopic subtopic : topic.getSubtopics()) {
-     * if (subtopic.getQuestions().size() < max) {
-     * max = subtopic.getQuestions().size();
-     * }
-     * }
-     * 
-     * return max;
-     * }
-     */
 
     private static Topic fromRadioButtonToTopic(RadioButton button) {
         Topic selectedTopic = App.actionsController
