@@ -3,6 +3,9 @@ package it.unibz.app.GUI.Controllers;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import it.unibz.app.App;
 import it.unibz.model.implementations.Question;
@@ -21,7 +24,7 @@ import javafx.scene.layout.AnchorPane;
 
 public class TestController {
     @FXML
-    Label questionNumber, questionStatement, timer;
+    Label questionNumber, questionStatement, time;
     @FXML
     RadioButton buttonA, buttonB, buttonC, buttonD;
     @FXML
@@ -33,38 +36,22 @@ public class TestController {
     static Question currQuestion;
     static boolean newSim = true;
 
+    // timer fields
+    private long mins, secs, hrs, totalSecs = 0;
+
+    public static Timer simTimer;
+
     public void initialize() {
         new Thread() {
             @Override
             public void run() {
-
                 if (newSim) {
                     index = 0;
                     newSim = false;
                     App.currentSimulation.start();
+                    setTimer();
                 }
-
-                App.currentSimulation.setCurrentQuestion(App.currentSimulation.getAllQuestions().get(index));
-                currQuestion = App.currentSimulation.getCurrentQuestion(); // update the current question
-                // synchronizing the threads or else sometimes the static properties are
-                // detected as 0 and
-                // null
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        questionStatement.setText(currQuestion.getQuestionStatement());
-                        questionNumber.setText(Integer.toString(index + 1));
-                        timer.setText(Integer.toString(App.currentSimulation.getTimer().getRemainingTime()));
-
-                        updateButtons(App.currentSimulation.getQuestionToShuffledAnswers().get(currQuestion));
-                        // System.out.println(App.currentSimulation.getQuestionStatementToAnswer());//
-                        // works
-                        displayAlreadyAnswered(App.currentSimulation.getQuestionStatementToAnswer(),
-                                currQuestion.getQuestionStatement());
-
-                        // System.out.println(getAnsweredQuestions());//
-                    }
-                });
+                updateQuestion();
             }
         }.start();
     }
@@ -73,16 +60,58 @@ public class TestController {
         // decrease the index and re-initialize
         if (index != 0) {
             index--;
-            App.setRoot("test");
+
+            updateQuestion();
         }
     }
 
     public void goNext(ActionEvent event) throws IOException {
         // increase the index and re-initialize
         if (index + 1 != App.currentSimulation.getNumberOfQuestions()) {
-            index++;
-            App.setRoot("test");
+            new Thread() {
+                @Override
+                public void run() {
+                    index++;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateQuestion();
+                        }
+                    });
+                }
+            }.start();
         }
+    }
+
+    private void updateQuestion() {
+        new Thread() {
+            @Override
+            public void run() {
+                App.currentSimulation.setCurrentQuestion(App.currentSimulation.getAllQuestions().get(index));
+                currQuestion = App.currentSimulation.getCurrentQuestion(); // update the current question
+                // synchronizing the threads or else sometimes the static properties are
+                // detected as 0 and null
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        questionStatement.setText(currQuestion.getQuestionStatement());
+                        questionNumber.setText(Integer.toString(index + 1));
+                        // clearinf the previously marked answer when the next or previous question is
+                        // accesed
+                        buttonA.setSelected(false);
+                        buttonB.setSelected(false);
+                        buttonC.setSelected(false);
+                        buttonD.setSelected(false);
+                        // check if the questions was already answered, if yes, mark its corresponding
+                        // radio button
+                        updateButtons(App.currentSimulation.getQuestionToShuffledAnswers().get(currQuestion));
+                        displayAlreadyAnswered(App.currentSimulation.getQuestionStatementToAnswer(),
+                                currQuestion.getQuestionStatement());
+                    }
+                });
+
+            }
+        }.start();
     }
 
     private void updateButtons(Map<String, Character> map) {
@@ -118,12 +147,13 @@ public class TestController {
         }
     }
 
+    // TODO
     public void finishSimulation(ActionEvent event) throws IOException {
         if (getAnsweredQuestions() == App.currentSimulation
                 .getNumberOfQuestions()) {
             // finish the shit
             System.out.println("simulation completed! FULL");
-            App.setRoot("mainMenu");
+
         } else {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Questions left on blank");
@@ -133,23 +163,24 @@ public class TestController {
 
             if (alert.showAndWait().get() == ButtonType.OK) {
                 System.out.println("simulation completed! EMPTY");
-                App.setRoot("mainMenu");
+
             }
         }
 
         newSim = true;
+        //
+        String finishMessage = App.currentSimulation.terminate(App.actionsController.getModel().getLoadedStats(),
+                App.actionsController.getModel().getLoadedHistory());
+        SimStatsController.updateStats(finishMessage);
+        simTimer.cancel();
+        App.setRoot("showStats");
     }
 
-    // checks if the question was already answered, if yes, marks its key in the
-    // initialization
+    // checks if the question was already answered, if yes, marks its key when the
+    // corresponding question is displayed
     public void displayAlreadyAnswered(Map<String, Character> map, String questionStatement) {
         if (map.containsKey(questionStatement)) {// if the questionstatemen is already a key of the map
             mark(map.get(questionStatement));
-        } else {
-            buttonA.setSelected(false);
-            buttonB.setSelected(false);
-            buttonC.setSelected(false);
-            buttonD.setSelected(false);
         }
     }
 
@@ -174,5 +205,58 @@ public class TestController {
             }
         }
         return i;
+    }
+
+    private void setTimer() {
+        totalSecs = App.currentSimulation.getNumberOfQuestions() * 60;
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        convertTime();
+                        if (totalSecs <= 0) {
+                            System.out.println("times up!!!");
+                            timer.cancel();
+                            String finishMessage = App.currentSimulation.terminate(
+                                    App.actionsController.getModel().getLoadedStats(),
+                                    App.actionsController.getModel().getLoadedHistory());
+                            SimStatsController.updateStats(finishMessage);
+                            simTimer.cancel();
+                            try {
+                                App.setRoot("showStats");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(timerTask, 0, 1000);
+        TestController.simTimer = timer;
+    }
+
+    private String format(long value) {
+        if (value < 10) {
+            return "0" + value;
+        } else {
+            return Long.toString(value);
+        }
+    }
+
+    public void convertTime() {
+        mins = TimeUnit.SECONDS.toMinutes(totalSecs);
+        secs = totalSecs - (mins * 60);
+
+        hrs = TimeUnit.MINUTES.toHours(mins);
+        mins = mins - (hrs * 60);
+
+        //
+        time.setText(format(hrs) + ":" + format(mins) + ":" + format(secs));
+        totalSecs--;
     }
 }
