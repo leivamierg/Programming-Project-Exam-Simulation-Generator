@@ -175,7 +175,7 @@ public class Controller {
         return null;
     }
 
-    private Subtopic getSubtopicFromName(String name) {
+    public Subtopic getSubtopicFromName(String name) {// also
         for (Topic topic : FileLoader.getTopics()) {
             for (Subtopic subtopic : topic.getSubtopics()) {
                 if (name.equalsIgnoreCase(subtopic.getSubtopicName()))

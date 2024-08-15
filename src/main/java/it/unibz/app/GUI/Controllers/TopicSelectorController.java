@@ -8,10 +8,12 @@ import java.util.Set;
 import it.unibz.app.App;
 import it.unibz.model.implementations.Simulation;
 import it.unibz.model.implementations.Topic;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
@@ -19,6 +21,8 @@ import javafx.scene.layout.AnchorPane;
 public class TopicSelectorController {
     @FXML
     AnchorPane displayPane;
+    @FXML
+    Button nextButton;
 
     List<Topic> topics;
     public static boolean subtopicMode;
@@ -41,6 +45,10 @@ public class TopicSelectorController {
             y += 30;
             index++;
         }
+
+        if (subtopicMode) {
+            nextButton.setText("Select subtopics");
+        }
     }
 
     public RadioButton addTopicButton(double x, double y, String text, ToggleGroup group) {
@@ -62,6 +70,19 @@ public class TopicSelectorController {
         for (Node child : displayPane.getChildren()) {
             if (subtopicMode) {
                 if (child instanceof RadioButton && ((RadioButton) child).isSelected()) {
+                    Topic selectedTopic = fromRadioButtonToTopic((RadioButton) child);
+                    //
+                    System.out.println(selectedTopic);
+                    //
+                    App.currentSimulation = new Simulation(selectedTopic);
+
+                    FXMLLoader loader = App.getFXMLLoader("subtopicSelector");
+                    loader.load();
+                    SubtopicSelectorController controller = loader.getController();
+
+                    controller.displaySelected(selectedTopic);
+
+                    App.setRoot("subtopicSelector");
 
                 }
             } else {
@@ -79,12 +100,14 @@ public class TopicSelectorController {
 
                     controller.displayTopicSelected(selectedTopic);
                     controller.setSpinnerMax(selectedTopic);
+                    NumberOfSubtopicsController.subTopicMode = false;
 
                     App.setRoot("numberOfSubtopics");
                 }
             }
 
         }
+
     }
 
     private static Topic fromRadioButtonToTopic(RadioButton button) {

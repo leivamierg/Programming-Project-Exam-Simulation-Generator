@@ -43,6 +43,10 @@ public class MainMenuEventController {
         App.setRoot("topicSelector");
     }
 
+    public void seeHistory(ActionEvent event) throws IOException {
+        App.setRoot("historyDisplay");
+    }
+
     public void logOut(ActionEvent event) throws IOException {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Log Out");

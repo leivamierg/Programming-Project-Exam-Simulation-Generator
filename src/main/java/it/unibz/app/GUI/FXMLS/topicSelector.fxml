@@ -8,6 +8,6 @@
    <children>
       <Label layoutX="111.0" layoutY="34.0" text="Select one topic to generate your exam simulation and then press start:" />
       <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#goBack" text="Go Back" />
-      <Button layoutX="233.0" layoutY="361.0" mnemonicParsing="false" onAction="#confirmSelection" text="Select nr. of questions" />
+      <Button fx:id="nextButton" layoutX="233.0" layoutY="361.0" mnemonicParsing="false" onAction="#confirmSelection" text="Select nr. of questions" />
    </children>
 </AnchorPane>
