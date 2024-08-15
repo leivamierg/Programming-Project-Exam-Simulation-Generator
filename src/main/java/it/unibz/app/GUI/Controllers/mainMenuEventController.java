@@ -34,6 +34,12 @@ public class MainMenuEventController {
     }
 
     public void selectTopic(ActionEvent event) throws IOException {
+        TopicSelectorController.subtopicMode = false;
+        App.setRoot("topicSelector");
+    }
+
+    public void selectTopicAndSubtopics(ActionEvent event) throws IOException {
+        TopicSelectorController.subtopicMode = true;
         App.setRoot("topicSelector");
     }
 

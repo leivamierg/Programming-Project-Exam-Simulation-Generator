@@ -21,6 +21,7 @@ public class TopicSelectorController {
     AnchorPane displayPane;
 
     List<Topic> topics;
+    public static boolean subtopicMode;
 
     @FXML
     void initialize() throws IOException {// to add components dynamically we MUST add the initialize method
@@ -59,23 +60,30 @@ public class TopicSelectorController {
 
     public void confirmSelection(ActionEvent event) throws IOException {
         for (Node child : displayPane.getChildren()) {
-            if (child instanceof RadioButton && ((RadioButton) child).isSelected()) {
+            if (subtopicMode) {
+                if (child instanceof RadioButton && ((RadioButton) child).isSelected()) {
 
-                Topic selectedTopic = fromRadioButtonToTopic((RadioButton) child);
-                //
-                System.out.println(selectedTopic);
-                //
-                App.currentSimulation = new Simulation(selectedTopic);/// TODO:
+                }
+            } else {
+                if (child instanceof RadioButton && ((RadioButton) child).isSelected()) {
 
-                FXMLLoader loader = App.getFXMLLoader("numberOfSubtopics");
-                loader.load();
-                NumberOfSubtopicsController controller = loader.getController();
+                    Topic selectedTopic = fromRadioButtonToTopic((RadioButton) child);
+                    //
+                    System.out.println(selectedTopic);
+                    //
+                    App.currentSimulation = new Simulation(selectedTopic);/// TODO:
 
-                controller.displayTopicSelected(selectedTopic);
-                controller.setSpinnerMax(selectedTopic);
+                    FXMLLoader loader = App.getFXMLLoader("numberOfSubtopics");
+                    loader.load();
+                    NumberOfSubtopicsController controller = loader.getController();
 
-                App.setRoot("numberOfSubtopics");
+                    controller.displayTopicSelected(selectedTopic);
+                    controller.setSpinnerMax(selectedTopic);
+
+                    App.setRoot("numberOfSubtopics");
+                }
             }
+
         }
     }
 
