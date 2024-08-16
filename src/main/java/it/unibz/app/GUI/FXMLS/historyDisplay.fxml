@@ -4,10 +4,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:id="displayPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="displayPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unibz.app.GUI.Controllers.HistoryDisplayController">
    <children>
       <Label layoutX="281.0" layoutY="14.0" text="History" />
       <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#goBack" text="Menu" />
+      <Label fx:id="history1" alignment="CENTER" layoutX="61.0" layoutY="44.0" prefHeight="98.0" prefWidth="486.0" text="1" wrapText="true" />
+      <Label fx:id="history2" alignment="CENTER" layoutX="61.0" layoutY="151.0" prefHeight="98.0" prefWidth="486.0" text="2" wrapText="true" />
+      <Label fx:id="history3" alignment="CENTER" layoutX="61.0" layoutY="256.0" prefHeight="98.0" prefWidth="486.0" text="3" wrapText="true" />
+      <Label fx:id="page" layoutX="291.0" layoutY="365.0" text="Page" />
+      <Button layoutX="190.0" layoutY="361.0" mnemonicParsing="false" onAction="#previous" text="Previous" />
+      <Button layoutX="373.0" layoutY="361.0" mnemonicParsing="false" onAction="#next" text="Next" />
    </children>
 </AnchorPane>
