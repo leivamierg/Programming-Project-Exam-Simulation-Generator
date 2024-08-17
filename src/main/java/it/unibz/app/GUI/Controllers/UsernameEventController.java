@@ -65,6 +65,6 @@ public class UsernameEventController {
 
     public void exitOnClick(ActionEvent event) throws IOException {// ask the user if it really wants to exit and
                                                                    // confirm it
-        App.exit(App.stage);// TODO: cannot exit the application without initializing everything before
+        App.exit(App.stage);
     }
 }

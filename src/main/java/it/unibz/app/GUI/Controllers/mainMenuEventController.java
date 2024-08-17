@@ -62,7 +62,6 @@ public class MainMenuEventController {
 
         if (alert.showAndWait().get() == ButtonType.OK) {
             App.setRoot("username");
-            // TODO: add progress savers methods, etc.
         }
     }
 }

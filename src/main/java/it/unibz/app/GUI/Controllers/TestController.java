@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import it.unibz.app.App;
+import it.unibz.model.implementations.ExamTimer;
 import it.unibz.model.implementations.Question;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -39,6 +40,8 @@ public class TestController {
 
     // timer fields
     private long mins, secs, hrs, totalSecs = 0;
+
+    long initialTime;
 
     public static Timer simTimer;
 
@@ -170,6 +173,9 @@ public class TestController {
         new Thread() {
             public void run() {
                 newSim = true;
+                // TODO:fix, add new methods
+                //
+                updateOldTimer(App.currentSimulation.getTimer(), (int) initialTime, (int) (initialTime - totalSecs));
                 //
                 String finishMessage = App.currentSimulation.terminate(
                         App.actionsController.getModel().getLoadedStats(),
@@ -225,6 +231,9 @@ public class TestController {
 
     private void setTimer() {
         totalSecs = App.currentSimulation.getNumberOfQuestions() * 60;
+        //
+        initialTime = totalSecs;
+        //
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
@@ -236,6 +245,7 @@ public class TestController {
                         if (totalSecs <= 0) {
                             System.out.println("times up!!!");
                             timer.cancel();
+
                             String finishMessage = App.currentSimulation.terminate(
                                     App.actionsController.getModel().getLoadedStats(),
                                     App.actionsController.getModel().getLoadedHistory());
@@ -274,5 +284,10 @@ public class TestController {
         //
         time.setText(format(hrs) + ":" + format(mins) + ":" + format(secs));
         totalSecs--;
+    }
+
+    public void updateOldTimer(ExamTimer timer, int initialTime, int remainingTime) {
+        timer.DURATION_SIMULATION = initialTime;
+        App.actionsController.getModel().setRemainingTimeSimulation(remainingTime);
     }
 }

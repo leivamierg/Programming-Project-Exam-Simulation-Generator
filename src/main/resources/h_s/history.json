@@ -51,23 +51,13 @@
     "subtopics" : [ "Row echelon form" ]
   }, {
     "testNumber" : 6,
-    "requiredTimeOverTotalTime" : "30:00 out of 30:00",
+    "requiredTimeOverTotalTime" : "00:09 out of 04:00",
     "numberOfQuestions" : 4,
-    "correctlyAnsweredQuestions" : 0,
-    "incorrectlyAnsweredQuestions" : 4,
-    "blankQuestions" : 0,
-    "overallScore" : 0.0,
+    "correctlyAnsweredQuestions" : 3,
+    "incorrectlyAnsweredQuestions" : 0,
+    "blankQuestions" : 1,
+    "overallScore" : 75.0,
     "topic" : "Computer System Architecture",
     "subtopics" : [ "Binary arithmetics", "Logic gates and boolean algebra", "The BUS", "Sequential and Combinatorial circuits" ]
-  }, {
-    "testNumber" : 7,
-    "requiredTimeOverTotalTime" : "30:00 out of 30:00",
-    "numberOfQuestions" : 1,
-    "correctlyAnsweredQuestions" : 0,
-    "incorrectlyAnsweredQuestions" : 1,
-    "blankQuestions" : 0,
-    "overallScore" : 0.0,
-    "topic" : "Computer System Architecture",
-    "subtopics" : [ "Logic gates and boolean algebra" ]
   } ]
 }

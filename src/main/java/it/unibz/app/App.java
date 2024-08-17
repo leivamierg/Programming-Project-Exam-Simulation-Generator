@@ -207,18 +207,4 @@ public class App extends Application {
 
         }
     }
-
-    public static void save() throws IOException {
-        Set<Topic> loadedTopics = FileLoader.getTopics();
-        FileLoader.saveBank(System.getProperty("user.dir") +
-                "/src/main/resources/bank/",
-                List.copyOf(loadedTopics));
-
-        // saving everything
-        HistoryStatsLoader.saveStats("src/main/resources/h_s/stats.json",
-                Model.getLoadedStats());
-        HistoryStatsLoader.saveHistory("src/main/resources/h_s/history.json",
-                Model.getLoadedHistory());
-    }
-
 }

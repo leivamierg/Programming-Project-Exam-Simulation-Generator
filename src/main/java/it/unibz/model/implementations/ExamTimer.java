@@ -12,7 +12,7 @@ public class ExamTimer implements Runnable {
     private int remainingTime;
 
     // Duration of the simulation in seconds
-    public final int DURATION_SIMULATION = 60 * 30;
+    public int DURATION_SIMULATION = 60 * 30; // not final anymore
 
     /**
      * Constructs a new ExamTimer object.

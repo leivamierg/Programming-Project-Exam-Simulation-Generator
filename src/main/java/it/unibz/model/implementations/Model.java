@@ -261,8 +261,13 @@ public class Model implements ModelInt {
         return history;
     }
 
-    public static String getRemainingTime() {
-        return String.valueOf(formatTime(DURATION_SIMULATION - remainingTimeSimulation));
+    public static String getRemainingTime() {//
+        return String.valueOf(formatTime(remainingTimeSimulation));
+    }
+
+    //
+    public static void setRemainingTimeSimulation(int i) {//
+        Model.remainingTimeSimulation = i;
     }
 
     // randomizer method for daily challenge questions (from all the topics)
