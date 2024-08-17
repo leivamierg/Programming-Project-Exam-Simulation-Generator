@@ -21,6 +21,7 @@ public class MainMenuEventController {
         MainMenuEventController.name = name;
     }
 
+    @FXML
     public void initialize() {
         username.setText(name);
     }
@@ -45,6 +46,12 @@ public class MainMenuEventController {
 
     public void seeHistory(ActionEvent event) throws IOException {
         App.setRoot("historyDisplay");
+    }
+
+    public void seeGeneralStats(ActionEvent event) throws IOException {
+        GeneralStatsDisplayController
+                .displayStats(App.actionsController.getModel().getLoadedStats().showGeneralStats());
+        App.setRoot("generalStatsDisplay");
     }
 
     public void logOut(ActionEvent event) throws IOException {

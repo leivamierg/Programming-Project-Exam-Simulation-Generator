@@ -12,9 +12,14 @@ import java.util.Scanner;
 import java.util.Set;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 /**
@@ -34,6 +39,7 @@ public class App extends Application {
     public static Controller actionsController;
     public static User user;
     public static Simulation currentSimulation;
+    public static Stage stage;//
 
     //
     public static void main(String[] args) throws IOException {
@@ -133,10 +139,21 @@ public class App extends Application {
 
     public void start(Stage stage) throws IOException {
         try {
+            App.stage = stage;//
             scene = new Scene(getFXMLLoader("username").load());
             stage.setScene(scene);
             stage.show();
-        } catch (Exception e) {
+
+            stage.setOnCloseRequest(event -> {
+                try {
+                    event.consume();
+                    exit(stage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            });
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -149,6 +166,59 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 new File("src/main/java/it/unibz/app/GUI/FXMLS/" + fxml + ".fxml").toURI().toURL());
         return fxmlLoader;
+    }
+
+    public static void exit(Stage stage) throws IOException {// ask the user if it really wants to exit and confirm it
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Close the application");
+        alert.setHeaderText("You are about to close the application");
+        alert.setContentText("Are you sure you want to exit?");
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            // check if the user was loaded
+            new Thread() {
+                public void run() {
+                    if (!(user == null)) {
+                        Set<Topic> loadedTopics = FileLoader.getTopics();
+                        FileLoader.saveBank(System.getProperty("user.dir") +
+                                "/src/main/resources/bank/",
+                                List.copyOf(loadedTopics));
+
+                        try {
+                            // saving everything
+                            HistoryStatsLoader.saveStats("src/main/resources/h_s/stats.json",
+                                    Model.getLoadedStats());
+                            HistoryStatsLoader.saveHistory("src/main/resources/h_s/history.json",
+                                    Model.getLoadedHistory());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        Platform.runLater(new Runnable() {
+                            public void run() {
+                                System.out.println("Exiting the simulation");
+                                stage.close();
+                            }
+                        });
+
+                    }
+                }
+            }.start();
+
+        }
+    }
+
+    public static void save() throws IOException {
+        Set<Topic> loadedTopics = FileLoader.getTopics();
+        FileLoader.saveBank(System.getProperty("user.dir") +
+                "/src/main/resources/bank/",
+                List.copyOf(loadedTopics));
+
+        // saving everything
+        HistoryStatsLoader.saveStats("src/main/resources/h_s/stats.json",
+                Model.getLoadedStats());
+        HistoryStatsLoader.saveHistory("src/main/resources/h_s/history.json",
+                Model.getLoadedHistory());
     }
 
 }

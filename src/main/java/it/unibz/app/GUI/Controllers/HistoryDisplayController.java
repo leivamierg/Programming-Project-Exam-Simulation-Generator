@@ -7,6 +7,7 @@ import java.util.List;
 import it.unibz.app.App;
 import it.unibz.model.implementations.History;
 import it.unibz.model.implementations.TestRegister;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -15,15 +16,28 @@ public class HistoryDisplayController {
     @FXML
     Label history1, history2, history3, page;
 
-    static History history = App.actionsController.getModel().getLoadedHistory();
-    static int numRegisters = App.actionsController.getModel().getLoadedHistory().getTestRegisters().size();
-    int i = 0;
+    static History history;
+    static int numRegisters;
+    int i;
 
     // build a navigable "e-book" in which you can see a max of 3 registers per
     // "page"
     public void initialize() {
-        updatePage();
-        System.out.println(numRegisters);
+        new Thread() {
+            public void run() {
+                history = App.actionsController.getModel().getLoadedHistory();
+                numRegisters = App.actionsController.getModel().getLoadedHistory().getTestRegisters().size();
+                i = 0;
+
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        updatePage();
+                        System.out.println(numRegisters);
+                    }
+                });
+            }
+
+        }.start();
     }
 
     public void updatePage() {

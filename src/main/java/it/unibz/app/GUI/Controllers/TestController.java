@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import it.unibz.app.App;
 import it.unibz.model.implementations.Question;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -166,14 +167,29 @@ public class TestController {
 
             }
         }
+        new Thread() {
+            public void run() {
+                newSim = true;
+                //
+                String finishMessage = App.currentSimulation.terminate(
+                        App.actionsController.getModel().getLoadedStats(),
+                        App.actionsController.getModel().getLoadedHistory());
 
-        newSim = true;
-        //
-        String finishMessage = App.currentSimulation.terminate(App.actionsController.getModel().getLoadedStats(),
-                App.actionsController.getModel().getLoadedHistory());
-        SimStatsController.updateStats(finishMessage);
-        simTimer.cancel();
-        App.setRoot("showStats");
+                simTimer.cancel();
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        try {
+                            SimStatsController.updateStats(finishMessage);
+                            App.setRoot("showStats");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }.start();
+
     }
 
     // checks if the question was already answered, if yes, marks its key when the

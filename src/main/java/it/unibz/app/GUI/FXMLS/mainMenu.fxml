@@ -14,7 +14,7 @@
       <Button layoutX="238.0" layoutY="148.0" mnemonicParsing="false" onAction="#selectTopic" text="Start a standard test" />
       <Button layoutX="239.0" layoutY="178.0" mnemonicParsing="false" onAction="#selectTopicAndSubtopics" text="Start a custom Test" />
       <Button layoutX="271.0" layoutY="208.0" mnemonicParsing="false" onAction="#seeHistory" text="History" />
-      <Button layoutX="276.0" layoutY="238.0" mnemonicParsing="false" text="Stats" />
+      <Button layoutX="276.0" layoutY="238.0" mnemonicParsing="false" onAction="#seeGeneralStats" text="Stats" />
       <Button layoutX="243.0" layoutY="268.0" mnemonicParsing="false" text="Generate test pdf" />
       <Button layoutX="260.0" layoutY="298.0" mnemonicParsing="false" text="Profile Info" />
       <Button layoutX="234.0" layoutY="328.0" mnemonicParsing="false" text="Start Daily Challenge" />
