@@ -179,6 +179,7 @@ public class App extends Application {
             // check if the user was loaded
             new Thread() {
                 public void run() {
+                    // only when closing incorrectly
                     if (!(user == null)) {
                         Set<Topic> loadedTopics = FileLoader.getTopics();
                         FileLoader.saveBank(System.getProperty("user.dir") +
@@ -191,17 +192,19 @@ public class App extends Application {
                                     Model.getLoadedStats());
                             HistoryStatsLoader.saveHistory("src/main/resources/h_s/history.json",
                                     Model.getLoadedHistory());
+                            // TODO: save profileInfo
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        Platform.runLater(new Runnable() {
-                            public void run() {
-                                System.out.println("Exiting the simulation");
-                                stage.close();
-                            }
-                        });
 
                     }
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            System.out.println("Exiting the simulation");
+                            stage.close();
+                        }
+                    });
                 }
             }.start();
 

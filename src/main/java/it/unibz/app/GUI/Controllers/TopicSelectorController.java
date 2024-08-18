@@ -8,7 +8,6 @@ import java.util.Set;
 import it.unibz.app.App;
 import it.unibz.model.implementations.Simulation;
 import it.unibz.model.implementations.Topic;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

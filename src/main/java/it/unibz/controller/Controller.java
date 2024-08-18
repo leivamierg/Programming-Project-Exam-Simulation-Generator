@@ -123,9 +123,11 @@ public class Controller {
                 System.out.println("The starting simulation number or the subtopic name is invalid!");
             }
         } else if ((startDailyChallengePattern.matcher(input)).find()) {
+            // TODO:
             String challengeDate = user.getChallengeDate();
 
             if (challengeDate == null || challengeDate.isEmpty()) {
+                // TODO:
                 user.setChallengeDate(LocalDate.now().toString());
                 user.resetStreak();
                 List<Question> questions = model.getRandomQuestions(5);
@@ -190,4 +192,8 @@ public class Controller {
         return (Model) model;
     }
     //
+
+    public PdfGenerator getPdfGenerator() {
+        return pdfGenerator;
+    }
 }
