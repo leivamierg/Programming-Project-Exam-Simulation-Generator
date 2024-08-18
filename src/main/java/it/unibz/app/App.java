@@ -134,7 +134,17 @@ public class App extends Application {
                 e.printStackTrace();
             }
         }
-        return new User(username);
+
+        User newUser = new User(username);
+        try {
+            mapper.writerWithDefaultPrettyPrinter()
+                    .writeValue(new File("src/main/resources/challenge/" + username + ".json"), newUser);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return newUser;
+
     }
 
     public void start(Stage stage) throws IOException {

@@ -6,40 +6,26 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="displayPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unibz.app.GUI.Controllers.StartDailyChallengeController">
    <children>
-      <Label layoutX="274.0" layoutY="14.0" text="username" />
-      <Label layoutX="287.0" layoutY="31.0" text="Date" />
-      <Label fx:id="questionDisplay" alignment="CENTER" layoutX="47.0" layoutY="69.0" prefHeight="106.0" prefWidth="506.0" text="question" />
+      <Label fx:id="Username" alignment="CENTER" contentDisplay="CENTER" layoutY="14.0" prefHeight="18.0" prefWidth="600.0" text="username" />
+      <Label fx:id="date" alignment="CENTER" layoutY="31.0" prefHeight="18.0" prefWidth="600.0" text="Date" />
+      <Label fx:id="questionDisplay" alignment="CENTER" layoutX="47.0" layoutY="69.0" prefHeight="106.0" prefWidth="506.0" text="question" wrapText="true" />
       <RadioButton fx:id="buttonA" alignment="TOP_CENTER" layoutX="72.0" layoutY="211.0" mnemonicParsing="false" onAction="#selectAnswer" prefHeight="53.0" prefWidth="208.0" text="Blank" wrapText="true">
          <toggleGroup>
-            <ToggleGroup fx:id="selection" />
+            <ToggleGroup fx:id="dailySelection" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="buttonB" alignment="TOP_CENTER" layoutX="72.0" layoutY="286.0" mnemonicParsing="false" onAction="#selectAnswer" prefHeight="54.0" prefWidth="208.0" text="Blank" wrapText="true">
-         <toggleGroup>
-            <ToggleGroup fx:id="selection" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="buttonC" alignment="TOP_CENTER" layoutX="317.0" layoutY="211.0" mnemonicParsing="false" onAction="#selectAnswer" prefHeight="54.0" prefWidth="208.0" text="Blank" wrapText="true">
-         <toggleGroup>
-            <ToggleGroup fx:id="selection" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="buttonD" alignment="TOP_CENTER" layoutX="317.0" layoutY="286.0" mnemonicParsing="false" onAction="#selectAnswer" prefHeight="54.0" prefWidth="208.0" text="Blank" wrapText="true">
-         <toggleGroup>
-            <ToggleGroup fx:id="selection" />
-         </toggleGroup>
-      </RadioButton>
+      <RadioButton fx:id="buttonB" alignment="TOP_CENTER" layoutX="72.0" layoutY="286.0" mnemonicParsing="false" onAction="#selectAnswer" prefHeight="54.0" prefWidth="208.0" text="Blank" toggleGroup="$dailySelection" wrapText="true" />
+      <RadioButton fx:id="buttonC" alignment="TOP_CENTER" layoutX="317.0" layoutY="211.0" mnemonicParsing="false" onAction="#selectAnswer" prefHeight="54.0" prefWidth="208.0" text="Blank" toggleGroup="$dailySelection" wrapText="true" />
+      <RadioButton fx:id="buttonD" alignment="TOP_CENTER" layoutX="317.0" layoutY="286.0" mnemonicParsing="false" onAction="#selectAnswer" prefHeight="54.0" prefWidth="208.0" text="Blank" toggleGroup="$dailySelection" wrapText="true" />
       <Label layoutX="54.0" layoutY="210.0" text="A." />
       <Label layoutX="54.0" layoutY="285.0" text="B." />
       <Label layoutX="299.0" layoutY="210.0" text="C." />
       <Label layoutX="299.0" layoutY="285.0" text="D." />
       <Button fx:id="backButton" layoutX="24.0" layoutY="361.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
-      <Button fx:id="nextButton" layoutX="554.0" layoutY="361.0" mnemonicParsing="false" onAction="#goNext" text="Next" />
+      <Button fx:id="nextButton" layoutX="544.0" layoutY="361.0" mnemonicParsing="false" onAction="#goNext" text="Next" />
       <Button layoutX="276.0" layoutY="361.0" mnemonicParsing="false" onAction="#finishDailyChallenge" text="Finish" />
-      <Label fx:id="timeDisplay" alignment="CENTER" layoutX="520.0" layoutY="22.0" prefHeight="18.0" prefWidth="65.0" text="Timer" />
       <Label fx:id="questionNumber" alignment="CENTER" layoutY="49.0" prefHeight="18.0" prefWidth="600.0" text="Question Number" />
    </children>
 </AnchorPane>

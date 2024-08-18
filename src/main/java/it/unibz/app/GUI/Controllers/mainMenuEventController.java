@@ -1,6 +1,8 @@
 package it.unibz.app.GUI.Controllers;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
@@ -70,7 +72,26 @@ public class MainMenuEventController {
     }
 
     public void startDailyChallenge(ActionEvent event) throws IOException {
-        App.setRoot("startDailyChallenge");
+        if (!App.user.getChallengeDate().equals("")) {
+            LocalDate lastChallengeDate = LocalDate.parse(App.user.getChallengeDate(),
+                    DateTimeFormatter.ISO_LOCAL_DATE);
+            if (lastChallengeDate.equals(LocalDate.now())) {
+                // TODO: Send back to mainMenu and show alert
+
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Challenge already done");
+                alert.setHeaderText("You have already complete today's daily challenge");
+                alert.setContentText("Come back tomorrow");
+                alert.showAndWait();
+
+            } else {
+                App.setRoot("startDailyChallenge");
+            }
+        } else {
+            App.setRoot("startDailyChallenge");
+        }
+        //
+
     }
 
     public void logOut(ActionEvent event) throws IOException {
