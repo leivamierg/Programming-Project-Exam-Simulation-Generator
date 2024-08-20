@@ -186,6 +186,7 @@ public class DailyChallenge implements DailyChallengeInt {
     }
 
     public void saveUserData() {
+        updateChallengeDate();//
         ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writerWithDefaultPrettyPrinter()

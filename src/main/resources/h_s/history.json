@@ -1,74 +1,63 @@
 {
-  "testRegisters": [
-    {
-      "testNumber": 1,
-      "requiredTimeOverTotalTime": "30:00 out of 30:00",
-      "numberOfQuestions": 4,
-      "correctlyAnsweredQuestions": 0,
-      "incorrectlyAnsweredQuestions": 0,
-      "blankQuestions": 4,
-      "overallScore": 0.0,
-      "topic": "Linear Algebra",
-      "subtopics": [
-        "Row echelon form",
-        "Matrices",
-        "Gaussian elimination",
-        "Vectors"
-      ]
-    },
-    {
-      "testNumber": 2,
-      "requiredTimeOverTotalTime": "30:00 out of 30:00",
-      "numberOfQuestions": 4,
-      "correctlyAnsweredQuestions": 0,
-      "incorrectlyAnsweredQuestions": 2,
-      "blankQuestions": 2,
-      "overallScore": 0.0,
-      "topic": "Linear Algebra",
-      "subtopics": [
-        "Row echelon form",
-        "Matrices",
-        "Gaussian elimination",
-        "Vectors"
-      ]
-    },
-    {
-      "testNumber": 3,
-      "requiredTimeOverTotalTime": "01:50 out of 30:00",
-      "numberOfQuestions": 16,
-      "correctlyAnsweredQuestions": 2,
-      "incorrectlyAnsweredQuestions": 3,
-      "blankQuestions": 11,
-      "overallScore": 12.5,
-      "topic": "Linear Algebra",
-      "subtopics": [
-        "Row echelon form",
-        "Matrices",
-        "Gaussian elimination",
-        "Vectors"
-      ]
-    },
-    {
-      "testNumber": 4,
-      "requiredTimeOverTotalTime": "00:09 out of 30:00",
-      "numberOfQuestions": 2,
-      "correctlyAnsweredQuestions": 2,
-      "incorrectlyAnsweredQuestions": 0,
-      "blankQuestions": 0,
-      "overallScore": 100.0,
-      "topic": "Linear Algebra",
-      "subtopics": ["Row echelon form"]
-    },
-    {
-      "testNumber": 5,
-      "requiredTimeOverTotalTime": "00:01 out of 30:00",
-      "numberOfQuestions": 1,
-      "correctlyAnsweredQuestions": 0,
-      "incorrectlyAnsweredQuestions": 0,
-      "blankQuestions": 1,
-      "overallScore": 0.0,
-      "topic": "Linear Algebra",
-      "subtopics": ["Row echelon form"]
-    }
-  ]
+  "testRegisters" : [ {
+    "testNumber" : 1,
+    "requiredTimeOverTotalTime" : "30:00 out of 30:00",
+    "numberOfQuestions" : 4,
+    "correctlyAnsweredQuestions" : 0,
+    "incorrectlyAnsweredQuestions" : 0,
+    "blankQuestions" : 4,
+    "overallScore" : 0.0,
+    "topic" : "Linear Algebra",
+    "subtopics" : [ "Row echelon form", "Matrices", "Gaussian elimination", "Vectors" ]
+  }, {
+    "testNumber" : 2,
+    "requiredTimeOverTotalTime" : "30:00 out of 30:00",
+    "numberOfQuestions" : 4,
+    "correctlyAnsweredQuestions" : 0,
+    "incorrectlyAnsweredQuestions" : 2,
+    "blankQuestions" : 2,
+    "overallScore" : 0.0,
+    "topic" : "Linear Algebra",
+    "subtopics" : [ "Row echelon form", "Matrices", "Gaussian elimination", "Vectors" ]
+  }, {
+    "testNumber" : 3,
+    "requiredTimeOverTotalTime" : "01:50 out of 30:00",
+    "numberOfQuestions" : 16,
+    "correctlyAnsweredQuestions" : 2,
+    "incorrectlyAnsweredQuestions" : 3,
+    "blankQuestions" : 11,
+    "overallScore" : 12.5,
+    "topic" : "Linear Algebra",
+    "subtopics" : [ "Row echelon form", "Matrices", "Gaussian elimination", "Vectors" ]
+  }, {
+    "testNumber" : 4,
+    "requiredTimeOverTotalTime" : "00:09 out of 30:00",
+    "numberOfQuestions" : 2,
+    "correctlyAnsweredQuestions" : 2,
+    "incorrectlyAnsweredQuestions" : 0,
+    "blankQuestions" : 0,
+    "overallScore" : 100.0,
+    "topic" : "Linear Algebra",
+    "subtopics" : [ "Row echelon form" ]
+  }, {
+    "testNumber" : 5,
+    "requiredTimeOverTotalTime" : "00:01 out of 30:00",
+    "numberOfQuestions" : 1,
+    "correctlyAnsweredQuestions" : 0,
+    "incorrectlyAnsweredQuestions" : 0,
+    "blankQuestions" : 1,
+    "overallScore" : 0.0,
+    "topic" : "Linear Algebra",
+    "subtopics" : [ "Row echelon form" ]
+  }, {
+    "testNumber" : 6,
+    "requiredTimeOverTotalTime" : "00:19 out of 04:00",
+    "numberOfQuestions" : 4,
+    "correctlyAnsweredQuestions" : 2,
+    "incorrectlyAnsweredQuestions" : 2,
+    "blankQuestions" : 0,
+    "overallScore" : 50.0,
+    "topic" : "Linear Algebra",
+    "subtopics" : [ "Row echelon form", "Matrices", "Gaussian elimination", "Vectors" ]
+  } ]
 }

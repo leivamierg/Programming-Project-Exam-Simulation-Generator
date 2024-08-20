@@ -2,7 +2,6 @@ package it.unibz.app.GUI.Controllers;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +24,25 @@ import javafx.scene.layout.AnchorPane;
 
 public class StartDailyChallengeController {
     @FXML
-    AnchorPane displayPane;
+    private AnchorPane displayPane;
     @FXML
-    Label questionNumber, questionDisplay, date, Username;
+    private Label questionNumber, questionDisplay, date, Username;
     @FXML
-    RadioButton buttonA, buttonB, buttonC, buttonD;
+    private RadioButton buttonA, buttonB, buttonC, buttonD;
     @FXML
-    Button backButton, nexButton;
+    private Button backButton, nexButton;
 
-    int index;
-    List<Question> questions;
-    Question currQuestion;
-    DailyChallenge dailyChallenge;
-    String challengeDate;
-    boolean validAccess;
+    private int index;
+    private List<Question> questions;
+    private Question currQuestion;
+    private DailyChallenge dailyChallenge;
+    private String challengeDate;
+    private boolean validAccess;
 
+    /**
+     * Initialize method which sets many private local fields and displays the first
+     * question of the questions List
+     */
     public void initialize() {
         new Thread() {
             public void run() {
@@ -63,7 +66,12 @@ public class StartDailyChallengeController {
         }.start();
     }
 
-    public void initializeDailyChallenge() {
+    /**
+     * Helper method which checks the last dailyChallenge done by the user date. And
+     * then initializes the daily challenge field with a new daily challenge object.
+     * If the user didn't do yesterday's daily challenge it breaks the daily streak
+     */
+    private void initializeDailyChallenge() {
         challengeDate = App.user.getChallengeDate();
 
         if (challengeDate == null || challengeDate.isEmpty()) {
@@ -88,6 +96,12 @@ public class StartDailyChallengeController {
         }
     }
 
+    /**
+     * Redirects the user to the mainMenu
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void goBack(ActionEvent event) throws IOException {
         // decrease the index and re-initialize
         if (index != 0) {
@@ -97,6 +111,12 @@ public class StartDailyChallengeController {
         }
     }
 
+    /**
+     * Displays the next question, if any, by increasing the index field
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void goNext(ActionEvent event) throws IOException {
         // increase the index and re-initialize
         if (index + 1 != questions.size()) {
@@ -115,6 +135,9 @@ public class StartDailyChallengeController {
         }
     }
 
+    /**
+     * Displays the previous question, if any, by decreasing the index field
+     */
     public void updateQuestion() {
         currQuestion = questions.get(index);
 
@@ -132,7 +155,17 @@ public class StartDailyChallengeController {
         displayAlreadyAnswered(dailyChallenge.getQuestionStatementToAnswer(), currQuestion.getQuestionStatement());
     }
 
+    /**
+     * Helper method which updates each of the possible answers buttons according to
+     * the current Question
+     * 
+     * @param map
+     */
     private void updateButtons(Map<String, Character> map) {
+        buttonA.setText("");
+        buttonB.setText("");
+        buttonC.setText("");
+        buttonD.setText("");
         for (Entry<String, Character> entry : map
                 .entrySet()) {
             if (entry.getValue() == 'A') {
@@ -147,6 +180,11 @@ public class StartDailyChallengeController {
         }
     }
 
+    /**
+     * Method that handles the selection of one of the answers and saves it in a Map
+     * 
+     * @param event
+     */
     public void selectAnswer(ActionEvent event) {
         for (Node child : displayPane.getChildren()) {
             if (child instanceof RadioButton && ((RadioButton) child).isSelected()) {
@@ -165,12 +203,23 @@ public class StartDailyChallengeController {
         }
     }
 
-    public void displayAlreadyAnswered(Map<String, Character> map, String questionStatement) {
+    /**
+     * Helper method which marks the already asnwered questions, if any.
+     * 
+     * @param map
+     * @param questionStatement
+     */
+    private void displayAlreadyAnswered(Map<String, Character> map, String questionStatement) {
         if (map.containsKey(questionStatement)) {// if the questionstatemen is already a key of the map
             mark(map.get(questionStatement));
         }
     }
 
+    /**
+     * Helper method to mark one of the four possible answer methods
+     * 
+     * @param key
+     */
     private void mark(Character key) {
         if (key.equals('A')) {
             buttonA.setSelected(true);
@@ -194,6 +243,14 @@ public class StartDailyChallengeController {
         return i;
     }
 
+    /**
+     * Method which if every question was answered displays how many were wrong and
+     * right and if the user gets today's daily challenge badge.
+     * If not every question was answered an alert is shown asking to answer every
+     * question
+     * 
+     * @param event
+     */
     public void finishDailyChallenge(ActionEvent event) {
         if (dailyChallenge.getQuestionStatementToAnswer().size() == 5) {
             List<String> answers = generateLabelsList();
@@ -221,7 +278,12 @@ public class StartDailyChallengeController {
 
     }
 
-    public List<String> generateLabelsList() {
+    /**
+     * Helper method which creates a List of all the marked answers of the user
+     * 
+     * @return
+     */
+    private List<String> generateLabelsList() {
         List<String> labels = new ArrayList<>();
         for (Question question : questions) {
             labels.add(Character

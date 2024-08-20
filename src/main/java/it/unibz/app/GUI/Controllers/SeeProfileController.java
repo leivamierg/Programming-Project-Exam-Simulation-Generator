@@ -8,16 +8,26 @@ import javafx.scene.control.Label;
 
 public class SeeProfileController {
     @FXML
-    Label username;
+    private Label username;
     @FXML
-    Label profileInfo;
+    private Label profileInfo;
 
+    /**
+     * Initilize method that sets the Username Label text to the Username String of
+     * App.user, and the profileInfo Label text to the toString method of the
+     * App.user object
+     */
     @FXML
     public void initialize() {
         username.setText(App.user.getUsername());
         profileInfo.setText(App.user.toString());
     }
 
+    /**
+     * Redirects the user back to the mainMenu
+     * 
+     * @throws IOException
+     */
     public void goBack() throws IOException {
         App.setRoot("mainMenu");
     }

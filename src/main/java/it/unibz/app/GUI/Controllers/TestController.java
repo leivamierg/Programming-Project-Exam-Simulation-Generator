@@ -150,6 +150,10 @@ public class TestController {
      * possible answers
      */
     private void updateButtons(Map<String, Character> map) {
+        buttonA.setText("");
+        buttonB.setText("");
+        buttonC.setText("");
+        buttonD.setText("");
         for (Entry<String, Character> entry : map
                 .entrySet()) {
             if (entry.getValue() == 'A') {

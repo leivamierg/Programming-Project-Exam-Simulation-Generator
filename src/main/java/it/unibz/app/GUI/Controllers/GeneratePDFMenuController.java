@@ -16,11 +16,19 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * Controller of the generatePDFMenu.fxml file
+ */
 public class GeneratePDFMenuController {
     @FXML
-    AnchorPane displayPane;
-    List<Topic> topics;
+    private AnchorPane displayPane;
+    private List<Topic> topics;
 
+    /**
+     * Initialize method which adds the Topics as radioButtons to the current Scene
+     * 
+     * @throws IOException
+     */
     @FXML
     void initialize() throws IOException {// to add components dynamically we MUST add the initialize method
         // add all the topics as elements to the display.fxml scene
@@ -41,7 +49,17 @@ public class GeneratePDFMenuController {
         }
     }
 
-    public RadioButton addTopicButton(double x, double y, String text, ToggleGroup group) {
+    /**
+     * Helper method to generate a RadioButton based on a toggleGroup, two
+     * coordinates and a text
+     * 
+     * @param x
+     * @param y
+     * @param text
+     * @param group
+     * @return
+     */
+    private RadioButton addTopicButton(double x, double y, String text, ToggleGroup group) {
         RadioButton newTopicButton = new RadioButton();
         newTopicButton.setText(text);
         newTopicButton.relocate(x, y);
@@ -51,6 +69,13 @@ public class GeneratePDFMenuController {
         return newTopicButton;
     }
 
+    /**
+     * Method to generate a pdf of the selected topic in the
+     * src/main/resources/pdf/ path, based on the topic selected, once it is
+     * succesful an alert is displayed with the path of the pdf
+     * 
+     * @param event
+     */
     public void generatePDF(ActionEvent event) {
         for (Node child : displayPane.getChildren()) {
             if (child instanceof RadioButton && ((RadioButton) child).isSelected()) {
@@ -77,10 +102,22 @@ public class GeneratePDFMenuController {
         }
     }
 
+    /**
+     * Redirects the user to the mainMenu
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void goBack(ActionEvent event) throws IOException {
         App.setRoot("mainMenu");
     }
 
+    /**
+     * Helper method to get a Topic based on the text of a RadioButton
+     * 
+     * @param button
+     * @return
+     */
     private static Topic fromRadioButtonToTopic(RadioButton button) {
         Topic selectedTopic = App.actionsController
                 .getTopicFromName(button.getText().substring(3));
