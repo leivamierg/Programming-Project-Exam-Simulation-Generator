@@ -8,14 +8,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -28,102 +25,58 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-    /**
-     * The main method of the program.
-     *
-     * @param args The command-line arguments.
-     */
-
     //
+    public static Stage stage;
     private static Scene scene;
-    public static Controller actionsController;
     public static User user;
+    public static Controller actionsController;
     public static Simulation currentSimulation;
-    public static Stage stage;//
 
-    //
+    /**
+     * The whole App class is set ready and activated through the "launch()" method,
+     * which will call the start() method.
+     */
     public static void main(String[] args) throws IOException {
-        //
         launch();
-        /**
-         * Scanner scanner = new Scanner(System.in);
-         * 
-         * System.out.println("Enter your username:");
-         * String username = scanner.nextLine();
-         **/
-        // User user = loadUserData(username);
-
-        // Controller controller = new Controller(new Model(), user);
-        //
-        /**
-         * String input;
-         * boolean showWelcomeMessage = true;
-         * 
-         * while (true) {
-         * if (showWelcomeMessage)
-         * System.out.println("Welcome to the exam simulation program! Click -h for
-         * commands");
-         * 
-         * input = scanner.nextLine();
-         * 
-         * if (input.equalsIgnoreCase("exit")) {
-         * Set<Topic> loadedTopics = FileLoader.getTopics();
-         * FileLoader.saveBank(System.getProperty("user.dir") +
-         * "/src/main/resources/bank/",
-         * List.copyOf(loadedTopics));
-         * 
-         * HistoryStatsLoader.saveStats("src/main/resources/h_s/stats.json",
-         * Model.getLoadedStats());
-         * HistoryStatsLoader.saveHistory("src/main/resources/h_s/history.json",
-         * Model.getLoadedHistory());
-         * 
-         * System.out.println("Exiting the simulation");
-         * break;
-         * }
-         * 
-         * if (input.equals("-h")) {
-         * System.out.println("1) -t or --topics to list all topics");
-         * System.out.println("2) 'topic' -s, --subtopics to list all subtopics");
-         * System.out.println("3) 'topic' to start the test");
-         * System.out.println("4) 'topic' --select to select the subtopic from the topic
-         * to test");
-         * System.out.println("5) --history to show the history of simulation");
-         * System.out.println("6) --stats to show the general stats");
-         * System.out.println(
-         * "7) topic 'topic' 'from sim number' 'to sim number' --compareStats to compare
-         * the stats" +
-         * "of a topic from a certain simulation to another one");
-         * System.out.println(
-         * "8) subtopic 'subtopic' 'from sim number' 'to sim number' --compareStats to
-         * compare the stats" +
-         * "of a subtopic from a certain simulation to another one");
-         * System.out.println("9) topic 'topic' 'from sim number' --compareStats to
-         * compare the stats" +
-         * "of a topic from a certain simulation to the last one");
-         * System.out.println("10) subtopic 'subtopic' 'from sim number' --compareStats
-         * to compare the stats" +
-         * "of a subtopic from a certain simulation to the last one");
-         * System.out.println("11) topic 'topic' 'simulation number' --showStats" +
-         * " to show the stats of a certain topic after x simulations");
-         * System.out.println("12) subtopic 'subtopic' 'simulation number' --showStats"
-         * +
-         * " to show the stats of a certain subtopic after x simulations");
-         * System.out.println("13) 'topic' --download to download PDF version of exam");
-         * System.out.println("14) '-d' to start the daily challenge");
-         * System.out.println("15) '--profile' to see your profile");
-         * System.out.println("16) 'exit' to close the exam simulation program");
-         * showWelcomeMessage = false;
-         * continue;
-         * } else {
-         * controller.elaborateArgs(input.split("\\s+"));
-         * }
-         * }
-         * 
-         * scanner.close();
-         * 
-         **/
     }
 
+    /**
+     * The start method first initializes the "scene" and "stage" fields.
+     * The initial scene is set to the "username.fxml" file.
+     * Then the scene is setted in the stage, and then it is showed. Displaying the
+     * content within "username.fxml".
+     * Lastly, a lambda function is sent to the setOnCloseRequest stage's method
+     * which will be called whenever the user tries to close the program.
+     */
+    public void start(Stage stage) throws IOException {
+        try {
+            App.stage = stage;//
+            scene = new Scene(getFXMLLoader("username").load());
+            stage.setScene(scene);
+            stage.show();
+
+            stage.setOnCloseRequest(event -> {
+                try {
+                    event.consume();
+                    exit(stage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method looks for the user String given and loads the username.json file,
+     * if any, to the App.user static field. If there's no corresponding .json file,
+     * it is created together with a new User object, which is also set to App.user.
+     * 
+     * @param username The username written by the user
+     * @return an User object corresponding the given username
+     */
     public static User loadUserData(String username) {
         ObjectMapper mapper = new ObjectMapper();
         File userFile = new File("src/main/resources/challenge/" + username + ".json");
@@ -147,37 +100,41 @@ public class App extends Application {
 
     }
 
-    public void start(Stage stage) throws IOException {
-        try {
-            App.stage = stage;//
-            scene = new Scene(getFXMLLoader("username").load());
-            stage.setScene(scene);
-            stage.show();
-
-            stage.setOnCloseRequest(event -> {
-                try {
-                    event.consume();
-                    exit(stage);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Helper method which switches the current scene of the stage. That is to say,
+     * display the content of a different .fxml file.
+     * 
+     * @param fxml The name of the fxml file without the .fxml ending.
+     * @throws IOException can be thrown when the fxml file is nonexistent.
+     */
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(getFXMLLoader(fxml).load());
     }
 
+    /**
+     * Helper method which returns an FXMLLoader object based on the fxml file name
+     * given.
+     * It is useful for the "App.setRoot" method and others.
+     * 
+     * @param fxml name of the fxml file
+     * @return a FXMLLoader object corresponding a certain fxml file.
+     * @throws IOException
+     */
     public static FXMLLoader getFXMLLoader(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 new File("src/main/java/it/unibz/app/GUI/FXMLS/" + fxml + ".fxml").toURI().toURL());
         return fxmlLoader;
     }
 
+    /**
+     * Method called when the application is going to be closed.It saves some data
+     * as .json files if the program was closed uncorrectly (outside the
+     * username.fxml scene) or it closes it directly when done correctly (logOut was
+     * done first).
+     * 
+     * @param stage the Stage object field of App
+     * @throws IOException
+     */
     public static void exit(Stage stage) throws IOException {// ask the user if it really wants to exit and confirm it
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -202,7 +159,6 @@ public class App extends Application {
                                     Model.getLoadedStats());
                             HistoryStatsLoader.saveHistory("src/main/resources/h_s/history.json",
                                     Model.getLoadedHistory());
-                            // TODO: save profileInfo
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -217,7 +173,6 @@ public class App extends Application {
                     });
                 }
             }.start();
-
         }
     }
 }

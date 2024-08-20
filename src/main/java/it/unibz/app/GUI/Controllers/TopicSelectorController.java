@@ -17,15 +17,24 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * Class that handles the topic selection for the creation of the tests
+ */
 public class TopicSelectorController {
     @FXML
-    AnchorPane displayPane;
+    private AnchorPane displayPane;
     @FXML
-    Button nextButton;
+    private Button nextButton;
 
     List<Topic> topics;
     public static boolean subtopicMode;
 
+    /**
+     * Method that creates RadioButton Objects representing the available Topics and
+     * to be selected by the user
+     * 
+     * @throws IOException
+     */
     @FXML
     void initialize() throws IOException {// to add components dynamically we MUST add the initialize method
         // add all the topics as elements to the display.fxml scene
@@ -45,12 +54,25 @@ public class TopicSelectorController {
             index++;
         }
 
+        // if the suptopicMode is activated it redirects the user to the
+        // subtopicSelector instead of the numberOfQuestionsPerSubtopic Selector so the
+        // button's text is modified accordingly
         if (subtopicMode) {
             nextButton.setText("Select subtopics");
         }
     }
 
-    public RadioButton addTopicButton(double x, double y, String text, ToggleGroup group) {
+    /**
+     * Helper method to generate a RadioButton object based on some coordinates, a
+     * given text, and a ToggleGroup
+     * 
+     * @param x
+     * @param y
+     * @param text
+     * @param group
+     * @return
+     */
+    private RadioButton addTopicButton(double x, double y, String text, ToggleGroup group) {
         RadioButton newTopicButton = new RadioButton();
         newTopicButton.setText(text);
         newTopicButton.relocate(x, y);
@@ -60,15 +82,30 @@ public class TopicSelectorController {
         return newTopicButton;
     }
 
+    /**
+     * Redirection to the mainMenu.fxml file
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void goBack(ActionEvent event) throws IOException {
         App.setRoot("mainMenu");
 
     }
 
+    /**
+     * Method that confirms the Topic selection of the User and sends the user no
+     * another fxml file depending on the SubtopiMode or TopicMode. And that shows
+     * an alert in the case that the user has not yet selected a Topic.
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void confirmSelection(ActionEvent event) throws IOException {
         for (Node child : displayPane.getChildren()) {
-            if (subtopicMode) {
-                if (child instanceof RadioButton && ((RadioButton) child).isSelected()) {
+            if (subtopicMode) {// if SubtopiCmode
+                if (child instanceof RadioButton && ((RadioButton) child).isSelected()) {// If such a RadioButton is
+                                                                                         // selected
                     Topic selectedTopic = fromRadioButtonToTopic((RadioButton) child);
                     //
                     System.out.println(selectedTopic);
@@ -84,8 +121,9 @@ public class TopicSelectorController {
                     App.setRoot("subtopicSelector");
 
                 }
-            } else {
-                if (child instanceof RadioButton && ((RadioButton) child).isSelected()) {
+            } else {// if instead TopicMode
+                if (child instanceof RadioButton && ((RadioButton) child).isSelected()) {// If such a RadioButton is
+                                                                                         // selected
 
                     Topic selectedTopic = fromRadioButtonToTopic((RadioButton) child);
                     //
@@ -109,7 +147,14 @@ public class TopicSelectorController {
 
     }
 
-    private static Topic fromRadioButtonToTopic(RadioButton button) {
+    /**
+     * Helper method that gets a Topic object based on the text of a RadioButton
+     * object
+     * 
+     * @param button
+     * @return
+     */
+    private Topic fromRadioButtonToTopic(RadioButton button) {
         Topic selectedTopic = App.actionsController
                 .getTopicFromName(button.getText().substring(3));
         return selectedTopic;

@@ -1,34 +1,37 @@
 package it.unibz.app.GUI.Controllers;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Set;
 
 import it.unibz.app.App;
 import it.unibz.controller.Controller;
-import it.unibz.model.implementations.FileLoader;
-import it.unibz.model.implementations.HistoryStatsLoader;
 import it.unibz.model.implementations.Model;
-import it.unibz.model.implementations.Topic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 public class UsernameEventController {
-    private Stage stage;
 
     @FXML
-    AnchorPane scenePane;
+    private AnchorPane scenePane;
 
     @FXML
-    TextField nameField;
+    private TextField nameField;
 
+    /**
+     * This method detects the username written by the user in the "nameField"
+     * TextField class and initializes it as the user parameter of the App class.
+     * It also initializes an old Controller object with a corresponding Model
+     * object as static fields of App.
+     * If no username is given it will only show a message requiring it not letting
+     * the user access the other programm's functionalities.
+     * 
+     * @param event event of clicking the log in button
+     * @throws IOException
+     */
     public void login(ActionEvent event) throws IOException {
         String name = nameField.getText(); // get the text within the nameField
 
@@ -46,7 +49,8 @@ public class UsernameEventController {
             App.user = App.loadUserData(name);
             App.actionsController = new Controller(new Model(), App.user);
 
-            //
+            // Setting static field of the mainMenuController class as a communication
+            // method.
 
             mainMenuController.displayName(name);
 

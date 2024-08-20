@@ -195,18 +195,28 @@ public class StartDailyChallengeController {
     }
 
     public void finishDailyChallenge(ActionEvent event) {
-        List<String> answers = generateLabelsList();
-        String results = dailyChallenge.GUICheckAnswers(answers);
+        if (dailyChallenge.getQuestionStatementToAnswer().size() == 5) {
+            List<String> answers = generateLabelsList();
+            String results = dailyChallenge.GUICheckAnswers(answers);
 
-        // send the message to the next scene
-        DailyChallengeResultsController.message = results;
+            // send the message to the next scene
+            DailyChallengeResultsController.message = results;
 
-        // change of scene
-        try {
-            dailyChallenge.saveUserData();//
-            App.setRoot("dailyChallengeResults");
-        } catch (IOException e) {
-            e.printStackTrace();
+            // change of scene
+            try {
+                dailyChallenge.saveUserData();//
+                App.setRoot("dailyChallengeResults");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Not all questions were answered");
+            alert.setHeaderText("In order to complete the daily challenge, all questions must be answered");
+            alert.setContentText("Please complete the "
+                    + (5 - dailyChallenge.getQuestionStatementToAnswer().size() + " questions left"));
+            alert.show();
         }
 
     }

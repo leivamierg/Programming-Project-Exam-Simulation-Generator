@@ -17,20 +17,29 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * Class meant to handle the numberOfSubtopics.fxml which should be named
+ * differently and controls and works with how many questions per Subtopic
+ * should the generated test have. It has differente methods which handle both
+ * Topic and Subtopic mode. The Topic mode means that the user wants to generate
+ * a test based on all the subtopics of a Topic, and the SubtopicMode means that
+ * it wants to generate a test based on some of the subtopics of a Topic
+ */
 public class NumberOfSubtopicsController {
     @FXML
-    Label selectedLabel;
+    private Label selectedLabel;
     @FXML
-    Spinner<Integer> subtopicSpinner;
+    private Spinner<Integer> subtopicSpinner;
 
-    static boolean subTopicMode;
+    public static boolean subTopicMode;
 
-    static int spinnerMax;
+    private static int spinnerMax;
 
-    static Topic topic;
+    private static Topic topic;
 
-    static Set<Subtopic> subtopicsSet;
+    private static Set<Subtopic> subtopicsSet;
 
+    @FXML
     public void initialize() {
         // SUBTOPICS MODE
         if (subTopicMode) {
@@ -81,16 +90,34 @@ public class NumberOfSubtopicsController {
 
     }
 
+    /**
+     * Public method for the other controllers to modify the static field topic
+     * 
+     * @param topic
+     */
     // TOPIC MODE
     public void displayTopicSelected(Topic topic) {
         NumberOfSubtopicsController.topic = topic;
     }
 
+    /**
+     * Public method for the other controllers to modify the static field subtopics
+     * 
+     * @param subtopics
+     */
     // SUBTOPICS MODE
     public void displaySubtopicsSelected(Set<Subtopic> subtopics) {
         NumberOfSubtopicsController.subtopicsSet = subtopics;
     }
 
+    /**
+     * Helper method which returns the ToString of the list of the names of the
+     * subtopics field
+     * 
+     * @param subtopics
+     * @return
+     */
+    // SUBTOPICS MODE
     private String formatSubtopics(Set<Subtopic> subtopics) {
         Set<String> subtopicNames = new HashSet<>();
         for (Subtopic subtopic : subtopics) {
@@ -99,21 +126,48 @@ public class NumberOfSubtopicsController {
         return subtopicNames.toString();
     }
 
+    /**
+     * Public method to be accessed by other controllers to modify the max number of
+     * questions per subtopic that can be choosen in the TOPIC mode
+     * 
+     * @param topic
+     */
     // TOPIC MODE
     public void setSpinnerMax(Topic topic) {
         NumberOfSubtopicsController.spinnerMax = NumberOfSubtopicsController.spinnerMaxCalculator(topic);
     }
 
+    /**
+     * Public method to be accessed y other controllers to modify the max number of
+     * questions per subtopic that can be choosen in the SUBTOPIC mode
+     * 
+     * @param subtopics
+     */
     // SUBTOPICS MODE
     public void setSpinnerMax(Set<Subtopic> subtopics) {
         NumberOfSubtopicsController.spinnerMax = NumberOfSubtopicsController.spinnerMaxCalculator(subtopics);
     }
 
+    /**
+     * Redirection to topicSelector.fxml which keeps the chosen topic or subtopic
+     * mode
+     * 
+     * @param event
+     * @throws IOException
+     */
     // BOTH
     public void goBack(ActionEvent event) throws IOException {
         App.setRoot("topicSelector");
     }
 
+    /**
+     * Method which starts the test and shows an alert first if one of the subtopics
+     * to be selected does not have enough available questions compared to the
+     * number chosen by the user. It works for both modes
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void startSimulation(ActionEvent event) throws IOException {
         if (subTopicMode) {// SUBTOPIC MODE
             if (enoughQuestions(subtopicSpinner.getValue(), subtopicsSet)) {
@@ -123,7 +177,7 @@ public class NumberOfSubtopicsController {
                 new Thread() {
                     @Override
                     public void run() {
-                        // TODO: fix the simulation start
+
                         App.currentSimulation.select(subtopicsSet, subtopicSpinner.getValue());
                         App.currentSimulation.start();
                         // synchronizing the threads or else the static properties are detected as 0 and
@@ -241,6 +295,14 @@ public class NumberOfSubtopicsController {
 
     }
 
+    /**
+     * Marks the max number of questions to be chosen through the Spinner GUI
+     * component. It loops through the subtopics of the given topic and selects the
+     * size of the subtopic which contains more available questions
+     * 
+     * @param topic
+     * @return
+     */
     // TOPIC MODE
     private static int spinnerMaxCalculator(Topic topic) {
         int max = 0;
@@ -254,6 +316,14 @@ public class NumberOfSubtopicsController {
         return max;
     }
 
+    /**
+     * Marks the max number of questions to be chosen through the Spinner GUI
+     * component. It loops through the subtopics selected and selects the
+     * size of the subtopic which contains more available questions
+     * 
+     * @param subtopics
+     * @return
+     */
     // SUBTOPIC MODE
     private static int spinnerMaxCalculator(Set<Subtopic> subtopics) {
         int max = 0;
@@ -267,6 +337,14 @@ public class NumberOfSubtopicsController {
         return max;
     }
 
+    /**
+     * Helper method which checks if all subtopics of the given Topic have enough
+     * available Questions to be selected
+     * 
+     * @param number
+     * @param topic
+     * @return
+     */
     // TOPIC MODE
     private static boolean enoughQuestions(int number, Topic topic) {
         for (Subtopic subtopic : topic.getSubtopics()) {
@@ -277,6 +355,14 @@ public class NumberOfSubtopicsController {
         return true;
     }
 
+    /**
+     * * Helper method which checks if all subtopics of the given Set have enough
+     * available Questions to be selected
+     * 
+     * @param number
+     * @param subtopics
+     * @return
+     */
     // SUBTOPICS MODE
     private static boolean enoughQuestions(int number, Set<Subtopic> subtopics) {
         for (Subtopic subtopic : subtopics) {
@@ -287,6 +373,14 @@ public class NumberOfSubtopicsController {
         return true;
     }
 
+    /**
+     * Helper method which returns the string containing the names of the subtopics
+     * with not enough available questions. TOPIC MODE
+     * 
+     * @param number
+     * @param topic
+     * @return
+     */
     // TOPIC MODE
     private static String returnInsufficientSubtopics(int number, Topic topic) {
         String message = "";
@@ -301,6 +395,14 @@ public class NumberOfSubtopicsController {
         return message;
     }
 
+    /**
+     * Helper method which returns the string containing the names of the subtopics
+     * with not enough available questions. SUBTOPICS MODE
+     * 
+     * @param number
+     * @param subtopics
+     * @return
+     */
     // SUBTOPICS MODE
     private static String returnInsufficientSubtopics(int number, Set<Subtopic> subtopics) {
         String message = "";

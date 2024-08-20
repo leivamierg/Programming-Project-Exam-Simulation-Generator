@@ -3,6 +3,15 @@
   "badges" : [ {
     "name" : "Daily Challenge Winner",
     "description" : "Awarded for passing a daily challenge."
+  }, {
+    "name" : "Daily Challenge Winner",
+    "description" : "Awarded for passing a daily challenge."
+  }, {
+    "name" : "Daily Challenge Winner",
+    "description" : "Awarded for passing a daily challenge."
+  }, {
+    "name" : "Daily Challenge Winner",
+    "description" : "Awarded for passing a daily challenge."
   } ],
   "streak" : 0,
   "challengeDate" : "2024-08-18"
