@@ -105,6 +105,7 @@ public class Model implements ModelInt {
                 break;
             } catch (Exception e) {
                 scanner.nextLine();
+                System.out.println("Invalid number. Please enter an integer.");
             }
         }
 

@@ -42,7 +42,7 @@ public class UsernameEventController {
 
             mainMenuLoader.load(); // if we dont load it the .getController method and other dont work
 
-            MainMenuEventController mainMenuController = mainMenuLoader.getController();
+            mainMenuEventController mainMenuController = mainMenuLoader.getController();
 
             // initialize everything model, controller, ecc.
 

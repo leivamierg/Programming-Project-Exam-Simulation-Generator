@@ -26,7 +26,7 @@ import javafx.scene.control.Label;
  * the corresponding .fxml file, which at the same time is handled by a
  * controller class.
  */
-public class MainMenuEventController {
+public class mainMenuEventController {
 
     @FXML
     private Label username;
@@ -39,7 +39,7 @@ public class MainMenuEventController {
      * @param name The username inserted by the user
      */
     public void displayName(String name) {
-        MainMenuEventController.name = name;
+        mainMenuEventController.name = name;
     }
 
     /**

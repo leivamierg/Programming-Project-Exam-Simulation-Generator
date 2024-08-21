@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unibz.app.GUI.Controllers.MainMenuEventController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unibz.app.GUI.Controllers.mainMenuEventController">
    <children>
       <Label layoutX="184.0" layoutY="35.0" text="Welcome to the Exam Simulation Program!" />
       <Label fx:id="username" alignment="CENTER" layoutX="1.0" layoutY="53.0" prefHeight="18.0" prefWidth="600.0" text="Username" />
