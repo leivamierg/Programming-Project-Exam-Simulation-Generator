@@ -43,43 +43,15 @@ java -jar target/tester-1.0-jar-with-dependencies.jar
 
 ## User-guide for our project
 
-N.B Do not use any quotes. Write directly the word needed.
-Example: 
-- linear algebra -s
-- exit
-- terminate
-
-
-List of possible commands after opening the program:
-
-- -t, --topics : to list all the topics
-- 'topic' -s, --subtopics : to list all the subtopics
-- 'topic' : to start the test
-- --history : to show the history of simulation (it will be empty at the beginning)
-- --stats : to show the general statistics (it will be empty at the beginning)
-- 'exit' : to close the exam simulation program
-- 'topic' --select : to see the list of the subtopics to choose from
-- 'topic' --download : to download the PDF version of the exam
-- -d : to start the daily challenge
-- --profile : to see the profile of the current logged-in user
-
-List of possible commands during the simulation:
-
-- A, B, C, D, ' ' : to answer the questions
-- '+', '-' : to navigate through the questions
-- 0-9 : to choose the question by its number
-- 'terminate' : to terminate the simulation and get the results
-
-List of possible commands during the daily challenge:
-
-- A, B, C, D : to answer the questions
-- 'exit' : *after* the daily challenge to end the application and save the results
+The program doesn´t use any command line interface anymore. So to comfortably use our program it is enough to run it and interact with the GUI as with any modern application.
+Once the program is started it will ask the user for a username, and once the user presses the Enter button it will see the main menu with the different functionalities of the program, which can be selected
+by pressing the corresponding button.
 
 ## Implementation of the project
 
 ### Overall Structure: Model, Controller and App
 
-If you want also a more in depth explanation of the project you can generate the javadoc by running the following command in the root directory of the project:
+If you want also a more in depth explanation of the project you can generate the javadoc by running the following command in the root directory of the project
 
 ```bash
 mvn javadoc:javadoc
@@ -148,20 +120,6 @@ This class represents a user in the application who has a username, who can earn
 
 This class represents an individual badge that a user can earn during the daily challenges. It provides the model of a badge which can be earned, and it can be used with the 'User' class to represent the badges earned by the user.
 
-##### Command Handling
-
-The Exam Simulation Program is based on the interaction between the user and the program itself via command-line inputs. The command handling process ensures that the inputs are interpreted and the actions executed.
-The process handling starts from the entry point of the program through the 'App' class, where the user is asked to insert one of the possible commands.
-Each of the command calls a specific function from the 'ModelInt' interface, where the method 'testAllSubtopics' starts the simulation through the method 'start' from the Simulation class.
-On the method 'testAllSubtopics', two types of input are required: the number of questions per subtopic and the answer for each question.
-Connected to the 'Simulation' class, the user can input letters (A,B,C,D), numbers (0-9), and the characters '+' and '-'. Other characters are not accepted and if an invalid command is inserted during the simulation, the user will be asked the same question again.
-There are three ways of seeing the questions: by pressing 'Enter' after answering, by pressing '+' or '-' to see the next or previous one, and by writing the number of the question.
-If the user presses '-' at the first question or '+' at the last one, respectively the first question or the last one will be asked again, since the person cannot go backwards or forward.
-During the simulation the user can write 'terminate' to finish the simulation and visualize the results, and then write 'exit' to leave the program.
-The command 'exit' can also be written on the main "page" at the beginning.
-In the more advanced version of the project, the commands 'history' and 'stats' can also be written and the general history and statistics can be checked.
-*All the commands can be written in upper case, lower case or both.*
-
 ###### Simulation class
 Represents a simulation of an exam. It provides several functionalities:
 - Select the topic the simulation is about -> all the subtopics of the given topic are part of the simulation (the questions are grouped by subtopic)
@@ -181,19 +139,19 @@ This way, the remaining time is continuously updated. When the remaining time re
 
 #### Comparators
 
-Even though having its own directory, actually there is only one comparator:
+Despite having its own directory, actually there is only one comparator:
 
 ##### QuestionPriorityComparator (@leivamierg)
 
 It is a useful tool to sort a question list based on their "priorityLevel" ordering them from lower priority to higher priority.\
 It is used on the Subtopic class, for the "pickQuestions" method.
 
-###### DailyChallenge class
+#### DailyChallenge class
 The 'DailyChallenge' class is where the logic for the daily challenge is handled. The daily challenge is based on five random questions about any topic, which are presented only once every day to the logged-in user. The latter must answer correctly to at least three of the five questions to win a badge, moreover, the user can accumulate a streak if he/she does the daily challenge more days in a row. The user's data are then saved after the application is closed in a separate json file with the user's name.
 
 ### The Controller
 
-###### Controller class
+##### Controller class
 
 The 'Controller' class handles the user's input and interacts principally with the 'ModelInt' interface.
 It parses the commands and calls the relative methods from the 'ModelInt' interface by using regexes. It also relies on 'HistoryInt' and 'StatsInt' for the advanced version of the program.
@@ -201,20 +159,60 @@ In the updated version, further interactions with new classes were implemented (
 The 'elaborateArgs' method is where the list of arguments from the user is processed.
 The overall class works as an intermediate between the user and the program, to delegate tasks to methods by processing commands.
 
+### Tests and Utils (@all)
+Each class was tested separately by using JUnit tests.
+
 ### The App
 
-###### App class
+##### App class
 
-The 'App' class is the entry point for the program. It manages the program's lifecycle (initialization, command handling and user interaction).
-It is mostly connected with the 'Controller' class, since it delegates command processing.
-It also displays the possible commands for the user, allowing user-friendliness.
+The 'App' class is the entry point for the program. It manages the program's lifecycle (initialization, GUI launch and other important events, such as, closing the program or retrieving the different .fxml files).
 
-## Tests and Utils (@all)
-Each class was tested separately by using JUnit tests.
+##### The Graphical User Interface
+###### The FXML files
+Each of the FXML files correspond to a JavaFx scene. Which is a certain snapshot with certain elements shown on the application window. 
+Most of the elements of each scene are declared within the FXML file, together with its properties (X and Y coordinate, type of button, etc.)
+Nevertheless, it is possible to add elements or change properties of the current scene without modifying the fxml file. 
+The different components of a scene appear in the FXML file as nested tags, the appartaining Controller class of the scene is also declared at the tag representing the FXML file itself, the most exterior one.
+Also, any component whose data will be retrieved and/or modified by a controller class must have the property fx:id=name property.
+##### The Controllers
+In order to handle the user interaction with each of the scenes of the application a controller class per each scene (each FXML file) is required. Furthermore, if a component must be added or a property must
+be changed, without modifying the fxml file, we would need to add the corresponding methods to the Controller class.
+###### initialize()
+The initialize() method is the first method called as soon as the corresponding scene is accessed by the user. Here we can write different declarations and/or initializations to any parameter we might need
+as soon as the scene is displayed.
+It is also particularly useful because it lets us add additional elements to the current scene without changing the fxml file. Any further element addition outside the initialize method won´t work properly.
+###### Modifying certain elements properties
+In order to interact with an element of the current scene we must add a field of the class of the element with the same name as its fx:id property and with the @FXML tag on the line inmediately above itself.
+From then it would be enough to call the different pre-established methods to modify its properties (i.e. .setText("Hello")).
+###### Interaction with the user
+In order to detect a certain user action and call a method consequently we have to create a normal public non-static method which recieves an event of the class "ActionEvent".
+Then we can define the method's content, and then go to the fxml file and define the event which triggers this method, which is usually a certain action with one of the elements
+of the scene, such as clicking a button (in this case we would need to add the #onClick property to that element and make it equal to the name of the event Method we have just created)
+###### Communication between Controllers
+The handling of data passing from one controller to another was implemented by adding spublic tatic properties to the "recieving" controllers which can be accessed and modified by the
+"sender" controllerdirectly or by calling a public method of the recieving class wich does exactly that.
+###### Thread handling
+The javafx library provide some methods to assure the thread synchronization between native Java thread and javafx threads. In the way I did it, to be sure that a serie of lines of code are executed 
+before some other serie of lines of code, you first need to create a new Thread object whose constructor doesn't recieve any parameter but some {} must be added inmediately after the parenthesis. 
+Which at the end will call the method .start().
+Then within the curly braces we write the run method (public and void) containing the "must go first" lines of code. Then, within the run method, after the first lines of code we call the
+Class method Platform.runLater() which receives a Runnable objects. We create such an object directly in the parenthesis and we open some curly braces again. Within those last curly braces we finally add
+a second public void run method, in which we will add the "must go second" lines of code.
+
+## BUGS
+1. Stats and History saving
+   Sometimes, due to bad threading, a method might me called with a null parameter, generating an exception. Whenever that happens the Stats class starts having more simulation than the History class
+   To check if that has happened go to the MainMenu and click the displayHistory and DisplayGeneralStats buttons, which will trigger a sysout of the number of simulations of the history and in the stats.
+   This number shoud be the same in both displays.
+   If this happens the saved data is corrupted and it is necessary to go back when both classes had the same number of simulation. The easiest way to do this is deleting the history.json and stats.json files.
+3. Thread failure
+   The application might stop working due to recursive threading calls or something simmilar. If this happens a message similar to: Error in Thread n° X, will be shown in the command line. To solve it, it would
+   be enough to close the programm and re open it again.
 
 ## Human experience in this project
 ### Workload
-- @sebanardin: Stats, Simulation, FileLoading, HistoryStatsLoader, App, Controller
+- @sebanardin: Stats, Simulation, FileLoading, HistoryStatsLoader, App, Controller, all the GUI controllers and the GUI fxml files.
 - @leivamierg: Topic, Subtopic, Question, QuestionPriorityComparator, HistoryStatsLoader, History, TestRegisters
 - @MassimiIiano: Controller, App, Model, Simulation, Question, HistoryStatsLoader
 - @Vaiolo: Controller, App, Model, Simulation, ExamTimer, History, Stats, DailyChallenge, Badge, User, PDFGenerator
@@ -242,6 +240,8 @@ We used git to manage the project, each of us had a branch where we worked on ou
 - Working constantly on the project while following the other courses and projects.
 - Communicating with the other members of the group
 - Solving tricky bugs implying java libraries, mainly because an incorrect type/class, reading and understanding the documentation could be tricky at times.
+-(2nd session) Threading in graphical interfaces is hard to handle with little experience.
+-(2nd session) Working on the project instead of having vacations was particularly tough.
 
 #### @Sebastiano
 - Developing and testing simulation and stats classes
