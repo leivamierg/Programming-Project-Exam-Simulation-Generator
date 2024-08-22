@@ -198,13 +198,13 @@ a second public void run method, in which we will add the "must go second" lines
 
 ## BUGS
 1. Stats and History saving
-   Sometimes, due to bad threading, a method might me called with a null parameter, generating an exception. Whenever that happens the Stats class starts having more simulation than the History class
+   Sometimes, due to bad threading, a method might be called with a null parameter, generating an exception. Whenever that happens the Stats class starts having more simulation than the History class
    To check if that has happened go to the MainMenu and click the displayHistory and DisplayGeneralStats buttons, which will trigger a sysout of the number of simulations of the history and in the stats.
-   This number shoud be the same in both displays.
-   If this happens the saved data is corrupted and it is necessary to go back when both classes had the same number of simulation. The easiest way to do this is deleting the history.json and stats.json files.
+   This number should be the same in both displays.
+   If this happens the saved data is corrupted, and it is necessary to go back when both classes had the same number of simulation. The easiest way to do this is deleting the history.json and stats.json files.
 3. Thread failure
-   The application might stop working due to recursive threading calls or something simmilar. If this happens a message similar to: Error in Thread n° X, will be shown in the command line. To solve it, it would
-   be enough to close the programm and re open it again.
+   The application might stop working due to recursive threading calls or something similar. If this happens a message similar to: Error in Thread n° X, will be shown in the command line. To solve it, it would
+   be enough to close the program and open it again.
 
 ## Human experience in this project
 ### Workload
@@ -230,6 +230,8 @@ We used git to manage the project, each of us had a branch where we worked on ou
 - Issues with Libraries
 - Issues with completely understanding the structure of the different classes
 - Issues with working on both the project and the other courses
+- (2nd session) Working and studying for courses during vacation was tough.
+- (2nd session) I had troubles mostly with PDFBox because I have never used it before, and it took me a bit to get a clear understanding of how to use it properly. 
 
 #### @Gersson
 
