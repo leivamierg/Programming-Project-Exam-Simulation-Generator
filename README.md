@@ -11,22 +11,18 @@ Free Choice-Group project for the "Programming Project" course of the Free Unive
 
 ## Instructions to build and run the project
 
-### Build
+### Build and Run
 
-To build the project, run the following command in the root directory of the project:
+To build the project and then run it write the following command from the root directory:
 
 ```bash
-mvn clean compile assembly:single
+mvn clean javafx:run
 ```
 
-The documentation will be generated in the `target/site/apidocs` folder.
-
 ### Run
-
-Execute the jar file created in the target folder
-
+Write on the the terminal from the root directory:
 ```bash
-java -jar target/tester-1.0-jar-with-dependencies.jar
+mvn javafx:run
 ```
 
 ## Project's overall description
