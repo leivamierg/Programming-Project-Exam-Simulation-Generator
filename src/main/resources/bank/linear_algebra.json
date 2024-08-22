@@ -7,7 +7,7 @@
       "rightAnswer" : "c and d",
       "wrongAnswers" : [ "None of them", "All of them", "a and b" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 14,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "a and b" : "A",
         "c and d" : "B",
@@ -19,7 +19,7 @@
       "rightAnswer" : "(1) [(1, 2, 3, 3) (0, 2, 1, 0) (0, 0, 0, 3)]\n(2) rank=3\n(3) A*1, A*2 and A*4",
       "wrongAnswers" : [ "(1) [(0, 2, 3, 3) (1, 2, 1, 0) (0, 0, 0, 3)]\n(2) rank=0\n(3) A*2", "(1) [(1, 0, 0, 0) (0, 0, 0, 3) (0, 0, 0, 0)]\n(2) rank=2\n(3) A*1 and A*4", "(1) [(1, 2, 3, 0) (0, 2, 0, 0) (0, 0, 0, 0)]\n(2) rank=2\n(3) A*1, A*2" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 10,
+      "priorityLevel" : 16,
       "shuffleMap" : {
         "(1) [(0, 2, 3, 3) (1, 2, 1, 0) (0, 0, 0, 3)]\n(2) rank=0\n(3) A*2" : "A",
         "(1) [(1, 2, 3, 0) (0, 2, 0, 0) (0, 0, 0, 0)]\n(2) rank=2\n(3) A*1, A*2" : "B",
@@ -31,7 +31,7 @@
       "rightAnswer" : "(1) [(1, 0, 2, 0) (0, 1, 1/2, 0) (0, 0, 0, 1)]\n(2) A*3=2A*1 + 1/2 A*2",
       "wrongAnswers" : [ "(1) [(1, 0, 2, 0) (0, 1, 1, 0) (0, 0, 2, 1)]\n(2) A*3=2A*1 + 1/2 A*2", "(1) [(1, 0, 0, 0) (0, 1, 0, 0) (0, 0, 1, 1)]\n(2) A*3=A*1", "(1) [(1, 0, 2, 0) (0, 1, 1/2, 0) (0, 0, 0, 1)]\n(2) A*3=2A*1 + 2 A*2" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 9,
+      "priorityLevel" : 15,
       "shuffleMap" : {
         "(1) [(1, 0, 2, 0) (0, 1, 1/2, 0) (0, 0, 0, 1)]\n(2) A*3=2A*1 + 1/2 A*2" : "A",
         "(1) [(1, 0, 2, 0) (0, 1, 1, 0) (0, 0, 2, 1)]\n(2) A*3=2A*1 + 1/2 A*2" : "B",
@@ -43,7 +43,7 @@
       "rightAnswer" : "All are consistent",
       "wrongAnswers" : [ "None of them are consistent", "a and b are consistent, while c is inconsistent", "a and c are consistent, while b is inconsistent" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 10,
+      "priorityLevel" : 16,
       "shuffleMap" : {
         "None of them are consistent" : "A",
         "a and c are consistent, while b is inconsistent" : "B",
@@ -55,7 +55,7 @@
       "rightAnswer" : "(a) True\n(b) False\n(c) True\n(d) False",
       "wrongAnswers" : [ "All false", "(a) False\n(b) True\n(c) False\n(d) True", "All true" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 9,
+      "priorityLevel" : 15,
       "shuffleMap" : {
         "All true" : "A",
         "(a) True\n(b) False\n(c) True\n(d) False" : "B",
@@ -67,7 +67,7 @@
       "rightAnswer" : "(a) No\n(b) Yes",
       "wrongAnswers" : [ "(a) No\n(b) No", "(a) Yes\n(b) No", "(a) Yes\n(b) Yes" ],
       "subtopic" : "Row echelon form",
-      "priorityLevel" : 25,
+      "priorityLevel" : 37,
       "shuffleMap" : {
         "(a) Yes\n(b) No" : "A",
         "(a) No\n(b) Yes" : "B",
@@ -83,7 +83,7 @@
       "rightAnswer" : "Neither",
       "wrongAnswers" : [ "Skew symmetric", "Symmetric" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 0,
+      "priorityLevel" : 7,
       "shuffleMap" : {
         "Symmetric" : "A",
         "Neither" : "B",
@@ -94,7 +94,7 @@
       "rightAnswer" : "It exists and it's correct",
       "wrongAnswers" : [ "It exists but it's not correct", "It doesn't exist" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 14,
+      "priorityLevel" : 2,
       "shuffleMap" : {
         "It exists but it's not correct" : "A",
         "It doesn't exist" : "B",
@@ -105,7 +105,7 @@
       "rightAnswer" : "I = [(1, 0) (0, 1)]",
       "wrongAnswers" : [ "It doesn't exist", "I = [(1, 1) (1, 1)]", "I = [(0, 1) (1, 0)]" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 14,
+      "priorityLevel" : 23,
       "shuffleMap" : {
         "I = [(1, 1) (1, 1)]" : "A",
         "I = [(1, 0) (0, 1)]" : "B",
@@ -117,7 +117,7 @@
       "rightAnswer" : "Neither",
       "wrongAnswers" : [ "Skew symmetric", "Symmetric", "Nonsensical" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 14,
+      "priorityLevel" : 22,
       "shuffleMap" : {
         "Nonsensical" : "A",
         "Skew symmetric" : "B",
@@ -129,7 +129,7 @@
       "rightAnswer" : "P = [(0, 1) (1, 0)]",
       "wrongAnswers" : [ "P = [(1, 0) (0, 1)]", "P = [(1, 1) (1, 1)]", "It doesn't exist" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "It doesn't exist" : "A",
         "P = [(1, 1) (1, 1)]" : "B",
@@ -141,7 +141,7 @@
       "rightAnswer" : "Ax = (3, 4, 5, 5)",
       "wrongAnswers" : [ "Ax = (4, 3, 5, 5)", "Ax = (5, 5, 4, 3)" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "Ax = (3, 4, 5, 5)" : "A",
         "Ax = (4, 3, 5, 5)" : "B",
@@ -152,7 +152,7 @@
       "rightAnswer" : "Skew symmetric",
       "wrongAnswers" : [ "Symmetric", "Neither" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "Neither" : "A",
         "Skew symmetric" : "B",
@@ -163,7 +163,7 @@
       "rightAnswer" : "Ax = (18, 5, 0)",
       "wrongAnswers" : [ "Ax = (-18, 5, 0)", "Ax = (-18, -5, 0)", "Ax = (18, -5, 0)" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "Ax = (-18, -5, 0)" : "A",
         "Ax = (-18, 5, 0)" : "B",
@@ -175,7 +175,7 @@
       "rightAnswer" : "Infinitely many solutions",
       "wrongAnswers" : [ "One solution", "No solution" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "One solution" : "A",
         "No solution" : "B",
@@ -186,7 +186,7 @@
       "rightAnswer" : "It doesn't exist",
       "wrongAnswers" : [ "It exists but it's not correct", "It exists and it's correct" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "It doesn't exist" : "A",
         "It exists but it's not correct" : "B",
@@ -197,7 +197,7 @@
       "rightAnswer" : "It doesn't exist",
       "wrongAnswers" : [ "It exists but it's not correct", "It exists and it's correct" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "It exists but it's not correct" : "A",
         "It doesn't exist" : "B",
@@ -208,7 +208,7 @@
       "rightAnswer" : "No solution",
       "wrongAnswers" : [ "One solution", "Infinitely many solutions" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "No solution" : "A",
         "One solution" : "B",
@@ -219,7 +219,7 @@
       "rightAnswer" : "Symmetric",
       "wrongAnswers" : [ "Skew symmetric", "Neither" ],
       "subtopic" : "Matrices",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "Skew symmetric" : "A",
         "Neither" : "B",
@@ -234,7 +234,7 @@
       "rightAnswer" : "(1) a=2\n(2) a=0",
       "wrongAnswers" : [ "(1)a=0\n(2)a=3", "(1) a=2\n(2) a=4", "Any value of a breaks down elimination permanently" ],
       "subtopic" : "Gaussian elimination",
-      "priorityLevel" : 25,
+      "priorityLevel" : 0,
       "shuffleMap" : {
         "Any value of a breaks down elimination permanently" : "A",
         "(1) a=2\n(2) a=4" : "B",
@@ -246,7 +246,7 @@
       "rightAnswer" : "L2.1 =10/2=5",
       "wrongAnswers" : [ "L2.1=-5", "L2.1=10", "L2.1=2" ],
       "subtopic" : "Gaussian elimination",
-      "priorityLevel" : 14,
+      "priorityLevel" : 22,
       "shuffleMap" : {
         "L2.1=-5" : "A",
         "L2.1=10" : "B",
@@ -258,7 +258,7 @@
       "rightAnswer" : "b=4 and g=32",
       "wrongAnswers" : [ "b=0 and g=32", "b=4 and g=4", "b=8 and g=4" ],
       "subtopic" : "Gaussian elimination",
-      "priorityLevel" : 14,
+      "priorityLevel" : 21,
       "shuffleMap" : {
         "b=0 and g=32" : "A",
         "b=4 and g=32" : "B",
@@ -270,7 +270,7 @@
       "rightAnswer" : "(1, 0, −1)",
       "wrongAnswers" : [ "(0, 1, −1)", "(1, 1, -1)", "(1, 0, 1)" ],
       "subtopic" : "Gaussian elimination",
-      "priorityLevel" : 14,
+      "priorityLevel" : 21,
       "shuffleMap" : {
         "(0, 1, −1)" : "A",
         "(1, 0, 1)" : "B",
@@ -282,7 +282,7 @@
       "rightAnswer" : "-1/2",
       "wrongAnswers" : [ "1", "2", "1/2" ],
       "subtopic" : "Gaussian elimination",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "2" : "A",
         "1" : "B",
@@ -294,7 +294,7 @@
       "rightAnswer" : "There is no solution unless b1=(10,20)",
       "wrongAnswers" : [ "b1=(10,20) and b2=(20, 10)", "There is no solution to such system", "b1=(20,10) and b2 can be any other two dimensional vector" ],
       "subtopic" : "Gaussian elimination",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "b1=(20,10) and b2 can be any other two dimensional vector" : "A",
         "b1=(10,20) and b2=(20, 10)" : "B",
@@ -306,7 +306,7 @@
       "rightAnswer" : "(1) k=3, k=-3 and k=0\n(2) k=0\n(3) no solution, infinite solutions and one solution",
       "wrongAnswers" : [ "The only solutions are k=3 and k=-3, and both have only one solution", "The system has no solution, regardless of the value of k.", "(1) k=3, k=-3 and k=0\n(2) k=0\n(3) no solution, no solution and infinitely many solutions" ],
       "subtopic" : "Gaussian elimination",
-      "priorityLevel" : 13,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "The system has no solution, regardless of the value of k." : "A",
         "The only solutions are k=3 and k=-3, and both have only one solution" : "B",
@@ -322,7 +322,7 @@
       "rightAnswer" : "u * v = 1.4; u * w = 0; u * (v + w) = 1.4; w * v = 48",
       "wrongAnswers" : [ "u * v = -1.4; u * w = 0; u * (v + w) = -1.4; w * v = 48", "u * v = 1.4; u * w = 0; u * (v + w) = -1.4; w * v = 48", "u * v = -1.4; u * w = 0; u * (v + w) = 1.4; w * v = 48" ],
       "subtopic" : "Vectors",
-      "priorityLevel" : 7,
+      "priorityLevel" : 13,
       "shuffleMap" : {
         "u * v = 1.4; u * w = 0; u * (v + w) = -1.4; w * v = 48" : "A",
         "u * v = -1.4; u * w = 0; u * (v + w) = -1.4; w * v = 48" : "B",
@@ -334,7 +334,7 @@
       "rightAnswer" : "TRUE",
       "wrongAnswers" : [ "False, v and w can be any vectors in the plane perpendicular to u" ],
       "subtopic" : "Vectors",
-      "priorityLevel" : 1,
+      "priorityLevel" : 7,
       "shuffleMap" : {
         "TRUE" : "A",
         "False, v and w can be any vectors in the plane perpendicular to u" : "B"
@@ -344,7 +344,7 @@
       "rightAnswer" : "3v + w = (7, 5) and cv + dw = (2c + d, c + 2d)",
       "wrongAnswers" : [ "3v + w = (7, 5) and cv + dw = (c + 2d, c + 2d)", "3v + w = (7, 5) and cv + dw = (2c + d, -c + 2d)", "3v + w = (7, -5) and cv + dw = (2c + d, -c + 2d)" ],
       "subtopic" : "Vectors",
-      "priorityLevel" : 0,
+      "priorityLevel" : 6,
       "shuffleMap" : {
         "3v + w = (7, 5) and cv + dw = (2c + d, -c + 2d)" : "A",
         "3v + w = (7, -5) and cv + dw = (2c + d, -c + 2d)" : "B",
@@ -356,7 +356,7 @@
       "rightAnswer" : "TRUE",
       "wrongAnswers" : [ "FALSE" ],
       "subtopic" : "Vectors",
-      "priorityLevel" : 15,
+      "priorityLevel" : 0,
       "shuffleMap" : {
         "FALSE" : "A",
         "TRUE" : "B"
@@ -366,7 +366,7 @@
       "rightAnswer" : "cv + dw = (c, -2c + d, c - d); c = 3 and d = 9",
       "wrongAnswers" : [ "cv + dw = (c, 2c - d, c - d); c = 3 and d = 9", "cv + dw = (c, -2c + d, c - 2d); c = -3 and d = 9", "cv + dw = (c, -2c + d, c - d); c = -3 and d = -9" ],
       "subtopic" : "Vectors",
-      "priorityLevel" : 14,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "cv + dw = (c, -2c + d, c - 2d); c = -3 and d = 9" : "A",
         "cv + dw = (c, 2c - d, c - d); c = 3 and d = 9" : "B",
@@ -378,7 +378,7 @@
       "rightAnswer" : "3π/4 radians",
       "wrongAnswers" : [ "-3π/4 radians", "π/4 radians", "2π/3 radians" ],
       "subtopic" : "Vectors",
-      "priorityLevel" : 14,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "π/4 radians" : "A",
         "2π/3 radians" : "B",
@@ -390,7 +390,7 @@
       "rightAnswer" : "u's length = 1, v's length = 5, w's length = 10",
       "wrongAnswers" : [ "u's length = -1, v's length = 5, w's length = 10", "u's length = 1, v's length = 6, w's length = 10", "u's length = 1, v's length = 5, w's length = 11" ],
       "subtopic" : "Vectors",
-      "priorityLevel" : 14,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "u's length = -1, v's length = 5, w's length = 10" : "A",
         "u's length = 1, v's length = 5, w's length = 10" : "B",
@@ -402,7 +402,7 @@
       "rightAnswer" : "TRUE",
       "wrongAnswers" : [ "FALSE" ],
       "subtopic" : "Vectors",
-      "priorityLevel" : 14,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "TRUE" : "A",
         "FALSE" : "B"
@@ -412,7 +412,7 @@
       "rightAnswer" : "v = (3, 3) and w = (2, -2)",
       "wrongAnswers" : [ "v = (-3, 3) and w = (-2, -2)", "v = (5, 2) and w = (4, -3)", "v = (3, -3) and w = (2, -2)" ],
       "subtopic" : "Vectors",
-      "priorityLevel" : 14,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "v = (3, 3) and w = (2, -2)" : "A",
         "v = (5, 2) and w = (4, -3)" : "B",
@@ -424,7 +424,7 @@
       "rightAnswer" : "TRUE",
       "wrongAnswers" : [ "FALSE" ],
       "subtopic" : "Vectors",
-      "priorityLevel" : 14,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "FALSE" : "A",
         "TRUE" : "B"

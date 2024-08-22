@@ -7,7 +7,7 @@
       "rightAnswer" : "the sign bit is 0 for positive numbers",
       "wrongAnswers" : [ "there is more than one sign bit", "the sign bit is either 1 or 0 depending on whether the mantissa is even or odd", "the sign bit is 1 for positive numbers" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 30,
+      "priorityLevel" : 33,
       "shuffleMap" : {
         "there is more than one sign bit" : "A",
         "the sign bit is either 1 or 0 depending on whether the mantissa is even or odd" : "B",
@@ -19,7 +19,7 @@
       "rightAnswer" : "The bits get shifted to the left",
       "wrongAnswers" : [ "The bits are shuffled", "The bits get flipped", "The bits get shifted to the right" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 25,
+      "priorityLevel" : 28,
       "shuffleMap" : {
         "The bits get shifted to the right" : "A",
         "The bits get flipped" : "B",
@@ -31,7 +31,7 @@
       "rightAnswer" : "with the same encoding we can represent very large or very small numbers, depending on the applications",
       "wrongAnswers" : [ "the representable magnitude is very large", "any number fits into 32 bits", "the precision is very high" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 15,
+      "priorityLevel" : 18,
       "shuffleMap" : {
         "any number fits into 32 bits" : "A",
         "the representable magnitude is very large" : "B",
@@ -43,7 +43,7 @@
       "rightAnswer" : "11110110",
       "wrongAnswers" : [ "10101010", "11100111", "00001010" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 11,
+      "priorityLevel" : 14,
       "shuffleMap" : {
         "11100111" : "A",
         "00001010" : "B",
@@ -55,7 +55,7 @@
       "rightAnswer" : "11010110",
       "wrongAnswers" : [ "00101010", "10101010", "11100111" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 43,
+      "priorityLevel" : 49,
       "shuffleMap" : {
         "00101010" : "A",
         "11010110" : "B",
@@ -67,7 +67,7 @@
       "rightAnswer" : "there is only one representation of zero",
       "wrongAnswers" : [ "one needs two times the number of bits", "very high precision is achieved", "even numbers are represented better" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 39,
+      "priorityLevel" : 42,
       "shuffleMap" : {
         "very high precision is achieved" : "A",
         "even numbers are represented better" : "B",
@@ -79,7 +79,7 @@
       "rightAnswer" : "there is only one representation of zero",
       "wrongAnswers" : [ "the set of representable numbers is very large", "any number of bits can be used", "the precision is very high" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 32,
+      "priorityLevel" : 35,
       "shuffleMap" : {
         "the precision is very high" : "A",
         "there is only one representation of zero" : "B",
@@ -91,7 +91,7 @@
       "rightAnswer" : "111111",
       "wrongAnswers" : [ "000000", "111000", "10101" ],
       "subtopic" : null,
-      "priorityLevel" : 31,
+      "priorityLevel" : 34,
       "shuffleMap" : {
         "000000" : "A",
         "111111" : "B",
@@ -103,7 +103,7 @@
       "rightAnswer" : "11111111",
       "wrongAnswers" : [ "11110000", "11100001", "11101111" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 17,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "11110000" : "A",
         "11100001" : "B",
@@ -115,7 +115,7 @@
       "rightAnswer" : "111111",
       "wrongAnswers" : [ "010101", "000000", "111000" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 16,
+      "priorityLevel" : 19,
       "shuffleMap" : {
         "010101" : "A",
         "111000" : "B",
@@ -127,7 +127,7 @@
       "rightAnswer" : "the value is multiplied by 2",
       "wrongAnswers" : [ "the value is raised to the power of 2", "the new value is unrelated", "the value is divided by 2" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 14,
+      "priorityLevel" : 17,
       "shuffleMap" : {
         "the value is raised to the power of 2" : "A",
         "the value is divided by 2" : "B",
@@ -139,7 +139,7 @@
       "rightAnswer" : "1110010",
       "wrongAnswers" : [ "1110000", "0101010", "0000001" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 13,
+      "priorityLevel" : 16,
       "shuffleMap" : {
         "0000001" : "A",
         "0101010" : "B",
@@ -151,7 +151,7 @@
       "rightAnswer" : "the distance between two consecutive numbers is variable",
       "wrongAnswers" : [ "the distance between two consecutive numbers is constants", "there is no way to represent the concept of infinity", "there is only one representation of the number zero" ],
       "subtopic" : "Binary arithmetics",
-      "priorityLevel" : 12,
+      "priorityLevel" : 15,
       "shuffleMap" : {
         "the distance between two consecutive numbers is constants" : "A",
         "there is only one representation of the number zero" : "B",
@@ -167,7 +167,7 @@
       "rightAnswer" : "0, 0, 0",
       "wrongAnswers" : [ "1, 1, 1", "0, 1, 0", "1, 0, 1" ],
       "subtopic" : "Logic gates and boolean algebra",
-      "priorityLevel" : 11,
+      "priorityLevel" : 16,
       "shuffleMap" : {
         "0, 1, 0" : "A",
         "1, 1, 1" : "B",
@@ -179,7 +179,7 @@
       "rightAnswer" : "two NAND gates",
       "wrongAnswers" : [ "an OR gate and an AND gate", "two AND gates", "two XOR gates" ],
       "subtopic" : "Logic gates and boolean algebra",
-      "priorityLevel" : 3,
+      "priorityLevel" : 6,
       "shuffleMap" : {
         "two NAND gates" : "A",
         "two AND gates" : "B",
@@ -191,7 +191,7 @@
       "rightAnswer" : "1, 0, 1",
       "wrongAnswers" : [ "1, 1, 0", "1, 1, 1", "0, 1, 0" ],
       "subtopic" : "Logic gates and boolean algebra",
-      "priorityLevel" : 2,
+      "priorityLevel" : 5,
       "shuffleMap" : {
         "1, 1, 1" : "A",
         "1, 0, 1" : "B",
@@ -203,7 +203,7 @@
       "rightAnswer" : "stays in the memory configuration",
       "wrongAnswers" : [ "gives output 1", "gives output 0", "has unpredictable behavior" ],
       "subtopic" : "Logic gates and boolean algebra",
-      "priorityLevel" : 15,
+      "priorityLevel" : 2,
       "shuffleMap" : {
         "gives output 0" : "A",
         "gives output 1" : "B",
@@ -219,7 +219,7 @@
       "rightAnswer" : "all the devices were limited by the set 66MHz clock frequency",
       "wrongAnswers" : [ "devices do not have to synchronize their access to the bus", "synchronization of devices happens automatically", "there are multiple clock signals that have to be synchronized together" ],
       "subtopic" : null,
-      "priorityLevel" : 1,
+      "priorityLevel" : 4,
       "shuffleMap" : {
         "all the devices were limited by the set 66MHz clock frequency" : "A",
         "there are multiple clock signals that have to be synchronized together" : "B",
@@ -231,7 +231,7 @@
       "rightAnswer" : "the CPU interrupts the control flow when I/O is ready",
       "wrongAnswers" : [ "the CPU waits for I/O operations", "the CPU interrupts the control flow at each instruction", "the CPU interrupts the control flow more frequently" ],
       "subtopic" : "The BUS",
-      "priorityLevel" : 14,
+      "priorityLevel" : 17,
       "shuffleMap" : {
         "the CPU interrupts the control flow at each instruction" : "A",
         "the CPU interrupts the control flow when I/O is ready" : "B",
@@ -243,7 +243,7 @@
       "rightAnswer" : "synchronization of devices happens without a central clock signal",
       "wrongAnswers" : [ "devices do not have to synchronize their access to the bus", "the transitions of the clock signal synchronize all the operations", "there are multiple clock signals that have to be synchronized together" ],
       "subtopic" : "The BUS",
-      "priorityLevel" : 36,
+      "priorityLevel" : 42,
       "shuffleMap" : {
         "the transitions of the clock signal synchronize all the operations" : "A",
         "there are multiple clock signals that have to be synchronized together" : "B",
@@ -255,7 +255,7 @@
       "rightAnswer" : "there is no central clock signal",
       "wrongAnswers" : [ "the clock frequency is chosen by the operating system", "the data lines connecting the devices to the host are parallel", "all the devices are limited to the same clock frequency" ],
       "subtopic" : "The BUS",
-      "priorityLevel" : 12,
+      "priorityLevel" : 15,
       "shuffleMap" : {
         "the data lines connecting the devices to the host are parallel" : "A",
         "there is no central clock signal" : "B",
@@ -271,7 +271,7 @@
       "rightAnswer" : "a sequential circuit whose output shifts to the right or to the left at each clock cycle",
       "wrongAnswers" : [ "a sequential circuit whose output is registered in different ways at each clock cycle", "a combinatorial circuit that outputs a shifted version of the input", "a combinatorial circuit that registers user inputs" ],
       "subtopic" : "Sequential and Combinatorial circuits",
-      "priorityLevel" : 29,
+      "priorityLevel" : 32,
       "shuffleMap" : {
         "a combinatorial circuit that outputs a shifted version of the input" : "A",
         "a sequential circuit whose output is registered in different ways at each clock cycle" : "B",
@@ -283,7 +283,7 @@
       "rightAnswer" : "there are only few dependencies between the instructions",
       "wrongAnswers" : [ "the instructions access memory very often", "there are too many dependencies between the instructions", "there are enough registers to keep all the needed temporary values" ],
       "subtopic" : "Sequential and Combinatorial circuits",
-      "priorityLevel" : 26,
+      "priorityLevel" : 29,
       "shuffleMap" : {
         "there are too many dependencies between the instructions" : "A",
         "there are enough registers to keep all the needed temporary values" : "B",
@@ -295,7 +295,7 @@
       "rightAnswer" : "a sequential circuit whose output increments at each clock cycle",
       "wrongAnswers" : [ "a combinatorial circuit that counts the number of 1s in the inputs", "a sequential circuit that counts the number of 1s in the inputs", "a combinatorial circuit that counts the number of 0s in the inputs" ],
       "subtopic" : "Sequential and Combinatorial circuits",
-      "priorityLevel" : 17,
+      "priorityLevel" : 20,
       "shuffleMap" : {
         "a sequential circuit that counts the number of 1s in the inputs" : "A",
         "a sequential circuit whose output increments at each clock cycle" : "B",
@@ -307,7 +307,7 @@
       "rightAnswer" : "a memory made of capacitors, and it needs to be refreshed periodically",
       "wrongAnswers" : [ "a memory that can be written many times", "a memory made of flip flops, and it does not need to be refreshed", "a memory used to store information that changes frequently" ],
       "subtopic" : "Sequential and Combinatorial circuits",
-      "priorityLevel" : 11,
+      "priorityLevel" : 14,
       "shuffleMap" : {
         "a memory made of flip flops, and it does not need to be refreshed" : "A",
         "a memory that can be written many times" : "B",
@@ -319,7 +319,7 @@
       "rightAnswer" : "nearby data are accessed together",
       "wrongAnswers" : [ "the bandwidth of the bus is large enough", "the CPU frequency is relatively low", "main memory is built with similar technologies" ],
       "subtopic" : "Sequential and Combinatorial circuits",
-      "priorityLevel" : 3,
+      "priorityLevel" : 6,
       "shuffleMap" : {
         "the bandwidth of the bus is large enough" : "A",
         "the CPU frequency is relatively low" : "B",
@@ -331,7 +331,7 @@
       "rightAnswer" : "the jumps are correctly predicted",
       "wrongAnswers" : [ "there are only a few instructions to execute at once", "the ALU is given small numbers as inputs", "only a few registers are used" ],
       "subtopic" : "Sequential and Combinatorial circuits",
-      "priorityLevel" : 1,
+      "priorityLevel" : 4,
       "shuffleMap" : {
         "the ALU is given small numbers as inputs" : "A",
         "the jumps are correctly predicted" : "B",
@@ -343,7 +343,7 @@
       "rightAnswer" : "the jumps are not correctly predicted",
       "wrongAnswers" : [ "the registers are full", "there are too many instructions to execute at once", "the ALU is given too large numbers as inputs" ],
       "subtopic" : "Sequential and Combinatorial circuits",
-      "priorityLevel" : 0,
+      "priorityLevel" : 3,
       "shuffleMap" : {
         "there are too many instructions to execute at once" : "A",
         "the jumps are not correctly predicted" : "B",
@@ -355,7 +355,7 @@
       "rightAnswer" : "the transitions of the clock signal synchronize all the operations",
       "wrongAnswers" : [ "devices do not have to synchronize their access to the bus", "synchronization of devices happens automatically", "there are multiple clock signals that have to be synchronized together" ],
       "subtopic" : "Sequential and Combinatorial circuits",
-      "priorityLevel" : 31,
+      "priorityLevel" : 0,
       "shuffleMap" : {
         "devices do not have to synchronize their access to the bus" : "A",
         "there are multiple clock signals that have to be synchronized together" : "B",
@@ -367,7 +367,7 @@
       "rightAnswer" : "memorizing one bit of information",
       "wrongAnswers" : [ "generating a clock signal", "setting or resetting an external circuit", "memorizing a word of N bits" ],
       "subtopic" : "Sequential and Combinatorial circuits",
-      "priorityLevel" : 31,
+      "priorityLevel" : 34,
       "shuffleMap" : {
         "memorizing a word of N bits" : "A",
         "generating a clock signal" : "B",
@@ -379,7 +379,7 @@
       "rightAnswer" : "allows peripherals to directly access main memory without the CPU",
       "wrongAnswers" : [ "allows main memory to directly access the CPU registers", "allows the CPU to directly access main memory without the bus", "allows main memory to directly access peripherals" ],
       "subtopic" : "Sequential and Combinatorial circuits",
-      "priorityLevel" : 31,
+      "priorityLevel" : 34,
       "shuffleMap" : {
         "allows main memory to directly access peripherals" : "A",
         "allows main memory to directly access the CPU registers" : "B",
@@ -391,7 +391,7 @@
       "rightAnswer" : "there are too many dependencies between the instructions",
       "wrongAnswers" : [ "there are only a few dependencies between the instructions", "there are not enough registers to keep all the needed temporary values", "the instructions do not access memory often enough" ],
       "subtopic" : "Sequential and Combinatorial circuits",
-      "priorityLevel" : 31,
+      "priorityLevel" : 34,
       "shuffleMap" : {
         "there are only a few dependencies between the instructions" : "A",
         "there are too many dependencies between the instructions" : "B",
