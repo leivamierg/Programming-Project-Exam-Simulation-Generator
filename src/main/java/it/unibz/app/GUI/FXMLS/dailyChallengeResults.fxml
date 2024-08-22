@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unibz.app.GUI.Controllers.DailyChallengeResultsController">
+   <children>
+      <Label layoutX="281.0" layoutY="14.0" text="Results" />
+      <Label fx:id="displayResults" alignment="CENTER" layoutX="30.0" layoutY="56.0" prefHeight="228.0" prefWidth="538.0" text="displayResults" />
+      <Button layoutX="276.0" layoutY="349.0" mnemonicParsing="false" onAction="#goBack" text="Menu" />
+   </children>
+</AnchorPane>

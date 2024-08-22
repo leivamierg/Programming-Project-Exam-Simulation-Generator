@@ -8,7 +8,6 @@ import it.unibz.model.interfaces.SimulationInt;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
 public class Simulation implements SimulationInt {
     // attributes
     @JsonIgnore
@@ -40,7 +39,6 @@ public class Simulation implements SimulationInt {
         timer = new ExamTimer();
         setTopic(topic);
     }
-
 
     /**
      * Json constructor for the Simulation class.
@@ -164,9 +162,8 @@ public class Simulation implements SimulationInt {
         for (int i = 0; i < allQuestions.size(); i++) {
             questionsIdxs.add(i + 1);
         }
-        Set<Character> possibleAnswers = questionToShuffledAnswers.get(currentQuestion).keySet().stream().
-                map(answer -> questionToShuffledAnswers.get(currentQuestion).get(answer)).
-                collect(Collectors.toSet());
+        Set<Character> possibleAnswers = questionToShuffledAnswers.get(currentQuestion).keySet().stream()
+                .map(answer -> questionToShuffledAnswers.get(currentQuestion).get(answer)).collect(Collectors.toSet());
         char commandChar = Character.toUpperCase(command.charAt(0));
         if ((possibleAnswers.contains(commandChar) || commandChar == ' ') && commandChar != '-' && commandChar != '+') {
             questionToAnswer.put(currentQuestion, commandChar);
@@ -185,32 +182,35 @@ public class Simulation implements SimulationInt {
                 throw new IllegalArgumentException("Illegal Character");
             }
         }
-        /*switch (command.toUpperCase()) {
-            case "A":
-            case "B":
-            case "C":
-            case "D":
-            case " ":
-                questionToAnswer.put(currentQuestion, Character.toUpperCase(command.charAt(0)));
-                questionStatementToAnswer.put(currentQuestion.getQuestionStatement(),
-                        Character.toUpperCase(command.charAt(0)));
-                if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
-                    int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
-                    setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
-                }
-                break;
-            case "+":
-            case "-":
-                    changeQuestion(command.charAt(0));
-                break;
-            default:
-                int idx = Integer.parseInt(command);
-                if (questionsIdxs.contains(idx)) {
-                    changeQuestion(idx);
-                } else {
-                    throw new IllegalArgumentException("Illegal Character");
-                }
-        }*/
+        /*
+         * switch (command.toUpperCase()) {
+         * case "A":
+         * case "B":
+         * case "C":
+         * case "D":
+         * case " ":
+         * questionToAnswer.put(currentQuestion,
+         * Character.toUpperCase(command.charAt(0)));
+         * questionStatementToAnswer.put(currentQuestion.getQuestionStatement(),
+         * Character.toUpperCase(command.charAt(0)));
+         * if (allQuestions.indexOf(currentQuestion) < allQuestions.size() - 1) {
+         * int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
+         * setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
+         * }
+         * break;
+         * case "+":
+         * case "-":
+         * changeQuestion(command.charAt(0));
+         * break;
+         * default:
+         * int idx = Integer.parseInt(command);
+         * if (questionsIdxs.contains(idx)) {
+         * changeQuestion(idx);
+         * } else {
+         * throw new IllegalArgumentException("Illegal Character");
+         * }
+         * }
+         */
     }
 
     @Override
@@ -233,12 +233,12 @@ public class Simulation implements SimulationInt {
         List<Question> allQuestions = getAllQuestions();
         int idxCurrentQuestion = allQuestions.indexOf(currentQuestion);
         if (idxCurrentQuestion >= 0 && idxCurrentQuestion < allQuestions.size() - 1 && prevOrNext == '+'
-        /*&& questionToAnswer.get(currentQuestion) != ' '*/) {
+        /* && questionToAnswer.get(currentQuestion) != ' ' */) {
             questionToAnswer.put(currentQuestion, ' ');
             questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), ' ');
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion + 1));
         } else if (idxCurrentQuestion > 0 && idxCurrentQuestion <= allQuestions.size() - 1 && prevOrNext == '-'
-                /*&& questionToAnswer.get(currentQuestion) != ' '*/) {
+        /* && questionToAnswer.get(currentQuestion) != ' ' */) {
             questionToAnswer.put(currentQuestion, ' ');
             questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), ' ');
             setCurrentQuestion(allQuestions.get(idxCurrentQuestion - 1));
@@ -247,9 +247,9 @@ public class Simulation implements SimulationInt {
     }
 
     private void changeQuestion(int idxQuestion) {
-        /*if (questionToAnswer.get(currentQuestion) != ' ') {*/
-            questionToAnswer.put(currentQuestion, ' ');
-            questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), ' ');
+        /* if (questionToAnswer.get(currentQuestion) != ' ') { */
+        questionToAnswer.put(currentQuestion, ' ');
+        questionStatementToAnswer.put(currentQuestion.getQuestionStatement(), ' ');
         // }
         List<Question> allQuestions = getAllQuestions();
         setCurrentQuestion(allQuestions.get(idxQuestion - 1));
@@ -269,16 +269,18 @@ public class Simulation implements SimulationInt {
         return computeResult();
     }
 
-    /*private void setBlankQuestions () {
-        List<Question> allQuestions = getAllQuestions();
-        Set<Question> notAnsweredQuestions = allQuestions.stream().
-                filter(q -> !questionToAnswer.keySet().contains(q)).
-                collect(Collectors.toSet());
-        for (Question question : notAnsweredQuestions) {
-            questionToAnswer.put(question, ' ');
-            questionStatementToAnswer.put(question.getQuestionStatement(), ' ');
-        }
-    }*/
+    /*
+     * private void setBlankQuestions () {
+     * List<Question> allQuestions = getAllQuestions();
+     * Set<Question> notAnsweredQuestions = allQuestions.stream().
+     * filter(q -> !questionToAnswer.keySet().contains(q)).
+     * collect(Collectors.toSet());
+     * for (Question question : notAnsweredQuestions) {
+     * questionToAnswer.put(question, ' ');
+     * questionStatementToAnswer.put(question.getQuestionStatement(), ' ');
+     * }
+     * }
+     */
 
     private void updateNonSelectedQuestions() {
         getNonSelectedQuestions().stream().forEach(q -> q.setPriorityLevel(q.getPriorityLevel() + 1));
@@ -444,6 +446,12 @@ public class Simulation implements SimulationInt {
     public Map<Question, Character> getQuestionToAnswer() {
         return questionToAnswer;
     }
+
+    // TODO:
+    public Map<String, Character> getQuestionStatementToAnswer() {
+        return questionStatementToAnswer;
+    }
+
     @Override
     public char getAnswer(Question question) {
         return questionToAnswer.get(question);

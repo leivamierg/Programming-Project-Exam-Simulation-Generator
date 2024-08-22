@@ -1,6 +1,12 @@
 {
   "username" : "gersson",
-  "badges" : [ ],
-  "streak" : 0,
-  "challengeDate" : "2024-08-13"
+  "badges" : [ {
+    "name" : "Daily Challenge Winner",
+    "description" : "Awarded for passing a daily challenge."
+  }, {
+    "name" : "Daily Challenge Winner",
+    "description" : "Awarded for passing a daily challenge."
+  } ],
+  "streak" : 1,
+  "challengeDate" : "2024-08-21"
 }

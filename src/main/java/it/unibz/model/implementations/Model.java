@@ -91,6 +91,7 @@ public class Model implements ModelInt {
         testSubtopic(selectedSubtopic);
     }
 
+    // TODO:
     private void testAllSubtopics(Topic selectedTopic) {
         Simulation simulation = new Simulation(selectedTopic);
 
@@ -102,9 +103,9 @@ public class Model implements ModelInt {
                 System.out.println("How many questions per subtopic?");
                 numberOfQuestionsSubtopic = scanner.nextInt();
                 break;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 scanner.nextLine();
+                System.out.println("Invalid number. Please enter an integer.");
             }
         }
 
@@ -114,7 +115,6 @@ public class Model implements ModelInt {
 
         runSimulation(simulation, scanner);
     }
-
 
     private void clearConsole() {
         System.out.print("\033[H\033[2J");
@@ -146,23 +146,20 @@ public class Model implements ModelInt {
                 .findFirst()
                 .orElse(null);
 
-        if (selectedTopic == null)
-        {
+        if (selectedTopic == null) {
             System.out.println("The topic doesn't exist.");
             return;
         }
 
         List<Subtopic> subtopicsList = new ArrayList<>(selectedTopic.getSubtopics());
 
-        if (subtopicsList.isEmpty())
-        {
+        if (subtopicsList.isEmpty()) {
             System.out.println("No subtopics available");
             return;
         }
 
         System.out.println("Select subtopics:");
-        for (int i = 0; i < subtopicsList.size(); i++)
-        {
+        for (int i = 0; i < subtopicsList.size(); i++) {
             char letter = (char) ('A' + i);
             System.out.println(letter + ": " + subtopicsList.get(i).getSubtopicName());
         }
@@ -171,11 +168,9 @@ public class Model implements ModelInt {
         String input = scanner.nextLine().toUpperCase().strip();
 
         Set<Subtopic> selectedSubtopics = new HashSet<>();
-        for (char ch : input.toCharArray())
-        {
+        for (char ch : input.toCharArray()) {
             int index = ch - 'A';
-            if (index >= 0 && index < subtopicsList.size())
-            {
+            if (index >= 0 && index < subtopicsList.size()) {
                 selectedSubtopics.add(subtopicsList.get(index));
             } else {
                 System.out.println("Invalid selection: " + ch);
@@ -183,16 +178,14 @@ public class Model implements ModelInt {
             }
         }
 
-        if (selectedSubtopics.isEmpty())
-        {
+        if (selectedSubtopics.isEmpty()) {
             System.out.println("No valid subtopics selected.");
             return;
         }
 
         Simulation simulation = new Simulation(selectedTopic);
         int numberOfQuestionsSubtopic;
-        while (true)
-        {
+        while (true) {
             try {
                 System.out.println("How many questions per subtopic?");
                 numberOfQuestionsSubtopic = scanner.nextInt();
@@ -210,7 +203,7 @@ public class Model implements ModelInt {
         runSimulation(simulation, scanner);
     }
 
-    //helper for duplicated code
+    // helper for duplicated code
 
     private void runSimulation(Simulation simulation, Scanner scanner) {
         remainingTimeSimulation = DURATION_SIMULATION;
@@ -261,29 +254,28 @@ public class Model implements ModelInt {
         System.out.println("Test completed.");
     }
 
-    public static Stats getLoadedStats()
-    {
+    public static Stats getLoadedStats() {
         return stats;
     }
 
-    public static History getLoadedHistory()
-    {
+    public static History getLoadedHistory() {
         return history;
     }
 
-    public static String getRemainingTime()
-    {
-        return String.valueOf(formatTime(DURATION_SIMULATION - remainingTimeSimulation));
+    public static String getRemainingTime() {//
+        return String.valueOf(formatTime(remainingTimeSimulation));
     }
 
-    //randomizer method for daily challenge questions (from all the topics)
-    public List<Question> getRandomQuestions(int numberOfQuestions)
-    {
+    //
+    public static void setRemainingTimeSimulation(int i) {//
+        Model.remainingTimeSimulation = i;
+    }
+
+    // randomizer method for daily challenge questions (from all the topics)
+    public List<Question> getRandomQuestions(int numberOfQuestions) {
         List<Question> allQuestions = new ArrayList<>();
-        for (Topic topic : FileLoader.getTopics())
-        {
-            for (Subtopic subtopic : topic.getSubtopics())
-            {
+        for (Topic topic : FileLoader.getTopics()) {
+            for (Subtopic subtopic : topic.getSubtopics()) {
                 allQuestions.addAll(subtopic.getQuestions());
             }
         }
@@ -291,4 +283,7 @@ public class Model implements ModelInt {
         return allQuestions.subList(0, numberOfQuestions);
     }
 
+    public Set<Topic> getTopics() {
+        return topics;
+    }
 }

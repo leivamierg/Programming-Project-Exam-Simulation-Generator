@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unibz.app.GUI.Controllers.mainMenuEventController">
+   <children>
+      <Label layoutX="184.0" layoutY="35.0" text="Welcome to the Exam Simulation Program!" />
+      <Label fx:id="username" alignment="CENTER" layoutX="1.0" layoutY="53.0" prefHeight="18.0" prefWidth="600.0" text="Username" />
+
+      <Button layoutX="256.0" layoutY="88.0" mnemonicParsing="false" onAction="#listTopics" text="See all topics" />
+      <Button layoutX="223.0" layoutY="118.0" mnemonicParsing="false" onAction="#listSubtopics" text="See topics and subtopics" />
+      <Button layoutX="238.0" layoutY="148.0" mnemonicParsing="false" onAction="#selectTopic" text="Start a standard test" />
+      <Button layoutX="239.0" layoutY="178.0" mnemonicParsing="false" onAction="#selectTopicAndSubtopics" text="Start a custom Test" />
+      <Button layoutX="271.0" layoutY="208.0" mnemonicParsing="false" onAction="#seeHistory" text="History" />
+      <Button layoutX="276.0" layoutY="238.0" mnemonicParsing="false" onAction="#seeGeneralStats" text="Stats" />
+      <Button layoutX="243.0" layoutY="268.0" mnemonicParsing="false" onAction="#generatePdf" text="Generate test pdf" />
+      <Button layoutX="260.0" layoutY="298.0" mnemonicParsing="false" onAction="#seeProfileInfo" text="Profile Info" />
+      <Button layoutX="234.0" layoutY="328.0" mnemonicParsing="false" onAction="#startDailyChallenge" text="Start Daily Challenge" />
+      <Button layoutX="27.0" layoutY="361.0" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
+   </children>
+</AnchorPane>
