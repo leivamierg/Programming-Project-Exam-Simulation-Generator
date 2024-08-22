@@ -202,7 +202,13 @@ a second public void run method, in which we will add the "must go second" lines
 
 ## BUGS
 1. Stats and History saving
-2. Thread failure
+   Sometimes, due to bad threading, a method might me called with a null parameter, generating an exception. Whenever that happens the Stats class starts having more simulation than the History class
+   To check if that has happened go to the MainMenu and click the displayHistory and DisplayGeneralStats buttons, which will trigger a sysout of the number of simulations of the history and in the stats.
+   This number shoud be the same in both displays.
+   If this happens the saved data is corrupted and it is necessary to go back when both classes had the same number of simulation. The easiest way to do this is deleting the history.json and stats.json files.
+3. Thread failure
+   The application might stop working due to recursive threading calls or something simmilar. If this happens a message similar to: Error in Thread n° X, will be shown in the command line. To solve it, it would
+   be enough to close the programm and re open it again.
 
 ## Human experience in this project
 ### Workload
@@ -234,6 +240,8 @@ We used git to manage the project, each of us had a branch where we worked on ou
 - Working constantly on the project while following the other courses and projects.
 - Communicating with the other members of the group
 - Solving tricky bugs implying java libraries, mainly because an incorrect type/class, reading and understanding the documentation could be tricky at times.
+-(2nd session) Threading in graphical interfaces is hard to handle with little experience.
+-(2nd session) Working on the project instead of having vacations was particularly tough.
 
 #### @Sebastiano
 - Developing and testing simulation and stats classes
